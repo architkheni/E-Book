@@ -1,0 +1,33 @@
+name: book
+description: A new Flutter project.
+version: 1.0.0+1
+environment: 
+  sdk: '>=2.12.0 <3.0.0'
+dependencies: 
+  flutter: 
+    sdk: flutter
+  cached_network_image:
+  flutter_svg:
+  intl:
+  flutter_bloc:
+dev_dependencies: 
+  flutter_test: 
+    sdk: flutter
+flutter: 
+  uses-material-design: true
+  assets: 
+    - assets/
+    - assets/images/
+  fonts: 
+    - family: Outfit
+      fonts: 
+        - asset: assets/fonts/OutfitBold.ttf
+          weight: 700
+        - asset: assets/fonts/OutfitThin.ttf
+          weight: 100
+        - asset: assets/fonts/OutfitMedium.ttf
+          weight: 500
+        - asset: assets/fonts/OutfitLight.ttf
+          weight: 300
+        - asset: assets/fonts/OutfitRegular.ttf
+          weight: 400
