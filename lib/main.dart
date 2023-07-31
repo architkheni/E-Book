@@ -4,7 +4,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:book/theme/theme_helper.dart';
 import 'package:book/routes/app_routes.dart';
 
-void main() {
+void main()  {    
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
