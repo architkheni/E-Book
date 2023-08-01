@@ -8,7 +8,7 @@ import '../detail_page_container_page/widgets/chipviewframefo2_item_widget.dart'
 import 'package:flutter/material.dart';
 
 import '../home_recommended_for_you_see_all_screen/home_recommended_for_you_see_all_screen.dart';
-import '../home_screen_page/widgets/listtitle_item_widget.dart';
+import '../home/widgets/listtitle_item_widget.dart';
 
 class DetailPageContainerPage extends StatelessWidget {
   const DetailPageContainerPage({Key? key}) : super(key: key);
