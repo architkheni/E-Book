@@ -8,8 +8,10 @@ dependencies:
     sdk: flutter
   cached_network_image:
   flutter_svg:
+  shared_preferences:
   intl:
   flutter_bloc:
+  connectivity: 
 dev_dependencies: 
   flutter_test: 
     sdk: flutter

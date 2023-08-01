@@ -1,5 +1,5 @@
 import 'package:book/core/app_export.dart';
-import 'package:book/presentation/home_screen_page/home_screen_page.dart';
+import 'package:book/presentation/home/home_screen_page.dart';
 import 'package:book/widgets/custom_bottom_bar.dart';
 import 'package:flutter/material.dart';
 
