@@ -5,7 +5,8 @@ import 'package:book/widgets/app_bar/custom_app_bar.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 
-import '../home_screen_page/home_screen_page.dart';
+import '../custom_bottom_bar/custom_bottom_bar.dart';
+import '../home/home_screen_page.dart';
 
 class LangugaesScreen extends StatelessWidget {
   const LangugaesScreen({Key? key})
@@ -165,7 +166,7 @@ class LangugaesScreen extends StatelessWidget {
                      Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => HomeScreenPage()),
+                                      builder: (context) =>  BottombarPage(buttomIndex: 0)),
                                 );
                   },
                   width: double.maxFinite,

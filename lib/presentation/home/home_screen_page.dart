@@ -1,11 +1,12 @@
+import 'package:book/presentation/home/widgets/listone_item_widget.dart';
+import 'package:book/presentation/home/widgets/listtitle1_item_widget.dart';
+import 'package:book/presentation/home/widgets/listtitle2_item_widget.dart';
+import 'package:book/presentation/home/widgets/listtitle3_item_widget.dart';
+
 import '../detail_page_container_page/detail_page_container_page.dart';
+import '../detail_page_container_page/widgets/chipviewframefo2_item_widget.dart';
+import '../detail_page_container_page/widgets/listtitle_item_widget.dart';
 import '../home_recommended_for_you_see_all_screen/home_recommended_for_you_see_all_screen.dart';
-import '../home_screen_page/widgets/chipviewframefo2_item_widget.dart';
-import '../home_screen_page/widgets/listone_item_widget.dart';
-import '../home_screen_page/widgets/listtitle1_item_widget.dart';
-import '../home_screen_page/widgets/listtitle2_item_widget.dart';
-import '../home_screen_page/widgets/listtitle3_item_widget.dart';
-import '../home_screen_page/widgets/listtitle_item_widget.dart';
 import 'package:book/core/app_export.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
