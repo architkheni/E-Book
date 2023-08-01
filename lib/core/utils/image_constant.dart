@@ -122,9 +122,21 @@ class ImageConstant {
   static String imgUillock = 'assets/images/img_uillock.svg';
   static String imgE50c016fb6a84145x101 =
       'assets/images/img_e50c016fb6a84_145x101.png';
-      static String imgIcroundchevronleft =
+  static String imgIcroundchevronleft =
       'assets/images/img_icroundchevronleft.svg';
-        static String imgUpload = 'assets/images/img_upload.svg';
+  static String imgUpload = 'assets/images/img_upload.svg';
   static String imgFrame117 = 'assets/images/img_frame117.svg';
+  
 
+  static String SelectedProfile = 'assets/images/SelectedProfile.png';
+  static String ProfileIcon = 'assets/images/ProfileIcon.png';
+
+  static String SelectedLibrary = 'assets/images/SelectedLibrary.png';
+  static String Library = 'assets/images/Library.png';
+
+  static String SlectedSearch = 'assets/images/SlectedSearch.png';
+  static String Search = 'assets/images/Search.png';
+
+  static String SlectedHome = 'assets/images/SlectedHome.png';
+  static String Home = 'assets/images/Home.png';
 }
