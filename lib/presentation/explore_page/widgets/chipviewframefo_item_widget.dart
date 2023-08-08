@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-
+ 
 import '../../../core/app_export.dart';
+import '../../../core/utils/size_utils.dart';
+import '../../../widgets/custom_image_view.dart';
 
 // ignore: must_be_immutable
-class Chipviewframefo2ItemWidget extends StatelessWidget {
-  const Chipviewframefo2ItemWidget({Key? key})
+class ChipviewframefoItemWidget extends StatelessWidget {
+  const ChipviewframefoItemWidget({Key? key})
       : super(
           key: key,
         );
@@ -12,17 +14,33 @@ class Chipviewframefo2ItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RawChip(
-      padding: getPadding(left: 16, right: 16),
+      padding: getPadding(
+        right: 16,
+      ),
       showCheckmark: false,
       labelPadding: EdgeInsets.zero,
       label: Text(
-        "Demo Text",
+        "Personal growth",
         textAlign: TextAlign.left,
         style: TextStyle(
           color: appTheme.blueGray50,
-          fontSize: getFontSize(12),
+          fontSize: getFontSize(
+            12,
+          ),
           fontFamily: 'Outfit',
           fontWeight: FontWeight.w100,
+        ),
+      ),
+      avatar: CustomImageView(
+        svgPath: ImageConstant.imgGroup1171274896,
+        height: getSize(
+          12,
+        ),
+        width: getSize(
+          12,
+        ),
+        margin: getMargin(
+          right: 10,
         ),
       ),
       selected: false,
@@ -31,7 +49,9 @@ class Chipviewframefo2ItemWidget extends StatelessWidget {
       shape: RoundedRectangleBorder(
         side: BorderSide.none,
         borderRadius: BorderRadius.circular(
-          getHorizontalSize(8),
+          getHorizontalSize(
+            8,
+          ),
         ),
       ),
       onSelected: (value) {},

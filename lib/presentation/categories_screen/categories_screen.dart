@@ -2,6 +2,9 @@ import 'package:book/core/app_export.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 
+import '../../widgets/app_bar/appbar_image.dart';
+import '../../widgets/app_bar/appbar_subtitle.dart';
+import '../../widgets/app_bar/custom_app_bar.dart';
 import '../langugaes_screen/langugaes_screen.dart';
 
 class CategoriesScreen extends StatelessWidget {
@@ -15,22 +18,35 @@ class CategoriesScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: theme.colorScheme.onPrimaryContainer.withOpacity(1),
+        appBar: CustomAppBar(
+            height: 60,
+            leadingWidth: 35,
+            leading: Container(
+              // color: Colors.red,
+              child: AppbarImage(
+                  height: 20,
+                  width: 15,
+                  svgPath: ImageConstant.imgArrowleftBlueGray50,
+                  margin: getMargin(left: 16, top: 17, bottom: 18),
+                  onTap: () {
+                  Navigator.pop(context);
+                  }),
+            ),
+            title: Padding(
+                padding: getPadding(left: 11),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      AppbarSubtitle(text: "Select Categories"),
+                    ]))),
         body: Container(
           width: double.maxFinite,
-          padding: getPadding(top: 41, bottom: 41),
+          padding: getPadding(top: 0, bottom: 41),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Padding(
-                padding: getPadding(left: 16),
-                child: Text(
-                  "Select Categories",
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.left,
-                  style: theme.textTheme.headlineLarge,
-                ),
-              ),
+              
               Padding(
                 padding: const EdgeInsets.only(left: 16, right: 16),
                 child: IntrinsicWidth(

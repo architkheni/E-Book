@@ -18,19 +18,21 @@ class HomeScreenPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
-
+    double _width = MediaQuery.of(context).size.width;
+    double _height = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
         backgroundColor: theme.colorScheme.onPrimaryContainer.withOpacity(1),
         body: Container(
-          width: double.maxFinite,
+          width: _width,
+          // double.maxFinite,
           decoration: AppDecoration.black,
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  width: double.maxFinite,
+                  width: _width,
                   padding: getPadding(left: 16, top: 10, right: 16, bottom: 10),
                   decoration: AppDecoration.black,
                   child: Column(
@@ -60,25 +62,13 @@ class HomeScreenPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                Container(
-                  height: getVerticalSize(1923),
-                  width: getHorizontalSize(374),
-                  margin: getMargin(top: 12),
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Container(
-                          height: getVerticalSize(163),
-                          width: getHorizontalSize(115),
-                          margin: getMargin(left: 111, top: 86),
-                          decoration: BoxDecoration(),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Column(
+                Padding(
+                  padding: const EdgeInsets.only(top: 12, left: 16, right: 16),
+                  child: Container(
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Column(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -101,69 +91,73 @@ class HomeScreenPage extends StatelessWidget {
                                 style: CustomTextStyles.bodyMediumThin,
                               ),
                             ),
-                            Container(
-                              height: getVerticalSize(189),
-                              width: getHorizontalSize(358),
-                              margin: getMargin(top: 5),
-                              child: Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                DetailPageContainerPage()),
-                                      );
-                                    },
-                                    child: CustomImageView(
-                                      imagePath: ImageConstant.imgE50c016fb6a84,
-                                      height: getVerticalSize(157),
-                                      width: getHorizontalSize(358),
-                                      alignment: Alignment.topCenter,
-                                      margin: getMargin(top: 12),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: Container(
+                                height: _height / 4.5,
+                                width: _width,
+                                child: Stack(
+                                  alignment: Alignment.center,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  DetailPageContainerPage()),
+                                        );
+                                      },
+                                      child: CustomImageView(
+                                        imagePath:
+                                            ImageConstant.imgE50c016fb6a84,
+                                        height: _height / 4.5,
+                                        width: _width,
+                                        fit: BoxFit.fill,
+                                      ),
                                     ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.center,
-                                    child: Container(
-                                      height: getVerticalSize(184),
-                                      width: getHorizontalSize(358),
-                                      decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                          begin: Alignment(0.5, 0),
-                                          end: Alignment(0.5, 1),
-                                          colors: [
-                                            theme
-                                                .colorScheme.onPrimaryContainer,
-                                            theme.colorScheme.onPrimaryContainer
-                                                .withOpacity(0.6),
-                                            theme.colorScheme.onPrimaryContainer
-                                                .withOpacity(1),
-                                          ],
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: Container(
+                                        height: _height / 4.5,
+                                        width: _width,
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            begin: Alignment(0.5, 0),
+                                            end: Alignment(0.5, 1),
+                                            colors: [
+                                              theme.colorScheme
+                                                  .onPrimaryContainer,
+                                              theme.colorScheme
+                                                  .onPrimaryContainer
+                                                  .withOpacity(0.6),
+                                              theme.colorScheme
+                                                  .onPrimaryContainer
+                                                  .withOpacity(1),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                DetailPageContainerPage()),
-                                      );
-                                    },
-                                    child: CustomImageView(
-                                      imagePath:
-                                          ImageConstant.imgE50c016fb6a84163x115,
-                                      height: getVerticalSize(163),
-                                      width: getHorizontalSize(115),
-                                      alignment: Alignment.bottomCenter,
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  DetailPageContainerPage()),
+                                        );
+                                      },
+                                      child: CustomImageView(
+                                        imagePath: ImageConstant
+                                            .imgE50c016fb6a84163x115,
+                                        height: _height / 4.5,
+                                        width: _width / 3,
+                                        fit: BoxFit.fill,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                             Padding(
@@ -208,25 +202,28 @@ class HomeScreenPage extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: SizedBox(
-                                height: getVerticalSize(212),
-                                child: ListView.separated(
-                                  padding: getPadding(top: 32),
-                                  scrollDirection: Axis.horizontal,
-                                  separatorBuilder: (
-                                    context,
-                                    index,
-                                  ) {
-                                    return SizedBox(
-                                      width: getHorizontalSize(8),
-                                    );
-                                  },
-                                  itemCount: 4,
-                                  itemBuilder: (context, index) {
-                                    return ListoneItemWidget();
-                                  },
+                            Padding(
+                              padding: const EdgeInsets.only(top: 25),
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Container(
+                                  height: _height / 3.5,
+                                  // color: Colors.pink,
+                                  child: ListView.separated(
+                                    scrollDirection: Axis.horizontal,
+                                    separatorBuilder: (
+                                      context,
+                                      index,
+                                    ) {
+                                      return SizedBox(
+                                        width: getHorizontalSize(10),
+                                      );
+                                    },
+                                    itemCount: 4,
+                                    itemBuilder: (context, index) {
+                                      return ListoneItemWidget();
+                                    },
+                                  ),
                                 ),
                               ),
                             ),
@@ -240,18 +237,18 @@ class HomeScreenPage extends StatelessWidget {
                                     textAlign: TextAlign.left,
                                     style: theme.textTheme.headlineSmall,
                                   ),
+                                  Spacer(),
                                   GestureDetector(
                                     onTap: () {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                HomeRecommendedForYouSeeAllScreen()),
+                                                HomeRecommendedForYouSeeAllScreen(Title: "Recommended For You",)),
                                       );
                                     },
                                     child: Padding(
-                                      padding: getPadding(
-                                          left: 41, top: 7, bottom: 7),
+                                      padding: getPadding(top: 7, bottom: 7),
                                       child: Text(
                                         "Show all",
                                         overflow: TextOverflow.ellipsis,
@@ -310,7 +307,7 @@ class HomeScreenPage extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                HomeRecommendedForYouSeeAllScreen()),
+                                                HomeRecommendedForYouSeeAllScreen(Title: "Top Search",)),
                                       );
                                     },
                                     child: Padding(
@@ -375,7 +372,7 @@ class HomeScreenPage extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                HomeRecommendedForYouSeeAllScreen()),
+                                                HomeRecommendedForYouSeeAllScreen(Title: "Categories",)),
                                       );
                                     },
                                     child: Padding(
@@ -421,7 +418,7 @@ class HomeScreenPage extends StatelessWidget {
                               child: Row(
                                 children: [
                                   Text(
-                                    "Popular ",
+                                    "Popular",
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
                                     style: theme.textTheme.titleLarge,
@@ -433,7 +430,7 @@ class HomeScreenPage extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                HomeRecommendedForYouSeeAllScreen()),
+                                                HomeRecommendedForYouSeeAllScreen(Title: "Popular",)),
                                       );
                                     },
                                     child: Padding(
@@ -499,7 +496,7 @@ class HomeScreenPage extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                HomeRecommendedForYouSeeAllScreen()),
+                                                HomeRecommendedForYouSeeAllScreen(Title: "Recently Added",)),
                                       );
                                     },
                                     child: Padding(
@@ -547,8 +544,8 @@ class HomeScreenPage extends StatelessWidget {
                             ),
                           ],
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ],

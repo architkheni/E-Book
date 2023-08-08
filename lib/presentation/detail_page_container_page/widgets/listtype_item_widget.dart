@@ -22,10 +22,10 @@ class ListtypeItemWidget extends StatelessWidget {
             bottom: 25,
           ),
           child: Text(
-            "",
+            "a",
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.left,
-            style: theme.textTheme.bodyLarge,
+            style: CustomTextStyles.titleMediumWhiteA700,
           ),
         ),
         Expanded(
@@ -37,7 +37,7 @@ class ListtypeItemWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  "",
+                  "B",
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
                   style: CustomTextStyles.titleMediumWhiteA700,
@@ -69,7 +69,7 @@ class ListtypeItemWidget extends StatelessWidget {
             all: 6,
           ),
           child: CustomImageView(
-            svgPath: ImageConstant.imgUillock,
+            imagePath: ImageConstant.imgUillock1,
           ),
         ),
       ],
