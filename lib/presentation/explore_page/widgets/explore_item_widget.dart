@@ -1,12 +1,19 @@
-import 'package:book/core/app_export.dart';
 import 'package:flutter/material.dart';
 
+import '../../../core/app_export.dart';
+import '../../../core/utils/size_utils.dart';
+import '../../../widgets/custom_image_view.dart';
+ 
 // ignore: must_be_immutable
-class Listtitle2ItemWidget extends StatelessWidget {
-  const Listtitle2ItemWidget({Key? key})
-      : super(
+class ExploreItemWidget extends StatelessWidget {
+  ExploreItemWidget({
+    Key? key,
+    this.onTapStackellipse394,
+  }) : super(
           key: key,
         );
+
+  VoidCallback? onTapStackellipse394;
 
   @override
   Widget build(BuildContext context) {
@@ -136,6 +143,26 @@ class Listtitle2ItemWidget extends StatelessWidget {
                                 ),
                               ),
                             ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 20),
+                              child: Align(
+                                alignment: Alignment.topRight,
+                                child: Container(
+                                  // color: Colors.lightGreen,
+                                  height:40,
+                                  width: 40,
+                                  child: Center(
+                                    child: CustomImageView(
+                                      imagePath:
+                                          ImageConstant.likeIcon,
+                                      fit: BoxFit.fill,
+                                      height: 20,
+                                      width: 20,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -148,5 +175,5 @@ class Listtitle2ItemWidget extends StatelessWidget {
         ),
       ),
     );
- }
+  }
 }

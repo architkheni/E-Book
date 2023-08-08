@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_image.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
-import '../../widgets/custom_bottom_bar.dart';
+// import '../../widgets/custom_bottom_bar.dart';
 import '../detail_page_container_page/detail_page_container_page.dart'; 
 
 // ignore_for_file: must_be_immutable
