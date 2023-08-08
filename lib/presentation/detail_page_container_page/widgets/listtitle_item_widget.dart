@@ -15,38 +15,48 @@ class ListtitleItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double _width = MediaQuery.of(context).size.width;
+    double _height = MediaQuery.of(context).size.height;
     return SizedBox(
-      width: getHorizontalSize(
-        192,
-      ),
+      width: _width / 2.1,
       child: Align(
         alignment: Alignment.centerRight,
-        child: SizedBox(
-          height: getVerticalSize(
-            256,
-          ),
-          width: getHorizontalSize(
-            192,
-          ),
+        child: Container(
+          width: _width / 2.2,
+          // color: Colors.green[500],
           child: Stack(
             alignment: Alignment.center,
             children: [
               Align(
                 alignment: Alignment.bottomLeft,
                 child: Padding(
-                  padding: getPadding(
-                    bottom: 19,
-                  ),
+                  padding: EdgeInsets.only(bottom: 19),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(
-                        "The Good Guy",
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
-                        style: theme.textTheme.titleSmall,
+                      Row(
+                        children: [
+                          Text(
+                            "The Good Guy",
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.left,
+                            style: theme.textTheme.titleSmall,
+                          ),
+                          Spacer(),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: Container(
+                              height: 18,
+                              width: 15,
+                              child: CustomImageView(
+                                imagePath: ImageConstant.Lock,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          )
+                        ],
                       ),
                       Text(
                         "A Fanklin",
@@ -61,18 +71,12 @@ class ListtitleItemWidget extends StatelessWidget {
                         style: theme.textTheme.bodySmall,
                       ),
                       Padding(
-                        padding: getPadding(
-                          top: 2,
-                        ),
+                        padding: EdgeInsets.only(top: 5),
                         child: Row(
                           children: [
                             Container(
-                              padding: getPadding(
-                                left: 7,
-                                top: 1,
-                                right: 7,
-                                bottom: 1,
-                              ),
+                              padding: EdgeInsets.only(
+                                  top: 1, bottom: 1, right: 7, left: 7),
                               decoration: AppDecoration.fill.copyWith(
                                 borderRadius: BorderRadiusStyle.roundedBorder5,
                               ),
@@ -84,11 +88,8 @@ class ListtitleItemWidget extends StatelessWidget {
                               ),
                             ),
                             Padding(
-                              padding: getPadding(
-                                left: 4,
-                                top: 1,
-                                bottom: 1,
-                              ),
+                              padding:
+                                  EdgeInsets.only(left: 4, top: 1, bottom: 1),
                               child: Text(
                                 "21 min",
                                 overflow: TextOverflow.ellipsis,
@@ -105,109 +106,64 @@ class ListtitleItemWidget extends StatelessWidget {
               ),
               Align(
                 alignment: Alignment.center,
-                child: SizedBox(
-                  height: getVerticalSize(
-                    256,
-                  ),
-                  width: getHorizontalSize(
-                    192,
-                  ),
-                  child: Stack(
-                    alignment: Alignment.topLeft,
-                    children: [
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                          height: getSize(
-                            192,
-                          ),
-                          width: getSize(
-                            192,
-                          ),
-                          decoration: BoxDecoration(
-                            color: appTheme.gray50001,
-                            borderRadius: BorderRadius.circular(
-                              getHorizontalSize(
-                                96,
+                child: Stack(
+                  alignment: Alignment.topLeft,
+                  children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Container(
+                        // color: Colors.pink,
+                        height: _height / 5.3,
+                        width: _width,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 70),
+                              child: CustomImageView(
+                                imagePath: ImageConstant.BookBackImage,
+                                height: _height / 5.3,
+                                width: _width,
+                                fit: BoxFit.fill,
+                                // alignment: Alignment.center,
                               ),
                             ),
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Container(
-                          height: getVerticalSize(
-                            145,
-                          ),
-                          width: getHorizontalSize(
-                            101,
-                          ),
-                          margin: getMargin(
-                            left: 41,
-                          ),
-                          decoration: AppDecoration.outline,
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              CustomImageView(
-                                imagePath:
-                                    ImageConstant.imgE50c016fb6a84145x101,
-                                height: getVerticalSize(
-                                  145,
+                            Align(
+                              alignment: Alignment.center,
+                              child: Container(
+                                // color: Colors.black,
+                                height: _height / 5.3,
+                                width: _width / 3.3,
+                                child: CustomImageView(
+                                  imagePath:
+                                      ImageConstant.imgE50c016fb6a84145x100,
+                                  fit: BoxFit.fill,
                                 ),
-                                width: getHorizontalSize(
-                                  101,
-                                ),
-                                alignment: Alignment.center,
                               ),
-                              Align(
-                                alignment: Alignment.center,
-                                child: SizedBox(
-                                  height: getVerticalSize(
-                                    145,
-                                  ),
-                                  width: getHorizontalSize(
-                                    100,
-                                  ),
-                                  child: Stack(
-                                    alignment: Alignment.center,
-                                    children: [
-                                      CustomImageView(
-                                        svgPath: ImageConstant.imgBookmark,
-                                        height: getVerticalSize(
-                                          11,
-                                        ),
-                                        width: getHorizontalSize(
-                                          8,
-                                        ),
-                                        alignment: Alignment.topRight,
-                                        margin: getMargin(
-                                          top: 3,
-                                          right: 3,
-                                        ),
-                                      ),
-                                      CustomImageView(
-                                        imagePath: ImageConstant
-                                            .imgE50c016fb6a84145x100,
-                                        height: getVerticalSize(
-                                          145,
-                                        ),
-                                        width: getHorizontalSize(
-                                          100,
-                                        ),
-                                        alignment: Alignment.center,
-                                      ),
-                                    ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 20),
+                              child: Align(
+                                alignment: Alignment.topRight,
+                                child: Container(
+                                  height: 40,
+                                  width: 40,
+                                  child: Center(
+                                    child: CustomImageView(
+                                      imagePath: ImageConstant.likeIcon,
+                                      fit: BoxFit.fill,
+                                      height: 20,
+                                      width: 20,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ],

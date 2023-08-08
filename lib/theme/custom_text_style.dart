@@ -14,6 +14,20 @@ class CustomTextStyles {
         color: appTheme.whiteA700,
         fontWeight: FontWeight.w700,
       );
+       static get titleSmallWhiteA700 => theme.textTheme.titleSmall!.copyWith(
+        color: appTheme.whiteA700,
+        fontWeight: FontWeight.w500,
+      );
+        static get bodySmallWhiteA700 => theme.textTheme.bodySmall!.copyWith(
+        color: appTheme.whiteA700,
+        fontSize: getFontSize(
+          12,
+        ),
+        fontWeight: FontWeight.w100,
+      );
+       static get titleSmallMedium => theme.textTheme.titleSmall!.copyWith(
+        fontWeight: FontWeight.w500,
+      );
   static get bodySmallGray400 => theme.textTheme.bodySmall!.copyWith(
         color: appTheme.gray400,
         fontSize: getFontSize(
@@ -77,6 +91,30 @@ class CustomTextStyles {
   static get labelLargeTeal400Bold => theme.textTheme.labelLarge!.copyWith(
         color: appTheme.teal400,
         fontWeight: FontWeight.w700,
+      );
+      static get labelLargeTeal500Bold => theme.textTheme.labelLarge!.copyWith(
+        color: appTheme.teal400,
+        fontWeight: FontWeight.w500,fontSize: getFontSize(
+          13,
+        ),
+      );
+      static get titleSmallGray500 => theme.textTheme.titleSmall!.copyWith(
+        color: appTheme.gray400,
+        fontWeight: FontWeight.w300,
+        fontSize: getFontSize(
+          13,
+        ),
+      );
+      static get ProfileTitle => theme.textTheme.titleSmall!.copyWith(
+        color: appTheme.whiteA700,
+        fontWeight: FontWeight.w700,
+        fontSize: getFontSize(
+          22,
+        ),
+      );
+        static get titleSmallWhiteA400 => theme.textTheme.titleSmall!.copyWith(
+        color: appTheme.whiteA700,
+        fontWeight: FontWeight.w400,
       );
 }
 
