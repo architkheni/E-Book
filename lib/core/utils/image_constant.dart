@@ -82,8 +82,7 @@ class ImageConstant {
 
   static String imgEye = 'assets/images/img_eye.svg';
 
-  static String imgUilpluscircle = 'assets/images/img_uilpluscircle.svg';
-
+ 
   static String imgTrash = 'assets/images/img_trash.svg';
 
   static String imgComputer = 'assets/images/img_computer.svg';
@@ -224,6 +223,17 @@ class ImageConstant {
   static String SaveAllBook = 'assets/images/SaveAllBook.png';
   static String inReed = 'assets/images/inReed.png';
   static String BookFinish = 'assets/images/BookFinish.png';
+  static String Contact_Us = 'assets/images/Contact_Us.png';
+
+  static String DownArrow = 'assets/images/DownArrow.png';
+  static String TextImage = 'assets/images/TextImage.png';
+  static String option = 'assets/images/option.png';
+
+  static String Checked = 'assets/images/Checked.png';
+  static String uil_pluscircle = 'assets/images/uil_pluscircle.png';
+
+
+
 
 
   

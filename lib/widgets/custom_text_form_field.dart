@@ -7,9 +7,11 @@ class CustomTextFormField extends StatelessWidget {
     this.alignment,
     this.width,
     this.margin,
+    this.maxLength,
     this.controller,
     this.focusNode,
     this.autofocus = true,
+    this.enabled = true,
     this.textStyle,
     this.obscureText = false,
     this.textInputAction = TextInputAction.next,
@@ -28,6 +30,7 @@ class CustomTextFormField extends StatelessWidget {
     this.enabledBorderDecoration,
     this.focusedBorderDecoration,
     this.disabledBorderDecoration,
+    this.onChanged,
     this.validator,
   }) : super(
           key: key,
@@ -45,6 +48,9 @@ class CustomTextFormField extends StatelessWidget {
 
   final bool? autofocus;
 
+  final bool? enabled;
+  final int? maxLength;
+  void Function(String)? onChanged;
   final TextStyle? textStyle;
 
   final bool? obscureText;
@@ -100,7 +106,10 @@ class CustomTextFormField extends StatelessWidget {
           controller: controller,
           focusNode: focusNode ?? FocusNode(),
           autofocus: autofocus!,
+          enabled: enabled,
           style: textStyle,
+          maxLength:maxLength,
+          onChanged: onChanged,
           obscureText: obscureText!,
           textInputAction: textInputAction,
           keyboardType: textInputType,

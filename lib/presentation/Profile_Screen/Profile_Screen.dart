@@ -7,6 +7,8 @@ import '../../widgets/custom_image_view.dart';
 import '../categories_screen/categories_screen.dart';
 import '../home_recommended_for_you_see_all_screen/home_recommended_for_you_see_all_screen.dart';
 import '../langugaes_screen/langugaes_screen.dart';
+import 'Contact_Us.dart';
+import 'editProfile.dart';
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen({Key? key}) : super(key: key);
@@ -66,55 +68,66 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   color: appTheme.teal400,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 25, bottom: 25),
-                child: Container(
-                  // color: Colors.green[100],
-                  width: _width,
-                  height: 80,
-                  child: Row(
-                    children: [
-                      Container(
-                          width: 80,
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          EditProfile()),
+                                );
+
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 25, bottom: 25),
+                  child: Container(
+                    // color: Colors.green[100],
+                    width: _width,
+                    height: 80,
+                    child: Row(
+                      children: [
+                        Container(
+                            width: 80,
+                            height: 80,
+                            // color: Colors.red[300],
+                            child: CircleAvatar(
+                              backgroundImage: AssetImage(ImageConstant.profile),
+                            ) /*  CustomImageView(
+                            imagePath: ImageConstant.profile,
+                          ), */
+                            ),
+                        Spacer(),
+                        Container(
                           height: 80,
-                          // color: Colors.red[300],
-                          child: CircleAvatar(
-                            backgroundImage: AssetImage(ImageConstant.profile),
-                          ) /*  CustomImageView(
-                          imagePath: ImageConstant.profile,
-                        ), */
+                          width: _width - 130,
+                          // color: Colors.yellow[400],
+                          child: Column(
+                            children: [
+                              Spacer(),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  "John Doe",
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.left,
+                                  style: CustomTextStyles.titleMediumWhiteA700,
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  "JohnDoe@gmail.com",
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.left,
+                                  style: CustomTextStyles.titleSmallWhiteA400,
+                                ),
+                              ),
+                              Spacer()
+                            ],
                           ),
-                      Spacer(),
-                      Container(
-                        height: 80,
-                        width: _width - 130,
-                        // color: Colors.yellow[400],
-                        child: Column(
-                          children: [
-                            Spacer(),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                "John Doe",
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.left,
-                                style: CustomTextStyles.titleMediumWhiteA700,
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                "JohnDoe@gmail.com",
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.left,
-                                style: CustomTextStyles.titleSmallWhiteA400,
-                              ),
-                            ),
-                            Spacer()
-                          ],
-                        ),
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -168,6 +181,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               case 3:
                                 break;
                               case 4:
+                                 Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          ContactUsScreen()),
+                                );
                                 break;
                               default:
                             }

@@ -7,8 +7,27 @@ import '../../widgets/app_bar/appbar_subtitle.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
 import '../langugaes_screen/langugaes_screen.dart';
 
-class CategoriesScreen extends StatelessWidget {
-  const CategoriesScreen({Key? key}) : super(key: key);
+class CategoriesScreen extends StatefulWidget {
+  CategoriesScreen({Key? key}) : super(key: key);
+
+  @override
+  State<CategoriesScreen> createState() => _CategoriesScreenState();
+}
+
+class _CategoriesScreenState extends State<CategoriesScreen> {
+  List<int> selectedChoices = [];
+
+  @override
+  void initState() {
+    selectedChoices = [];
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    selectedChoices = [];
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +48,7 @@ class CategoriesScreen extends StatelessWidget {
                   svgPath: ImageConstant.imgArrowleftBlueGray50,
                   margin: getMargin(left: 16, top: 17, bottom: 18),
                   onTap: () {
-                  Navigator.pop(context);
+                    Navigator.pop(context);
                   }),
             ),
             title: Padding(
@@ -46,7 +65,6 @@ class CategoriesScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              
               Padding(
                 padding: const EdgeInsets.only(left: 16, right: 16),
                 child: IntrinsicWidth(
@@ -83,9 +101,7 @@ class CategoriesScreen extends StatelessWidget {
                                 spacing: getHorizontalSize(5),
                                 children: List<Widget>.generate(
                                   9,
-                                  (index) =>
-                                      // ChipviewframefoItemWidget(),
-                                      RawChip(
+                                  (index) => RawChip(
                                     padding: getPadding(right: 16),
                                     showCheckmark: false,
                                     labelPadding: EdgeInsets.zero,
@@ -105,7 +121,7 @@ class CategoriesScreen extends StatelessWidget {
                                       width: getSize(12),
                                       margin: getMargin(right: 10),
                                     ),
-                                    selected: false,
+                                    selected: selectedChoices.contains(index),
                                     backgroundColor: theme.colorScheme.primary,
                                     selectedColor: appTheme.teal400,
                                     shape: RoundedRectangleBorder(
@@ -114,7 +130,13 @@ class CategoriesScreen extends StatelessWidget {
                                         getHorizontalSize(8),
                                       ),
                                     ),
-                                    onSelected: (value) {},
+                                    onSelected: (value) {
+                                      setState(() {
+                                        selectedChoices.contains(index)
+                                            ? selectedChoices.remove(index)
+                                            : selectedChoices.add(index);
+                                      });
+                                    },
                                   ),
                                 ),
                               ),
@@ -122,11 +144,22 @@ class CategoriesScreen extends StatelessWidget {
                             Spacer(),
                             CustomElevatedButton(
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LangugaesScreen()),
-                                );
+                                if (selectedChoices.length <= 2) {
+                                  SnackBar snackBar = SnackBar(
+                                    content:
+                                        Text("Select minimum 3 Categories"),
+                                    backgroundColor: appTheme.teal400,
+                                  );
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            LangugaesScreen()),
+                                  );
+                                }
                               },
                               width: double.maxFinite,
                               height: getVerticalSize(48),
