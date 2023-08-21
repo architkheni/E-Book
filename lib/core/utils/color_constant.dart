@@ -10,4 +10,5 @@ class ColorConstant {
   }
 
   static Color primary_color = fromHex('#29978A');
+  static Color whiteA700 = fromHex('#ffffff');
 }

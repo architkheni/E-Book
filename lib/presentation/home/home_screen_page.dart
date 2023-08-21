@@ -51,10 +51,10 @@ class HomeScreenPage extends StatelessWidget {
                       Padding(
                         padding: getPadding(top: 2),
                         child: SizedBox(
-                          width: getHorizontalSize(66),
+                          width: 80,
                           child: Divider(
-                            height: getVerticalSize(3),
-                            thickness: getVerticalSize(3),
+                            height: 2,
+                            thickness: 2,
                             color: appTheme.teal400,
                           ),
                         ),
@@ -182,13 +182,21 @@ class HomeScreenPage extends StatelessWidget {
                               padding: getPadding(left: 6, top: 5),
                               child: Row(
                                 children: [
-                                  CustomElevatedButton(
-                                    width: getHorizontalSize(62),
-                                    height: getVerticalSize(15),
-                                    text: "Select tyep",
-                                    buttonStyle:
-                                        CustomButtonStyles.fillTeal400TL5,
-                                    buttonTextStyle: theme.textTheme.bodySmall!,
+                                  Container(
+                                    height: 15,
+                                    width: 63,
+                                    decoration: BoxDecoration(
+                                      color: appTheme.teal400,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        "Select tyep",
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.left,
+                                        style: theme.textTheme.bodySmall,
+                                      ),
+                                    ),
                                   ),
                                   Padding(
                                     padding: getPadding(left: 3, top: 1),
@@ -244,7 +252,9 @@ class HomeScreenPage extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                HomeRecommendedForYouSeeAllScreen(Title: "Recommended For You",)),
+                                                HomeRecommendedForYouSeeAllScreen(
+                                                  Title: "Recommended For You",
+                                                )),
                                       );
                                     },
                                     child: Padding(
@@ -307,7 +317,9 @@ class HomeScreenPage extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                HomeRecommendedForYouSeeAllScreen(Title: "Top Search",)),
+                                                HomeRecommendedForYouSeeAllScreen(
+                                                  Title: "Top Search",
+                                                )),
                                       );
                                     },
                                     child: Padding(
@@ -372,7 +384,9 @@ class HomeScreenPage extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                HomeRecommendedForYouSeeAllScreen(Title: "Categories",)),
+                                                HomeRecommendedForYouSeeAllScreen(
+                                                  Title: "Categories",
+                                                )),
                                       );
                                     },
                                     child: Padding(
@@ -430,7 +444,9 @@ class HomeScreenPage extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                HomeRecommendedForYouSeeAllScreen(Title: "Popular",)),
+                                                HomeRecommendedForYouSeeAllScreen(
+                                                  Title: "Popular",
+                                                )),
                                       );
                                     },
                                     child: Padding(
@@ -496,7 +512,9 @@ class HomeScreenPage extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                HomeRecommendedForYouSeeAllScreen(Title: "Recently Added",)),
+                                                HomeRecommendedForYouSeeAllScreen(
+                                                  Title: "Recently Added",
+                                                )),
                                       );
                                     },
                                     child: Padding(

@@ -26,24 +26,23 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: theme.colorScheme.onPrimaryContainer.withOpacity(1),
+        backgroundColor: Theme.of(context).brightness == Brightness.light
+            ? theme.colorScheme.onPrimaryContainer.withOpacity(1)
+            : ColorConstant.whiteA700,
+
+        // theme.colorScheme.onPrimaryContainer.withOpacity(1),
         resizeToAvoidBottomInset: false,
         body: Form(
           key: _formKey,
           child: Container(
             width: double.maxFinite,
-            padding: getPadding(
-              left: 16,
-              right: 16,
-            ),
+            padding: getPadding(left: 16, right: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: getPadding(
-                    left: 16,
-                  ),
+                  padding: getPadding(left: 16),
                   child: Text(
                     "Log in",
                     overflow: TextOverflow.ellipsis,
@@ -89,7 +88,8 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                       ),
                       CustomElevatedButton(
                         onTap: () {
-                          if (emailController.text != "") {
+                          var velidEmail = emailV(emailController.text);
+                          if (velidEmail == true) {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -99,8 +99,9 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                             );
                           } else {
                             SnackBar snackBar = SnackBar(
-                              content: Text("Enter Email"),
-                              backgroundColor: ColorConstant.primary_color,
+                              content:
+                                  Text("Please enter a valid email address"),
+                              backgroundColor: appTheme.teal400,
                             );
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(snackBar);
@@ -119,12 +120,11 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                              Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ForgotPasswordScreen()),
-                                      );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ForgotPasswordScreen()),
+                          );
                         },
                         child: Padding(
                           padding: getPadding(
@@ -264,20 +264,28 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                         padding: getPadding(
                           top: 33,
                         ),
-                        child: RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: "Don’t have an account? ",
-                                style: CustomTextStyles.bodyMediumThin_1,
-                              ),
-                              TextSpan(
-                                text: "Sign up",
+                        child: Row(
+                          children: [
+                            Spacer(),
+                            Text(
+                              "Don’t have an account? ",
+                              style: CustomTextStyles.bodyMediumThin_1,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SignUpScreen()),
+                                );
+                              },
+                              child: Text(
+                                "Sign up",
                                 style: CustomTextStyles.titleSmallTeal400_1,
                               ),
-                            ],
-                          ),
-                          textAlign: TextAlign.left,
+                            ),
+                            Spacer(),
+                          ],
                         ),
                       ),
                     ],
@@ -289,5 +297,12 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
         ),
       ),
     );
+  }
+
+  emailV(String Email) {
+    bool emailValid = RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
+        .hasMatch(Email);
+    print(emailValid);
+    return emailValid;
   }
 }

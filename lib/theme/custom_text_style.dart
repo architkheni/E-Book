@@ -14,6 +14,14 @@ class CustomTextStyles {
         color: appTheme.whiteA700,
         fontWeight: FontWeight.w700,
       );
+        static get titleMediumWhiteA500 => theme.textTheme.titleMedium!.copyWith(
+        color: appTheme.whiteA700,
+        fontWeight: FontWeight.w300,
+      );
+        static get titleMediumWhiteA400 => theme.textTheme.titleMedium!.copyWith(
+        color: appTheme.teal400,
+        fontWeight: FontWeight.w400,
+      );
        static get titleSmallWhiteA700 => theme.textTheme.titleSmall!.copyWith(
         color: appTheme.whiteA700,
         fontWeight: FontWeight.w500,
@@ -50,6 +58,14 @@ class CustomTextStyles {
       );
   static get bodyMediumGray500 => theme.textTheme.bodyMedium!.copyWith(
         color: appTheme.gray900,
+        fontWeight: FontWeight.w400,
+      );
+      static get bodyMediumwhite500 => theme.textTheme.bodyMedium!.copyWith(
+        color: appTheme.whiteA700,
+        fontWeight: FontWeight.w400,
+      );
+      static get bodyMediumGray200 => theme.textTheme.bodyMedium!.copyWith(
+        color: appTheme.gray400,
         fontWeight: FontWeight.w400,
       );
   static get bodySmallTeal400 => theme.textTheme.bodySmall!.copyWith(
