@@ -62,7 +62,7 @@ class ImageConstant {
   static String imgBookmarkOnprimary =
       'assets/images/img_bookmark_onprimary.svg';
 
-  static String imgSearch = 'assets/images/img_search.svg';
+  static String imgSearch = 'assets/images/Search.png';
 
   static String imgMail = 'assets/images/img_mail.svg';
 

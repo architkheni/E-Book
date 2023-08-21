@@ -39,21 +39,21 @@ class ExplorePage extends StatelessWidget {
                               Padding(
                                   padding: getPadding(top: 2),
                                   child: SizedBox(
-                                      width: getHorizontalSize(95),
+                                      width: 90,
                                       child: Divider(
-                                          height: getVerticalSize(2),
-                                          thickness: getVerticalSize(2),
+                                          height: 2,
+                                          thickness: 2,
                                           color: appTheme.teal400,
-                                          indent: getHorizontalSize(1)))),
+                                          indent: 1))),
                               CustomTextFormField(
                                   controller: framefortyfourController,
                                   margin:
                                       getMargin(left: 1, top: 23, right: 16),
                                   contentPadding: getPadding(
                                       top: 14, right: 30, bottom: 14),
-                                  textStyle: CustomTextStyles.bodyMediumGray500,
+                                  textStyle: CustomTextStyles.bodyMediumwhite500,
                                   hintText: "Title, author or keyword",
-                                  hintStyle: CustomTextStyles.bodyMediumGray500,
+                                  hintStyle: CustomTextStyles.bodyMediumwhite500,
                                   prefix: Container(
                                       margin: getMargin(
                                           left: 16,
@@ -61,10 +61,11 @@ class ExplorePage extends StatelessWidget {
                                           right: 10,
                                           bottom: 14),
                                       child: CustomImageView(
-                                          svgPath: ImageConstant.imgSearch)),
+                                          imagePath: ImageConstant.imgSearch)),
                                   prefixConstraints: BoxConstraints(
                                       maxHeight: getVerticalSize(45)),
                                   filled: true,
+                                  autofocus: false,
                                   fillColor: appTheme.blueGray900),
                               Padding(
                                   padding: getPadding(top: 42),

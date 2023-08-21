@@ -69,19 +69,22 @@ class Listtitle2ItemWidget extends StatelessWidget {
                         padding: EdgeInsets.only(top: 5),
                         child: Row(
                           children: [
-                            Container(
-                              padding: EdgeInsets.only(
-                                  top: 1, bottom: 1, right: 7, left: 7),
-                              decoration: AppDecoration.fill.copyWith(
-                                borderRadius: BorderRadiusStyle.roundedBorder5,
-                              ),
-                              child: Text(
-                                "Blinks",
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.left,
-                                style: theme.textTheme.bodySmall,
-                              ),
-                            ),
+                             Container(
+                                    height: 15,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                      color: appTheme.teal400,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        "Blinks",
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.left,
+                                        style: theme.textTheme.bodySmall,
+                                      ),
+                                    ),
+                                  ),
                             Padding(
                               padding:
                                   EdgeInsets.only(left: 4, top: 1, bottom: 1),

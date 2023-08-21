@@ -1,5 +1,7 @@
+import 'package:book/core/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 
+import '../../ColorTheme/ColorTheme.dart';
 import '../../core/utils/image_constant.dart';
 import '../../theme/custom_text_style.dart';
 import '../../theme/theme_helper.dart';
@@ -34,12 +36,14 @@ final List<String> image_List = <String>[
   ImageConstant.ContactUs,
   ImageConstant.Share
 ];
-
+bool light = true;
 // final List<int> colorCodes = <int>[600, 500, 100];
 
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
+    // final themeProviderr = Provider.of<ThemeProvider>(context);
+
     double _width = MediaQuery.of(context).size.width;
     double _height = MediaQuery.of(context).size.height;
     return SafeArea(
@@ -71,12 +75,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               GestureDetector(
                 onTap: () {
                   Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          EditProfile()),
-                                );
-
+                    context,
+                    MaterialPageRoute(builder: (context) => EditProfile()),
+                  );
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(top: 25, bottom: 25),
@@ -91,7 +92,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             height: 80,
                             // color: Colors.red[300],
                             child: CircleAvatar(
-                              backgroundImage: AssetImage(ImageConstant.profile),
+                              backgroundImage:
+                                  AssetImage(ImageConstant.profile),
                             ) /*  CustomImageView(
                             imagePath: ImageConstant.profile,
                           ), */
@@ -181,11 +183,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               case 3:
                                 break;
                               case 4:
-                                 Navigator.push(
+                                Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          ContactUsScreen()),
+                                      builder: (context) => ContactUsScreen()),
                                 );
                                 break;
                               default:
@@ -221,14 +222,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       ),
                                     ),
                                     Spacer(),
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 15),
-                                      child: CustomImageView(
-                                        svgPath: ImageConstant.imgArrowright,
-                                        height: 16,
-                                        width: 16,
-                                      ),
-                                    )
+                                    index == 3
+                                        ? Switch(
+                                            // This bool value toggles the switch.
+                                            value: light,
+                                            // themeProviderr.isdarkMode,
+                                            activeColor: ColorConstant.primary_color,
+
+                                            onChanged: (bool value) {
+                                              // This is called when the user toggles the switch.
+                                              setState(() {
+                                                 light = value;
+                                                // final provider =
+                                                //     Provider.of<ThemeProvider>(
+                                                //         context,
+                                                //         listen: false);
+                                                // provider.toggleTheme(value);
+                                                // saveTheme(value);
+                                              });
+                                            },
+                                          )
+                                        : Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 15),
+                                            child: CustomImageView(
+                                              svgPath:
+                                                  ImageConstant.imgArrowright,
+                                              height: 16,
+                                              width: 16,
+                                            ),
+                                          )
                                   ],
                                 ),
                               ),

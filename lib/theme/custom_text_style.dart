@@ -60,6 +60,10 @@ class CustomTextStyles {
         color: appTheme.gray900,
         fontWeight: FontWeight.w400,
       );
+      static get bodyMediumwhite500 => theme.textTheme.bodyMedium!.copyWith(
+        color: appTheme.whiteA700,
+        fontWeight: FontWeight.w400,
+      );
       static get bodyMediumGray200 => theme.textTheme.bodyMedium!.copyWith(
         color: appTheme.gray400,
         fontWeight: FontWeight.w400,

@@ -36,18 +36,13 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
           key: _formKey,
           child: Container(
             width: double.maxFinite,
-            padding: getPadding(
-              left: 16,
-              right: 16,
-            ),
+            padding: getPadding(left: 16, right: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: getPadding(
-                    left: 16,
-                  ),
+                  padding: getPadding(left: 16),
                   child: Text(
                     "Log in",
                     overflow: TextOverflow.ellipsis,
