@@ -1,4 +1,4 @@
-import 'dart:html';
+import 'dart:io';
 
 import 'package:book/core/app_export.dart';
 import 'package:book/presentation/log_in_password_screen/log_in_password_screen.dart';
@@ -6,7 +6,6 @@ import 'package:book/presentation/sign_up_screen/sign_up_screen.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:book/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../../core/utils/color_constant.dart';
 import '../forgot_password_screen/forgot_password_screen.dart';
 
@@ -192,20 +191,23 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                         buttonStyle: CustomButtonStyles.fillBluegray50,
                         buttonTextStyle: CustomTextStyles.titleSmallPrimary_1,
                       ),
-                      CustomElevatedButton(
-                        width: double.maxFinite,
-                        height: getVerticalSize(48),
-                        text: "Login with Apple",
-                        margin: getMargin(top: 16),
-                        leftIcon: Container(
-                          margin: getMargin(right: 30),
-                          child: CustomImageView(
-                            svgPath: ImageConstant.imgUser,
-                          ),
-                        ),
-                        buttonStyle: CustomButtonStyles.fillBluegray50,
-                        buttonTextStyle: CustomTextStyles.titleSmallPrimary_1,
-                      ),
+                      Platform.isAndroid
+                          ? SizedBox.shrink()
+                          : CustomElevatedButton(
+                              width: double.maxFinite,
+                              height: getVerticalSize(48),
+                              text: "Login with Apple",
+                              margin: getMargin(top: 16),
+                              leftIcon: Container(
+                                margin: getMargin(right: 30),
+                                child: CustomImageView(
+                                  svgPath: ImageConstant.imgUser,
+                                ),
+                              ),
+                              buttonStyle: CustomButtonStyles.fillBluegray50,
+                              buttonTextStyle:
+                                  CustomTextStyles.titleSmallPrimary_1,
+                            ),
                       Padding(
                         padding: getPadding(top: 33),
                         child: Row(

@@ -11,7 +11,8 @@ dependencies:
   shared_preferences:
   intl:
   flutter_bloc:
-  connectivity: 
+  connectivity:
+  platform:
 dev_dependencies: 
   flutter_test: 
     sdk: flutter
