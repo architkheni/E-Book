@@ -2,15 +2,11 @@ import 'package:book/core/app_export.dart';
 import 'package:book/widgets/app_bar/appbar_image.dart';
 import 'package:book/widgets/app_bar/appbar_subtitle_1.dart';
 import 'package:book/widgets/app_bar/custom_app_bar.dart';
-import 'package:book/widgets/custom_checkbox_button.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:book/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 
 import '../categories_screen/categories_screen.dart';
-import '../forgot_password_screen/forgot_password_screen.dart';
-
-// ignore_for_file: must_be_immutable
 
 class LogInPasswordScreen extends StatefulWidget {
   LogInPasswordScreen({Key? key, this.email}) : super(key: key);

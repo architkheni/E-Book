@@ -1,10 +1,12 @@
+import 'dart:html';
+
 import 'package:book/core/app_export.dart';
 import 'package:book/presentation/log_in_password_screen/log_in_password_screen.dart';
 import 'package:book/presentation/sign_up_screen/sign_up_screen.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:book/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/services.dart';
 import '../../core/utils/color_constant.dart';
 import '../forgot_password_screen/forgot_password_screen.dart';
 
@@ -51,16 +53,8 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                   ),
                 ),
                 Container(
-                  margin: getMargin(
-                    top: 15,
-                    bottom: 5,
-                  ),
-                  padding: getPadding(
-                    left: 16,
-                    top: 22,
-                    right: 16,
-                    bottom: 22,
-                  ),
+                  margin: getMargin(top: 15, bottom: 5),
+                  padding: getPadding(left: 16, top: 22, right: 16, bottom: 22),
                   decoration: AppDecoration.fill.copyWith(
                     borderRadius: BorderRadiusStyle.roundedBorder12,
                   ),
@@ -70,15 +64,9 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                     children: [
                       CustomTextFormField(
                         controller: emailController,
-                        margin: getMargin(
-                          top: 1,
-                        ),
+                        margin: getMargin(top: 1),
                         contentPadding: getPadding(
-                          left: 16,
-                          top: 15,
-                          right: 16,
-                          bottom: 15,
-                        ),
+                            left: 16, top: 15, right: 16, bottom: 15),
                         textStyle: CustomTextStyles.bodyMediumGray500,
                         hintText: "Email",
                         hintStyle: CustomTextStyles.bodyMediumGray500,
@@ -108,13 +96,9 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                           }
                         },
                         width: double.maxFinite,
-                        height: getVerticalSize(
-                          48,
-                        ),
+                        height: getVerticalSize(48),
                         text: "Continue",
-                        margin: getMargin(
-                          top: 16,
-                        ),
+                        margin: getMargin(top: 16),
                         buttonStyle: CustomButtonStyles.fillTeal400,
                         buttonTextStyle: CustomTextStyles.titleSmallPrimary_1,
                       ),
@@ -146,21 +130,12 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Padding(
-                              padding: getPadding(
-                                top: 7,
-                                bottom: 8,
-                              ),
+                              padding: getPadding(top: 7, bottom: 8),
                               child: SizedBox(
-                                width: getHorizontalSize(
-                                  138,
-                                ),
+                                width: getHorizontalSize(138),
                                 child: Divider(
-                                  height: getVerticalSize(
-                                    1,
-                                  ),
-                                  thickness: getVerticalSize(
-                                    1,
-                                  ),
+                                  height: getVerticalSize(1),
+                                  thickness: getVerticalSize(1),
                                   color: theme.colorScheme.primary,
                                 ),
                               ),
@@ -172,18 +147,11 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                               style: CustomTextStyles.bodyMediumGray500,
                             ),
                             Padding(
-                              padding: getPadding(
-                                top: 7,
-                                bottom: 8,
-                              ),
+                              padding: getPadding(top: 7, bottom: 8),
                               child: SizedBox(
-                                width: getHorizontalSize(
-                                  138,
-                                ),
+                                width: getHorizontalSize(138),
                                 child: Divider(
-                                  height: getVerticalSize(
-                                    1,
-                                  ),
+                                  height: getVerticalSize(1),
                                   thickness: getVerticalSize(
                                     1,
                                   ),
@@ -196,17 +164,11 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                       ),
                       CustomElevatedButton(
                         width: double.maxFinite,
-                        height: getVerticalSize(
-                          48,
-                        ),
+                        height: getVerticalSize(48),
                         text: "Login with Facebook",
-                        margin: getMargin(
-                          top: 31,
-                        ),
+                        margin: getMargin(top: 31),
                         leftIcon: Container(
-                          margin: getMargin(
-                            right: 30,
-                          ),
+                          margin: getMargin(right: 30),
                           child: CustomImageView(
                             svgPath: ImageConstant.imgFacebook,
                           ),
@@ -216,25 +178,15 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                       ),
                       CustomElevatedButton(
                         width: double.maxFinite,
-                        height: getVerticalSize(
-                          48,
-                        ),
+                        height: getVerticalSize(48),
                         text: "Login with Google",
-                        margin: getMargin(
-                          top: 16,
-                        ),
+                        margin: getMargin(top: 16),
                         leftIcon: Container(
-                          margin: getMargin(
-                            right: 30,
-                          ),
+                          margin: getMargin(right: 30),
                           child: CustomImageView(
                             imagePath: ImageConstant.imgImage2,
-                            height: getSize(
-                              23,
-                            ),
-                            width: getSize(
-                              23,
-                            ),
+                            height: getSize(23),
+                            width: getSize(23),
                           ),
                         ),
                         buttonStyle: CustomButtonStyles.fillBluegray50,
@@ -242,17 +194,11 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                       ),
                       CustomElevatedButton(
                         width: double.maxFinite,
-                        height: getVerticalSize(
-                          48,
-                        ),
+                        height: getVerticalSize(48),
                         text: "Login with Apple",
-                        margin: getMargin(
-                          top: 16,
-                        ),
+                        margin: getMargin(top: 16),
                         leftIcon: Container(
-                          margin: getMargin(
-                            right: 30,
-                          ),
+                          margin: getMargin(right: 30),
                           child: CustomImageView(
                             svgPath: ImageConstant.imgUser,
                           ),
@@ -261,9 +207,7 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                         buttonTextStyle: CustomTextStyles.titleSmallPrimary_1,
                       ),
                       Padding(
-                        padding: getPadding(
-                          top: 33,
-                        ),
+                        padding: getPadding(top: 33),
                         child: Row(
                           children: [
                             Spacer(),

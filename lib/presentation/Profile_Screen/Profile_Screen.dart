@@ -56,22 +56,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Column(
             children: [
               Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Profile",
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.left,
-                  style: CustomTextStyles.ProfileTitle,
-                ),
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  height: 1.5,
-                  width: 70,
-                  color: appTheme.teal400,
-                ),
-              ),
+                  alignment: Alignment.centerLeft,
+                  child: CustomImageView(
+                    imagePath: ImageConstant.profileImage,
+                    height: 35,
+                  )),
               GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -143,124 +132,103 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 20),
-                child: Container(
-                  // color: Colors.deepPurple[100],
-                  height: _height / 1.55,
-                  child: ListView.builder(
-                      itemCount: entries.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return GestureDetector(
-                          onTap: () {
-                            //  Navigator.push(
-                            //               context,
-                            //               MaterialPageRoute(
-                            //                   builder: (context) =>
-                            //                       HomeRecommendedForYouSeeAllScreen()),
-                            //             );
+                child: ListView.builder(
+                  itemCount: entries.length,
+                  physics: BouncingScrollPhysics(),
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ListTile(
+                        onTap: () {
+                          //  Navigator.push(
+                          //               context,
+                          //               MaterialPageRoute(
+                          //                   builder: (context) =>
+                          //                       HomeRecommendedForYouSeeAllScreen()),
+                          //             );
 
-                            switch (index) {
-                              case 0:
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => CategoriesScreen()),
-                                );
-                                break;
-                              case 1:
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LangugaesScreen()),
-                                );
-                                break;
-                              case 2:
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LangugaesScreen()),
-                                );
-                                break;
-                              case 3:
-                                break;
-                              case 4:
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ContactUsScreen()),
-                                );
-                                break;
-                              default:
-                            }
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: 9),
-                            child: Container(
-                              height: 55,
-                              // color: Colors.amber[colorCodes[index]],
-                              child: Center(
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      // color: Colors.green[300],
-                                      height: 50,
-                                      width: 50,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: CustomImageView(
-                                          imagePath: image_List[index],
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        "${entries[index]}",
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.left,
-                                        style: CustomTextStyles
-                                            .titleSmallWhiteA400,
-                                      ),
-                                    ),
-                                    Spacer(),
-                                    index == 3
-                                        ? Switch(
-                                            // This bool value toggles the switch.
-                                            value: light,
-                                            // themeProviderr.isdarkMode,
-                                            activeColor: ColorConstant.primary_color,
+                          switch (index) {
+                            case 0:
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CategoriesScreen()),
+                              );
+                              break;
+                            case 1:
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LangugaesScreen()),
+                              );
+                              break;
+                            case 2:
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LangugaesScreen()),
+                              );
+                              break;
+                            case 3:
+                              break;
+                            case 4:
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ContactUsScreen()),
+                              );
+                              break;
+                            default:
+                          }
+                        },
+                        dense: true,
+                        contentPadding: EdgeInsets.zero,
+                        leading: Container(
+                          height: 50,
+                          width: 50,
+                          child: CustomImageView(
+                            imagePath: image_List[index],
+                          ),
+                        ),
+                        title: Text(
+                          "${entries[index]}",
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.left,
+                          style: CustomTextStyles.titleSmallWhiteA400,
+                        ),
+                        trailing: index == 3
+                            ? Switch(
+                                value: light,
+                                // themeProviderr.isdarkMode,
+                                activeColor: ColorConstant.primary_color,
 
-                                            onChanged: (bool value) {
-                                              // This is called when the user toggles the switch.
-                                              setState(() {
-                                                 light = value;
-                                                // final provider =
-                                                //     Provider.of<ThemeProvider>(
-                                                //         context,
-                                                //         listen: false);
-                                                // provider.toggleTheme(value);
-                                                // saveTheme(value);
-                                              });
-                                            },
-                                          )
-                                        : Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 15),
-                                            child: CustomImageView(
-                                              svgPath:
-                                                  ImageConstant.imgArrowright,
-                                              height: 16,
-                                              width: 16,
-                                            ),
-                                          )
-                                  ],
+                                onChanged: (bool value) {
+                                  setState(() {
+                                    light = value;
+                                    // final provider =
+                                    //     Provider.of<ThemeProvider>(
+                                    //         context,
+                                    //         listen: false);
+                                    // provider.toggleTheme(value);
+                                    // saveTheme(value);
+                                  });
+                                },
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.only(right: 15),
+                                child: CustomImageView(
+                                  svgPath: ImageConstant.imgArrowright,
+                                  height: 16,
+                                  width: 16,
                                 ),
                               ),
-                            ),
-                          ),
-                        );
-                      }),
+                      ),
+                    );
+                  },
                 ),
-              )
+              ),
             ],
           ),
         ),

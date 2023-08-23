@@ -1,16 +1,11 @@
 import 'package:book/core/app_export.dart';
-import 'package:book/core/utils/image_constant.dart';
 import 'package:book/widgets/app_bar/appbar_image.dart';
 import 'package:flutter/material.dart';
 
-import '../../core/utils/size_utils.dart';
-import '../../theme/custom_text_style.dart';
-import '../../theme/theme_helper.dart';
 import '../../widgets/app_bar/appbar_subtitle.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_text_form_field.dart';
-import '../custom_bottom_bar/custom_bottom_bar.dart';
 
 class ContactUsScreen extends StatefulWidget {
   ContactUsScreen({Key? key}) : super(key: key);
@@ -95,7 +90,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                     hintStyle: CustomTextStyles.bodyMediumGray200,
                     textInputType: TextInputType.emailAddress,
                     filled: true,
-      
+
                     fillColor: appTheme.GrayTextfiled,
                   ),
                 ),
@@ -124,11 +119,11 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                     textStyle: CustomTextStyles.bodyMediumGray200,
                     hintText: "Enter Your Mail ID",
                     // enabled: false,
-      
+
                     hintStyle: CustomTextStyles.bodyMediumGray200,
                     textInputType: TextInputType.emailAddress,
                     filled: true,
-      
+
                     fillColor: appTheme.GrayTextfiled,
                   ),
                 ),
@@ -154,14 +149,14 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                       right: 16,
                       bottom: 15,
                     ),
-      
+
                     textStyle: CustomTextStyles.bodyMediumGray200,
                     hintText: "Enter Your Subject",
                     // enabled: false,
                     hintStyle: CustomTextStyles.bodyMediumGray200,
                     textInputType: TextInputType.emailAddress,
                     filled: true,
-      
+
                     fillColor: appTheme.GrayTextfiled,
                   ),
                 ),
@@ -178,7 +173,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                   padding: const EdgeInsets.only(top: 0),
                   child: CustomTextFormField(
                     // controller: emailController,
-      
+
                     margin: getMargin(
                       top: 1,
                     ),
@@ -191,16 +186,16 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                     textStyle: CustomTextStyles.bodyMediumGray200,
                     hintText: "Enter Your Message",
                     // enabled: false,
-      
+
                     hintStyle: CustomTextStyles.bodyMediumGray200,
                     textInputType: TextInputType.emailAddress,
                     filled: true,
-      
+
                     fillColor: appTheme.GrayTextfiled,
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 20,bottom: 20),
+                  padding: const EdgeInsets.only(top: 20, bottom: 20),
                   child: CustomElevatedButton(
                     onTap: () {},
                     width: double.maxFinite,

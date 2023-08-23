@@ -82,7 +82,6 @@ class ImageConstant {
 
   static String imgEye = 'assets/images/img_eye.svg';
 
- 
   static String imgTrash = 'assets/images/img_trash.svg';
 
   static String imgComputer = 'assets/images/img_computer.svg';
@@ -117,14 +116,13 @@ class ImageConstant {
   static String imgUilbook = 'assets/images/img_uilbook.svg';
   static String imgClock = 'assets/images/img_clock.svg';
   static String imgUillightbulbalt = 'assets/images/img_uillightbulbalt.svg';
-  static String imgSignal = 'assets/images/img_signal.svg'; 
+  static String imgSignal = 'assets/images/img_signal.svg';
   static String imgE50c016fb6a84145x101 =
       'assets/images/img_e50c016fb6a84_145x101.png';
   static String imgIcroundchevronleft =
       'assets/images/img_icroundchevronleft.svg';
   static String imgUpload = 'assets/images/img_upload.svg';
   static String imgFrame117 = 'assets/images/img_frame117.svg';
-  
 
   static String SelectedProfile = 'assets/images/SelectedProfile.png';
   static String ProfileIcon = 'assets/images/ProfileIcon.png';
@@ -140,67 +138,50 @@ class ImageConstant {
   static String imgAkariconshomealt1WhiteA700 =
       'assets/images/img_akariconshomealt1_white_a700.svg';
 
-
-
- 
-
   static String imgArrowrightBlueGray50 =
-      'assets/images/img_arrowright_blue_gray_50.svg'; 
+      'assets/images/img_arrowright_blue_gray_50.svg';
 
   static String imgVector = 'assets/images/img_vector.svg';
- 
 
   static String imgGroup1171274877 = 'assets/images/img_group1171274877.svg';
 
   static String imgFeheadphone = 'assets/images/img_feheadphone.svg';
- 
 
   static String imgShare = 'assets/images/img_share.svg';
- 
 
-  static String imgGgreadGray400 = 'assets/images/img_ggread_gray_400.svg'; 
+  static String imgGgreadGray400 = 'assets/images/img_ggread_gray_400.svg';
 
   static String imgCameraTeal400 = 'assets/images/img_camera_teal_400.svg';
- 
- 
 
   static String imgDashboard = 'assets/images/img_dashboard.svg';
 
   static String imgGgreadTeal40001 = 'assets/images/img_ggread_teal_400_01.svg';
- 
 
   static String imgAkariconssearchTeal400 =
       'assets/images/img_akariconssearch_teal_400.svg';
- 
 
   static String imgSearchTeal400 = 'assets/images/img_search_teal_400.svg';
- 
 
   static String imgSearchBlueGray50 =
       'assets/images/img_search_blue_gray_50.svg';
 
   static String imgImage3 = 'assets/images/img_image3.png';
- 
 
   static String imgChecked = 'assets/images/img_checked.svg';
 
   static String imgCamera = 'assets/images/img_camera.svg';
 
-  
   static String imgFavoriteWhiteA700 =
       'assets/images/img_favorite_white_a700.svg';
 
   static String imgFavoriteWhiteA70012x15 =
       'assets/images/img_favorite_white_a700_12x15.svg';
- 
 
   static String imgAkariconssearchWhiteA700 =
       'assets/images/img_akariconssearch_white_a700.svg';
 
   static String imgBookmarkWhiteA700 =
-      'assets/images/img_bookmark_white_a700.svg'; 
-
-
+      'assets/images/img_bookmark_white_a700.svg';
 
   static String Presonalisation = 'assets/images/Presonalisation.png';
   static String contentlanguage = 'assets/images/contentlanguage.png';
@@ -215,7 +196,6 @@ class ImageConstant {
   static String Clock = 'assets/images/Clock.png';
   static String Ideas = 'assets/images/Ideas.png';
 
-  
   static String imgUillock1 = 'assets/images/imgUillock.png';
 
   static String likeIcon = 'assets/images/likeIcon.png';
@@ -232,18 +212,19 @@ class ImageConstant {
   static String Checked = 'assets/images/Checked.png';
   static String uil_pluscircle = 'assets/images/uil_pluscircle.png';
 
-
-
-
-
-  
-
-
-
-  
-
-
-
+  // Title Image
+  static String exploreImage = 'assets/images/explore.png';
+  static String forMeImage = 'assets/images/for_me.png';
+  static String favouritesImage = 'assets/images/favourites.png';
+  static String finishedImage = 'assets/images/finished.png';
+  static String frame136Image = 'assets/images/Frame136.png';
+  static String inProgressImage = 'assets/images/in_Progress.png';
+  static String myHistoryImage = 'assets/images/My_History.png';
+  static String myLibraryImage = 'assets/images/My_Library.png';
+  static String profileImage = 'assets/images/profile_image.png';
+  static String recentlyAddedImage = 'assets/images/recently_added.png';
+  static String similarBooksImage = 'assets/images/similar_books.png';
+  static String topSearchImage = 'assets/images/top_search.png';
+  static String categoriesImage = 'assets/images/categories.png';
+  static String popularImage = 'assets/images/popular.png';
 }
-
-

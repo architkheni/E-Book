@@ -1,15 +1,14 @@
+import 'package:book/core/app_export.dart';
 import 'package:book/presentation/home/widgets/listone_item_widget.dart';
 import 'package:book/presentation/home/widgets/listtitle1_item_widget.dart';
 import 'package:book/presentation/home/widgets/listtitle2_item_widget.dart';
 import 'package:book/presentation/home/widgets/listtitle3_item_widget.dart';
+import 'package:flutter/material.dart';
 
 import '../detail_page_container_page/detail_page_container_page.dart';
 import '../detail_page_container_page/widgets/chipviewframefo2_item_widget.dart';
 import '../detail_page_container_page/widgets/listtitle_item_widget.dart';
 import '../home_recommended_for_you_see_all_screen/home_recommended_for_you_see_all_screen.dart';
-import 'package:book/core/app_export.dart';
-import 'package:book/widgets/custom_elevated_button.dart';
-import 'package:flutter/material.dart';
 
 // ignore_for_file: must_be_immutable
 class HomeScreenPage extends StatelessWidget {
@@ -28,38 +27,16 @@ class HomeScreenPage extends StatelessWidget {
           // double.maxFinite,
           decoration: AppDecoration.black,
           child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: _width,
-                  padding: getPadding(left: 16, top: 10, right: 16, bottom: 10),
-                  decoration: AppDecoration.black,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Padding(
-                        padding: getPadding(top: 18),
-                        child: Text(
-                          "For Me",
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: theme.textTheme.headlineSmall,
-                        ),
-                      ),
-                      Padding(
-                        padding: getPadding(top: 2),
-                        child: SizedBox(
-                          width: 80,
-                          child: Divider(
-                            height: 2,
-                            thickness: 2,
-                            color: appTheme.teal400,
-                          ),
-                        ),
-                      ),
-                    ],
+                Padding(
+                  padding: getPadding(top: 18, left: 18),
+                  child: CustomImageView(
+                    imagePath: ImageConstant.forMeImage,
+                    height: 35,
                   ),
                 ),
                 Padding(
@@ -219,6 +196,7 @@ class HomeScreenPage extends StatelessWidget {
                                   // color: Colors.pink,
                                   child: ListView.separated(
                                     scrollDirection: Axis.horizontal,
+                                    physics: BouncingScrollPhysics(),
                                     separatorBuilder: (
                                       context,
                                       index,
@@ -281,8 +259,9 @@ class HomeScreenPage extends StatelessWidget {
                             Align(
                               alignment: Alignment.centerRight,
                               child: SizedBox(
-                                height: getVerticalSize(287),
+                                height: getVerticalSize(275),
                                 child: ListView.separated(
+                                  physics: BouncingScrollPhysics(),
                                   padding: getPadding(top: 31),
                                   scrollDirection: Axis.horizontal,
                                   separatorBuilder: (
@@ -301,7 +280,7 @@ class HomeScreenPage extends StatelessWidget {
                               ),
                             ),
                             Padding(
-                              padding: getPadding(top: 13),
+                              padding: getPadding(top: 20),
                               child: Row(
                                 children: [
                                   Text(
@@ -346,9 +325,10 @@ class HomeScreenPage extends StatelessWidget {
                             Align(
                               alignment: Alignment.centerRight,
                               child: SizedBox(
-                                height: getVerticalSize(272),
+                                height: getVerticalSize(275),
                                 child: ListView.separated(
                                   padding: getPadding(top: 16),
+                                  physics: BouncingScrollPhysics(),
                                   scrollDirection: Axis.horizontal,
                                   separatorBuilder: (
                                     context,
@@ -366,9 +346,7 @@ class HomeScreenPage extends StatelessWidget {
                               ),
                             ),
                             Padding(
-                              padding: getPadding(
-                                top: 5,
-                              ),
+                              padding: getPadding(top: 5),
                               child: Row(
                                 children: [
                                   Text(
@@ -390,10 +368,7 @@ class HomeScreenPage extends StatelessWidget {
                                       );
                                     },
                                     child: Padding(
-                                      padding: getPadding(
-                                        top: 5,
-                                        bottom: 5,
-                                      ),
+                                      padding: getPadding(top: 5, bottom: 5),
                                       child: Text(
                                         "Show all",
                                         overflow: TextOverflow.ellipsis,
@@ -415,6 +390,7 @@ class HomeScreenPage extends StatelessWidget {
                             ),
                             SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
+                              physics: BouncingScrollPhysics(),
                               padding: getPadding(top: 16),
                               child: IntrinsicWidth(
                                 child: Wrap(
@@ -479,6 +455,7 @@ class HomeScreenPage extends StatelessWidget {
                                 height: getVerticalSize(272),
                                 child: ListView.separated(
                                   padding: getPadding(top: 16),
+                                  physics: BouncingScrollPhysics(),
                                   scrollDirection: Axis.horizontal,
                                   separatorBuilder: (
                                     context,
@@ -544,6 +521,7 @@ class HomeScreenPage extends StatelessWidget {
                                 height: getVerticalSize(272),
                                 child: ListView.separated(
                                   padding: getPadding(top: 16),
+                                  physics: BouncingScrollPhysics(),
                                   scrollDirection: Axis.horizontal,
                                   separatorBuilder: (
                                     context,

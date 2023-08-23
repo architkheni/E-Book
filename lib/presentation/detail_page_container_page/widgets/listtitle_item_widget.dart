@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/utils/image_constant.dart';
-import '../../../core/utils/size_utils.dart';
-import '../../../theme/app_decoration.dart';
 import '../../../theme/theme_helper.dart';
 import '../../../widgets/custom_image_view.dart';
 
@@ -23,88 +21,84 @@ class ListtitleItemWidget extends StatelessWidget {
         alignment: Alignment.centerRight,
         child: Container(
           width: _width / 2.2,
-          // color: Colors.green[500],
           child: Stack(
             alignment: Alignment.center,
             children: [
               Align(
                 alignment: Alignment.bottomLeft,
-                child: Padding(
-                  padding: EdgeInsets.only(bottom: 19),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            "The Good Guy",
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            style: theme.textTheme.titleSmall,
-                          ),
-                          Spacer(),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: Container(
-                              height: 18,
-                              width: 15,
-                              child: CustomImageView(
-                                imagePath: ImageConstant.Lock,
-                                fit: BoxFit.fill,
-                              ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "The Good Guy",
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.left,
+                          style: theme.textTheme.titleSmall,
+                        ),
+                        Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: Container(
+                            height: 18,
+                            width: 15,
+                            child: CustomImageView(
+                              imagePath: ImageConstant.Lock,
+                              fit: BoxFit.fill,
                             ),
-                          )
-                        ],
-                      ),
-                      Text(
-                        "A Fanklin",
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
-                        style: theme.textTheme.bodyMedium,
-                      ),
-                      Text(
-                        "Banish Forgutable Forever",
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
-                        style: theme.textTheme.bodySmall,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 5),
-                        child: Row(
-                          children: [
-                            Container(
-                                    height: 15,
-                                    width: 40,
-                                    decoration: BoxDecoration(
-                                      color: appTheme.teal400,
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        "Blinks",
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.left,
-                                        style: theme.textTheme.bodySmall,
-                                      ),
-                                    ),
-                                  ),
-                            Padding(
-                              padding:
-                                  EdgeInsets.only(left: 4, top: 1, bottom: 1),
+                          ),
+                        )
+                      ],
+                    ),
+                    Text(
+                      "A Fanklin",
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.left,
+                      style: theme.textTheme.bodyMedium,
+                    ),
+                    Text(
+                      "Banish Forgutable Forever",
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.left,
+                      style: theme.textTheme.bodySmall,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 5),
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 15,
+                            width: 40,
+                            decoration: BoxDecoration(
+                              color: appTheme.teal400,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Center(
                               child: Text(
-                                "21 min",
+                                "Blinks",
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
                                 style: theme.textTheme.bodySmall,
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                          Padding(
+                            padding:
+                                EdgeInsets.only(left: 4, top: 1, bottom: 1),
+                            child: Text(
+                              "21 min",
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.left,
+                              style: theme.textTheme.bodySmall,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
               Align(
@@ -125,7 +119,6 @@ class ListtitleItemWidget extends StatelessWidget {
                               padding: const EdgeInsets.only(top: 70),
                               child: CustomImageView(
                                 imagePath: ImageConstant.BookBackImage,
-                                height: _height / 5.3,
                                 width: _width,
                                 fit: BoxFit.fill,
                                 // alignment: Alignment.center,
@@ -135,7 +128,6 @@ class ListtitleItemWidget extends StatelessWidget {
                               alignment: Alignment.center,
                               child: Container(
                                 // color: Colors.black,
-                                height: _height / 5.3,
                                 width: _width / 3.3,
                                 child: CustomImageView(
                                   imagePath:

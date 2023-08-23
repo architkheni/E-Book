@@ -74,7 +74,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
-                        height: getVerticalSize(300),
                         padding: getPadding(
                             left: 16, top: 22, right: 16, bottom: 22),
                         decoration: AppDecoration.fill.copyWith(

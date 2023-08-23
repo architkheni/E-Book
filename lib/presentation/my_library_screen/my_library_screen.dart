@@ -1,12 +1,35 @@
+import 'package:book/core/app_export.dart';
+import 'package:flutter/material.dart';
+
 import '../home_recommended_for_you_see_all_screen/home_recommended_for_you_see_all_screen.dart';
 import '../my_library_screen/widgets/liste50c016fb6a_item_widget.dart';
-import '../my_library_screen/widgets/listrectanglesi_item_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:book/core/app_export.dart';
 
-class MyLibraryScreen extends StatelessWidget {
+class MyLibraryScreen extends StatefulWidget {
   const MyLibraryScreen({Key? key}) : super(key: key);
 
+  @override
+  State<MyLibraryScreen> createState() => _MyLibraryScreenState();
+}
+
+class _MyLibraryScreenState extends State<MyLibraryScreen> {
+  int? selected;
+  List<Map<String, dynamic>> libraryData = [
+    {
+      'image': ImageConstant.SaveAllBook,
+      'title': 'Favourite',
+      'icon': ImageConstant.imgArrowright
+    },
+    {
+      'image': ImageConstant.inReed,
+      'title': 'In Progress',
+      'icon': ImageConstant.imgArrowright
+    },
+    {
+      'image': ImageConstant.Checked,
+      'title': 'Finished',
+      'icon': ImageConstant.imgArrowright
+    },
+  ];
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
@@ -20,30 +43,108 @@ class MyLibraryScreen extends StatelessWidget {
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Align(
+                          Padding(
+                            padding: getPadding(left: 13),
+                            child: Align(
                               alignment: Alignment.centerLeft,
-                              child: Padding(
-                                  padding: getPadding(left: 16),
-                                  child: Text("My Library",
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.left,
-                                      style: theme.textTheme.headlineSmall))),
-                          Align(
-                              alignment: Alignment.centerLeft,
-                              child: SizedBox(
-                                  width: getHorizontalSize(136),
-                                  child: Divider(
-                                      height: getVerticalSize(2),
-                                      thickness: getVerticalSize(2),
-                                      color: appTheme.teal400,
-                                      indent: getHorizontalSize(16)))),
-                          GestureDetector(
+                              child: CustomImageView(
+                                imagePath: ImageConstant.myLibraryImage,
+                                height: 35,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: getPadding(top: 10),
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              padding: EdgeInsets.zero,
+                              physics: BouncingScrollPhysics(),
+                              itemCount: libraryData.length,
+                              itemBuilder: (context, index) {
+                                return ListTile(
+                                  onTap: () {
+                                    setState(() {
+                                      if (index == 0)
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  HomeRecommendedForYouSeeAllScreen(
+                                                    Title: "Favourite",
+                                                  )),
+                                        );
+                                      if (index == 1)
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  HomeRecommendedForYouSeeAllScreen(
+                                                    Title: "In Progress",
+                                                  )),
+                                        );
+                                      if (index == 2)
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  HomeRecommendedForYouSeeAllScreen(
+                                                    Title: "Finished",
+                                                  )),
+                                        );
+                                      selected = index;
+                                      // onTapRowfavorite(context);
+                                    });
+                                  },
+                                  dense: true,
+                                  focusColor: Colors.transparent,
+                                  leading: Container(
+                                    height: 40,
+                                    width: 55,
+                                    decoration: BoxDecoration(
+                                      color: selected == index
+                                          ? appTheme.teal400
+                                          : Colors.transparent,
+                                      border: Border.all(
+                                        color: Colors.white,
+                                        width: 1,
+                                      ),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(6)),
+                                    ),
+                                    child: CustomImageView(
+                                      imagePath: libraryData[index]['image'],
+                                      height: 22,
+                                      alignment: Alignment.center,
+                                    ),
+                                  ),
+                                  title: Text(
+                                    libraryData[index]['title'],
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: CustomTextStyles.titleSmallWhiteA700,
+                                  ),
+                                  trailing: Padding(
+                                    padding: const EdgeInsets.only(right: 15),
+                                    child: CustomImageView(
+                                        svgPath: ImageConstant.imgArrowright,
+                                        height: getSize(16),
+                                        width: getSize(16),
+                                        margin: getMargin(
+                                            left: 4, top: 2, bottom: 7)),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                          /*    GestureDetector(
                               onTap: () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          HomeRecommendedForYouSeeAllScreen(Title: "Favourite",)),
+                                          HomeRecommendedForYouSeeAllScreen(
+                                            Title: "Favourite",
+                                          )),
                                 );
                                 // onTapRowfavorite(context);
                               },
@@ -99,7 +200,9 @@ class MyLibraryScreen extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          HomeRecommendedForYouSeeAllScreen(Title: "In Progress",)),
+                                          HomeRecommendedForYouSeeAllScreen(
+                                            Title: "In Progress",
+                                          )),
                                 );
                               },
                               child: Padding(
@@ -154,7 +257,9 @@ class MyLibraryScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        HomeRecommendedForYouSeeAllScreen(Title: "Finished",)),
+                                        HomeRecommendedForYouSeeAllScreen(
+                                          Title: "Finished",
+                                        )),
                               );
                             },
                             child: Padding(
@@ -202,7 +307,7 @@ class MyLibraryScreen extends StatelessWidget {
                                                 left: 4, top: 2, bottom: 7)),
                                       )
                                     ])),
-                          ),
+                          ),*/
                           Padding(
                               padding: getPadding(left: 16, top: 25),
                               child: Row(
@@ -220,7 +325,9 @@ class MyLibraryScreen extends StatelessWidget {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  HomeRecommendedForYouSeeAllScreen(Title: "My History",)),
+                                                  HomeRecommendedForYouSeeAllScreen(
+                                                    Title: "My History",
+                                                  )),
                                         );
                                       },
                                       child: Padding(

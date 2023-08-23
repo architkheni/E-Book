@@ -31,15 +31,11 @@ class ListoneItemWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: Container(
-                  // color: Colors.green,
-                  child: CustomImageView(
-                    svgPath: ImageConstant.img,
-                    height: 30,
-                    width: 30,
-                  ),
+              Container(
+                child: CustomImageView(
+                  svgPath: ImageConstant.img,
+                  height: 30,
+                  width: 30,
                 ),
               ),
               Padding(
@@ -63,17 +59,12 @@ class ListoneItemWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomImageView(
-                      imagePath: ImageConstant.imgE50c016fb6a8454x37,
-                      height: 70,
-                      width:50
-                    ),
+                        imagePath: ImageConstant.imgE50c016fb6a8454x37,
+                        height: 70,
+                        width: 50),
                     Spacer(),
                     CustomImageView(
-                      svgPath: ImageConstant.img,
-                      height: 20,
-                      width:25
-                     
-                    ),
+                        svgPath: ImageConstant.img, height: 20, width: 25),
                   ],
                 ),
               ),

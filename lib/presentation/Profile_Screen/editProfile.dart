@@ -8,7 +8,6 @@ import '../../theme/theme_helper.dart';
 import '../../widgets/app_bar/appbar_subtitle.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_text_form_field.dart';
-import '../custom_bottom_bar/custom_bottom_bar.dart';
 
 class EditProfile extends StatefulWidget {
   EditProfile({Key? key}) : super(key: key);

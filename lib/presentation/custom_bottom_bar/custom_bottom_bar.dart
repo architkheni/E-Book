@@ -62,7 +62,7 @@ class _BottombarPageState extends State<BottombarPage> {
   @override
   Widget build(BuildContext context) {
     return (isOffline)
-        ? Text("NOt Connected")
+        ? Text("Not Connected")
         : WillPopScope(
             onWillPop: () async => false,
             child: Scaffold(

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/app_export.dart';
-import '../../../core/utils/size_utils.dart';
-import '../../../theme/custom_text_style.dart';
 import '../../../widgets/custom_icon_button.dart';
 
 // ignore: must_be_immutable

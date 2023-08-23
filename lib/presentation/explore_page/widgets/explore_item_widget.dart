@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/app_export.dart';
-import '../../../core/utils/size_utils.dart';
-import '../../../widgets/custom_image_view.dart';
- 
+
 // ignore: must_be_immutable
 class ExploreItemWidget extends StatelessWidget {
   ExploreItemWidget({
@@ -17,7 +15,7 @@ class ExploreItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      double _width = MediaQuery.of(context).size.width;
+    double _width = MediaQuery.of(context).size.width;
     double _height = MediaQuery.of(context).size.height;
     return SizedBox(
       width: _width / 2.1,
@@ -77,16 +75,19 @@ class ExploreItemWidget extends StatelessWidget {
                         child: Row(
                           children: [
                             Container(
-                              padding: EdgeInsets.only(
-                                  top: 1, bottom: 1, right: 7, left: 7),
-                              decoration: AppDecoration.fill.copyWith(
-                                borderRadius: BorderRadiusStyle.roundedBorder5,
+                              height: 15,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                color: appTheme.teal400,
+                                borderRadius: BorderRadius.circular(5),
                               ),
-                              child: Text(
-                                "Blinks",
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.left,
-                                style: theme.textTheme.bodySmall,
+                              child: Center(
+                                child: Text(
+                                  "Blinks",
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.left,
+                                  style: theme.textTheme.bodySmall,
+                                ),
                               ),
                             ),
                             Padding(
@@ -149,12 +150,11 @@ class ExploreItemWidget extends StatelessWidget {
                                 alignment: Alignment.topRight,
                                 child: Container(
                                   // color: Colors.lightGreen,
-                                  height:40,
+                                  height: 40,
                                   width: 40,
                                   child: Center(
                                     child: CustomImageView(
-                                      imagePath:
-                                          ImageConstant.likeIcon,
+                                      imagePath: ImageConstant.likeIcon,
                                       fit: BoxFit.fill,
                                       height: 20,
                                       width: 20,
