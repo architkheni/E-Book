@@ -155,8 +155,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            LangugaesScreen()),
+                                        builder: (context) => LangugaesScreen(
+                                              start: true,
+                                            )),
                                   );
                                 }
                               },

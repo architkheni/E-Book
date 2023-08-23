@@ -1,3 +1,4 @@
+import 'package:book/widgets/app_bar/appbar_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/app_export.dart';
@@ -13,10 +14,10 @@ class ExplorePage extends StatefulWidget {
 }
 
 class _ExplorePageState extends State<ExplorePage> {
-  TextEditingController framefortyfourController = TextEditingController();
+  TextEditingController searchController = TextEditingController();
 
-  int? selectCategory;
-  int? selectSubCategory;
+  var selectCategory;
+  var selectSubCategory;
 
   @override
   Widget build(BuildContext context) {
@@ -39,28 +40,54 @@ class _ExplorePageState extends State<ExplorePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  CustomImageView(
-                    imagePath: ImageConstant.exploreImage,
-                    height: 35,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      if (selectCategory != null)
+                        Container(
+                          child: AppbarImage(
+                            height: 20,
+                            width: 15,
+                            svgPath: ImageConstant.imgArrowleftBlueGray50,
+                            margin: getMargin(right: 16),
+                            onTap: () {
+                              setState(() {
+                                selectCategory = null;
+                                searchController.clear();
+                                selectSubCategory = null;
+                              });
+                            },
+                          ),
+                        ),
+                      CustomImageView(
+                        imagePath: ImageConstant.exploreImage,
+                        height: 35,
+                      ),
+                    ],
                   ),
                   CustomTextFormField(
-                      controller: framefortyfourController,
-                      margin: getMargin(left: 1, top: 23, right: 16),
-                      contentPadding:
-                          getPadding(top: 14, right: 30, bottom: 14),
-                      textStyle: CustomTextStyles.bodyMediumWhite500,
-                      hintText: "Title, author or keyword",
-                      hintStyle: CustomTextStyles.bodyMediumWhite500,
-                      prefix: Container(
-                          margin: getMargin(
-                              left: 16, top: 14, right: 10, bottom: 14),
-                          child: CustomImageView(
-                              imagePath: ImageConstant.imgSearch)),
-                      prefixConstraints:
-                          BoxConstraints(maxHeight: getVerticalSize(45)),
-                      filled: true,
-                      autofocus: false,
-                      fillColor: appTheme.blueGray900),
+                    controller: searchController,
+                    margin: getMargin(left: 1, top: 23, right: 16),
+                    contentPadding: getPadding(top: 14, right: 30, bottom: 14),
+                    textStyle: CustomTextStyles.bodyMediumWhite500,
+                    hintText: "Title, author or keyword",
+                    hintStyle: CustomTextStyles.bodyMediumWhite500,
+                    prefix: Container(
+                        margin:
+                            getMargin(left: 16, top: 14, right: 10, bottom: 14),
+                        child: CustomImageView(
+                            imagePath: ImageConstant.imgSearch)),
+                    prefixConstraints:
+                        BoxConstraints(maxHeight: getVerticalSize(45)),
+                    filled: true,
+                    autofocus: false,
+                    fillColor: appTheme.blueGray900,
+                    onChanged: (value) {
+                      setState(() {
+                        selectCategory = value.toLowerCase();
+                      });
+                    },
+                  ),
                   if (selectSubCategory == null) ...{
                     Padding(
                         padding: getPadding(top: 42),
@@ -93,7 +120,7 @@ class _ExplorePageState extends State<ExplorePage> {
                                   child: GestureDetector(
                                     onTap: () {
                                       setState(() {
-                                        framefortyfourController.text =
+                                        searchController.text =
                                             'Personal growth';
                                         selectCategory = index;
                                       });
@@ -134,7 +161,7 @@ class _ExplorePageState extends State<ExplorePage> {
                                   child: GestureDetector(
                                     onTap: () {
                                       setState(() {
-                                        framefortyfourController.text =
+                                        searchController.text =
                                             'Mind & Philosophy';
                                         selectSubCategory = index;
                                       });

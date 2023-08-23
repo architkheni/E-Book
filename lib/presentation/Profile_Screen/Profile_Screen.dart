@@ -161,14 +161,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => LangugaesScreen()),
+                                    builder: (context) => LangugaesScreen(
+                                          start: false,
+                                        )),
                               );
                               break;
                             case 2:
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => LangugaesScreen()),
+                                    builder: (context) => LangugaesScreen(
+                                          start: false,
+                                        )),
                               );
                               break;
                             case 3:

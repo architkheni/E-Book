@@ -1,16 +1,14 @@
 import 'package:book/core/app_export.dart';
 import 'package:book/widgets/app_bar/appbar_image.dart';
-import 'package:book/widgets/app_bar/appbar_subtitle_1.dart';
 import 'package:book/widgets/app_bar/custom_app_bar.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
-
 import '../../widgets/app_bar/appbar_subtitle.dart';
 import '../custom_bottom_bar/custom_bottom_bar.dart';
-import '../home/home_screen_page.dart';
 
 class LangugaesScreen extends StatefulWidget {
-  LangugaesScreen({Key? key}) : super(key: key);
+  bool? start;
+  LangugaesScreen({Key? key, this.start}) : super(key: key);
 
   @override
   State<LangugaesScreen> createState() => _LangugaesScreenState();
@@ -39,62 +37,88 @@ class _LangugaesScreenState extends State<LangugaesScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: theme.colorScheme.onPrimaryContainer.withOpacity(1),
-        appBar: CustomAppBar(
-          height: 60,
-          leadingWidth: 35,
-          leading: Container(
-            child: AppbarImage(
-                height: 20,
-                width: 15,
-                svgPath: ImageConstant.imgArrowleftBlueGray50,
-                margin: getMargin(left: 16, top: 17, bottom: 18),
-                onTap: () {
-                  Navigator.pop(context);
-                }),
-          ),
-          title: Padding(
-              padding: getPadding(left: 11),
-              child:
-                  Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-                AppbarSubtitle(text: "Select Languages"),
-              ])),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 25,
-              ),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => BottombarPage(buttomIndex: 0)),
-                  );
-                },
-                child: Text(
-                  "Skip",
-                  // margin: getMargin( top: 20,),
+        appBar: widget.start == true
+            ? CustomAppBar(
+                height: 60,
+                leadingWidth: 35,
+                leading: Container(
+                  child: AppbarImage(
+                      height: 20,
+                      width: 15,
+                      svgPath: ImageConstant.imgArrowleftBlueGray50,
+                      margin: getMargin(left: 16, top: 17, bottom: 18),
+                      onTap: () {
+                        Navigator.pop(context);
+                      }),
                 ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 16, top: 10, left: 10),
-              child: AppbarImage(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => BottombarPage(buttomIndex: 0)),
-                  );
-                },
-                height: getVerticalSize(14),
-                width: getHorizontalSize(8),
-                svgPath: ImageConstant.imgArrowright,
-                // margin: getMargin(left: 10, top: 16, right: 16, bottom: 5),
-              ),
-            ),
-          ],
-        ),
+                title: Padding(
+                    padding: getPadding(left: 11),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          AppbarSubtitle(text: "Select Languages"),
+                        ])),
+                actions: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 25,
+                    ),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  BottombarPage(buttomIndex: 0)),
+                        );
+                      },
+                      child: Text(
+                        "Skip",
+                        // margin: getMargin( top: 20,),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(right: 16, top: 10, left: 10),
+                    child: AppbarImage(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  BottombarPage(buttomIndex: 0)),
+                        );
+                      },
+                      height: getVerticalSize(14),
+                      width: getHorizontalSize(8),
+                      svgPath: ImageConstant.imgArrowright,
+                      // margin: getMargin(left: 10, top: 16, right: 16, bottom: 5),
+                    ),
+                  ),
+                ],
+              )
+            : CustomAppBar(
+                height: 60,
+                leadingWidth: 35,
+                leading: Container(
+                  // color: Colors.red,
+                  child: AppbarImage(
+                      height: 20,
+                      width: 15,
+                      svgPath: ImageConstant.imgArrowleftBlueGray50,
+                      margin: getMargin(left: 16, top: 17, bottom: 18),
+                      onTap: () {
+                        Navigator.pop(context);
+                      }),
+                ),
+                title: Padding(
+                    padding: getPadding(left: 11),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          AppbarSubtitle(text: "Select Languages"),
+                        ]))),
         body: Container(
           width: getHorizontalSize(358),
           margin: getMargin(left: 16, top: 3, right: 16, bottom: 5),

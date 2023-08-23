@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:book/core/app_export.dart';
 import 'package:book/presentation/log_in_password_screen/log_in_password_screen.dart';
 import 'package:book/presentation/sign_up_screen/sign_up_screen.dart';
@@ -30,8 +29,6 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
         backgroundColor: Theme.of(context).brightness == Brightness.light
             ? theme.colorScheme.onPrimaryContainer.withOpacity(1)
             : ColorConstant.whiteA700,
-
-        // theme.colorScheme.onPrimaryContainer.withOpacity(1),
         resizeToAvoidBottomInset: false,
         body: Form(
           key: _formKey,
@@ -110,9 +107,7 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                           );
                         },
                         child: Padding(
-                          padding: getPadding(
-                            top: 16,
-                          ),
+                          padding: getPadding(top: 16),
                           child: Text(
                             "Forgot password?",
                             overflow: TextOverflow.ellipsis,

@@ -52,7 +52,9 @@ class AppRoutes {
     forgotPasswordScreen: (context) => ForgotPasswordScreen(),
     langugaesScreen: (context) => LangugaesScreen(),
     homeRecommendedForYouSeeAllScreen: (context) =>
-        HomeRecommendedForYouSeeAllScreen(Title: '',),
+        HomeRecommendedForYouSeeAllScreen(
+          Title: '',
+        ),
     forgotPasswordOneScreen: (context) => ForgotPasswordOneScreen(),
     homeRecommendedForYouSeeAllOneScreen: (context) =>
         HomeRecommendedForYouSeeAllOneScreen(),
