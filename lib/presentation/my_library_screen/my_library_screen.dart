@@ -351,6 +351,7 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                                   ])),
                           Expanded(
                               child: Container(
+                                
                                   height: getVerticalSize(648),
                                   width: double.maxFinite,
                                   margin: getMargin(top: 9),

@@ -143,7 +143,7 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                             Padding(
                               padding: getPadding(top: 7, bottom: 8),
                               child: SizedBox(
-                                width: getHorizontalSize(138),
+                                width: 138,
                                 child: Divider(
                                   height: getVerticalSize(1),
                                   thickness: getVerticalSize(
@@ -158,39 +158,49 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                       ),
                       CustomElevatedButton(
                         width: double.maxFinite,
-                        height: getVerticalSize(48),
+                        height: 48,
                         text: "Login with Facebook",
-                        margin: getMargin(top: 31),
-                        leftIcon: Container(
-                          margin: getMargin(right: 30),
-                          child: CustomImageView(
-                            svgPath: ImageConstant.imgFacebook,
+                        margin: getMargin(top: 0),
+                        leftIcon: Padding(
+                          padding: EdgeInsets.only(right: 20),
+                          child: Container(
+                            // margin: getMargin(right: 30),
+                            child: CustomImageView(
+                              svgPath: ImageConstant.imgFacebook,
+                              height: 23,
+                              width: 23,
+                            ),
                           ),
                         ),
                         buttonStyle: CustomButtonStyles.fillBluegray50,
                         buttonTextStyle: CustomTextStyles.titleSmallPrimary_1,
                       ),
-                      CustomElevatedButton(
-                        width: double.maxFinite,
-                        height: getVerticalSize(48),
-                        text: "Login with Google",
-                        margin: getMargin(top: 16),
-                        leftIcon: Container(
-                          margin: getMargin(right: 30),
-                          child: CustomImageView(
-                            imagePath: ImageConstant.imgImage2,
-                            height: getSize(23),
-                            width: getSize(23),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16),
+                        child: CustomElevatedButton(
+                          width: double.maxFinite,
+                          height: 48,
+                          text: "Login with Google",
+                          leftIcon: Padding(
+                            padding: EdgeInsets.only(right: 30),
+                            child: Container(
+                              // margin: getMargin(right: 30),
+                              child: CustomImageView(
+                                imagePath: ImageConstant.imgImage2,
+                                height: 23,
+                                width: 23,
+                              ),
+                            ),
                           ),
+                          buttonStyle: CustomButtonStyles.fillBluegray50,
+                          buttonTextStyle: CustomTextStyles.titleSmallPrimary_1,
                         ),
-                        buttonStyle: CustomButtonStyles.fillBluegray50,
-                        buttonTextStyle: CustomTextStyles.titleSmallPrimary_1,
                       ),
                       Platform.isAndroid
                           ? SizedBox.shrink()
                           : CustomElevatedButton(
                               width: double.maxFinite,
-                              height: getVerticalSize(48),
+                              height: 48,
                               text: "Login with Apple",
                               margin: getMargin(top: 16),
                               leftIcon: Container(

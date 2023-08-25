@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:book/core/app_export.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:book/widgets/custom_text_form_field.dart';
@@ -118,7 +120,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         CustomTextFormField(
                           controller: emailController,
-                          // margin: getMargin(top: 15),
+                          margin: getMargin(top: 15),
                           contentPadding: getPadding(
                               left: 16, top: 15, right: 16, bottom: 15),
                           textStyle: CustomTextStyles.bodyMediumGray500,
@@ -302,51 +304,49 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                         ),
                         CustomElevatedButton(
-                          width: double.maxFinite,
-                          height: getVerticalSize(
-                            48,
-                          ),
-                          text: "Login with Facebook",
-                          margin: getMargin(
-                            top: 23,
-                          ),
-                          leftIcon: Container(
-                            margin: getMargin(
-                              right: 30,
-                            ),
+                        width: double.maxFinite,
+                        height: 48,
+                        text: "Login with Facebook",
+                        margin: getMargin(top: 0),
+                        leftIcon: Padding(
+                          padding: EdgeInsets.only(right: 20),
+                          child: Container(
+                            // margin: getMargin(right: 30),
                             child: CustomImageView(
                               svgPath: ImageConstant.imgFacebook,
+                              height: 23,
+                              width: 23,
                             ),
                           ),
-                          buttonStyle: CustomButtonStyles.fillBluegray50,
-                          buttonTextStyle: CustomTextStyles.titleSmallPrimary_1,
                         ),
-                        CustomElevatedButton(
+                        buttonStyle: CustomButtonStyles.fillBluegray50,
+                        buttonTextStyle: CustomTextStyles.titleSmallPrimary_1,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16),
+                        child: CustomElevatedButton(
                           width: double.maxFinite,
-                          height: getVerticalSize(
-                            48,
-                          ),
+                          height: 48,
                           text: "Login with Google",
-                          margin: getMargin(
-                            top: 16,
-                          ),
-                          rightIcon: Container(
-                            margin: getMargin(
-                              left: 30,
-                            ),
-                            child: CustomImageView(
-                              imagePath: ImageConstant.imgImage2,
-                              height: getSize(
-                                23,
-                              ),
-                              width: getSize(
-                                23,
+                          leftIcon: Padding(
+                            padding: EdgeInsets.only(right: 30),
+                            child: Container(
+                              // margin: getMargin(right: 30),
+                              child: CustomImageView(
+                                imagePath: ImageConstant.imgImage2,
+                                height: 23,
+                                width: 23,
                               ),
                             ),
                           ),
                           buttonStyle: CustomButtonStyles.fillBluegray50,
                           buttonTextStyle: CustomTextStyles.titleSmallPrimary_1,
                         ),
+                      ),
+
+                         Platform.isAndroid
+                          ? SizedBox.shrink()
+                          :  
                         CustomElevatedButton(
                           width: double.maxFinite,
                           height: getVerticalSize(

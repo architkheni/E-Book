@@ -19,9 +19,9 @@ class Liste50c016fb6aItemWidget extends StatelessWidget {
           right: 8,
           bottom: 7,
         ),
-        decoration: AppDecoration.fill1.copyWith(
-          borderRadius: BorderRadiusStyle.roundedBorder10,
-        ),
+         decoration: AppDecoration.fill4.copyWith(
+                        borderRadius: BorderRadiusStyle.roundedBorder8,
+                      ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

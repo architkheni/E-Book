@@ -356,35 +356,35 @@ class HomeScreenPage extends StatelessWidget {
                                     style: theme.textTheme.titleLarge,
                                   ),
                                   Spacer(),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                HomeRecommendedForYouSeeAllScreen(
-                                                  Title: "Categories",
-                                                )),
-                                      );
-                                    },
-                                    child: Padding(
-                                      padding: getPadding(top: 5, bottom: 5),
-                                      child: Text(
-                                        "Show all",
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.left,
-                                        style: CustomTextStyles
-                                            .labelLargeTeal400Bold,
-                                      ),
-                                    ),
-                                  ),
-                                  CustomImageView(
-                                    svgPath: ImageConstant.imgArrowrightTeal400,
-                                    height: getSize(16),
-                                    width: getSize(16),
-                                    margin:
-                                        getMargin(left: 4, top: 4, bottom: 4),
-                                  ),
+                                  // GestureDetector(
+                                  //   onTap: () {
+                                  //     Navigator.push(
+                                  //       context,
+                                  //       MaterialPageRoute(
+                                  //           builder: (context) =>
+                                  //               HomeRecommendedForYouSeeAllScreen(
+                                  //                 Title: "Categories",
+                                  //               )),
+                                  //     );
+                                  //   },
+                                  //   child: Padding(
+                                  //     padding: getPadding(top: 5, bottom: 5),
+                                  //     child: Text(
+                                  //       "Show all",
+                                  //       overflow: TextOverflow.ellipsis,
+                                  //       textAlign: TextAlign.left,
+                                  //       style: CustomTextStyles
+                                  //           .labelLargeTeal400Bold,
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  // CustomImageView(
+                                  //   svgPath: ImageConstant.imgArrowrightTeal400,
+                                  //   height: getSize(16),
+                                  //   width: getSize(16),
+                                  //   margin:
+                                  //       getMargin(left: 4, top: 4, bottom: 4),
+                                  // ),
                                 ],
                               ),
                             ),

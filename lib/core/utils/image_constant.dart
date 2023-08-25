@@ -183,6 +183,7 @@ class ImageConstant {
   static String imgBookmarkWhiteA700 =
       'assets/images/img_bookmark_white_a700.svg';
 
+  static String YourMembership = 'assets/images/Your Membership.png';
   static String Presonalisation = 'assets/images/Presonalisation.png';
   static String contentlanguage = 'assets/images/contentlanguage.png';
   static String Applanguage = 'assets/images/Applanguage.png';
@@ -227,4 +228,9 @@ class ImageConstant {
   static String topSearchImage = 'assets/images/top_search.png';
   static String categoriesImage = 'assets/images/categories.png';
   static String popularImage = 'assets/images/popular.png';
+  static String payment = 'assets/images/payment.png';
+
+  static String membership = 'assets/images/membership.png';
+  
+
 }

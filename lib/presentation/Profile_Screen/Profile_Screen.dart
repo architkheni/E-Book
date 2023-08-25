@@ -9,6 +9,7 @@ import '../../widgets/custom_image_view.dart';
 import '../categories_screen/categories_screen.dart';
 import '../home_recommended_for_you_see_all_screen/home_recommended_for_you_see_all_screen.dart';
 import '../langugaes_screen/langugaes_screen.dart';
+import '../payment_screen/payment_screen.dart';
 import 'Contact_Us.dart';
 import 'editProfile.dart';
 
@@ -20,18 +21,18 @@ class ProfileScreen extends StatefulWidget {
 }
 
 final List<String> entries = <String>[
+  "Your Membership",
   "Presonalisation",
   "Content Language",
-  "App Language",
   "App Theme",
   "Contact Us",
   "Share"
 ];
 
 final List<String> image_List = <String>[
+  ImageConstant.YourMembership,
   ImageConstant.Presonalisation,
   ImageConstant.contentlanguage,
-  ImageConstant.Applanguage,
   ImageConstant.AppTheme,
   ImageConstant.ContactUs,
   ImageConstant.Share
@@ -151,19 +152,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                           switch (index) {
                             case 0:
-                              Navigator.push(
+                            
+                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => CategoriesScreen()),
+                                    builder: (context) => Paymenr_Screen()),
                               );
                               break;
                             case 1:
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => LangugaesScreen(
-                                          start: false,
-                                        )),
+                                    builder: (context) => CategoriesScreen()),
                               );
                               break;
                             case 2:
@@ -174,6 +174,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           start: false,
                                         )),
                               );
+
                               break;
                             case 3:
                               break;
@@ -183,6 +184,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 MaterialPageRoute(
                                     builder: (context) => ContactUsScreen()),
                               );
+                              break;
+                            case 5:
                               break;
                             default:
                           }
@@ -202,32 +205,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           textAlign: TextAlign.left,
                           style: CustomTextStyles.titleSmallWhiteA400,
                         ),
-                        trailing: index == 3
-                            ? Switch(
-                                value: light,
-                                // themeProviderr.isdarkMode,
-                                activeColor: ColorConstant.primary_color,
-
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    light = value;
-                                    // final provider =
-                                    //     Provider.of<ThemeProvider>(
-                                    //         context,
-                                    //         listen: false);
-                                    // provider.toggleTheme(value);
-                                    // saveTheme(value);
-                                  });
-                                },
+                        trailing: index == 0
+                            ? Text(
+                                "Package Name",
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.left,
+                                style: CustomTextStyles.titleSmallWhiteA400,
                               )
-                            : Padding(
-                                padding: const EdgeInsets.only(right: 15),
-                                child: CustomImageView(
-                                  svgPath: ImageConstant.imgArrowright,
-                                  height: 16,
-                                  width: 16,
-                                ),
-                              ),
+                            : index == 3
+                                ? Switch(
+                                    value: light,
+                                    // themeProviderr.isdarkMode,
+                                    activeColor: ColorConstant.primary_color,
+
+                                    onChanged: (bool value) {
+                                      setState(() {
+                                        light = value;
+                                        // final provider =
+                                        //     Provider.of<ThemeProvider>(
+                                        //         context,
+                                        //         listen: false);
+                                        // provider.toggleTheme(value);
+                                        // saveTheme(value);
+                                      });
+                                    },
+                                  )
+                                : Padding(
+                                    padding: const EdgeInsets.only(right: 15),
+                                    child: CustomImageView(
+                                      svgPath: ImageConstant.imgArrowright,
+                                      height: 16,
+                                      width: 16,
+                                    ),
+                                  ),
                       ),
                     );
                   },

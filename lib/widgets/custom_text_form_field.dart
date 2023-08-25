@@ -131,6 +131,7 @@ class CustomTextFormField extends StatelessWidget {
         fillColor: fillColor,
         filled: filled,
         isDense: true,
+        counterText: "",
         contentPadding: contentPadding,
         border: defaultBorderDecoration ??
             OutlineInputBorder(

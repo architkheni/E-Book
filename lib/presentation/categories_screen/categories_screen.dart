@@ -96,46 +96,49 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                             Spacer(),
                             Center(
                               child: Wrap(
-                                runSpacing: getVerticalSize(5),
-                                spacing: getHorizontalSize(5),
+                                runSpacing: 5,
+                                spacing: 5,
                                 children: List<Widget>.generate(
                                   9,
-                                  (index) => RawChip(
-                                    padding: getPadding(right: 16),
-                                    showCheckmark: false,
-                                    labelPadding: EdgeInsets.zero,
-                                    label: Text(
-                                      "Personal",
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        color: appTheme.blueGray50,
-                                        fontSize: getFontSize(12),
-                                        fontFamily: 'Outfit',
-                                        fontWeight: FontWeight.w100,
+                                  (index) => Padding(
+                                    padding: EdgeInsets.only(right: 16),
+                                    child: RawChip(
+                                      // padding: getPadding(right: 16),
+                                      showCheckmark: false,
+                                      labelPadding: EdgeInsets.zero,
+                                      label: Text(
+                                        "Persona ",
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          color: appTheme.blueGray50,
+                                          fontSize: 12,
+                                          fontFamily: 'Outfit',
+                                          fontWeight: FontWeight.w100,
+                                        ),
                                       ),
-                                    ),
-                                    avatar: CustomImageView(
-                                      svgPath: ImageConstant.imgGroup1171274896,
-                                      height: getSize(12),
-                                      width: getSize(12),
-                                      margin: getMargin(right: 10),
-                                    ),
-                                    selected: selectedChoices.contains(index),
-                                    backgroundColor: theme.colorScheme.primary,
-                                    selectedColor: appTheme.teal400,
-                                    shape: RoundedRectangleBorder(
-                                      side: BorderSide.none,
-                                      borderRadius: BorderRadius.circular(
-                                        getHorizontalSize(8),
+                                      avatar: CustomImageView(
+                                        svgPath:
+                                            ImageConstant.imgGroup1171274896,
+                                        height: 12,
+                                        width: 12,
+                                        margin: getMargin(right: 10),
                                       ),
+                                      selected: selectedChoices.contains(index),
+                                      backgroundColor:
+                                          theme.colorScheme.primary,
+                                      selectedColor: appTheme.teal400,
+                                      shape: RoundedRectangleBorder(
+                                        side: BorderSide.none,
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      onSelected: (value) {
+                                        setState(() {
+                                          selectedChoices.contains(index)
+                                              ? selectedChoices.remove(index)
+                                              : selectedChoices.add(index);
+                                        });
+                                      },
                                     ),
-                                    onSelected: (value) {
-                                      setState(() {
-                                        selectedChoices.contains(index)
-                                            ? selectedChoices.remove(index)
-                                            : selectedChoices.add(index);
-                                      });
-                                    },
                                   ),
                                 ),
                               ),

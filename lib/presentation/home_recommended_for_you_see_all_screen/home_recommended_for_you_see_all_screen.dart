@@ -16,7 +16,7 @@ class HomeRecommendedForYouSeeAllScreen extends StatefulWidget {
 class _HomeRecommendedForYouSeeAllScreenState
     extends State<HomeRecommendedForYouSeeAllScreen> {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
-  String selectedValue = 'Last Saved';
+  String selectedValue = 'A to Z';
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +117,7 @@ class _HomeRecommendedForYouSeeAllScreenState
                   style: CustomTextStyles.bodyMediumGray400,
                 ),
                 DropdownButton<String>(
-                  padding: EdgeInsets.zero,
+                  // padding: EdgeInsets.zero,
                   isDense: true,
                   underline: SizedBox.shrink(),
                   style: CustomTextStyles.titleSmallWhiteA700,
@@ -131,7 +131,7 @@ class _HomeRecommendedForYouSeeAllScreenState
                       selectedValue = newValue!;
                     });
                   },
-                  items: <String>['A to Z', 'Z to A', 'Last Saved']
+                  items: <String>['A to Z', 'Z to A']
                       .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
@@ -185,53 +185,142 @@ class _HomeRecommendedForYouSeeAllScreenState
                                         style: theme.textTheme.labelLarge,
                                       ),
                                       Spacer(),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            right: 10, bottom: 7),
-                                        child: CustomImageView(
-                                          svgPath: ImageConstant.imgLockTeal400,
-                                          height: 16,
-                                          width: 13,
-                                        ),
-                                      ),
+                                      widget.Title == 'In Progress'
+                                          ? SizedBox()
+                                          : widget.Title == 'Finished'
+                                              ? SizedBox()
+                                              : Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          right: 10, bottom: 7),
+                                                  child: CustomImageView(
+                                                    svgPath: ImageConstant
+                                                        .imgLockTeal400,
+                                                    height: 16,
+                                                    width: 13,
+                                                  ),
+                                                ),
                                     ],
                                   ),
                                   Container(
                                     // color: Colors.deepPurple,
-                                    height: _height / 10.5,
+                                    height: _height / 9,
                                     width: _width / 1.4,
                                     child: Stack(
                                       alignment: Alignment.topCenter,
                                       children: [
                                         Align(
                                           alignment: Alignment.bottomLeft,
-                                          child: Row(
+                                          child: Column(
                                             children: [
-                                              CustomImageView(
-                                                svgPath:
-                                                    ImageConstant.imgGgread,
-                                                height: 16,
-                                                width: 16,
+                                              Spacer(),
+                                              Row(
+                                                children: [
+                                                  CustomImageView(
+                                                    svgPath:
+                                                        ImageConstant.imgGgread,
+                                                    height: 16,
+                                                    width: 16,
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 4,
+                                                            top: 1,
+                                                            bottom: 1),
+                                                    child: Text(
+                                                      "8m",
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      textAlign: TextAlign.left,
+                                                      style: CustomTextStyles
+                                                          .bodySmallTeal400,
+                                                    ),
+                                                  ),
+                                                  Spacer(),
+                                                  widget.Title == 'Finished'
+                                                      ? Padding(
+                                                        padding: const EdgeInsets.only(right: 10),
+                                                        child: Container(
+                                                            height: 20,
+                                                            width: 70,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5),
+                                                              color: appTheme
+                                                                  .teal400,
+                                                            ),
+                                                            child: Center(
+                                                              child: Text(
+                                                                "Finished",
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .left,
+                                                                style: theme
+                                                                    .textTheme
+                                                                    .labelLarge,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                      )
+                                                      : SizedBox()
+                                                ],
                                               ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 4, top: 1, bottom: 1),
-                                                child: Text(
-                                                  "8m",
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  textAlign: TextAlign.left,
-                                                  style: CustomTextStyles
-                                                      .bodySmallTeal400,
-                                                ),
-                                              ),
+                                              widget.Title == 'In Progress'
+                                                  ? Row(
+                                                      children: [
+                                                        Align(
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          child: Container(
+                                                            height: 3,
+                                                            width: _width / 3,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5),
+                                                              // color: appTheme
+                                                              //     .teal400,
+                                                            ),
+                                                            child:
+                                                                LinearProgressIndicator(
+                                                              color: appTheme
+                                                                  .teal400,
+                                                              backgroundColor:
+                                                                  appTheme
+                                                                      .whiteA700,
+                                                              value: 0.4,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        SizedBox(width: 7,),
+                                                        Text(
+                                                          "10/20",
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                          style: CustomTextStyles
+                                                              .bodySmallThin_1,
+                                                        )
+                                                      ],
+                                                    )
+                                                  : SizedBox(),
                                             ],
                                           ),
                                         ),
                                         Align(
                                           alignment: Alignment.topCenter,
                                           child: Text(
-                                            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has",
+                                            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has",
                                             maxLines: 5,
                                             overflow: TextOverflow.ellipsis,
                                             textAlign: TextAlign.left,

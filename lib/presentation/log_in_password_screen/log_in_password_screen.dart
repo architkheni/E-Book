@@ -7,6 +7,7 @@ import 'package:book/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 
 import '../categories_screen/categories_screen.dart';
+import '../forgot_password_screen/forgot_password_screen.dart';
 
 class LogInPasswordScreen extends StatefulWidget {
   LogInPasswordScreen({Key? key, this.email}) : super(key: key);
@@ -123,9 +124,10 @@ class _LogInPasswordScreenState extends State<LogInPasswordScreen> {
                                               ),
                                               Spacer(),
                                               Container(
-                                                height: getVerticalSize(20),
-                                                width: getHorizontalSize(20),
+                                                height: 20,
+                                                width: 20,
                                                 child: CustomImageView(
+                                                    fit: BoxFit.fill,
                                                     imagePath:
                                                         ImageConstant.CheckBox),
                                               )
@@ -172,13 +174,23 @@ class _LogInPasswordScreenState extends State<LogInPasswordScreen> {
                                             CustomButtonStyles.fillTeal400,
                                         buttonTextStyle: CustomTextStyles
                                             .titleSmallPrimary_1),
-                                    Padding(
-                                        padding: getPadding(top: 16),
-                                        child: Text("Forgot password?",
-                                            overflow: TextOverflow.ellipsis,
-                                            textAlign: TextAlign.left,
-                                            style: CustomTextStyles
-                                                .titleSmallTeal400))
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ForgotPasswordScreen()),
+                                        );
+                                      },
+                                      child: Padding(
+                                          padding: getPadding(top: 16),
+                                          child: Text("Forgot password?",
+                                              overflow: TextOverflow.ellipsis,
+                                              textAlign: TextAlign.left,
+                                              style: CustomTextStyles
+                                                  .titleSmallTeal400)),
+                                    )
                                   ]))
                         ])))));
   }
