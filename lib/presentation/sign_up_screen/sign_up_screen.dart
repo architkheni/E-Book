@@ -1,10 +1,11 @@
 import 'dart:io';
 
 import 'package:book/core/app_export.dart';
+import 'package:book/provider/auth_provider.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:book/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
-import '../categories_screen/categories_screen.dart';
+import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatefulWidget {
   SignUpScreen({Key? key}) : super(key: key);
@@ -15,8 +16,8 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController nameController = TextEditingController();
-  TextEditingController UserNameController = TextEditingController();
-  TextEditingController MobileNumberController = TextEditingController();
+  TextEditingController userNameController = TextEditingController();
+  TextEditingController mobileNumberController = TextEditingController();
 
   TextEditingController emailController = TextEditingController();
 
@@ -93,7 +94,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           fillColor: appTheme.blueGray50,
                         ),
                         CustomTextFormField(
-                          controller: UserNameController,
+                          controller: userNameController,
                           margin: getMargin(top: 15),
                           contentPadding: getPadding(
                               left: 16, top: 15, right: 16, bottom: 15),
@@ -105,7 +106,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           fillColor: appTheme.blueGray50,
                         ),
                         CustomTextFormField(
-                          controller: MobileNumberController,
+                          controller: mobileNumberController,
                           margin: getMargin(top: 15),
                           contentPadding: getPadding(
                               left: 16, top: 15, right: 16, bottom: 15),
@@ -184,8 +185,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         CustomElevatedButton(
                           onTap: () {
-                            var Name = validateName(nameController.text);
-                            if (Name == "Name must be more than 2 charater") {
+                            var name = validateName(nameController.text);
+                            if (name == "Name must be more than 2 charater") {
                               SnackBar snackBar = SnackBar(
                                 content:
                                     Text("Name must be more than 2 charater"),
@@ -194,8 +195,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(snackBar);
                             } else {
-                              if (UserNameController.text == null ||
-                                  UserNameController.text == "") {
+                              if (userNameController.text == "") {
                                 SnackBar snackBar = SnackBar(
                                   content: Text("Enter User Name"),
                                   backgroundColor: appTheme.teal400,
@@ -204,7 +204,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     .showSnackBar(snackBar);
                               } else {
                                 var number =
-                                    validateMobile(MobileNumberController.text);
+                                    validateMobile(mobileNumberController.text);
                                 if (number ==
                                     "Mobile Number must be of 10 digit") {
                                   SnackBar snackBar = SnackBar(
@@ -225,12 +225,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(snackBar);
                                   } else {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              CategoriesScreen()),
-                                    );
+                                    // TODO: register api
+                                    context.read<AuthProvider>().register(
+                                          context,
+                                          name: nameController.text,
+                                          username: userNameController.text,
+                                          mobileNo: mobileNumberController.text,
+                                          email: emailController.text,
+                                          password: passwordController.text,
+                                        );
                                   }
                                 }
                               }
@@ -304,36 +307,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                         ),
                         CustomElevatedButton(
-                        width: double.maxFinite,
-                        height: 48,
-                        text: "Login with Facebook",
-                        margin: getMargin(top: 0),
-                        leftIcon: Padding(
-                          padding: EdgeInsets.only(right: 20),
-                          child: Container(
-                            // margin: getMargin(right: 30),
-                            child: CustomImageView(
-                              svgPath: ImageConstant.imgFacebook,
-                              height: 23,
-                              width: 23,
-                            ),
-                          ),
-                        ),
-                        buttonStyle: CustomButtonStyles.fillBluegray50,
-                        buttonTextStyle: CustomTextStyles.titleSmallPrimary_1,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 16),
-                        child: CustomElevatedButton(
                           width: double.maxFinite,
                           height: 48,
-                          text: "Login with Google",
+                          text: "Login with Facebook",
+                          margin: getMargin(top: 0),
                           leftIcon: Padding(
-                            padding: EdgeInsets.only(right: 30),
+                            padding: EdgeInsets.only(right: 20),
                             child: Container(
                               // margin: getMargin(right: 30),
                               child: CustomImageView(
-                                imagePath: ImageConstant.imgImage2,
+                                svgPath: ImageConstant.imgFacebook,
                                 height: 23,
                                 width: 23,
                               ),
@@ -342,31 +325,51 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           buttonStyle: CustomButtonStyles.fillBluegray50,
                           buttonTextStyle: CustomTextStyles.titleSmallPrimary_1,
                         ),
-                      ),
-
-                         Platform.isAndroid
-                          ? SizedBox.shrink()
-                          :  
-                        CustomElevatedButton(
-                          width: double.maxFinite,
-                          height: getVerticalSize(
-                            48,
-                          ),
-                          text: "Login with Apple",
-                          margin: getMargin(
-                            top: 16,
-                          ),
-                          leftIcon: Container(
-                            margin: getMargin(
-                              right: 30,
+                        Padding(
+                          padding: const EdgeInsets.only(top: 16),
+                          child: CustomElevatedButton(
+                            width: double.maxFinite,
+                            height: 48,
+                            text: "Login with Google",
+                            leftIcon: Padding(
+                              padding: EdgeInsets.only(right: 30),
+                              child: Container(
+                                // margin: getMargin(right: 30),
+                                child: CustomImageView(
+                                  imagePath: ImageConstant.imgImage2,
+                                  height: 23,
+                                  width: 23,
+                                ),
+                              ),
                             ),
-                            child: CustomImageView(
-                              svgPath: ImageConstant.imgUser,
-                            ),
+                            buttonStyle: CustomButtonStyles.fillBluegray50,
+                            buttonTextStyle:
+                                CustomTextStyles.titleSmallPrimary_1,
                           ),
-                          buttonStyle: CustomButtonStyles.fillBluegray50,
-                          buttonTextStyle: CustomTextStyles.titleSmallPrimary_1,
                         ),
+                        Platform.isAndroid
+                            ? SizedBox.shrink()
+                            : CustomElevatedButton(
+                                width: double.maxFinite,
+                                height: getVerticalSize(
+                                  48,
+                                ),
+                                text: "Login with Apple",
+                                margin: getMargin(
+                                  top: 16,
+                                ),
+                                leftIcon: Container(
+                                  margin: getMargin(
+                                    right: 30,
+                                  ),
+                                  child: CustomImageView(
+                                    svgPath: ImageConstant.imgUser,
+                                  ),
+                                ),
+                                buttonStyle: CustomButtonStyles.fillBluegray50,
+                                buttonTextStyle:
+                                    CustomTextStyles.titleSmallPrimary_1,
+                              ),
                         Align(
                           alignment: Alignment.center,
                           child: Padding(
@@ -406,9 +409,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  emailV(String Email) {
+  emailV(String email) {
     bool emailValid = RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
-        .hasMatch(Email);
+        .hasMatch(email);
     print(emailValid);
     return emailValid;
   }

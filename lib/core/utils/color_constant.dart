@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class ColorConstant {
@@ -9,6 +10,6 @@ class ColorConstant {
     return Color(int.parse(buffer.toString(), radix: 16));
   }
 
-  static Color primary_color = fromHex('#29978A');
+  static Color primaryColor = fromHex('#29978A');
   static Color whiteA700 = fromHex('#ffffff');
 }

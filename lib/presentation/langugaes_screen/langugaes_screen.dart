@@ -3,11 +3,12 @@ import 'package:book/widgets/app_bar/appbar_image.dart';
 import 'package:book/widgets/app_bar/custom_app_bar.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
+
 import '../../widgets/app_bar/appbar_subtitle.dart';
 import '../custom_bottom_bar/custom_bottom_bar.dart';
 
 class LangugaesScreen extends StatefulWidget {
-  bool? start;
+  final bool? start;
   LangugaesScreen({Key? key, this.start}) : super(key: key);
 
   @override
@@ -15,7 +16,7 @@ class LangugaesScreen extends StatefulWidget {
 }
 
 int _selectedIndex = -1;
-var NameArraya = ["English", "Malay", "Urdu"];
+var nameArray = ["English", "Malay", "Urdu"];
 
 class _LangugaesScreenState extends State<LangugaesScreen> {
   @override
@@ -148,13 +149,13 @@ class _LangugaesScreenState extends State<LangugaesScreen> {
                     runSpacing: getVerticalSize(5),
                     spacing: getHorizontalSize(5),
                     children: List<Widget>.generate(
-                      NameArraya.length,
+                      nameArray.length,
                       (index) => RawChip(
                         padding: getPadding(right: 16),
                         showCheckmark: false,
                         labelPadding: EdgeInsets.zero,
                         label: Text(
-                          "${NameArraya[index]}",
+                          "${nameArray[index]}",
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             color: appTheme.blueGray50,
@@ -165,13 +166,13 @@ class _LangugaesScreenState extends State<LangugaesScreen> {
                         ),
                         avatar: _selectedIndex == index
                             ? CustomImageView(
-                                imagePath: ImageConstant.Checked,
+                                imagePath: ImageConstant.checked,
                                 height: 23,
                                 width: 23,
                                 margin: getMargin(right: 10),
                               )
                             : CustomImageView(
-                                imagePath: ImageConstant.uil_pluscircle,
+                                imagePath: ImageConstant.uilPluscircle,
                                 height: 23,
                                 width: 23,
                                 margin: getMargin(right: 10),
@@ -206,6 +207,7 @@ class _LangugaesScreenState extends State<LangugaesScreen> {
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     } else {
+                      // TODO: language select api
                       Navigator.push(
                         context,
                         MaterialPageRoute(

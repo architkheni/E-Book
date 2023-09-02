@@ -122,7 +122,7 @@ class CustomTextStyles {
           13,
         ),
       );
-  static get ProfileTitle => theme.textTheme.titleSmall!.copyWith(
+  static get profileTitle => theme.textTheme.titleSmall!.copyWith(
         color: appTheme.whiteA700,
         fontWeight: FontWeight.w700,
         fontSize: getFontSize(
@@ -136,6 +136,7 @@ class CustomTextStyles {
 }
 
 extension on TextStyle {
+  // ignore: unused_element
   TextStyle get outfit {
     return copyWith(
       fontFamily: 'Outfit',

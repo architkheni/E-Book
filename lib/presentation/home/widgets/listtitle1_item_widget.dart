@@ -10,7 +10,7 @@ class Listtitle1ItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      double _width = MediaQuery.of(context).size.width;
+    double _width = MediaQuery.of(context).size.width;
     double _height = MediaQuery.of(context).size.height;
     return SizedBox(
       width: _width / 2.1,
@@ -46,7 +46,7 @@ class Listtitle1ItemWidget extends StatelessWidget {
                               height: 18,
                               width: 15,
                               child: CustomImageView(
-                                imagePath: ImageConstant.Lock,
+                                imagePath: ImageConstant.lock,
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -70,21 +70,21 @@ class Listtitle1ItemWidget extends StatelessWidget {
                         child: Row(
                           children: [
                             Container(
-                                    height: 15,
-                                    width: 40,
-                                    decoration: BoxDecoration(
-                                      color: appTheme.teal400,
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        "Blinks",
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.left,
-                                        style: theme.textTheme.bodySmall,
-                                      ),
-                                    ),
-                                  ),
+                              height: 15,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                color: appTheme.teal400,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  "Blinks",
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.left,
+                                  style: theme.textTheme.bodySmall,
+                                ),
+                              ),
+                            ),
                             Padding(
                               padding:
                                   EdgeInsets.only(left: 4, top: 1, bottom: 1),
@@ -119,7 +119,7 @@ class Listtitle1ItemWidget extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(top: 70),
                               child: CustomImageView(
-                                imagePath: ImageConstant.BookBackImage,
+                                imagePath: ImageConstant.bookBackImage,
                                 height: _height / 5.3,
                                 width: _width,
                                 fit: BoxFit.fill,

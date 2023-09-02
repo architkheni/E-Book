@@ -105,7 +105,7 @@ class _EditProfileState extends State<EditProfile> {
                   textInputType: TextInputType.emailAddress,
                   filled: true,
 
-                  fillColor: appTheme.GrayTextfiled,
+                  fillColor: appTheme.grayTextfiled,
                 ),
               ),
               Align(
@@ -138,7 +138,7 @@ class _EditProfileState extends State<EditProfile> {
                   textInputType: TextInputType.emailAddress,
                   filled: true,
 
-                  fillColor: appTheme.GrayTextfiled,
+                  fillColor: appTheme.grayTextfiled,
                 ),
               ),
               Align(
@@ -171,7 +171,7 @@ class _EditProfileState extends State<EditProfile> {
                   textInputType: TextInputType.emailAddress,
                   filled: true,
 
-                  fillColor: appTheme.GrayTextfiled,
+                  fillColor: appTheme.grayTextfiled,
                 ),
               ),
               Align(
@@ -204,7 +204,7 @@ class _EditProfileState extends State<EditProfile> {
                   textInputType: TextInputType.emailAddress,
                   filled: true,
 
-                  fillColor: appTheme.GrayTextfiled,
+                  fillColor: appTheme.grayTextfiled,
                 ),
               ),
             ],

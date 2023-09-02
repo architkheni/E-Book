@@ -305,7 +305,7 @@ class _ExplorePageState extends State<ExplorePage> {
                               MaterialPageRoute(
                                   builder: (context) =>
                                       HomeRecommendedForYouSeeAllScreen(
-                                        Title: "Recently Added",
+                                        title: "Recently Added",
                                       )),
                             );
                           },

@@ -59,7 +59,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                       height: 200,
                       // color: Colors.red[300],
                       child: CustomImageView(
-                        imagePath: ImageConstant.Contact_Us,
+                        imagePath: ImageConstant.contactUsPng,
                       )),
                 ),
                 Align(
@@ -91,7 +91,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                     textInputType: TextInputType.emailAddress,
                     filled: true,
 
-                    fillColor: appTheme.GrayTextfiled,
+                    fillColor: appTheme.grayTextfiled,
                   ),
                 ),
                 Align(
@@ -124,7 +124,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                     textInputType: TextInputType.emailAddress,
                     filled: true,
 
-                    fillColor: appTheme.GrayTextfiled,
+                    fillColor: appTheme.grayTextfiled,
                   ),
                 ),
                 Align(
@@ -157,7 +157,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                     textInputType: TextInputType.emailAddress,
                     filled: true,
 
-                    fillColor: appTheme.GrayTextfiled,
+                    fillColor: appTheme.grayTextfiled,
                   ),
                 ),
                 Align(
@@ -191,7 +191,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                     textInputType: TextInputType.emailAddress,
                     filled: true,
 
-                    fillColor: appTheme.GrayTextfiled,
+                    fillColor: appTheme.grayTextfiled,
                   ),
                 ),
                 Padding(

@@ -7,7 +7,6 @@ import '../../widgets/app_bar/appbar_image.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
 // import '../../widgets/custom_bottom_bar.dart';
 import '../../widgets/custom_elevated_button.dart';
-import '../detail_page_container_page/detail_page_container_page.dart';
 
 // ignore_for_file: must_be_immutable
 class BookReadScreen extends StatefulWidget {
@@ -89,13 +88,13 @@ class _BookReadScreenState extends State<BookReadScreen> {
               },
               height: 24,
               width: 24,
-              imagePath: ImageConstant.DownArrow,
+              imagePath: ImageConstant.downArrow,
               margin: getMargin(left: 13, top: 16, bottom: 16)),
           actions: [
             AppbarImage(
                 height: 17,
                 width: 21,
-                imagePath: ImageConstant.TextImage,
+                imagePath: ImageConstant.textImage,
                 margin: getMargin(left: 16, top: 19, right: 16, bottom: 4),
                 onTap: () {
                   if (ShowBox == false) {
@@ -157,7 +156,7 @@ class _BookReadScreenState extends State<BookReadScreen> {
                                       child: CustomImageView(
                                         height: 15,
                                         width: 15,
-                                        imagePath: ImageConstant.TextImage,
+                                        imagePath: ImageConstant.textImage,
                                       ),
                                     ),
                                     Container(
@@ -184,7 +183,7 @@ class _BookReadScreenState extends State<BookReadScreen> {
                                       child: CustomImageView(
                                         height: 23,
                                         width: 23,
-                                        imagePath: ImageConstant.TextImage,
+                                        imagePath: ImageConstant.textImage,
                                       ),
                                     )
                                   ],
@@ -215,7 +214,7 @@ class _BookReadScreenState extends State<BookReadScreen> {
                                           child: Container(
                                             height: _height,
                                             width: _width,
-                                            decoration: ShowBorder == 1  
+                                            decoration: ShowBorder == 1
                                                 ? BoxDecoration(
                                                     border: Border.all(
                                                       color: appTheme.teal400,
@@ -243,7 +242,9 @@ class _BookReadScreenState extends State<BookReadScreen> {
                                                       TextOverflow.ellipsis,
                                                   textAlign: TextAlign.left,
                                                   style: TextStyle(
-                                                      color: ShowBorder == 1  ?appTheme.whiteA700: appTheme.black900,
+                                                      color: ShowBorder == 1
+                                                          ? appTheme.whiteA700
+                                                          : appTheme.black900,
                                                       fontSize: 22,
                                                       fontFamily: 'Roboto',
                                                       fontWeight:
@@ -298,7 +299,9 @@ class _BookReadScreenState extends State<BookReadScreen> {
                                                       TextOverflow.ellipsis,
                                                   textAlign: TextAlign.left,
                                                   style: TextStyle(
-                                                      color: ShowBorder == 2  ?appTheme.whiteA700: appTheme.black900,
+                                                      color: ShowBorder == 2
+                                                          ? appTheme.whiteA700
+                                                          : appTheme.black900,
                                                       fontSize: 22,
                                                       fontFamily: 'Outfit',
                                                       fontWeight:
@@ -356,8 +359,6 @@ class Pages extends StatelessWidget {
       required this.fontFamily});
   @override
   Widget build(BuildContext context) {
-    double _width = MediaQuery.of(context).size.width;
-    double _height = MediaQuery.of(context).size.height;
     var bold = 22 + FontSize.toInt();
     var NormalFont = 17 + FontSize.toInt();
     return Padding(

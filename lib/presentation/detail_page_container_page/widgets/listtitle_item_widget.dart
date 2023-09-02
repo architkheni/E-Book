@@ -46,7 +46,7 @@ class ListtitleItemWidget extends StatelessWidget {
                             height: 18,
                             width: 15,
                             child: CustomImageView(
-                              imagePath: ImageConstant.Lock,
+                              imagePath: ImageConstant.lock,
                               fit: BoxFit.fill,
                             ),
                           ),
@@ -118,7 +118,7 @@ class ListtitleItemWidget extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(top: 70),
                               child: CustomImageView(
-                                imagePath: ImageConstant.BookBackImage,
+                                imagePath: ImageConstant.bookBackImage,
                                 width: _width,
                                 fit: BoxFit.fill,
                                 // alignment: Alignment.center,

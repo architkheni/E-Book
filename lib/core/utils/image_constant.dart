@@ -109,7 +109,7 @@ class ImageConstant {
 
   static String profile = 'assets/images/profile.png';
 
-  static String CheckBox = 'assets/images/CheckBox.png';
+  static String checkBox = 'assets/images/CheckBox.png';
 
   // aaaaaa
   static String imgFavorite = 'assets/images/img_favorite.svg';
@@ -124,17 +124,17 @@ class ImageConstant {
   static String imgUpload = 'assets/images/img_upload.svg';
   static String imgFrame117 = 'assets/images/img_frame117.svg';
 
-  static String SelectedProfile = 'assets/images/SelectedProfile.png';
-  static String ProfileIcon = 'assets/images/ProfileIcon.png';
+  static String selectedProfile = 'assets/images/SelectedProfile.png';
+  static String profileIcon = 'assets/images/ProfileIcon.png';
 
-  static String SelectedLibrary = 'assets/images/SelectedLibrary.png';
-  static String Library = 'assets/images/Library.png';
+  static String selectedLibrary = 'assets/images/SelectedLibrary.png';
+  static String library = 'assets/images/Library.png';
 
-  static String SlectedSearch = 'assets/images/SlectedSearch.png';
-  static String Search = 'assets/images/Search.png';
+  static String slectedSearch = 'assets/images/SlectedSearch.png';
+  static String search = 'assets/images/Search.png';
 
-  static String SlectedHome = 'assets/images/SlectedHome.png';
-  static String Home = 'assets/images/Home.png';
+  static String slectedHome = 'assets/images/SlectedHome.png';
+  static String home = 'assets/images/Home.png';
   static String imgAkariconshomealt1WhiteA700 =
       'assets/images/img_akariconshomealt1_white_a700.svg';
 
@@ -183,35 +183,35 @@ class ImageConstant {
   static String imgBookmarkWhiteA700 =
       'assets/images/img_bookmark_white_a700.svg';
 
-  static String YourMembership = 'assets/images/Your Membership.png';
-  static String Presonalisation = 'assets/images/Presonalisation.png';
+  static String yourMembership = 'assets/images/Your Membership.png';
+  static String presonalisation = 'assets/images/Presonalisation.png';
   static String contentlanguage = 'assets/images/contentlanguage.png';
-  static String Applanguage = 'assets/images/Applanguage.png';
-  static String AppTheme = 'assets/images/AppTheme.png';
-  static String ContactUs = 'assets/images/ContactUs.png';
-  static String Share = 'assets/images/Share.png';
+  static String appLanguage = 'assets/images/Applanguage.png';
+  static String appTheme = 'assets/images/AppTheme.png';
+  static String contactUs = 'assets/images/ContactUs.png';
+  static String share = 'assets/images/Share.png';
 
-  static String BookBackImage = 'assets/images/BookBackImage.png';
-  static String Lock = 'assets/images/Lock.png';
-  static String ReadBook = 'assets/images/ReadBook.png';
-  static String Clock = 'assets/images/Clock.png';
-  static String Ideas = 'assets/images/Ideas.png';
+  static String bookBackImage = 'assets/images/BookBackImage.png';
+  static String lock = 'assets/images/Lock.png';
+  static String readBook = 'assets/images/ReadBook.png';
+  static String clock = 'assets/images/Clock.png';
+  static String ideas = 'assets/images/Ideas.png';
 
   static String imgUillock1 = 'assets/images/imgUillock.png';
 
   static String likeIcon = 'assets/images/likeIcon.png';
 
-  static String SaveAllBook = 'assets/images/SaveAllBook.png';
+  static String saveAllBook = 'assets/images/SaveAllBook.png';
   static String inReed = 'assets/images/inReed.png';
-  static String BookFinish = 'assets/images/BookFinish.png';
-  static String Contact_Us = 'assets/images/Contact_Us.png';
+  static String bookFinish = 'assets/images/BookFinish.png';
+  static String contactUsPng = 'assets/images/Contact_Us.png';
 
-  static String DownArrow = 'assets/images/DownArrow.png';
-  static String TextImage = 'assets/images/TextImage.png';
+  static String downArrow = 'assets/images/DownArrow.png';
+  static String textImage = 'assets/images/TextImage.png';
   static String option = 'assets/images/option.png';
 
-  static String Checked = 'assets/images/Checked.png';
-  static String uil_pluscircle = 'assets/images/uil_pluscircle.png';
+  static String checked = 'assets/images/Checked.png';
+  static String uilPluscircle = 'assets/images/uil_pluscircle.png';
 
   // Title Image
   static String exploreImage = 'assets/images/explore.png';
@@ -231,6 +231,4 @@ class ImageConstant {
   static String payment = 'assets/images/payment.png';
 
   static String membership = 'assets/images/membership.png';
-  
-
 }

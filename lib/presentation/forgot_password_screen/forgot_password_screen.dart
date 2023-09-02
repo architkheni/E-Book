@@ -1,12 +1,15 @@
 import 'package:book/core/app_export.dart';
 import 'package:book/presentation/forgot_password_one_screen/forgot_password_one_screen.dart';
+import 'package:book/provider/auth_provider.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:book/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 // ignore_for_file: must_be_immutable
 class ForgotPasswordScreen extends StatelessWidget {
-  ForgotPasswordScreen({Key? key}) : super(key: key);
+  final String email;
+  ForgotPasswordScreen({Key? key, required this.email}) : super(key: key);
 
   TextEditingController entercodeController = TextEditingController();
 
@@ -75,14 +78,17 @@ class ForgotPasswordScreen extends StatelessWidget {
                                     filled: true,
                                     fillColor: appTheme.blueGray50),
                                 CustomElevatedButton(
-                                  onTap: () {
-                                        Navigator.push(
+                                    onTap: () {
+                                      // TODO: verify-token api
+                                      Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                ForgotPasswordOneScreen()),
+                                                ForgotPasswordOneScreen(
+                                                  email: email,
+                                                )),
                                       );
-                                  },
+                                    },
                                     width: double.maxFinite,
                                     height: getVerticalSize(48),
                                     text: "Verify",
@@ -102,14 +108,23 @@ class ForgotPasswordScreen extends StatelessWidget {
                                               textAlign: TextAlign.left,
                                               style: CustomTextStyles
                                                   .bodyMediumThin),
-                                          Padding(
-                                              padding: getPadding(left: 8),
-                                              child: Text("Resend",
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  textAlign: TextAlign.left,
-                                                  style: CustomTextStyles
-                                                      .titleSmallTeal400)),
+                                          GestureDetector(
+                                            onTap: () {
+                                              // TODO: resend-otp api
+                                              context
+                                                  .read<AuthProvider>()
+                                                  .resendOtp(context,
+                                                      email: email);
+                                            },
+                                            child: Padding(
+                                                padding: getPadding(left: 8),
+                                                child: Text("Resend",
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    textAlign: TextAlign.left,
+                                                    style: CustomTextStyles
+                                                        .titleSmallTeal400)),
+                                          ),
                                           CustomImageView(
                                               svgPath:
                                                   ImageConstant.imgUilreload,

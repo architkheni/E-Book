@@ -1,12 +1,15 @@
 import 'dart:io';
+
 import 'package:book/core/app_export.dart';
 import 'package:book/presentation/log_in_password_screen/log_in_password_screen.dart';
 import 'package:book/presentation/sign_up_screen/sign_up_screen.dart';
+import 'package:book/provider/auth_provider.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:book/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import '../../core/utils/color_constant.dart';
-import '../forgot_password_screen/forgot_password_screen.dart';
 
 class LogInEmailScreen extends StatefulWidget {
   LogInEmailScreen({Key? key}) : super(key: key);
@@ -74,6 +77,7 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                         onTap: () {
                           var velidEmail = emailV(emailController.text);
                           if (velidEmail == true) {
+                            // TODO: go to the password page
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -100,11 +104,9 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ForgotPasswordScreen()),
-                          );
+                          // TODO: forget-password api
+                          context.read<AuthProvider>().forgotPassword(context,
+                              email: emailController.text.trim());
                         },
                         child: Padding(
                           padding: getPadding(top: 16),

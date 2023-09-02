@@ -155,6 +155,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(snackBar);
                                 } else {
+                                  // TODO: category select api
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(

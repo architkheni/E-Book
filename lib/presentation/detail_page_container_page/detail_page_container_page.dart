@@ -1,4 +1,4 @@
-import 'package:book/presentation/detail_page_container_page/widgets/listtype_item_widget.dart';
+import 'package:flutter/material.dart';
 
 import '../../core/app_export.dart';
 import '../../core/utils/color_constant.dart';
@@ -6,10 +6,8 @@ import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_icon_button.dart';
 import '../book_read_screen/book_read_screen.dart';
 import '../detail_page_container_page/widgets/chipviewframefo2_item_widget.dart';
-import 'package:flutter/material.dart';
-
-import '../home_recommended_for_you_see_all_screen/home_recommended_for_you_see_all_screen.dart';
 import '../home/widgets/listtitle_item_widget.dart';
+import '../home_recommended_for_you_see_all_screen/home_recommended_for_you_see_all_screen.dart';
 
 class DetailPageContainerPage extends StatelessWidget {
   const DetailPageContainerPage({Key? key}) : super(key: key);
@@ -17,14 +15,14 @@ class DetailPageContainerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
-    double _Width = MediaQuery.of(context).size.width;
-    double _Height = MediaQuery.of(context).size.height;
+    double _width = MediaQuery.of(context).size.width;
+    double _height = MediaQuery.of(context).size.height;
     return SafeArea(
         child: Scaffold(
             backgroundColor: appTheme.gray90003,
             body: Container(
-                width: _Width,
-                height: _Height,
+                width: _width,
+                height: _height,
                 decoration: AppDecoration.black,
                 child: SingleChildScrollView(
                     physics: BouncingScrollPhysics(),
@@ -33,20 +31,20 @@ class DetailPageContainerPage extends StatelessWidget {
                         children: [
                           Container(
                               color: Colors.pink,
-                              height: _Height / 2.8,
-                              width: _Width,
+                              height: _height / 2.8,
+                              width: _width,
                               child: Stack(
                                 alignment: Alignment.center,
                                 children: [
                                   CustomImageView(
                                     imagePath: ImageConstant.imgE50c016fb6a84,
-                                    height: _Height / 2.8,
-                                    width: _Width,
+                                    height: _height / 2.8,
+                                    width: _width,
                                     fit: BoxFit.fill,
                                   ),
                                   Align(
                                       child: Container(
-                                          width: _Width,
+                                          width: _width,
                                           decoration: AppDecoration
                                               .gradientnamegray90003opacity0namegray90003,
                                           child: Column(
@@ -82,8 +80,8 @@ class DetailPageContainerPage extends StatelessWidget {
                                                           top: 22),
                                                   child: Container(
                                                     // color: Colors.amber,
-                                                    height: _Height / 5,
-                                                    width: _Width / 2.7,
+                                                    height: _height / 5,
+                                                    width: _width / 2.7,
                                                     child: CustomImageView(
                                                       imagePath: ImageConstant
                                                           .imgE50c016fb6a84,
@@ -106,10 +104,10 @@ class DetailPageContainerPage extends StatelessWidget {
                                                       },
                                                       child: Container(
                                                           height: 60,
-                                                          width: _Width,
+                                                          width: _width,
                                                           decoration: AppDecoration.fill.copyWith(
                                                               color: ColorConstant
-                                                                  .primary_color,
+                                                                  .primaryColor,
                                                               borderRadius:
                                                                   BorderRadiusStyle
                                                                       .roundedBorder10),
@@ -118,7 +116,7 @@ class DetailPageContainerPage extends StatelessWidget {
                                                             CustomImageView(
                                                               imagePath:
                                                                   ImageConstant
-                                                                      .ReadBook,
+                                                                      .readBook,
                                                               height: 24,
                                                               width: 24,
                                                             ),
@@ -145,7 +143,7 @@ class DetailPageContainerPage extends StatelessWidget {
                             padding: const EdgeInsets.only(
                                 left: 16, top: 25, right: 16),
                             child: Container(
-                                width: _Width,
+                                width: _width,
                                 child: Text(
                                   "Project Management for the Unofficial Proect Manager",
                                   maxLines: 2,
@@ -182,7 +180,7 @@ class DetailPageContainerPage extends StatelessWidget {
                               padding: EdgeInsets.only(
                                   left: 40, top: 7, right: 40, bottom: 7),
                               decoration: AppDecoration.fill.copyWith(
-                                  color: ColorConstant.primary_color,
+                                  color: ColorConstant.primaryColor,
                                   borderRadius:
                                       BorderRadiusStyle.roundedBorder10),
                               child: Row(
@@ -194,7 +192,7 @@ class DetailPageContainerPage extends StatelessWidget {
                                         children: [
                                           Spacer(),
                                           CustomImageView(
-                                            imagePath: ImageConstant.Clock,
+                                            imagePath: ImageConstant.clock,
                                             height: 20,
                                             width: 20,
                                           ),
@@ -220,7 +218,7 @@ class DetailPageContainerPage extends StatelessWidget {
                                         children: [
                                           Spacer(),
                                           CustomImageView(
-                                            imagePath: ImageConstant.Ideas,
+                                            imagePath: ImageConstant.ideas,
                                             height: 20,
                                             width: 20,
                                           ),
@@ -292,7 +290,7 @@ class DetailPageContainerPage extends StatelessWidget {
                             padding: const EdgeInsets.only(
                                 left: 16, top: 7, right: 16),
                             child: Container(
-                                width: _Width,
+                                width: _width,
                                 child: Text(
                                     "Getting Along (2022) describes the importance of workplace interactions and their effecs on productivity and creaiviy.",
                                     maxLines: 5,
@@ -502,7 +500,7 @@ class DetailPageContainerPage extends StatelessWidget {
                             padding: const EdgeInsets.only(
                                 left: 16, top: 7, right: 16),
                             child: Container(
-                                width: _Width,
+                                width: _width,
                                 child: Text(
                                     "Getting Along (2022) describes the importance of workplace interactions and their effecs on productivity and creaiviy.",
                                     maxLines: 5,
@@ -540,7 +538,7 @@ class DetailPageContainerPage extends StatelessWidget {
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     HomeRecommendedForYouSeeAllScreen(
-                                                      Title: "Similar Books",
+                                                      title: "Similar Books",
                                                     )),
                                           );
                                         })
@@ -548,7 +546,7 @@ class DetailPageContainerPage extends StatelessWidget {
                           Align(
                               alignment: Alignment.centerRight,
                               child: SizedBox(
-                                  height: _Height / 2.9,
+                                  height: _height / 2.9,
                                   child: ListView.separated(
                                       padding: getPadding(left: 16, top: 32),
                                       physics: BouncingScrollPhysics(),

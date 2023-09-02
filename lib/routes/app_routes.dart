@@ -1,16 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:book/presentation/log_in_email_screen/log_in_email_screen.dart';
-import 'package:book/presentation/forgot_password_two_screen/forgot_password_two_screen.dart';
-import 'package:book/presentation/sign_up_screen/sign_up_screen.dart';
-import 'package:book/presentation/categories_screen/categories_screen.dart';
-import 'package:book/presentation/home_screen_container_screen/home_screen_container_screen.dart';
-import 'package:book/presentation/log_in_password_screen/log_in_password_screen.dart';
-import 'package:book/presentation/forgot_password_screen/forgot_password_screen.dart';
-import 'package:book/presentation/langugaes_screen/langugaes_screen.dart';
-import 'package:book/presentation/home_recommended_for_you_see_all_screen/home_recommended_for_you_see_all_screen.dart';
-import 'package:book/presentation/forgot_password_one_screen/forgot_password_one_screen.dart';
-import 'package:book/presentation/home_recommended_for_you_see_all_one_screen/home_recommended_for_you_see_all_one_screen.dart';
 import 'package:book/presentation/app_navigation_screen/app_navigation_screen.dart';
+import 'package:book/presentation/categories_screen/categories_screen.dart';
+import 'package:book/presentation/forgot_password_one_screen/forgot_password_one_screen.dart';
+import 'package:book/presentation/forgot_password_screen/forgot_password_screen.dart';
+import 'package:book/presentation/forgot_password_two_screen/forgot_password_two_screen.dart';
+import 'package:book/presentation/home_recommended_for_you_see_all_one_screen/home_recommended_for_you_see_all_one_screen.dart';
+import 'package:book/presentation/home_recommended_for_you_see_all_screen/home_recommended_for_you_see_all_screen.dart';
+import 'package:book/presentation/home_screen_container_screen/home_screen_container_screen.dart';
+import 'package:book/presentation/langugaes_screen/langugaes_screen.dart';
+import 'package:book/presentation/log_in_email_screen/log_in_email_screen.dart';
+import 'package:book/presentation/log_in_password_screen/log_in_password_screen.dart';
+import 'package:book/presentation/sign_up_screen/sign_up_screen.dart';
+import 'package:flutter/material.dart';
 
 class AppRoutes {
   static const String logInEmailScreen = '/log_in_email_screen';
@@ -48,14 +48,18 @@ class AppRoutes {
     signUpScreen: (context) => SignUpScreen(),
     categoriesScreen: (context) => CategoriesScreen(),
     homeScreenContainerScreen: (context) => HomeScreenContainerScreen(),
-    logInPasswordScreen: (context) => LogInPasswordScreen(),
-    forgotPasswordScreen: (context) => ForgotPasswordScreen(),
+    logInPasswordScreen: (context) => LogInPasswordScreen(
+          email: "",
+        ),
+    forgotPasswordScreen: (context) => ForgotPasswordScreen(
+          email: "",
+        ),
     langugaesScreen: (context) => LangugaesScreen(),
     homeRecommendedForYouSeeAllScreen: (context) =>
         HomeRecommendedForYouSeeAllScreen(
-          Title: '',
+          title: '',
         ),
-    forgotPasswordOneScreen: (context) => ForgotPasswordOneScreen(),
+    forgotPasswordOneScreen: (context) => ForgotPasswordOneScreen(email: ""),
     homeRecommendedForYouSeeAllOneScreen: (context) =>
         HomeRecommendedForYouSeeAllOneScreen(),
     appNavigationScreen: (context) => AppNavigationScreen()

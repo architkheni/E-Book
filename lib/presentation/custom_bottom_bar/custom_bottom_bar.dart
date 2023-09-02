@@ -1,7 +1,9 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:async';
-import 'dart:ffi';
+
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../connection_status/connection_status_singleton.dart';
 import '../../core/utils/image_constant.dart';
 import '../../theme/custom_text_style.dart';
@@ -22,10 +24,10 @@ class BottombarPage extends StatefulWidget {
 
 class _BottombarPageState extends State<BottombarPage> {
   bool keyboardOpen = false;
-  var ProfileURL = "";
+  var profileURL = "";
   int selectedIndex = 0;
-  var IsGuestUserEnabled;
-  var GetTimeSplash;
+  var isGuestUserEnabled;
+  var getTimeSplash;
 
   List widgetOptions = [
     HomeScreenPage(),
@@ -102,12 +104,12 @@ class _BottombarPageState extends State<BottombarPage> {
                                 Container(
                                   child: selectedIndex != 0
                                       ? Image.asset(
-                                          "${ImageConstant.Home}",
+                                          "${ImageConstant.home}",
                                           height: 25,
                                           width: 25,
                                         )
                                       : Image.asset(
-                                          "${ImageConstant.SlectedHome}",
+                                          "${ImageConstant.slectedHome}",
                                           height: 25,
                                           width: 25,
                                           // color: Color(0XFFED1C25),
@@ -149,12 +151,12 @@ class _BottombarPageState extends State<BottombarPage> {
                                 Container(
                                   child: selectedIndex != 1
                                       ? Image.asset(
-                                          "${ImageConstant.Search}",
+                                          "${ImageConstant.search}",
                                           height: 24,
                                           width: 24,
                                         )
                                       : Image.asset(
-                                          "${ImageConstant.SlectedSearch}",
+                                          "${ImageConstant.slectedSearch}",
                                           height: 24,
                                           width: 24,
                                         ),
@@ -194,12 +196,12 @@ class _BottombarPageState extends State<BottombarPage> {
                                 Container(
                                   child: selectedIndex != 2
                                       ? Image.asset(
-                                          "${ImageConstant.Library}",
+                                          "${ImageConstant.library}",
                                           height: 24,
                                           width: 24,
                                         )
                                       : Image.asset(
-                                          "${ImageConstant.SelectedLibrary}",
+                                          "${ImageConstant.selectedLibrary}",
                                           // color: Color(0XFFED1C25),
                                           height: 24,
                                           width: 24,
@@ -240,12 +242,12 @@ class _BottombarPageState extends State<BottombarPage> {
                                 Container(
                                   child: selectedIndex != 3
                                       ? Image.asset(
-                                          "${ImageConstant.ProfileIcon}",
+                                          "${ImageConstant.profileIcon}",
                                           height: 26,
                                           width: 26,
                                         )
                                       : Image.asset(
-                                          "${ImageConstant.SelectedProfile}",
+                                          "${ImageConstant.selectedProfile}",
                                           // color: Color(0XFFED1C25),
                                           height: 26,
                                           width: 26,

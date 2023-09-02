@@ -231,7 +231,7 @@ class HomeScreenPage extends StatelessWidget {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 HomeRecommendedForYouSeeAllScreen(
-                                                  Title: "Recommended For You",
+                                                  title: "Recommended For You",
                                                 )),
                                       );
                                     },
@@ -297,7 +297,7 @@ class HomeScreenPage extends StatelessWidget {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 HomeRecommendedForYouSeeAllScreen(
-                                                  Title: "Top Search",
+                                                  title: "Top Search",
                                                 )),
                                       );
                                     },
@@ -421,7 +421,7 @@ class HomeScreenPage extends StatelessWidget {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 HomeRecommendedForYouSeeAllScreen(
-                                                  Title: "Popular",
+                                                  title: "Popular",
                                                 )),
                                       );
                                     },
@@ -490,7 +490,7 @@ class HomeScreenPage extends StatelessWidget {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 HomeRecommendedForYouSeeAllScreen(
-                                                  Title: "Recently Added",
+                                                  title: "Recently Added",
                                                 )),
                                       );
                                     },

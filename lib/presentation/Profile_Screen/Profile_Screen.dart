@@ -1,13 +1,13 @@
 import 'package:book/core/utils/color_constant.dart';
+import 'package:book/provider/profile_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../../ColorTheme/ColorTheme.dart';
 import '../../core/utils/image_constant.dart';
 import '../../theme/custom_text_style.dart';
 import '../../theme/theme_helper.dart';
 import '../../widgets/custom_image_view.dart';
 import '../categories_screen/categories_screen.dart';
-import '../home_recommended_for_you_see_all_screen/home_recommended_for_you_see_all_screen.dart';
 import '../langugaes_screen/langugaes_screen.dart';
 import '../payment_screen/payment_screen.dart';
 import 'Contact_Us.dart';
@@ -29,24 +29,29 @@ final List<String> entries = <String>[
   "Share"
 ];
 
-final List<String> image_List = <String>[
-  ImageConstant.YourMembership,
-  ImageConstant.Presonalisation,
+final List<String> imageList = <String>[
+  ImageConstant.yourMembership,
+  ImageConstant.presonalisation,
   ImageConstant.contentlanguage,
-  ImageConstant.AppTheme,
-  ImageConstant.ContactUs,
-  ImageConstant.Share
+  ImageConstant.appTheme,
+  ImageConstant.contactUs,
+  ImageConstant.share
 ];
 bool light = true;
 // final List<int> colorCodes = <int>[600, 500, 100];
 
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
+  void initState() {
+    super.initState();
+    context.read<ProfileProvider>().init();
+  }
+
+  @override
   Widget build(BuildContext context) {
     // final themeProviderr = Provider.of<ThemeProvider>(context);
 
     double _width = MediaQuery.of(context).size.width;
-    double _height = MediaQuery.of(context).size.height;
     return SafeArea(
         child: Scaffold(
       body: Container(
@@ -98,21 +103,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Spacer(),
                               Align(
                                 alignment: Alignment.centerLeft,
-                                child: Text(
-                                  "John Doe",
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.left,
-                                  style: CustomTextStyles.titleMediumWhiteA700,
-                                ),
+                                child: Consumer<ProfileProvider>(
+                                    builder: (context, provider, child) {
+                                  return Text(
+                                    provider.username,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style:
+                                        CustomTextStyles.titleMediumWhiteA700,
+                                  );
+                                }),
                               ),
                               Align(
                                 alignment: Alignment.centerLeft,
-                                child: Text(
-                                  "JohnDoe@gmail.com",
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.left,
-                                  style: CustomTextStyles.titleSmallWhiteA400,
-                                ),
+                                child: Consumer<ProfileProvider>(
+                                    builder: (context, provider, child) {
+                                  return Text(
+                                    provider.email,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: CustomTextStyles.titleSmallWhiteA400,
+                                  );
+                                }),
                               ),
                               Spacer()
                             ],
@@ -152,11 +164,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                           switch (index) {
                             case 0:
-                            
-                             Navigator.push(
+                              Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Paymenr_Screen()),
+                                    builder: (context) => PaymentScreen()),
                               );
                               break;
                             case 1:
@@ -196,7 +207,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           height: 50,
                           width: 50,
                           child: CustomImageView(
-                            imagePath: image_List[index],
+                            imagePath: imageList[index],
                           ),
                         ),
                         title: Text(
@@ -216,7 +227,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ? Switch(
                                     value: light,
                                     // themeProviderr.isdarkMode,
-                                    activeColor: ColorConstant.primary_color,
+                                    activeColor: ColorConstant.primaryColor,
 
                                     onChanged: (bool value) {
                                       setState(() {

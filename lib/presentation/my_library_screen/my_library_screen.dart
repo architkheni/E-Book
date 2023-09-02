@@ -15,7 +15,7 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
   int? selected;
   List<Map<String, dynamic>> libraryData = [
     {
-      'image': ImageConstant.SaveAllBook,
+      'image': ImageConstant.saveAllBook,
       'title': 'Favourite',
       'icon': ImageConstant.imgArrowright
     },
@@ -25,7 +25,7 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
       'icon': ImageConstant.imgArrowright
     },
     {
-      'image': ImageConstant.Checked,
+      'image': ImageConstant.checked,
       'title': 'Finished',
       'icon': ImageConstant.imgArrowright
     },
@@ -70,7 +70,7 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   HomeRecommendedForYouSeeAllScreen(
-                                                    Title: "Favourite",
+                                                    title: "Favourite",
                                                   )),
                                         );
                                       if (index == 1)
@@ -79,7 +79,7 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   HomeRecommendedForYouSeeAllScreen(
-                                                    Title: "In Progress",
+                                                    title: "In Progress",
                                                   )),
                                         );
                                       if (index == 2)
@@ -88,7 +88,7 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   HomeRecommendedForYouSeeAllScreen(
-                                                    Title: "Finished",
+                                                    title: "Finished",
                                                   )),
                                         );
                                       selected = index;
@@ -326,7 +326,7 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   HomeRecommendedForYouSeeAllScreen(
-                                                    Title: "My History",
+                                                    title: "My History",
                                                   )),
                                         );
                                       },
@@ -351,7 +351,6 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                                   ])),
                           Expanded(
                               child: Container(
-                                
                                   height: getVerticalSize(648),
                                   width: double.maxFinite,
                                   margin: getMargin(top: 9),

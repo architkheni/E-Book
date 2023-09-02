@@ -51,7 +51,7 @@ class ExploreItemWidget extends StatelessWidget {
                               height: 18,
                               width: 15,
                               child: CustomImageView(
-                                imagePath: ImageConstant.Lock,
+                                imagePath: ImageConstant.lock,
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -124,7 +124,7 @@ class ExploreItemWidget extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(top: 70),
                               child: CustomImageView(
-                                imagePath: ImageConstant.BookBackImage,
+                                imagePath: ImageConstant.bookBackImage,
                                 height: _height / 5.3,
                                 width: _width,
                                 fit: BoxFit.fill,

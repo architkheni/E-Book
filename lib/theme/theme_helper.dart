@@ -1,5 +1,5 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
+
 import '../../core/app_export.dart';
 
 String _appTheme = "primary";
@@ -199,7 +199,7 @@ class PrimaryColors {
   Color get gray50001 => Color(0XFFA5998D);
   Color get gray90003 => Color(0XFF181919);
   Color get gray90001 => Color(0XFF1D201C);
-  Color get GrayTextfiled => Color(0XFF272828);
+  Color get grayTextfiled => Color(0XFF272828);
 
   // Orange
   Color get orange200 => Color(0XFFFACC70);

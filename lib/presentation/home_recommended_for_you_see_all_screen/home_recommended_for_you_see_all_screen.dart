@@ -4,8 +4,8 @@ import 'package:book/widgets/app_bar/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class HomeRecommendedForYouSeeAllScreen extends StatefulWidget {
-  String Title;
-  HomeRecommendedForYouSeeAllScreen({Key? key, required this.Title})
+  final String title;
+  HomeRecommendedForYouSeeAllScreen({Key? key, required this.title})
       : super(key: key);
 
   @override
@@ -41,55 +41,55 @@ class _HomeRecommendedForYouSeeAllScreenState
           ),
           title: Padding(
             padding: getPadding(left: 15),
-            child: widget.Title == 'Favourite'
+            child: widget.title == 'Favourite'
                 ? CustomImageView(
                     imagePath: ImageConstant.favouritesImage,
                     height: 35,
                   )
-                : widget.Title == 'In Progress'
+                : widget.title == 'In Progress'
                     ? CustomImageView(
                         imagePath: ImageConstant.inProgressImage,
                         height: 35,
                       )
-                    : widget.Title == 'Finished'
+                    : widget.title == 'Finished'
                         ? CustomImageView(
                             imagePath: ImageConstant.finishedImage,
                             height: 35,
                           )
-                        : widget.Title == 'My History'
+                        : widget.title == 'My History'
                             ? CustomImageView(
                                 imagePath: ImageConstant.myHistoryImage,
                                 height: 35,
                               )
-                            : widget.Title == 'Recently Added'
+                            : widget.title == 'Recently Added'
                                 ? CustomImageView(
                                     imagePath: ImageConstant.recentlyAddedImage,
                                     height: 35,
                                   )
-                                : widget.Title == 'Recommended For You'
+                                : widget.title == 'Recommended For You'
                                     ? CustomImageView(
                                         imagePath: ImageConstant.frame136Image,
                                         height: 35,
                                       )
-                                    : widget.Title == 'Similar Books'
+                                    : widget.title == 'Similar Books'
                                         ? CustomImageView(
                                             imagePath:
                                                 ImageConstant.similarBooksImage,
                                             height: 35,
                                           )
-                                        : widget.Title == 'Top Search'
+                                        : widget.title == 'Top Search'
                                             ? CustomImageView(
                                                 imagePath: ImageConstant
                                                     .topSearchImage,
                                                 height: 35,
                                               )
-                                            : widget.Title == 'Categories'
+                                            : widget.title == 'Categories'
                                                 ? CustomImageView(
                                                     imagePath: ImageConstant
                                                         .categoriesImage,
                                                     height: 35,
                                                   )
-                                                : widget.Title == 'Popular'
+                                                : widget.title == 'Popular'
                                                     ? CustomImageView(
                                                         imagePath: ImageConstant
                                                             .popularImage,
@@ -185,9 +185,9 @@ class _HomeRecommendedForYouSeeAllScreenState
                                         style: theme.textTheme.labelLarge,
                                       ),
                                       Spacer(),
-                                      widget.Title == 'In Progress'
+                                      widget.title == 'In Progress'
                                           ? SizedBox()
-                                          : widget.Title == 'Finished'
+                                          : widget.title == 'Finished'
                                               ? SizedBox()
                                               : Padding(
                                                   padding:
@@ -238,10 +238,13 @@ class _HomeRecommendedForYouSeeAllScreenState
                                                     ),
                                                   ),
                                                   Spacer(),
-                                                  widget.Title == 'Finished'
+                                                  widget.title == 'Finished'
                                                       ? Padding(
-                                                        padding: const EdgeInsets.only(right: 10),
-                                                        child: Container(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  right: 10),
+                                                          child: Container(
                                                             height: 20,
                                                             width: 70,
                                                             decoration:
@@ -268,11 +271,11 @@ class _HomeRecommendedForYouSeeAllScreenState
                                                               ),
                                                             ),
                                                           ),
-                                                      )
+                                                        )
                                                       : SizedBox()
                                                 ],
                                               ),
-                                              widget.Title == 'In Progress'
+                                              widget.title == 'In Progress'
                                                   ? Row(
                                                       children: [
                                                         Align(
@@ -301,7 +304,9 @@ class _HomeRecommendedForYouSeeAllScreenState
                                                             ),
                                                           ),
                                                         ),
-                                                        SizedBox(width: 7,),
+                                                        SizedBox(
+                                                          width: 7,
+                                                        ),
                                                         Text(
                                                           "10/20",
                                                           overflow: TextOverflow

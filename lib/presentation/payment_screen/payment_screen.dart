@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import '../../core/utils/image_constant.dart';
 import '../../widgets/custom_image_view.dart';
 
-class Paymenr_Screen extends StatefulWidget {
-  Paymenr_Screen({Key? key}) : super(key: key);
+class PaymentScreen extends StatefulWidget {
+  PaymentScreen({Key? key}) : super(key: key);
 
   @override
-  State<Paymenr_Screen> createState() => Paymenr_ScreenState();
+  State<PaymentScreen> createState() => PaymentScreenState();
 }
 
-class Paymenr_ScreenState extends State<Paymenr_Screen> {
+class PaymentScreenState extends State<PaymentScreen> {
   @override
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;

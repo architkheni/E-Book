@@ -4,7 +4,8 @@ import 'package:book/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 
 class ForgotPasswordOneScreen extends StatelessWidget {
-  ForgotPasswordOneScreen({Key? key})
+  final String email;
+  ForgotPasswordOneScreen({Key? key, required this.email})
       : super(
           key: key,
         );
@@ -226,6 +227,26 @@ class ForgotPasswordOneScreen extends StatelessWidget {
                                           ),
                                         ),
                                         CustomElevatedButton(
+                                          onTap: () {
+                                            if (newpasswordController.text
+                                                        .trim() !=
+                                                    newpasswordController.text
+                                                        .trim() ||
+                                                newpasswordController.text
+                                                    .trim()
+                                                    .isEmpty) {
+                                              SnackBar snackBar = SnackBar(
+                                                content: Text(
+                                                    "Please enter valid password"),
+                                                backgroundColor:
+                                                    appTheme.teal400,
+                                              );
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(snackBar);
+                                            } else {
+                                              // TODO: update-password api
+                                            }
+                                          },
                                           width: double.maxFinite,
                                           height: getVerticalSize(
                                             48,
@@ -242,7 +263,7 @@ class ForgotPasswordOneScreen extends StatelessWidget {
                                       ],
                                     ),
                                   ),
-                                     ],
+                                ],
                               ),
                             ),
                           ],

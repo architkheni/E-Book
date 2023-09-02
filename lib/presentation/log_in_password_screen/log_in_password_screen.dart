@@ -1,17 +1,18 @@
 import 'package:book/core/app_export.dart';
+import 'package:book/provider/auth_provider.dart';
 import 'package:book/widgets/app_bar/appbar_image.dart';
 import 'package:book/widgets/app_bar/appbar_subtitle_1.dart';
 import 'package:book/widgets/app_bar/custom_app_bar.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:book/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../categories_screen/categories_screen.dart';
 import '../forgot_password_screen/forgot_password_screen.dart';
 
 class LogInPasswordScreen extends StatefulWidget {
-  LogInPasswordScreen({Key? key, this.email}) : super(key: key);
-  final email;
+  LogInPasswordScreen({Key? key, required this.email}) : super(key: key);
+  final String email;
 
   @override
   State<LogInPasswordScreen> createState() => _LogInPasswordScreenState();
@@ -129,7 +130,7 @@ class _LogInPasswordScreenState extends State<LogInPasswordScreen> {
                                                 child: CustomImageView(
                                                     fit: BoxFit.fill,
                                                     imagePath:
-                                                        ImageConstant.CheckBox),
+                                                        ImageConstant.checkBox),
                                               )
                                             ])),
                                     CustomTextFormField(
@@ -159,12 +160,13 @@ class _LogInPasswordScreenState extends State<LogInPasswordScreen> {
                                         fillColor: appTheme.blueGray50),
                                     CustomElevatedButton(
                                         onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    CategoriesScreen()),
-                                          );
+                                          // TODO: login api
+
+                                          context.read<AuthProvider>().logIn(
+                                              context,
+                                              email: widget.email,
+                                              password: passwordController.text
+                                                  .trim());
                                         },
                                         width: double.maxFinite,
                                         height: getVerticalSize(48),
@@ -176,11 +178,14 @@ class _LogInPasswordScreenState extends State<LogInPasswordScreen> {
                                             .titleSmallPrimary_1),
                                     GestureDetector(
                                       onTap: () {
+                                        //  TODO: forget-password api
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  ForgotPasswordScreen()),
+                                                  ForgotPasswordScreen(
+                                                    email: widget.email,
+                                                  )),
                                         );
                                       },
                                       child: Padding(
