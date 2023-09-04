@@ -71,6 +71,7 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                                               builder: (context) =>
                                                   HomeRecommendedForYouSeeAllScreen(
                                                     title: "Favourite",
+                                                    books: [],
                                                   )),
                                         );
                                       if (index == 1)
@@ -80,6 +81,7 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                                               builder: (context) =>
                                                   HomeRecommendedForYouSeeAllScreen(
                                                     title: "In Progress",
+                                                    books: [],
                                                   )),
                                         );
                                       if (index == 2)
@@ -89,6 +91,7 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                                               builder: (context) =>
                                                   HomeRecommendedForYouSeeAllScreen(
                                                     title: "Finished",
+                                                    books: [],
                                                   )),
                                         );
                                       selected = index;
@@ -327,6 +330,7 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                                               builder: (context) =>
                                                   HomeRecommendedForYouSeeAllScreen(
                                                     title: "My History",
+                                                    books: [],
                                                   )),
                                         );
                                       },

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../core/app_export.dart';
 
 class Chipviewframefo2ItemWidget extends StatelessWidget {
-  const Chipviewframefo2ItemWidget({Key? key})
+  final String text;
+  const Chipviewframefo2ItemWidget({Key? key, required this.text})
       : super(
           key: key,
         );
@@ -15,7 +16,7 @@ class Chipviewframefo2ItemWidget extends StatelessWidget {
       showCheckmark: false,
       labelPadding: EdgeInsets.zero,
       label: Text(
-        "Demo Text",
+        text,
         textAlign: TextAlign.left,
         style: TextStyle(
           color: appTheme.blueGray50,

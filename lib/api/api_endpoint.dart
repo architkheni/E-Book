@@ -4,4 +4,6 @@ class ApiEndpoint {
   static const String register = "/register";
   static const String forgetPassword = "/forgot-password";
   static const String resendOtp = "/resend-otp";
+  static const String dashboardDetails = "/dashboard-detail";
+  static const String categoryList = "/category-list";
 }

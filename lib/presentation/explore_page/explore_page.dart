@@ -1,5 +1,10 @@
+import 'package:book/model/book_model.dart';
+import 'package:book/model/category_model.dart';
+import 'package:book/provider/explore_provider.dart';
+import 'package:book/provider/home_provider.dart';
 import 'package:book/widgets/app_bar/appbar_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../core/app_export.dart';
 import '../../widgets/custom_text_form_field.dart';
@@ -18,6 +23,11 @@ class _ExplorePageState extends State<ExplorePage> {
 
   var selectCategory;
   var selectSubCategory;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -109,45 +119,53 @@ class _ExplorePageState extends State<ExplorePage> {
                   SizedBox(height: 10),
                   if (selectSubCategory == null) ...{
                     if (selectCategory == null) ...{
-                      Wrap(
-                        runSpacing: getVerticalSize(5),
-                        spacing: getHorizontalSize(5),
-                        children: List<Widget>.generate(
-                            11,
-                            (index) => Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 5, vertical: 2),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        searchController.text =
-                                            'Personal growth';
-                                        selectCategory = index;
-                                      });
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: appTheme.blueGray900,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          "Personal growth",
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                            color: appTheme.blueGray50,
-                                            fontSize: getFontSize(
-                                              12,
+                      Consumer<ExploreProvider>(
+                        builder: (context, provider, child) {
+                          List<CategoryModel> categories = provider.categories;
+                          return Wrap(
+                            runSpacing: getVerticalSize(5),
+                            spacing: getHorizontalSize(5),
+                            children: List<Widget>.generate(
+                                categories.length,
+                                (index) => Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5, vertical: 2),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            searchController.text =
+                                                categories[index].name ??
+                                                    "Personal growth";
+                                            selectCategory = index;
+                                          });
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: appTheme.blueGray900,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              categories[index].name ??
+                                                  "Personal growth",
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                color: appTheme.blueGray50,
+                                                fontSize: getFontSize(
+                                                  12,
+                                                ),
+                                                fontFamily: 'Outfit',
+                                                fontWeight: FontWeight.w100,
+                                              ),
                                             ),
-                                            fontFamily: 'Outfit',
-                                            fontWeight: FontWeight.w100,
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                )),
+                                    )),
+                          );
+                        },
                       ),
                     } else ...{
                       Wrap(
@@ -290,56 +308,70 @@ class _ExplorePageState extends State<ExplorePage> {
                       ),
                     ),
                   ),*/
-                  Padding(
-                      padding: getPadding(left: 1, top: 45),
-                      child: Row(children: [
-                        Text("Recently Added",
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            style: theme.textTheme.headlineSmall),
-                        Spacer(),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      HomeRecommendedForYouSeeAllScreen(
-                                        title: "Recently Added",
-                                      )),
-                            );
-                          },
-                          child: Padding(
-                              padding: getPadding(top: 7, bottom: 7),
-                              child: Text("Show all",
+                  Consumer<HomePovider>(builder: (context, provider, child) {
+                    return provider.recentlyAddBook.isNotEmpty
+                        ? Padding(
+                            padding: getPadding(left: 1, top: 45),
+                            child: Row(children: [
+                              Text("Recently Added",
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.left,
-                                  style: CustomTextStyles.labelLargeTeal400)),
-                        ),
-                        CustomImageView(
-                            svgPath: ImageConstant.imgArrowright,
-                            height: getSize(16),
-                            width: getSize(16),
-                            margin: getMargin(left: 4, top: 7, bottom: 7))
-                      ])),
-                  Align(
-                      alignment: Alignment.centerRight,
-                      child: SizedBox(
-                          height: getVerticalSize(287),
-                          child: ListView.separated(
-                              padding: getPadding(left: 1, top: 31),
-                              physics: BouncingScrollPhysics(),
-                              scrollDirection: Axis.horizontal,
-                              separatorBuilder: (context, index) {
-                                return SizedBox(width: getHorizontalSize(13));
-                              },
-                              itemCount: 4,
-                              itemBuilder: (context, index) {
-                                return ExploreItemWidget(
-                                    onTapStackellipse394: () {
-                                  // onTapStackellipse394(context);
-                                });
-                              })))
+                                  style: theme.textTheme.headlineSmall),
+                              Spacer(),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            HomeRecommendedForYouSeeAllScreen(
+                                              title: "Recently Added",
+                                              books: [],
+                                            )),
+                                  );
+                                },
+                                child: Padding(
+                                    padding: getPadding(top: 7, bottom: 7),
+                                    child: Text("Show all",
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.left,
+                                        style: CustomTextStyles
+                                            .labelLargeTeal400)),
+                              ),
+                              CustomImageView(
+                                  svgPath: ImageConstant.imgArrowright,
+                                  height: getSize(16),
+                                  width: getSize(16),
+                                  margin: getMargin(left: 4, top: 7, bottom: 7))
+                            ]))
+                        : SizedBox.shrink();
+                  }),
+                  Consumer<HomePovider>(builder: (context, provider, child) {
+                    return provider.recentlyAddBook.isNotEmpty
+                        ? Align(
+                            alignment: Alignment.centerRight,
+                            child: SizedBox(
+                                height: getVerticalSize(287),
+                                child: ListView.separated(
+                                    padding: getPadding(left: 1, top: 31),
+                                    physics: BouncingScrollPhysics(),
+                                    scrollDirection: Axis.horizontal,
+                                    separatorBuilder: (context, index) {
+                                      return SizedBox(
+                                          width: getHorizontalSize(13));
+                                    },
+                                    itemCount: provider.recentlyAddBook.length,
+                                    itemBuilder: (context, index) {
+                                      BookModel book =
+                                          provider.recentlyAddBook[index];
+                                      return ExploreItemWidget(
+                                          book: book,
+                                          onTapStackellipse394: () {
+                                            // onTapStackellipse394(context);
+                                          });
+                                    })))
+                        : SizedBox.shrink();
+                  })
                 ],
               ),
             ),

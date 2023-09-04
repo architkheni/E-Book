@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class BookModel {
   int? bookId;
   String? categoryName;
@@ -180,5 +182,10 @@ class BookModel {
     data['original_audiobook_length'] = this.originalAudiobookLength;
     data['introduction'] = this.introduction;
     return data;
+  }
+
+  @override
+  String toString() {
+    return jsonEncode(toJson());
   }
 }

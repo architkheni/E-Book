@@ -1,11 +1,14 @@
 import 'package:book/core/app_export.dart';
+import 'package:book/model/book_model.dart';
 import 'package:book/widgets/app_bar/appbar_image.dart';
 import 'package:book/widgets/app_bar/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class HomeRecommendedForYouSeeAllScreen extends StatefulWidget {
+  final List<BookModel> books;
   final String title;
-  HomeRecommendedForYouSeeAllScreen({Key? key, required this.title})
+  HomeRecommendedForYouSeeAllScreen(
+      {Key? key, required this.title, required this.books})
       : super(key: key);
 
   @override
@@ -104,7 +107,7 @@ class _HomeRecommendedForYouSeeAllScreenState
             Row(
               children: [
                 Text(
-                  "15 Items",
+                  "${widget.books.length} Items",
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
                   style: CustomTextStyles.titleSmallWhiteA700,
@@ -149,8 +152,9 @@ class _HomeRecommendedForYouSeeAllScreenState
                   separatorBuilder: (context, index) {
                     return SizedBox(height: 10);
                   },
-                  itemCount: 15,
+                  itemCount: widget.books.length,
                   itemBuilder: (context, index) {
+                    BookModel book = widget.books[index];
                     return Container(
                       decoration: AppDecoration.fill4.copyWith(
                         borderRadius: BorderRadiusStyle.roundedBorder8,
@@ -161,7 +165,7 @@ class _HomeRecommendedForYouSeeAllScreenState
                           Padding(
                             padding: const EdgeInsets.all(9.0),
                             child: CustomImageView(
-                              imagePath: ImageConstant.imgE50c016fb6a84106x74,
+                              url: book.frontCover,
                               height: _height / 8,
                               width: _width / 5,
                               fit: BoxFit.fill,
@@ -179,7 +183,7 @@ class _HomeRecommendedForYouSeeAllScreenState
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        "Book Name",
+                                        book.name ?? "Book Name",
                                         overflow: TextOverflow.ellipsis,
                                         textAlign: TextAlign.left,
                                         style: theme.textTheme.labelLarge,

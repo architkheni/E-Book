@@ -2,7 +2,10 @@
 
 import 'dart:async';
 
+import 'package:book/provider/explore_provider.dart';
+import 'package:book/provider/home_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../connection_status/connection_status_singleton.dart';
 import '../../core/utils/image_constant.dart';
@@ -48,6 +51,8 @@ class _BottombarPageState extends State<BottombarPage> {
   @override
   initState() {
     super.initState();
+    context.read<HomePovider>().getDashboardDetails();
+    context.read<ExploreProvider>().getAllCategories();
     ConnectionStatusSingleton connectionStatus =
         ConnectionStatusSingleton.getInstance();
     _connectionChangeStream =

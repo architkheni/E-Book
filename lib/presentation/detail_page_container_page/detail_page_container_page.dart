@@ -307,8 +307,9 @@ class DetailPageContainerPage extends StatelessWidget {
                                       spacing: getHorizontalSize(5),
                                       children: List<Widget>.generate(
                                           5,
-                                          (index) =>
-                                              Chipviewframefo2ItemWidget())))),
+                                          (index) => Chipviewframefo2ItemWidget(
+                                                text: "Demo Text",
+                                              ))))),
                           Align(
                               alignment: Alignment.centerLeft,
                               child: Padding(
@@ -539,6 +540,7 @@ class DetailPageContainerPage extends StatelessWidget {
                                                 builder: (context) =>
                                                     HomeRecommendedForYouSeeAllScreen(
                                                       title: "Similar Books",
+                                                      books: [],
                                                     )),
                                           );
                                         })

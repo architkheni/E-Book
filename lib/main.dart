@@ -1,4 +1,6 @@
 import 'package:book/provider/auth_provider.dart';
+import 'package:book/provider/explore_provider.dart';
+import 'package:book/provider/home_provider.dart';
 import 'package:book/provider/profile_provider.dart';
 import 'package:book/routes/app_routes.dart';
 import 'package:book/theme/theme_helper.dart';
@@ -24,6 +26,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => AuthProvider()),
         ChangeNotifierProvider(create: (context) => ProfileProvider()),
+        ChangeNotifierProvider(create: (context) => HomePovider()),
+        ChangeNotifierProvider(create: (context) => ExploreProvider()),
       ],
       child: MaterialApp(
         theme: ThemeData(

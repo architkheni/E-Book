@@ -1,12 +1,15 @@
+import 'package:book/model/book_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/app_export.dart';
 
 // ignore: must_be_immutable
 class ExploreItemWidget extends StatelessWidget {
+  final BookModel? book;
   ExploreItemWidget({
     Key? key,
     this.onTapStackellipse394,
+    this.book,
   }) : super(
           key: key,
         );
@@ -39,7 +42,7 @@ class ExploreItemWidget extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            "The Good Guy",
+                            book?.name ?? "The Good Guy",
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.left,
                             style: theme.textTheme.titleSmall,
@@ -59,13 +62,13 @@ class ExploreItemWidget extends StatelessWidget {
                         ],
                       ),
                       Text(
-                        "A Fanklin",
+                        book?.authorName ?? "A Fanklin",
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
                         style: theme.textTheme.bodyMedium,
                       ),
                       Text(
-                        "Banish Forgutable Forever",
+                        book?.categoryName ?? "Banish Forgutable Forever",
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
                         style: theme.textTheme.bodySmall,

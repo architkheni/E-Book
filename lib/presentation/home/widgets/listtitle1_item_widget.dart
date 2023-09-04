@@ -1,9 +1,11 @@
 import 'package:book/core/app_export.dart';
+import 'package:book/model/book_model.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class Listtitle1ItemWidget extends StatelessWidget {
-  const Listtitle1ItemWidget({Key? key})
+  final BookModel book;
+  const Listtitle1ItemWidget({Key? key, required this.book})
       : super(
           key: key,
         );
@@ -34,7 +36,7 @@ class Listtitle1ItemWidget extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            "The Good Guy",
+                            book.title ?? "The Good Guy",
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.left,
                             style: theme.textTheme.titleSmall,
@@ -54,13 +56,13 @@ class Listtitle1ItemWidget extends StatelessWidget {
                         ],
                       ),
                       Text(
-                        "A Fanklin",
+                        book.authorName ?? "No author",
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
                         style: theme.textTheme.bodyMedium,
                       ),
                       Text(
-                        "Banish Forgutable Forever",
+                        book.categoryName ?? "Banish Forgutable Forever",
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
                         style: theme.textTheme.bodySmall,
@@ -89,7 +91,7 @@ class Listtitle1ItemWidget extends StatelessWidget {
                               padding:
                                   EdgeInsets.only(left: 4, top: 1, bottom: 1),
                               child: Text(
-                                "21 min",
+                                "${book.originalAudiobookLength} min",
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
                                 style: theme.textTheme.bodySmall,
@@ -133,8 +135,7 @@ class Listtitle1ItemWidget extends StatelessWidget {
                                 height: _height / 5.3,
                                 width: _width / 3.3,
                                 child: CustomImageView(
-                                  imagePath:
-                                      ImageConstant.imgE50c016fb6a84145x100,
+                                  url: book.frontCover,
                                   fit: BoxFit.fill,
                                 ),
                               ),
