@@ -58,6 +58,7 @@ class AppRoutes {
     homeRecommendedForYouSeeAllScreen: (context) =>
         HomeRecommendedForYouSeeAllScreen(
           title: '',
+          books: [],
         ),
     forgotPasswordOneScreen: (context) => ForgotPasswordOneScreen(email: ""),
     homeRecommendedForYouSeeAllOneScreen: (context) =>
