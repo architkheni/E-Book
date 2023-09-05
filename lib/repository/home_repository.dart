@@ -2,8 +2,9 @@ import 'dart:convert';
 
 import 'package:book/api/api_endpoint.dart';
 import 'package:book/api/dio_client.dart';
-import 'package:book/model/book_model.dart';
 import 'package:book/model/category_model.dart';
+import 'package:book/presentation/detail_page_container_page/model/detail_model.dart';
+import 'package:book/presentation/home/model/dashboard_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
@@ -14,8 +15,7 @@ class HomeRepository {
 
   DioClient dioClient = DioClient();
 
-  Future<Either<String, Map<String, dynamic>>>
-      getDashboardDetail() async {
+  Future<Either<String, DashboardModel>> getDashboardDetail() async {
     try {
       Response response = await dioClient.get(ApiEndpoint.dashboardDetails);
       if (response.statusCode == 200) {
@@ -23,45 +23,8 @@ class HomeRepository {
         if (data.runtimeType == String) {
           data = jsonDecode(data);
         }
-        List<BookModel> popularBook = data["popular_book"] != null
-            ? (data["popular_book"] as List<dynamic>)
-                .map((e) => BookModel.fromJson(e))
-                .toList()
-            : [];
-        List<BookModel> topSearchBook = data["top_search_book"] != null
-            ? (data["top_search_book"] as List<dynamic>)
-                .map((e) => BookModel.fromJson(e))
-                .toList()
-            : [];
-        List<BookModel> topSellBook = data["top_sell_book"] != null
-            ? (data["top_sell_book"] as List<dynamic>)
-                .map((e) => BookModel.fromJson(e))
-                .toList()
-            : [];
-        List<BookModel> recommendedBook = data["recommended_book"] != null
-            ? (data["recommended_book"] as List<dynamic>)
-                .map((e) => BookModel.fromJson(e))
-                .toList()
-            : [];
-        List<BookModel> recentlyAddBook = data["recently_add_book"] != null
-            ? (data["recently_add_book"] as List<dynamic>)
-                .map((e) => BookModel.fromJson(e))
-                .toList()
-            : [];
-        List<CategoryModel> categories = data["category_book"] != null
-            ? (data["category_book"] as List<dynamic>)
-                .map((e) => CategoryModel.fromJson(e))
-                .toList()
-            : [];
-
-        return right({
-          "popular_book": popularBook,
-          "top_search_book": topSearchBook,
-          "top_sell_book": topSellBook,
-          "recommended_book": recommendedBook,
-          "recently_add_book": recentlyAddBook,
-          "category_book":categories,
-        });
+        DashboardModel dashboardModel = DashboardModel.fromJson(data);
+        return right(dashboardModel);
       }
       return left("Some error accured");
     } catch (e) {
@@ -81,6 +44,23 @@ class HomeRepository {
         return right((data as List<dynamic>)
             .map((e) => CategoryModel.fromJson(e))
             .toList());
+      }
+      return left("some error accured");
+    } catch (e) {
+      return left(e.toString());
+    }
+  }
+
+  Future<Either<String, DetailModel>> getBookDetails(int bookId) async {
+    try {
+      Response response = await dioClient
+          .post(ApiEndpoint.bookDetails, data: {"book_id": bookId});
+      if (response.statusCode == 200) {
+        dynamic data = response.data;
+        if (data.runtimeType == String) {
+          data = jsonDecode(data);
+        }
+        return right(DetailModel.fromJson(data));
       }
       return left("some error accured");
     } catch (e) {

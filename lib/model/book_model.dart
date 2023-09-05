@@ -21,7 +21,7 @@ class BookModel {
   int? price;
   int? discount;
   int? discountedPrice;
-  String? isWishlist;
+  int? isWishlist;
   String? image;
   String? type;
   String? mainTitle;

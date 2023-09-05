@@ -3,6 +3,7 @@ import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:book/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class ForgotPasswordOneScreen extends StatelessWidget {
   final String email;
   ForgotPasswordOneScreen({Key? key, required this.email})

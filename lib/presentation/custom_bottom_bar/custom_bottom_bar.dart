@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:book/provider/explore_provider.dart';
 import 'package:book/provider/home_provider.dart';
+import 'package:book/provider/wishlist_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -45,6 +46,7 @@ class _BottombarPageState extends State<BottombarPage> {
     // RoomsScreen()
   ];
 
+  // ignore: cancel_subscriptions, unused_field
   late StreamSubscription _connectionChangeStream;
 
   bool isOffline = false;
@@ -53,6 +55,7 @@ class _BottombarPageState extends State<BottombarPage> {
     super.initState();
     context.read<HomePovider>().getDashboardDetails();
     context.read<ExploreProvider>().getAllCategories();
+    context.read<WishlistProvider>().getWishListBook();
     ConnectionStatusSingleton connectionStatus =
         ConnectionStatusSingleton.getInstance();
     _connectionChangeStream =

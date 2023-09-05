@@ -1,5 +1,7 @@
 import 'package:book/core/app_export.dart';
+import 'package:book/provider/wishlist_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../home_recommended_for_you_see_all_screen/home_recommended_for_you_see_all_screen.dart';
 import '../my_library_screen/widgets/liste50c016fb6a_item_widget.dart';
@@ -61,80 +63,84 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                               physics: BouncingScrollPhysics(),
                               itemCount: libraryData.length,
                               itemBuilder: (context, index) {
-                                return ListTile(
-                                  onTap: () {
-                                    setState(() {
-                                      if (index == 0)
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  HomeRecommendedForYouSeeAllScreen(
-                                                    title: "Favourite",
-                                                    books: [],
-                                                  )),
-                                        );
-                                      if (index == 1)
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  HomeRecommendedForYouSeeAllScreen(
-                                                    title: "In Progress",
-                                                    books: [],
-                                                  )),
-                                        );
-                                      if (index == 2)
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  HomeRecommendedForYouSeeAllScreen(
-                                                    title: "Finished",
-                                                    books: [],
-                                                  )),
-                                        );
-                                      selected = index;
-                                      // onTapRowfavorite(context);
-                                    });
-                                  },
-                                  dense: true,
-                                  focusColor: Colors.transparent,
-                                  leading: Container(
-                                    height: 40,
-                                    width: 55,
-                                    decoration: BoxDecoration(
-                                      color: selected == index
-                                          ? appTheme.teal400
-                                          : Colors.transparent,
-                                      border: Border.all(
-                                        color: Colors.white,
-                                        width: 1,
+                                return Consumer<WishlistProvider>(
+                                  builder: (context,provider,child) {
+                                    return ListTile(
+                                      onTap: () {
+                                        setState(() {
+                                          if (index == 0)
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      HomeRecommendedForYouSeeAllScreen(
+                                                        title: "Favourite",
+                                                        books: provider.wishlist,
+                                                      )),
+                                            );
+                                          if (index == 1)
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      HomeRecommendedForYouSeeAllScreen(
+                                                        title: "In Progress",
+                                                        books: [],
+                                                      )),
+                                            );
+                                          if (index == 2)
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      HomeRecommendedForYouSeeAllScreen(
+                                                        title: "Finished",
+                                                        books: [],
+                                                      )),
+                                            );
+                                          selected = index;
+                                          // onTapRowfavorite(context);
+                                        });
+                                      },
+                                      dense: true,
+                                      focusColor: Colors.transparent,
+                                      leading: Container(
+                                        height: 40,
+                                        width: 55,
+                                        decoration: BoxDecoration(
+                                          color: selected == index
+                                              ? appTheme.teal400
+                                              : Colors.transparent,
+                                          border: Border.all(
+                                            color: Colors.white,
+                                            width: 1,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.all(Radius.circular(6)),
+                                        ),
+                                        child: CustomImageView(
+                                          imagePath: libraryData[index]['image'],
+                                          height: 22,
+                                          alignment: Alignment.center,
+                                        ),
                                       ),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(6)),
-                                    ),
-                                    child: CustomImageView(
-                                      imagePath: libraryData[index]['image'],
-                                      height: 22,
-                                      alignment: Alignment.center,
-                                    ),
-                                  ),
-                                  title: Text(
-                                    libraryData[index]['title'],
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: CustomTextStyles.titleSmallWhiteA700,
-                                  ),
-                                  trailing: Padding(
-                                    padding: const EdgeInsets.only(right: 15),
-                                    child: CustomImageView(
-                                        svgPath: ImageConstant.imgArrowright,
-                                        height: getSize(16),
-                                        width: getSize(16),
-                                        margin: getMargin(
-                                            left: 4, top: 2, bottom: 7)),
-                                  ),
+                                      title: Text(
+                                        libraryData[index]['title'],
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.left,
+                                        style: CustomTextStyles.titleSmallWhiteA700,
+                                      ),
+                                      trailing: Padding(
+                                        padding: const EdgeInsets.only(right: 15),
+                                        child: CustomImageView(
+                                            svgPath: ImageConstant.imgArrowright,
+                                            height: getSize(16),
+                                            width: getSize(16),
+                                            margin: getMargin(
+                                                left: 4, top: 2, bottom: 7)),
+                                      ),
+                                    );
+                                  }
                                 );
                               },
                             ),

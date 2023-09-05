@@ -1,6 +1,9 @@
 import 'package:book/core/app_export.dart';
+import 'package:book/model/category_model.dart';
+import 'package:book/provider/explore_provider.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../widgets/app_bar/appbar_image.dart';
 import '../../widgets/app_bar/appbar_subtitle.dart';
@@ -20,6 +23,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   @override
   void initState() {
     selectedChoices = [];
+    context.read<ExploreProvider>().getAllCategories();
     super.initState();
   }
 
@@ -33,7 +37,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
         backgroundColor: theme.colorScheme.onPrimaryContainer.withOpacity(1),
@@ -69,7 +72,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 padding: const EdgeInsets.only(left: 16, right: 16),
                 child: IntrinsicWidth(
                   child: Container(
-                    height: height / 2.5,
+                    // height: height / 2.5,
                     width: width,
                     child: Align(
                       alignment: Alignment.centerLeft,
@@ -93,57 +96,66 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                 style: CustomTextStyles.bodyMediumThin,
                               ),
                             ),
-                            Spacer(),
+                            SizedBox(height: 20),
                             Center(
-                              child: Wrap(
-                                runSpacing: 5,
-                                spacing: 5,
-                                children: List<Widget>.generate(
-                                  9,
-                                  (index) => Padding(
-                                    padding: EdgeInsets.only(right: 16),
-                                    child: RawChip(
-                                      // padding: getPadding(right: 16),
-                                      showCheckmark: false,
-                                      labelPadding: EdgeInsets.zero,
-                                      label: Text(
-                                        "Persona ",
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                          color: appTheme.blueGray50,
-                                          fontSize: 12,
-                                          fontFamily: 'Outfit',
-                                          fontWeight: FontWeight.w100,
+                              child: Consumer<ExploreProvider>(
+                                  builder: (context, provider, child) {
+                                List<CategoryModel> categories =
+                                    provider.categories;
+                                return Wrap(
+                                  runSpacing: 5,
+                                  spacing: 5,
+                                  children: List<Widget>.generate(
+                                    categories.length,
+                                    (index) => Padding(
+                                      padding: EdgeInsets.only(right: 16),
+                                      child: RawChip(
+                                        // padding: getPadding(right: 16),
+                                        showCheckmark: false,
+                                        labelPadding: EdgeInsets.zero,
+                                        label: Text(
+                                          categories[index].name!,
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                            color: appTheme.blueGray50,
+                                            fontSize: 12,
+                                            fontFamily: 'Outfit',
+                                            fontWeight: FontWeight.w100,
+                                          ),
                                         ),
+                                        avatar: CustomImageView(
+                                          svgPath:
+                                              ImageConstant.imgGroup1171274896,
+                                          height: 12,
+                                          width: 12,
+                                          margin: getMargin(right: 10),
+                                        ),
+                                        selected:
+                                            selectedChoices.contains(index),
+                                        backgroundColor:
+                                            theme.colorScheme.primary,
+                                        selectedColor: appTheme.teal400,
+                                        shape: RoundedRectangleBorder(
+                                          side: BorderSide.none,
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        onSelected: (value) {
+                                          setState(() {
+                                            selectedChoices.contains(index)
+                                                ? selectedChoices.remove(index)
+                                                : selectedChoices.add(index);
+                                          });
+                                        },
                                       ),
-                                      avatar: CustomImageView(
-                                        svgPath:
-                                            ImageConstant.imgGroup1171274896,
-                                        height: 12,
-                                        width: 12,
-                                        margin: getMargin(right: 10),
-                                      ),
-                                      selected: selectedChoices.contains(index),
-                                      backgroundColor:
-                                          theme.colorScheme.primary,
-                                      selectedColor: appTheme.teal400,
-                                      shape: RoundedRectangleBorder(
-                                        side: BorderSide.none,
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      onSelected: (value) {
-                                        setState(() {
-                                          selectedChoices.contains(index)
-                                              ? selectedChoices.remove(index)
-                                              : selectedChoices.add(index);
-                                        });
-                                      },
                                     ),
                                   ),
-                                ),
-                              ),
+                                );
+                              }),
                             ),
-                            Spacer(),
+                            SizedBox(
+                              height: 20,
+                            ),
                             CustomElevatedButton(
                               onTap: () {
                                 if (selectedChoices.length <= 2) {

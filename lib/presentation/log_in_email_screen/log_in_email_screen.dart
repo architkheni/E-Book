@@ -252,9 +252,9 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
     );
   }
 
-  emailV(String Email) {
+  emailV(String email) {
     bool emailValid = RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
-        .hasMatch(Email);
+        .hasMatch(email);
     print(emailValid);
     return emailValid;
   }

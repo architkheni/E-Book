@@ -309,7 +309,7 @@ class _ExplorePageState extends State<ExplorePage> {
                     ),
                   ),*/
                   Consumer<HomePovider>(builder: (context, provider, child) {
-                    return provider.recentlyAddBook.isNotEmpty
+                    return provider.dashboardModel.recentlyAddBook.isNotEmpty
                         ? Padding(
                             padding: getPadding(left: 1, top: 45),
                             child: Row(children: [
@@ -347,7 +347,7 @@ class _ExplorePageState extends State<ExplorePage> {
                         : SizedBox.shrink();
                   }),
                   Consumer<HomePovider>(builder: (context, provider, child) {
-                    return provider.recentlyAddBook.isNotEmpty
+                    return provider.dashboardModel.recentlyAddBook.isNotEmpty
                         ? Align(
                             alignment: Alignment.centerRight,
                             child: SizedBox(
@@ -360,10 +360,11 @@ class _ExplorePageState extends State<ExplorePage> {
                                       return SizedBox(
                                           width: getHorizontalSize(13));
                                     },
-                                    itemCount: provider.recentlyAddBook.length,
+                                    itemCount: provider
+                                        .dashboardModel.recentlyAddBook.length,
                                     itemBuilder: (context, index) {
-                                      BookModel book =
-                                          provider.recentlyAddBook[index];
+                                      BookModel book = provider.dashboardModel
+                                          .recentlyAddBook[index];
                                       return ExploreItemWidget(
                                           book: book,
                                           onTapStackellipse394: () {

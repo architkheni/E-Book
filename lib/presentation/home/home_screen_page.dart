@@ -2,7 +2,6 @@ import 'package:book/core/app_export.dart';
 import 'package:book/model/book_model.dart';
 import 'package:book/presentation/home/widgets/listone_item_widget.dart';
 import 'package:book/presentation/home/widgets/listtitle1_item_widget.dart';
-import 'package:book/presentation/home/widgets/listtitle3_item_widget.dart';
 import 'package:book/provider/home_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -94,7 +93,9 @@ class HomeScreenPage extends StatelessWidget {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      DetailPageContainerPage()),
+                                                      DetailPageContainerPage(
+                                                        bookId: 6,
+                                                      )),
                                             );
                                           },
                                           child: CustomImageView(
@@ -134,7 +135,9 @@ class HomeScreenPage extends StatelessWidget {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      DetailPageContainerPage()),
+                                                      DetailPageContainerPage(
+                                                        bookId: 6,
+                                                      )),
                                             );
                                           },
                                           child: CustomImageView(
@@ -226,7 +229,8 @@ class HomeScreenPage extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                provider.recommendedBook.isNotEmpty
+                                provider.dashboardModel.recommendedBook
+                                        .isNotEmpty
                                     ? Padding(
                                         padding: getPadding(top: 31),
                                         child: Row(
@@ -249,6 +253,7 @@ class HomeScreenPage extends StatelessWidget {
                                                             title:
                                                                 "Recommended For You",
                                                             books: provider
+                                                                .dashboardModel
                                                                 .recommendedBook,
                                                           )),
                                                 );
@@ -278,7 +283,8 @@ class HomeScreenPage extends StatelessWidget {
                                         ),
                                       )
                                     : SizedBox.shrink(),
-                                provider.recommendedBook.isNotEmpty
+                                provider.dashboardModel.recommendedBook
+                                        .isNotEmpty
                                     ? Align(
                                         alignment: Alignment.centerRight,
                                         child: SizedBox(
@@ -295,20 +301,33 @@ class HomeScreenPage extends StatelessWidget {
                                                 width: getHorizontalSize(13),
                                               );
                                             },
-                                            itemCount:
-                                                provider.recommendedBook.length,
+                                            itemCount: provider.dashboardModel
+                                                .recommendedBook.length,
                                             itemBuilder: (context, index) {
                                               BookModel book = provider
+                                                  .dashboardModel
                                                   .recommendedBook[index];
-                                              return Listtitle1ItemWidget(
-                                                book: book,
+                                              return GestureDetector(
+                                                onTap: () {
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(
+                                                    builder: (context) {
+                                                      return DetailPageContainerPage(
+                                                        bookId: book.bookId!,
+                                                      );
+                                                    },
+                                                  ));
+                                                },
+                                                child: Listtitle1ItemWidget(
+                                                  book: book,
+                                                ),
                                               );
                                             },
                                           ),
                                         ),
                                       )
                                     : SizedBox.shrink(),
-                                provider.topSearchBook.isNotEmpty
+                                provider.dashboardModel.topSearchBook.isNotEmpty
                                     ? Padding(
                                         padding: getPadding(top: 20),
                                         child: Row(
@@ -329,6 +348,7 @@ class HomeScreenPage extends StatelessWidget {
                                                           HomeRecommendedForYouSeeAllScreen(
                                                             title: "Top Search",
                                                             books: provider
+                                                                .dashboardModel
                                                                 .topSearchBook,
                                                           )),
                                                 );
@@ -358,7 +378,7 @@ class HomeScreenPage extends StatelessWidget {
                                         ),
                                       )
                                     : SizedBox.shrink(),
-                                provider.topSearchBook.isNotEmpty
+                                provider.dashboardModel.topSearchBook.isNotEmpty
                                     ? Align(
                                         alignment: Alignment.centerRight,
                                         child: SizedBox(
@@ -375,20 +395,33 @@ class HomeScreenPage extends StatelessWidget {
                                                 width: getHorizontalSize(13),
                                               );
                                             },
-                                            itemCount:
-                                                provider.topSearchBook.length,
+                                            itemCount: provider.dashboardModel
+                                                .topSearchBook.length,
                                             itemBuilder: (context, index) {
-                                              BookModel book =
-                                                  provider.topSearchBook[index];
-                                              return Listtitle1ItemWidget(
-                                                book: book,
+                                              BookModel book = provider
+                                                  .dashboardModel
+                                                  .topSearchBook[index];
+                                              return GestureDetector(
+                                                onTap: () {
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(
+                                                    builder: (context) {
+                                                      return DetailPageContainerPage(
+                                                        bookId: book.bookId!,
+                                                      );
+                                                    },
+                                                  ));
+                                                },
+                                                child: Listtitle1ItemWidget(
+                                                  book: book,
+                                                ),
                                               );
                                             },
                                           ),
                                         ),
                                       )
                                     : SizedBox.shrink(),
-                                provider.categories.isNotEmpty
+                                provider.dashboardModel.categories.isNotEmpty
                                     ? Padding(
                                         padding: getPadding(top: 5),
                                         child: Row(
@@ -433,7 +466,7 @@ class HomeScreenPage extends StatelessWidget {
                                         ),
                                       )
                                     : SizedBox.shrink(),
-                                provider.categories.isNotEmpty
+                                provider.dashboardModel.categories.isNotEmpty
                                     ? SingleChildScrollView(
                                         scrollDirection: Axis.horizontal,
                                         physics: BouncingScrollPhysics(),
@@ -443,10 +476,14 @@ class HomeScreenPage extends StatelessWidget {
                                             runSpacing: getVerticalSize(5),
                                             spacing: getHorizontalSize(5),
                                             children: List<Widget>.generate(
-                                                provider.categories.length,
-                                                (index) {
+                                                provider
+                                                    .dashboardModel
+                                                    .categories
+                                                    .length, (index) {
                                               String text = provider
-                                                      .categories[index].name ??
+                                                      .dashboardModel
+                                                      .categories[index]
+                                                      .name ??
                                                   'Demo Text';
                                               return Chipviewframefo2ItemWidget(
                                                 text: text,
@@ -456,7 +493,7 @@ class HomeScreenPage extends StatelessWidget {
                                         ),
                                       )
                                     : SizedBox.shrink(),
-                                provider.popularBook.isNotEmpty
+                                provider.dashboardModel.popularBook.isNotEmpty
                                     ? Padding(
                                         padding: getPadding(
                                           top: 24,
@@ -479,6 +516,7 @@ class HomeScreenPage extends StatelessWidget {
                                                           HomeRecommendedForYouSeeAllScreen(
                                                             title: "Popular",
                                                             books: provider
+                                                                .dashboardModel
                                                                 .popularBook,
                                                           )),
                                                 );
@@ -510,7 +548,7 @@ class HomeScreenPage extends StatelessWidget {
                                         ),
                                       )
                                     : SizedBox.shrink(),
-                                provider.popularBook.isNotEmpty
+                                provider.dashboardModel.popularBook.isNotEmpty
                                     ? Align(
                                         alignment: Alignment.centerRight,
                                         child: SizedBox(
@@ -527,19 +565,33 @@ class HomeScreenPage extends StatelessWidget {
                                                 width: getHorizontalSize(13),
                                               );
                                             },
-                                            itemCount:
-                                                provider.popularBook.length,
+                                            itemCount: provider.dashboardModel
+                                                .popularBook.length,
                                             itemBuilder: (context, index) {
-                                              BookModel book =
-                                                  provider.popularBook[index];
-                                              return Listtitle1ItemWidget(
-                                                  book: book);
+                                              BookModel book = provider
+                                                  .dashboardModel
+                                                  .popularBook[index];
+                                              return GestureDetector(
+                                                onTap: () {
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(
+                                                    builder: (context) {
+                                                      return DetailPageContainerPage(
+                                                        bookId: book.bookId!,
+                                                      );
+                                                    },
+                                                  ));
+                                                },
+                                                child: Listtitle1ItemWidget(
+                                                    book: book),
+                                              );
                                             },
                                           ),
                                         ),
                                       )
                                     : SizedBox.shrink(),
-                                provider.recentlyAddBook.isNotEmpty
+                                provider.dashboardModel.recentlyAddBook
+                                        .isNotEmpty
                                     ? Padding(
                                         padding: getPadding(top: 5),
                                         child: Row(
@@ -589,7 +641,8 @@ class HomeScreenPage extends StatelessWidget {
                                         ),
                                       )
                                     : SizedBox.shrink(),
-                                provider.recentlyAddBook.isNotEmpty
+                                provider.dashboardModel.recentlyAddBook
+                                        .isNotEmpty
                                     ? Align(
                                         alignment: Alignment.centerRight,
                                         child: SizedBox(
@@ -606,9 +659,26 @@ class HomeScreenPage extends StatelessWidget {
                                                 width: getHorizontalSize(13),
                                               );
                                             },
-                                            itemCount: 4,
+                                            itemCount: provider.dashboardModel
+                                                .recentlyAddBook.length,
                                             itemBuilder: (context, index) {
-                                              return Listtitle3ItemWidget();
+                                              BookModel book = provider
+                                                  .dashboardModel
+                                                  .recentlyAddBook[index];
+                                              return GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.push(context,
+                                                        MaterialPageRoute(
+                                                      builder: (context) {
+                                                        return DetailPageContainerPage(
+                                                          bookId: book.bookId!,
+                                                        );
+                                                      },
+                                                    ));
+                                                  },
+                                                  child: Listtitle1ItemWidget(
+                                                    book: book,
+                                                  ));
                                             },
                                           ),
                                         ),
