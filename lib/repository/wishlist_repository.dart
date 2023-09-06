@@ -31,4 +31,36 @@ class WishlistRepository {
       return left(e.toString());
     }
   }
+
+  Future<Either<String, bool>> addRemoveBookInWishlist(
+    String token,
+    int userId,
+    int bookId,
+    int wishlist,
+  ) async {
+    try {
+      Response response = await dioClient.post(
+          ApiEndpoint.addRemoveWishlistBook,
+          options: Options(headers: {"Authorization": "Bearer $token"}),
+          data: {
+            "book_id": bookId,
+            "user_id": userId,
+            "is_wishlist": wishlist,
+          });
+      if (response.statusCode == 200) {
+        dynamic data = response.data;
+        if (data.runtimeType == String) {
+          data = jsonDecode(data);
+        }
+        if (data["status"] == true) {
+          return right(true);
+        } else {
+          return right(false);
+        }
+      }
+      return left("Some error accured");
+    } catch (e) {
+      return left(e.toString());
+    }
+  }
 }

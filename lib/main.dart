@@ -1,3 +1,4 @@
+import 'package:book/core/storage/app_storage.dart';
 import 'package:book/provider/auth_provider.dart';
 import 'package:book/provider/explore_provider.dart';
 import 'package:book/provider/home_provider.dart';
@@ -9,18 +10,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
+  bool isLogin = await AppStorage().getLogin();
 
   ///Please update theme as per your need if required.
   ThemeHelper().changeTheme('primary');
-  runApp(MyApp());
+  runApp(MyApp(
+    isLogin: isLogin,
+  ));
 }
 
 class MyApp extends StatelessWidget {
+  final bool isLogin;
+
+  const MyApp({Key? key, required this.isLogin}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -37,7 +44,8 @@ class MyApp extends StatelessWidget {
         ),
         title: 'book',
         debugShowCheckedModeBanner: false,
-        initialRoute: AppRoutes.logInEmailScreen,
+        initialRoute:
+            isLogin ? AppRoutes.bottomPage : AppRoutes.logInEmailScreen,
         routes: AppRoutes.routes,
       ),
     );

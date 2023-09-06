@@ -199,6 +199,7 @@ class ImageConstant {
 
   static String imgUillock1 = 'assets/images/imgUillock.png';
 
+  static String like = 'assets/images/like.png';
   static String likeIcon = 'assets/images/likeIcon.png';
 
   static String saveAllBook = 'assets/images/SaveAllBook.png';

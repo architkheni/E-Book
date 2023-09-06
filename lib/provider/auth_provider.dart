@@ -23,6 +23,7 @@ class AuthProvider extends ChangeNotifier {
     }, (r) {
       appStorage.setToken(r.apiToken!);
       appStorage.setUser(r.toString());
+      appStorage.setLogin(true);
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => CategoriesScreen()),
@@ -53,6 +54,7 @@ class AuthProvider extends ChangeNotifier {
     }, (r) {
       appStorage.setToken(r.apiToken!);
       appStorage.setUser(r.toString());
+      appStorage.setLogin(true);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("user has been save successfully"),
         backgroundColor: appTheme.teal400,

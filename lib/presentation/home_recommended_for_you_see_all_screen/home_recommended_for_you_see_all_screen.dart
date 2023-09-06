@@ -1,5 +1,6 @@
 import 'package:book/core/app_export.dart';
 import 'package:book/model/book_model.dart';
+import 'package:book/presentation/detail_page_container_page/detail_page_container_page.dart';
 import 'package:book/widgets/app_bar/appbar_image.dart';
 import 'package:book/widgets/app_bar/custom_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -155,196 +156,210 @@ class _HomeRecommendedForYouSeeAllScreenState
                   itemCount: widget.books.length,
                   itemBuilder: (context, index) {
                     BookModel book = widget.books[index];
-                    return Container(
-                      decoration: AppDecoration.fill4.copyWith(
-                        borderRadius: BorderRadiusStyle.roundedBorder8,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(9.0),
-                            child: CustomImageView(
-                              url: book.frontCover,
-                              height: _height / 8,
-                              width: _width / 5,
-                              fit: BoxFit.fill,
-                              radius: BorderRadius.circular(5),
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  DetailPageContainerPage(bookId: book.bookId!),
+                            ));
+                      },
+                      child: Container(
+                        decoration: AppDecoration.fill4.copyWith(
+                          borderRadius: BorderRadiusStyle.roundedBorder8,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(9.0),
+                              child: CustomImageView(
+                                url: book.frontCover,
+                                height: _height / 8,
+                                width: _width / 5,
+                                fit: BoxFit.fill,
+                                radius: BorderRadius.circular(5),
+                              ),
                             ),
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 5, top: 1, bottom: 4),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        book.name ?? "Book Name",
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.left,
-                                        style: theme.textTheme.labelLarge,
-                                      ),
-                                      Spacer(),
-                                      widget.title == 'In Progress'
-                                          ? SizedBox()
-                                          : widget.title == 'Finished'
-                                              ? SizedBox()
-                                              : Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          right: 10, bottom: 7),
-                                                  child: CustomImageView(
-                                                    svgPath: ImageConstant
-                                                        .imgLockTeal400,
-                                                    height: 16,
-                                                    width: 13,
-                                                  ),
-                                                ),
-                                    ],
-                                  ),
-                                  Container(
-                                    // color: Colors.deepPurple,
-                                    height: _height / 9,
-                                    width: _width / 1.4,
-                                    child: Stack(
-                                      alignment: Alignment.topCenter,
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 5, top: 1, bottom: 4),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
-                                        Align(
-                                          alignment: Alignment.bottomLeft,
-                                          child: Column(
-                                            children: [
-                                              Spacer(),
-                                              Row(
-                                                children: [
-                                                  CustomImageView(
-                                                    svgPath:
-                                                        ImageConstant.imgGgread,
-                                                    height: 16,
-                                                    width: 16,
-                                                  ),
-                                                  Padding(
+                                        Text(
+                                          book.name ?? "Book Name",
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.left,
+                                          style: theme.textTheme.labelLarge,
+                                        ),
+                                        Spacer(),
+                                        widget.title == 'In Progress'
+                                            ? SizedBox()
+                                            : widget.title == 'Finished'
+                                                ? SizedBox()
+                                                : Padding(
                                                     padding:
                                                         const EdgeInsets.only(
-                                                            left: 4,
-                                                            top: 1,
-                                                            bottom: 1),
-                                                    child: Text(
-                                                      "8m",
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      textAlign: TextAlign.left,
-                                                      style: CustomTextStyles
-                                                          .bodySmallTeal400,
+                                                            right: 10,
+                                                            bottom: 7),
+                                                    child: CustomImageView(
+                                                      svgPath: ImageConstant
+                                                          .imgLockTeal400,
+                                                      height: 16,
+                                                      width: 13,
                                                     ),
                                                   ),
-                                                  Spacer(),
-                                                  widget.title == 'Finished'
-                                                      ? Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .only(
-                                                                  right: 10),
-                                                          child: Container(
-                                                            height: 20,
-                                                            width: 70,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5),
-                                                              color: appTheme
-                                                                  .teal400,
+                                      ],
+                                    ),
+                                    Container(
+                                      // color: Colors.deepPurple,
+                                      height: _height / 9,
+                                      width: _width / 1.4,
+                                      child: Stack(
+                                        alignment: Alignment.topCenter,
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.bottomLeft,
+                                            child: Column(
+                                              children: [
+                                                Spacer(),
+                                                Row(
+                                                  children: [
+                                                    CustomImageView(
+                                                      svgPath: ImageConstant
+                                                          .imgGgread,
+                                                      height: 16,
+                                                      width: 16,
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 4,
+                                                              top: 1,
+                                                              bottom: 1),
+                                                      child: Text(
+                                                        "${book.originalAudiobookLength ?? 0}m",
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        textAlign:
+                                                            TextAlign.left,
+                                                        style: CustomTextStyles
+                                                            .bodySmallTeal400,
+                                                      ),
+                                                    ),
+                                                    Spacer(),
+                                                    widget.title == 'Finished'
+                                                        ? Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .only(
+                                                                    right: 10),
+                                                            child: Container(
+                                                              height: 20,
+                                                              width: 70,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            5),
+                                                                color: appTheme
+                                                                    .teal400,
+                                                              ),
+                                                              child: Center(
+                                                                child: Text(
+                                                                  "Finished",
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .left,
+                                                                  style: theme
+                                                                      .textTheme
+                                                                      .labelLarge,
+                                                                ),
+                                                              ),
                                                             ),
-                                                            child: Center(
-                                                              child: Text(
-                                                                "Finished",
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .ellipsis,
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .left,
-                                                                style: theme
-                                                                    .textTheme
-                                                                    .labelLarge,
+                                                          )
+                                                        : SizedBox()
+                                                  ],
+                                                ),
+                                                widget.title == 'In Progress'
+                                                    ? Row(
+                                                        children: [
+                                                          Align(
+                                                            alignment: Alignment
+                                                                .centerLeft,
+                                                            child: Container(
+                                                              height: 3,
+                                                              width: _width / 3,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            5),
+                                                                // color: appTheme
+                                                                //     .teal400,
+                                                              ),
+                                                              child:
+                                                                  LinearProgressIndicator(
+                                                                color: appTheme
+                                                                    .teal400,
+                                                                backgroundColor:
+                                                                    appTheme
+                                                                        .whiteA700,
+                                                                value: 0.4,
                                                               ),
                                                             ),
                                                           ),
-                                                        )
-                                                      : SizedBox()
-                                                ],
-                                              ),
-                                              widget.title == 'In Progress'
-                                                  ? Row(
-                                                      children: [
-                                                        Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Container(
-                                                            height: 3,
-                                                            width: _width / 3,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5),
-                                                              // color: appTheme
-                                                              //     .teal400,
-                                                            ),
-                                                            child:
-                                                                LinearProgressIndicator(
-                                                              color: appTheme
-                                                                  .teal400,
-                                                              backgroundColor:
-                                                                  appTheme
-                                                                      .whiteA700,
-                                                              value: 0.4,
-                                                            ),
+                                                          SizedBox(
+                                                            width: 7,
                                                           ),
-                                                        ),
-                                                        SizedBox(
-                                                          width: 7,
-                                                        ),
-                                                        Text(
-                                                          "10/20",
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          textAlign:
-                                                              TextAlign.left,
-                                                          style: CustomTextStyles
-                                                              .bodySmallThin_1,
-                                                        )
-                                                      ],
-                                                    )
-                                                  : SizedBox(),
-                                            ],
+                                                          Text(
+                                                            "10/20",
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: CustomTextStyles
+                                                                .bodySmallThin_1,
+                                                          )
+                                                        ],
+                                                      )
+                                                    : SizedBox(),
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                        Align(
-                                          alignment: Alignment.topCenter,
-                                          child: Text(
-                                            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has",
-                                            maxLines: 5,
-                                            overflow: TextOverflow.ellipsis,
-                                            textAlign: TextAlign.left,
-                                            style: CustomTextStyles
-                                                .bodySmallThin_1,
+                                          Align(
+                                            alignment: Alignment.topLeft,
+                                            child: Text(
+                                              "${book.description}",
+                                              maxLines: 5,
+                                              overflow: TextOverflow.ellipsis,
+                                              textAlign: TextAlign.left,
+                                              style: CustomTextStyles
+                                                  .bodySmallThin_1,
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     );
                   }),

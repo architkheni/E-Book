@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:book/model/book_chapter_mode.dart';
 import 'package:book/model/book_model.dart';
 import 'package:book/presentation/home/widgets/listtitle1_item_widget.dart';
 import 'package:book/provider/detail_provider.dart';
+import 'package:book/provider/wishlist_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -104,14 +107,49 @@ class _DetailViewState extends State<DetailView> {
                                                             width: 35,
                                                             // color: Colors.red,
                                                             child: Center(
-                                                              child:
-                                                                  CustomImageView(
-                                                                imagePath:
-                                                                    ImageConstant
-                                                                        .likeIcon,
-                                                                height: 20,
-                                                                width: 20,
-                                                              ),
+                                                              child: Consumer<
+                                                                      WishlistProvider>(
+                                                                  builder: (context,
+                                                                      wishlistProvider,
+                                                                      child) {
+                                                                bool isFavorite = wishlistProvider
+                                                                    .bookId
+                                                                    .contains(provider
+                                                                        .detailModel
+                                                                        .book!
+                                                                        .bookId!);
+                                                                log(isFavorite
+                                                                    .toString());
+                                                                return GestureDetector(
+                                                                  onTap: () {
+                                                                    if (isFavorite) {
+                                                                      context.read<WishlistProvider>().addRemoveBookInWishlist(
+                                                                          provider
+                                                                              .detailModel
+                                                                              .book!
+                                                                              .bookId!,
+                                                                          0);
+                                                                    } else {
+                                                                      context.read<WishlistProvider>().addRemoveBookInWishlist(
+                                                                          provider
+                                                                              .detailModel
+                                                                              .book!
+                                                                              .bookId!,
+                                                                          1);
+                                                                    }
+                                                                  },
+                                                                  child:
+                                                                      CustomImageView(
+                                                                    imagePath: isFavorite
+                                                                        ? ImageConstant
+                                                                            .likeIcon
+                                                                        : ImageConstant
+                                                                            .like,
+                                                                    height: 20,
+                                                                    width: 20,
+                                                                  ),
+                                                                );
+                                                              }),
                                                             ),
                                                           ),
                                                         ),

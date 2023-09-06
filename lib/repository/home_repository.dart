@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:book/api/api_endpoint.dart';
 import 'package:book/api/dio_client.dart';
 import 'package:book/model/category_model.dart';
+import 'package:book/model/language_model.dart';
 import 'package:book/presentation/detail_page_container_page/model/detail_model.dart';
 import 'package:book/presentation/home/model/dashboard_model.dart';
 import 'package:dartz/dartz.dart';
@@ -50,6 +51,24 @@ class HomeRepository {
       return left(e.toString());
     }
   }
+  Future<Either<String, List<CategoryModel>>> getSubCategories() async {
+    try {
+      Response response = await dioClient.post(ApiEndpoint.subCategoryList);
+      if (response.statusCode == 200) {
+        dynamic data = response.data;
+        if (data.runtimeType == String) {
+          data = jsonDecode(data);
+        }
+        data = data["data"];
+        return right((data as List<dynamic>)
+            .map((e) => CategoryModel.fromJson(e))
+            .toList());
+      }
+      return left("some error accured");
+    } catch (e) {
+      return left(e.toString());
+    }
+  }
 
   Future<Either<String, DetailModel>> getBookDetails(int bookId) async {
     try {
@@ -61,6 +80,27 @@ class HomeRepository {
           data = jsonDecode(data);
         }
         return right(DetailModel.fromJson(data));
+      }
+      return left("some error accured");
+    } catch (e) {
+      return left(e.toString());
+    }
+  }
+
+  Future<Either<String, List<LanguageModel>>> getAllLanguage(
+      String token) async {
+    try {
+      Response response = await dioClient.post(ApiEndpoint.language,
+          options: Options(headers: {"Authorization": "Bearer $token"}));
+      if (response.statusCode == 200) {
+        dynamic data = response.data;
+        if (data.runtimeType == String) {
+          data = jsonDecode(data);
+        }
+        List<LanguageModel> languages = (data["data"] as List<dynamic>)
+            .map((e) => LanguageModel.fromJson(e))
+            .toList();
+        return right(languages);
       }
       return left("some error accured");
     } catch (e) {

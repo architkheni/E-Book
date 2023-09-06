@@ -20,4 +20,13 @@ class AppStorage {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('user') ?? "";
   }
+  void setLogin(bool value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isLogin',value);
+  }
+
+  Future<bool> getLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isLogin') ?? false;
+  }
 }

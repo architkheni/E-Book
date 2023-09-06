@@ -168,45 +168,52 @@ class _ExplorePageState extends State<ExplorePage> {
                         },
                       ),
                     } else ...{
-                      Wrap(
-                        runSpacing: getVerticalSize(5),
-                        spacing: getHorizontalSize(5),
-                        children: List<Widget>.generate(
-                            10,
-                            (index) => Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 5, vertical: 2),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        searchController.text =
-                                            'Mind & Philosophy';
-                                        selectSubCategory = index;
-                                      });
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: appTheme.blueGray900,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          "Mind & Philosophy",
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                            color: appTheme.blueGray50,
-                                            fontSize: getFontSize(
-                                              12,
+                      Consumer<ExploreProvider>(
+                        builder: (context, provider, child) {
+                          List<CategoryModel> subCategories =
+                              provider.subCategories;
+                          return Wrap(
+                            runSpacing: getVerticalSize(5),
+                            spacing: getHorizontalSize(5),
+                            children: List<Widget>.generate(
+                                subCategories.length,
+                                (index) => Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5, vertical: 2),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            searchController.text =
+                                                subCategories[index].name!;
+                                            selectSubCategory = index;
+                                          });
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: appTheme.blueGray900,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              subCategories[index].name!,
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                color: appTheme.blueGray50,
+                                                fontSize: getFontSize(
+                                                  12,
+                                                ),
+                                                fontFamily: 'Outfit',
+                                                fontWeight: FontWeight.w100,
+                                              ),
                                             ),
-                                            fontFamily: 'Outfit',
-                                            fontWeight: FontWeight.w100,
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                )),
+                                    )),
+                          );
+                        },
                       ),
                     },
                   } else ...{

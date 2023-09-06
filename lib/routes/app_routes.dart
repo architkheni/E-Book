@@ -1,5 +1,6 @@
 import 'package:book/presentation/app_navigation_screen/app_navigation_screen.dart';
 import 'package:book/presentation/categories_screen/categories_screen.dart';
+import 'package:book/presentation/custom_bottom_bar/custom_bottom_bar.dart';
 import 'package:book/presentation/forgot_password_one_screen/forgot_password_one_screen.dart';
 import 'package:book/presentation/forgot_password_screen/forgot_password_screen.dart';
 import 'package:book/presentation/forgot_password_two_screen/forgot_password_two_screen.dart';
@@ -41,6 +42,7 @@ class AppRoutes {
       '/home_recommended_for_you_see_all_one_screen';
 
   static const String appNavigationScreen = '/app_navigation_screen';
+  static const String bottomPage = '/bottom-page';
 
   static Map<String, WidgetBuilder> routes = {
     logInEmailScreen: (context) => LogInEmailScreen(),
@@ -63,6 +65,7 @@ class AppRoutes {
     forgotPasswordOneScreen: (context) => ForgotPasswordOneScreen(email: ""),
     homeRecommendedForYouSeeAllOneScreen: (context) =>
         HomeRecommendedForYouSeeAllOneScreen(),
-    appNavigationScreen: (context) => AppNavigationScreen()
+    appNavigationScreen: (context) => AppNavigationScreen(),
+    bottomPage: (context) => BottombarPage(buttomIndex: 0,)
   };
 }
