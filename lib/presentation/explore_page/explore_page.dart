@@ -93,9 +93,7 @@ class _ExplorePageState extends State<ExplorePage> {
                     autofocus: false,
                     fillColor: appTheme.blueGray900,
                     onChanged: (value) {
-                      setState(() {
-                        selectCategory = value.toLowerCase();
-                      });
+                      setState(() {});
                     },
                   ),
                   if (selectSubCategory == null) ...{
@@ -136,6 +134,11 @@ class _ExplorePageState extends State<ExplorePage> {
                                             searchController.text =
                                                 categories[index].name ??
                                                     "Personal growth";
+                                            context
+                                                .read<ExploreProvider>()
+                                                .getSubCategories(
+                                                    categories[index]
+                                                        .categoryId!);
                                             selectCategory = index;
                                           });
                                         },
@@ -172,47 +175,53 @@ class _ExplorePageState extends State<ExplorePage> {
                         builder: (context, provider, child) {
                           List<CategoryModel> subCategories =
                               provider.subCategories;
-                          return Wrap(
-                            runSpacing: getVerticalSize(5),
-                            spacing: getHorizontalSize(5),
-                            children: List<Widget>.generate(
-                                subCategories.length,
-                                (index) => Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 5, vertical: 2),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            searchController.text =
-                                                subCategories[index].name!;
-                                            selectSubCategory = index;
-                                          });
-                                        },
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: appTheme.blueGray900,
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Text(
-                                              subCategories[index].name!,
-                                              textAlign: TextAlign.left,
-                                              style: TextStyle(
-                                                color: appTheme.blueGray50,
-                                                fontSize: getFontSize(
-                                                  12,
+                          return provider.isLoading
+                              ? SizedBox.shrink()
+                              : Wrap(
+                                  runSpacing: getVerticalSize(5),
+                                  spacing: getHorizontalSize(5),
+                                  children: List<Widget>.generate(
+                                      subCategories.length,
+                                      (index) => Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 5, vertical: 2),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  searchController.text =
+                                                      subCategories[index]
+                                                          .name!;
+                                                  selectSubCategory = index;
+                                                });
+                                              },
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: appTheme.blueGray900,
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
                                                 ),
-                                                fontFamily: 'Outfit',
-                                                fontWeight: FontWeight.w100,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                    subCategories[index].name!,
+                                                    textAlign: TextAlign.left,
+                                                    style: TextStyle(
+                                                      color:
+                                                          appTheme.blueGray50,
+                                                      fontSize: getFontSize(
+                                                        12,
+                                                      ),
+                                                      fontFamily: 'Outfit',
+                                                      fontWeight:
+                                                          FontWeight.w100,
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ),
-                                      ),
-                                    )),
-                          );
+                                          )),
+                                );
                         },
                       ),
                     },

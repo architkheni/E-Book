@@ -225,7 +225,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(snackBar);
                                   } else {
-                                    // TODO: register api
                                     context.read<AuthProvider>().register(
                                           context,
                                           name: nameController.text,

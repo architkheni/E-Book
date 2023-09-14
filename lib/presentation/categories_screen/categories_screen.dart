@@ -1,6 +1,7 @@
 import 'package:book/core/app_export.dart';
 import 'package:book/model/category_model.dart';
 import 'package:book/provider/explore_provider.dart';
+import 'package:book/provider/profile_provider.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +20,7 @@ class CategoriesScreen extends StatefulWidget {
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
   List<int> selectedChoices = [];
+  List<int> selectedId = [];
 
   @override
   void initState() {
@@ -142,9 +144,17 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                         ),
                                         onSelected: (value) {
                                           setState(() {
-                                            selectedChoices.contains(index)
-                                                ? selectedChoices.remove(index)
-                                                : selectedChoices.add(index);
+                                            if (selectedChoices
+                                                .contains(index)) {
+                                              selectedId.remove(
+                                                  categories[index]
+                                                      .categoryId!);
+                                              selectedChoices.remove(index);
+                                            } else {
+                                              selectedChoices.add(index);
+                                              selectedId.add(categories[index]
+                                                  .categoryId!);
+                                            }
                                           });
                                         },
                                       ),
@@ -168,13 +178,10 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                       .showSnackBar(snackBar);
                                 } else {
                                   // TODO: category select api
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LangugaesScreen(
-                                              start: true,
-                                            )),
-                                  );
+                                  context
+                                      .read<ProfileProvider>()
+                                      .saveUserCategory(context,
+                                          category: selectedId);
                                 }
                               },
                               width: double.maxFinite,

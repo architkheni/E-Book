@@ -1,5 +1,4 @@
 import 'package:book/core/app_export.dart';
-import 'package:book/presentation/forgot_password_one_screen/forgot_password_one_screen.dart';
 import 'package:book/provider/auth_provider.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:book/widgets/custom_text_form_field.dart';
@@ -79,15 +78,19 @@ class ForgotPasswordScreen extends StatelessWidget {
                                     fillColor: appTheme.blueGray50),
                                 CustomElevatedButton(
                                     onTap: () {
-                                      // TODO: verify-token api
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ForgotPasswordOneScreen(
-                                                  email: email,
-                                                )),
-                                      );
+                                      context.read<AuthProvider>().verifyOtp(
+                                          context,
+                                          email: email,
+                                          code: entercodeController.text);
+
+                                      // Navigator.push(
+                                      //   context,
+                                      //   MaterialPageRoute(
+                                      //       builder: (context) =>
+                                      //           ForgotPasswordOneScreen(
+                                      //             email: email,
+                                      //           )),
+                                      // );
                                     },
                                     width: double.maxFinite,
                                     height: getVerticalSize(48),
@@ -110,7 +113,6 @@ class ForgotPasswordScreen extends StatelessWidget {
                                                   .bodyMediumThin),
                                           GestureDetector(
                                             onTap: () {
-                                              // TODO: resend-otp api
                                               context
                                                   .read<AuthProvider>()
                                                   .resendOtp(context,

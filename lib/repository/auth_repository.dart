@@ -93,8 +93,56 @@ class AuthRepository {
 
   Future<Either<String, bool>> resendOtp({required String email}) async {
     try {
+      Response response =
+          await dioClient.post(ApiEndpoint.resendOtp, data: {"email": email});
+      if (response.statusCode == 200) {
+        dynamic data = response.data;
+        if (data.runtimeType == String) {
+          data = jsonDecode(data);
+        }
+        if (data["status"] == false) {
+          return left(data["message"]);
+        }
+        return right(true);
+      } else if (response.statusCode == 500) {
+        return left("Internal server error");
+      } else {
+        return left("Some error accured");
+      }
+    } catch (e) {
+      return left("Internal server error");
+    }
+  }
+
+  Future<Either<String, bool>> verifyToken(
+      {required String email, required String code}) async {
+    try {
       Response response = await dioClient
-          .post(ApiEndpoint.resendOtp, data: {"email": email});
+          .post(ApiEndpoint.verifyToken, data: {"email": email, "code": code});
+      if (response.statusCode == 200) {
+        dynamic data = response.data;
+        if (data.runtimeType == String) {
+          data = jsonDecode(data);
+        }
+        if (data["status"] == false) {
+          return left(data["message"]);
+        }
+        return right(true);
+      } else if (response.statusCode == 500) {
+        return left("Internal server error");
+      } else {
+        return left("Some error accured");
+      }
+    } catch (e) {
+      return left("Internal server error");
+    }
+  }
+
+  Future<Either<String, bool>> updatePassword(
+      {required String email, required String password}) async {
+    try {
+      Response response = await dioClient
+          .post(ApiEndpoint.updatePassword, data: {"email": email, "password": password});
       if (response.statusCode == 200) {
         dynamic data = response.data;
         if (data.runtimeType == String) {

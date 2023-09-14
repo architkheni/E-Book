@@ -1,6 +1,7 @@
 import 'package:book/core/app_export.dart';
 import 'package:book/model/language_model.dart';
 import 'package:book/presentation/langugaes_screen/provider/language_provider.dart';
+import 'package:book/provider/profile_provider.dart';
 import 'package:book/widgets/app_bar/appbar_image.dart';
 import 'package:book/widgets/app_bar/custom_app_bar.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
@@ -18,21 +19,9 @@ class LangugaesScreen extends StatefulWidget {
   State<LangugaesScreen> createState() => _LangugaesScreenState();
 }
 
-int _selectedIndex = -1;
-var nameArray = ["English", "Malay", "Urdu"];
-
 class _LangugaesScreenState extends State<LangugaesScreen> {
-  @override
-  void dispose() {
-    _selectedIndex = -1;
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    _selectedIndex = -1;
-    super.initState();
-  }
+  List<int> selectedId = [];
+  List<int> selectedIndex = [];
 
   @override
   Widget build(BuildContext context) {
@@ -146,71 +135,75 @@ class _LangugaesScreenState extends State<LangugaesScreen> {
                     style: CustomTextStyles.bodyMediumThin,
                   ),
                 ),
-                Consumer<LanguageProvider>(
-                  builder: (context,provider,child) {
-                    List<LanguageModel> language = provider.language;
-                    return Align(
-                      alignment: Alignment.center,
-                      child: Padding(
-                        padding: getPadding(left: 21, top: 22),
-                        child: Wrap(
-                          runSpacing: getVerticalSize(5),
-                          spacing: getHorizontalSize(5),
-                          children: List<Widget>.generate(
-                            language.length,
-                            (index) => RawChip(
-                              padding: getPadding(right: 16),
-                              showCheckmark: false,
-                              labelPadding: EdgeInsets.zero,
-                              label: Text(
-                                "${language[index].name}",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  color: appTheme.blueGray50,
-                                  fontSize: 15,
-                                  fontFamily: 'Outfit',
-                                  fontWeight: FontWeight.w400,
-                                ),
+                Consumer<LanguageProvider>(builder: (context, provider, child) {
+                  List<LanguageModel> language = provider.language;
+                  return Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: getPadding(left: 21, top: 22),
+                      child: Wrap(
+                        runSpacing: getVerticalSize(5),
+                        spacing: getHorizontalSize(5),
+                        children: List<Widget>.generate(
+                          language.length,
+                          (index) => RawChip(
+                            padding: getPadding(right: 16),
+                            showCheckmark: false,
+                            labelPadding: EdgeInsets.zero,
+                            label: Text(
+                              "${language[index].name}",
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                color: appTheme.blueGray50,
+                                fontSize: 15,
+                                fontFamily: 'Outfit',
+                                fontWeight: FontWeight.w400,
                               ),
-                              avatar: _selectedIndex == index
-                                  ? CustomImageView(
-                                      imagePath: ImageConstant.checked,
-                                      height: 23,
-                                      width: 23,
-                                      margin: getMargin(right: 10),
-                                    )
-                                  : CustomImageView(
-                                      imagePath: ImageConstant.uilPluscircle,
-                                      height: 23,
-                                      width: 23,
-                                      margin: getMargin(right: 10),
-                                    ),
-                              selected: _selectedIndex == index,
-                              backgroundColor: theme.colorScheme.primary,
-                              selectedColor: appTheme.teal400,
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide.none,
-                                borderRadius: BorderRadius.circular(
-                                  getHorizontalSize(8),
-                                ),
-                              ),
-                              onSelected: (value) {
-                                setState(() {
-                                  _selectedIndex = index;
-                                });
-                              },
                             ),
+                            avatar: selectedIndex.contains(index)
+                                ? CustomImageView(
+                                    imagePath: ImageConstant.checked,
+                                    height: 23,
+                                    width: 23,
+                                    margin: getMargin(right: 10),
+                                  )
+                                : CustomImageView(
+                                    imagePath: ImageConstant.uilPluscircle,
+                                    height: 23,
+                                    width: 23,
+                                    margin: getMargin(right: 10),
+                                  ),
+                            selected: selectedIndex.contains(index),
+                            backgroundColor: theme.colorScheme.primary,
+                            selectedColor: appTheme.teal400,
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide.none,
+                              borderRadius: BorderRadius.circular(
+                                getHorizontalSize(8),
+                              ),
+                            ),
+                            onSelected: (value) {
+                              setState(() {
+                                if (selectedIndex.contains(index)) {
+                                  selectedIndex.remove(index);
+                                  selectedId.remove(language[index].id);
+                                } else {
+                                  selectedIndex.add(index);
+                                  selectedId.add(language[index].id!);
+                                }
+                              });
+                            },
                           ),
                         ),
                       ),
-                    );
-                  }
-                ),
+                    ),
+                  );
+                }),
                 Padding(
                   padding: const EdgeInsets.only(top: 50),
                   child: CustomElevatedButton(
                     onTap: () {
-                      if (_selectedIndex == -1) {
+                      if (selectedIndex.length == 0) {
                         SnackBar snackBar = SnackBar(
                           content: Text("Select minimum 1 Languages"),
                           backgroundColor: appTheme.teal400,
@@ -218,12 +211,9 @@ class _LangugaesScreenState extends State<LangugaesScreen> {
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       } else {
                         // TODO: language select api
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  BottombarPage(buttomIndex: 0)),
-                        );
+                        context
+                            .read<ProfileProvider>()
+                            .saveUserLanguage(context, language: selectedId);
                       }
                     },
                     width: double.maxFinite,

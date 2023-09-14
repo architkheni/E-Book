@@ -8,8 +8,6 @@ import 'package:book/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../forgot_password_screen/forgot_password_screen.dart';
-
 class LogInPasswordScreen extends StatefulWidget {
   LogInPasswordScreen({Key? key, required this.email}) : super(key: key);
   final String email;
@@ -160,7 +158,6 @@ class _LogInPasswordScreenState extends State<LogInPasswordScreen> {
                                         fillColor: appTheme.blueGray50),
                                     CustomElevatedButton(
                                         onTap: () {
-                                          // TODO: login api
 
                                           context.read<AuthProvider>().logIn(
                                               context,
@@ -178,15 +175,10 @@ class _LogInPasswordScreenState extends State<LogInPasswordScreen> {
                                             .titleSmallPrimary_1),
                                     GestureDetector(
                                       onTap: () {
-                                        //  TODO: forget-password api
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ForgotPasswordScreen(
-                                                    email: widget.email,
-                                                  )),
-                                        );
+                                        context
+                                            .read<AuthProvider>()
+                                            .forgotPassword(context,
+                                                email: widget.email);
                                       },
                                       child: Padding(
                                           padding: getPadding(top: 16),

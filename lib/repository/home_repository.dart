@@ -51,9 +51,9 @@ class HomeRepository {
       return left(e.toString());
     }
   }
-  Future<Either<String, List<CategoryModel>>> getSubCategories() async {
+  Future<Either<String, List<CategoryModel>>> getSubCategories(int categoryId) async {
     try {
-      Response response = await dioClient.post(ApiEndpoint.subCategoryList);
+      Response response = await dioClient.post(ApiEndpoint.subCategoryList,data: {"category_id":categoryId });
       if (response.statusCode == 200) {
         dynamic data = response.data;
         if (data.runtimeType == String) {

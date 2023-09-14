@@ -2,6 +2,7 @@ import 'package:book/core/utils/color_constant.dart';
 import 'package:book/provider/profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../core/utils/image_constant.dart';
 import '../../theme/custom_text_style.dart';
@@ -197,6 +198,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               );
                               break;
                             case 5:
+                              // TODO: share profile
+                              Share.share("Share your book");
                               break;
                             default:
                           }

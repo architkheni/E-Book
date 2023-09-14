@@ -104,7 +104,6 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          // TODO: forget-password api
                           context.read<AuthProvider>().forgotPassword(context,
                               email: emailController.text.trim());
                         },

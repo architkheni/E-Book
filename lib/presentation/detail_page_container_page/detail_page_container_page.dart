@@ -126,15 +126,13 @@ class _DetailViewState extends State<DetailView> {
                                                                       context.read<WishlistProvider>().addRemoveBookInWishlist(
                                                                           provider
                                                                               .detailModel
-                                                                              .book!
-                                                                              .bookId!,
+                                                                              .book!,
                                                                           0);
                                                                     } else {
                                                                       context.read<WishlistProvider>().addRemoveBookInWishlist(
                                                                           provider
                                                                               .detailModel
-                                                                              .book!
-                                                                              .bookId!,
+                                                                              .book!,
                                                                           1);
                                                                     }
                                                                   },

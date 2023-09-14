@@ -6,20 +6,29 @@ import 'package:flutter/material.dart';
 class ExploreProvider extends ChangeNotifier {
   List<CategoryModel> categories = [];
   List<CategoryModel> subCategories = [];
+  bool isLoading = false;
 
   void getAllCategories() async {
-    Either<String, List<CategoryModel>> result = await HomeRepository.instance
-        .getAllCategories();
+    Either<String, List<CategoryModel>> result =
+        await HomeRepository.instance.getAllCategories();
     result.fold((l) {}, (r) {
       categories = r;
       notifyListeners();
     });
+  }
+
+  void getSubCategories(int categoryId) async {
+    setLoading(true);
     Either<String, List<CategoryModel>> resultSubCategories =
-        await HomeRepository.instance
-            .getSubCategories();
+        await HomeRepository.instance.getSubCategories(categoryId);
     resultSubCategories.fold((l) {}, (r) {
       subCategories = r;
-      notifyListeners();
+      setLoading(false);
     });
+  }
+
+  void setLoading(bool value) {
+    isLoading = value;
+    notifyListeners();
   }
 }
