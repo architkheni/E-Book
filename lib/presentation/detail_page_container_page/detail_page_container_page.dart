@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:book/model/book_chapter_mode.dart';
+import 'package:book/model/book_chapter_model.dart';
 import 'package:book/model/book_model.dart';
 import 'package:book/presentation/home/widgets/listtitle1_item_widget.dart';
 import 'package:book/provider/detail_provider.dart';
@@ -123,17 +123,19 @@ class _DetailViewState extends State<DetailView> {
                                                                 return GestureDetector(
                                                                   onTap: () {
                                                                     if (isFavorite) {
-                                                                      context.read<WishlistProvider>().addRemoveBookInWishlist(
-                                                                          provider
-                                                                              .detailModel
-                                                                              .book!,
-                                                                          0);
+                                                                      context
+                                                                          .read<
+                                                                              WishlistProvider>()
+                                                                          .addRemoveBookInWishlist(
+                                                                              provider.detailModel.book!,
+                                                                              0);
                                                                     } else {
-                                                                      context.read<WishlistProvider>().addRemoveBookInWishlist(
-                                                                          provider
-                                                                              .detailModel
-                                                                              .book!,
-                                                                          1);
+                                                                      context
+                                                                          .read<
+                                                                              WishlistProvider>()
+                                                                          .addRemoveBookInWishlist(
+                                                                              provider.detailModel.book!,
+                                                                              1);
                                                                     }
                                                                   },
                                                                   child:
@@ -185,7 +187,7 @@ class _DetailViewState extends State<DetailView> {
                                                                 MaterialPageRoute(
                                                                     builder:
                                                                         (context) =>
-                                                                            BookReadScreen()),
+                                                                            BookReadScreen(bookId: widget.bookId,)),
                                                               );
                                                             },
                                                             child: Container(

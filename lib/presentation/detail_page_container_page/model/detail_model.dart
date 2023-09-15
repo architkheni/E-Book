@@ -1,7 +1,7 @@
 import 'package:book/model/author_model.dart';
-import 'package:book/model/book_chapter_mode.dart';
+import 'package:book/model/book_chapter_model.dart';
 import 'package:book/model/book_model.dart';
-import 'package:book/model/book_rating_mode.dart';
+import 'package:book/model/book_rating_model.dart';
 
 class DetailModel {
   BookModel? book;

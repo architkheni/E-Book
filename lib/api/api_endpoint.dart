@@ -15,4 +15,5 @@ class ApiEndpoint {
   static const String language = "/language";
   static const String saveUserCategory = "/save-user-category";
   static const String saveUserLanguage = "/save-user-language";
+  static const String bookDescription = "/book-description";
 }

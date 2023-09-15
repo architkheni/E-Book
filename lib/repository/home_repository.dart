@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:book/api/api_endpoint.dart';
 import 'package:book/api/dio_client.dart';
+import 'package:book/model/book_chapter_model.dart';
 import 'package:book/model/category_model.dart';
 import 'package:book/model/language_model.dart';
 import 'package:book/presentation/detail_page_container_page/model/detail_model.dart';
@@ -51,9 +52,12 @@ class HomeRepository {
       return left(e.toString());
     }
   }
-  Future<Either<String, List<CategoryModel>>> getSubCategories(int categoryId) async {
+
+  Future<Either<String, List<CategoryModel>>> getSubCategories(
+      int categoryId) async {
     try {
-      Response response = await dioClient.post(ApiEndpoint.subCategoryList,data: {"category_id":categoryId });
+      Response response = await dioClient
+          .post(ApiEndpoint.subCategoryList, data: {"category_id": categoryId});
       if (response.statusCode == 200) {
         dynamic data = response.data;
         if (data.runtimeType == String) {
@@ -99,6 +103,27 @@ class HomeRepository {
         }
         List<LanguageModel> languages = (data["data"] as List<dynamic>)
             .map((e) => LanguageModel.fromJson(e))
+            .toList();
+        return right(languages);
+      }
+      return left("some error accured");
+    } catch (e) {
+      return left(e.toString());
+    }
+  }
+
+  Future<Either<String, List<BookChapterModel>>> getBookChapter(
+      int bookId) async {
+    try {
+      Response response = await dioClient
+          .post(ApiEndpoint.bookDescription, data: {"book_id": bookId});
+      if (response.statusCode == 200) {
+        dynamic data = response.data;
+        if (data.runtimeType == String) {
+          data = jsonDecode(data);
+        }
+        List<BookChapterModel> languages = (data["chapters"] as List<dynamic>)
+            .map((e) => BookChapterModel.fromJson(e))
             .toList();
         return right(languages);
       }

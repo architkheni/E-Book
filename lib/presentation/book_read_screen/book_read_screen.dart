@@ -1,6 +1,9 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:book/model/book_chapter_model.dart';
+import 'package:book/presentation/book_read_screen/provider/book_read_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_image.dart';
@@ -8,12 +11,24 @@ import '../../widgets/app_bar/custom_app_bar.dart';
 // import '../../widgets/custom_bottom_bar.dart';
 import '../../widgets/custom_elevated_button.dart';
 
-// ignore_for_file: must_be_immutable
-class BookReadScreen extends StatefulWidget {
-  BookReadScreen({Key? key}) : super(key: key);
+class BookReadScreen extends StatelessWidget {
+  final int bookId;
+  BookReadScreen({Key? key, required this.bookId}) : super(key: key);
 
   @override
-  State<BookReadScreen> createState() => _BookReadScreenState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+        create: (BuildContext context) =>
+            BookReadProvider()..getChapter(bookId),
+        child: BookReadView());
+  }
+}
+
+class BookReadView extends StatefulWidget {
+  BookReadView({Key? key}) : super(key: key);
+
+  @override
+  State<BookReadView> createState() => _BookReadViewState();
 }
 
 bool ShowBox = false;
@@ -21,7 +36,7 @@ int _currentSliderValue = 1;
 String fontFamily = "Roboto";
 int ShowBorder = 0;
 
-class _BookReadScreenState extends State<BookReadScreen> {
+class _BookReadViewState extends State<BookReadView> {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
   @override
   void initState() {
@@ -45,36 +60,36 @@ class _BookReadScreenState extends State<BookReadScreen> {
     PageController controller = PageController();
     int _curr = 0;
 
-    final List<Widget> entries = <Widget>[
-      Center(
-          child: Pages(
-        text: "Page One",
-        color: Colors.teal,
-        FontSize: _currentSliderValue,
-        fontFamily: fontFamily,
-      )),
-      Center(
-          child: Pages(
-        text: "Page Two",
-        color: Colors.red.shade100,
-        FontSize: _currentSliderValue,
-        fontFamily: fontFamily,
-      )),
-      Center(
-          child: Pages(
-        text: "Page Three",
-        color: Colors.grey,
-        FontSize: _currentSliderValue,
-        fontFamily: fontFamily,
-      )),
-      Center(
-          child: Pages(
-        text: "Page Four",
-        color: Colors.yellow.shade100,
-        FontSize: _currentSliderValue,
-        fontFamily: fontFamily,
-      ))
-    ];
+    // final List<Widget> entries = <Widget>[
+    //   Center(
+    //       child: Pages(
+    //     text: "Page One",
+    //     color: Colors.teal,
+    //     FontSize: _currentSliderValue,
+    //     fontFamily: fontFamily,
+    //   )),
+    //   Center(
+    //       child: Pages(
+    //     text: "Page Two",
+    //     color: Colors.red.shade100,
+    //     FontSize: _currentSliderValue,
+    //     fontFamily: fontFamily,
+    //   )),
+    //   Center(
+    //       child: Pages(
+    //     text: "Page Three",
+    //     color: Colors.grey,
+    //     FontSize: _currentSliderValue,
+    //     fontFamily: fontFamily,
+    //   )),
+    //   Center(
+    //       child: Pages(
+    //     text: "Page Four",
+    //     color: Colors.yellow.shade100,
+    //     FontSize: _currentSliderValue,
+    //     fontFamily: fontFamily,
+    //   ))
+    // ];
 
     return SafeArea(
         child: Scaffold(
@@ -111,242 +126,286 @@ class _BookReadScreenState extends State<BookReadScreen> {
                 margin: getMargin(left: 9, top: 16, right: 32),
                 onTap: () {})
           ]),
-      body: Stack(
-        children: [
-          Container(
-            height: _height,
-            width: _width,
-            child: PageView(
-              allowImplicitScrolling: true,
-              children: entries,
-              scrollDirection: Axis.horizontal,
-              controller: controller,
-              onPageChanged: (num) {
-                setState(() {
-                  _curr = num;
-                  print("++++++++++++++++");
-                  print(_curr);
-                });
-              },
-            ),
-          ),
-          ShowBox == true
-              ? Container(
-                  color: Color.fromARGB(210, 32, 32, 32),
-                  height: _height,
-                  width: _width,
-                  child: Column(
-                    children: [
-                      Container(
-                        height: _height / 3.5,
-                        width: _width,
-                        color: Color.fromARGB(255, 32, 32, 32),
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 20),
-                              child: Container(
-                                height: _height / 13,
-                                width: _width,
-                                // color: Colors.blue[200],
-                                child: Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 10),
-                                      child: CustomImageView(
-                                        height: 15,
-                                        width: 15,
-                                        imagePath: ImageConstant.textImage,
-                                      ),
-                                    ),
-                                    Container(
-                                      width: _width - 60,
-                                      child: Slider(
-                                        value: _currentSliderValue.toDouble(),
-                                        max: 10,
-                                        activeColor: appTheme.teal400,
-                                        inactiveColor: appTheme.whiteA700,
-                                        // thumbColor: Colors.transparent,
-                                        label: _currentSliderValue
-                                            .round()
-                                            .toString(),
-                                        onChanged: (double value) {
-                                          setState(() {
-                                            _currentSliderValue = value.toInt();
-                                            print(_currentSliderValue);
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 10),
-                                      child: CustomImageView(
-                                        height: 23,
-                                        width: 23,
-                                        imagePath: ImageConstant.textImage,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 16, right: 16),
-                              child: Container(
-                                height: _height / 13,
-                                width: _width,
-                                // color: Colors.blue[800],
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Expanded(
-                                      flex: 2,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            fontFamily = "Roboto";
-                                            ShowBorder = 1;
-                                          });
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(7.0),
-                                          child: Container(
-                                            height: _height,
-                                            width: _width,
-                                            decoration: ShowBorder == 1
-                                                ? BoxDecoration(
-                                                    border: Border.all(
-                                                      color: appTheme.teal400,
-                                                      width: 2,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                13)),
-                                                  )
-                                                : BoxDecoration(
-                                                    color: Colors.white,
-                                                    border: Border.all(
-                                                      width: 2,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                13)),
-                                                  ),
-                                            child: Center(
-                                              child: Text("Aa",
-                                                  maxLines: 5,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                      color: ShowBorder == 1
-                                                          ? appTheme.whiteA700
-                                                          : appTheme.black900,
-                                                      fontSize: 22,
-                                                      fontFamily: 'Roboto',
-                                                      fontWeight:
-                                                          FontWeight.w900)),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Expanded(
-                                      flex: 2,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            fontFamily = "Outfit";
-                                            ShowBorder = 2;
-                                          });
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(7.0),
-                                          child: Container(
-                                            height: _height,
-                                            width: _width,
-                                            decoration: ShowBorder == 2
-                                                ? BoxDecoration(
-                                                    border: Border.all(
-                                                      color: appTheme.teal400,
-                                                      width: 2,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                13)),
-                                                  )
-                                                : BoxDecoration(
-                                                    color: Colors.white,
-                                                    border: Border.all(
-                                                      width: 2,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                13)),
-                                                  ),
-                                            child: Center(
-                                              child: Text("Aa",
-                                                  maxLines: 5,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                      color: ShowBorder == 2
-                                                          ? appTheme.whiteA700
-                                                          : appTheme.black900,
-                                                      fontSize: 22,
-                                                      fontFamily: 'Outfit',
-                                                      fontWeight:
-                                                          FontWeight.w900)),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 16, right: 16, top: 20),
-                              child: CustomElevatedButton(
-                                onTap: () {
-                                  setState(() {
-                                    ShowBox = false;
-                                  });
-                                },
-                                width: double.maxFinite,
-                                height: getVerticalSize(48),
-                                text: "Continue",
-                                // margin: getMargin(top: 74),
-                                buttonStyle: CustomButtonStyles.fillTeal400,
-                                buttonTextStyle:
-                                    CustomTextStyles.titleSmallPrimary_1,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+      body: Consumer<BookReadProvider>(builder: (context, provider, child) {
+        return provider.isLoading
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : Stack(
+                children: [
+                  Container(
+                    height: _height,
+                    width: _width,
+                    child: PageView(
+                      allowImplicitScrolling: true,
+                      children: provider.chapters
+                          .map((e) => Center(
+                                  child: Pages(
+                                text: "Page Three",
+                                chapter: e,
+                                color: Colors.grey,
+                                FontSize: _currentSliderValue,
+                                fontFamily: fontFamily,
+                              )))
+                          .toList(),
+                      scrollDirection: Axis.horizontal,
+                      controller: controller,
+                      onPageChanged: (num) {
+                        setState(() {
+                          _curr = num;
+                          print("++++++++++++++++");
+                          print(_curr);
+                        });
+                      },
+                    ),
                   ),
-                )
-              : SizedBox(),
-        ],
-      ),
+                  ShowBox == true
+                      ? Container(
+                          color: Color.fromARGB(210, 32, 32, 32),
+                          height: _height,
+                          width: _width,
+                          child: Column(
+                            children: [
+                              Container(
+                                height: _height / 3.5,
+                                width: _width,
+                                color: Color.fromARGB(255, 32, 32, 32),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 20),
+                                      child: Container(
+                                        height: _height / 13,
+                                        width: _width,
+                                        // color: Colors.blue[200],
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10),
+                                              child: CustomImageView(
+                                                height: 15,
+                                                width: 15,
+                                                imagePath:
+                                                    ImageConstant.textImage,
+                                              ),
+                                            ),
+                                            Container(
+                                              width: _width - 60,
+                                              child: Slider(
+                                                value: _currentSliderValue
+                                                    .toDouble(),
+                                                max: 10,
+                                                activeColor: appTheme.teal400,
+                                                inactiveColor:
+                                                    appTheme.whiteA700,
+                                                // thumbColor: Colors.transparent,
+                                                label: _currentSliderValue
+                                                    .round()
+                                                    .toString(),
+                                                onChanged: (double value) {
+                                                  setState(() {
+                                                    _currentSliderValue =
+                                                        value.toInt();
+                                                    print(_currentSliderValue);
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 10),
+                                              child: CustomImageView(
+                                                height: 23,
+                                                width: 23,
+                                                imagePath:
+                                                    ImageConstant.textImage,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 16, right: 16),
+                                      child: Container(
+                                        height: _height / 13,
+                                        width: _width,
+                                        // color: Colors.blue[800],
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Expanded(
+                                              flex: 2,
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  setState(() {
+                                                    fontFamily = "Roboto";
+                                                    ShowBorder = 1;
+                                                  });
+                                                },
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(7.0),
+                                                  child: Container(
+                                                    height: _height,
+                                                    width: _width,
+                                                    decoration: ShowBorder == 1
+                                                        ? BoxDecoration(
+                                                            border: Border.all(
+                                                              color: appTheme
+                                                                  .teal400,
+                                                              width: 2,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            13)),
+                                                          )
+                                                        : BoxDecoration(
+                                                            color: Colors.white,
+                                                            border: Border.all(
+                                                              width: 2,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            13)),
+                                                          ),
+                                                    child: Center(
+                                                      child: Text("Aa",
+                                                          maxLines: 5,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                          style: TextStyle(
+                                                              color: ShowBorder ==
+                                                                      1
+                                                                  ? appTheme
+                                                                      .whiteA700
+                                                                  : appTheme
+                                                                      .black900,
+                                                              fontSize: 22,
+                                                              fontFamily:
+                                                                  'Roboto',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w900)),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Expanded(
+                                              flex: 2,
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  setState(() {
+                                                    fontFamily = "Outfit";
+                                                    ShowBorder = 2;
+                                                  });
+                                                },
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(7.0),
+                                                  child: Container(
+                                                    height: _height,
+                                                    width: _width,
+                                                    decoration: ShowBorder == 2
+                                                        ? BoxDecoration(
+                                                            border: Border.all(
+                                                              color: appTheme
+                                                                  .teal400,
+                                                              width: 2,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            13)),
+                                                          )
+                                                        : BoxDecoration(
+                                                            color: Colors.white,
+                                                            border: Border.all(
+                                                              width: 2,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            13)),
+                                                          ),
+                                                    child: Center(
+                                                      child: Text("Aa",
+                                                          maxLines: 5,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                          style: TextStyle(
+                                                              color: ShowBorder ==
+                                                                      2
+                                                                  ? appTheme
+                                                                      .whiteA700
+                                                                  : appTheme
+                                                                      .black900,
+                                                              fontSize: 22,
+                                                              fontFamily:
+                                                                  'Outfit',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w900)),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 16, right: 16, top: 20),
+                                      child: CustomElevatedButton(
+                                        onTap: () {
+                                          setState(() {
+                                            ShowBox = false;
+                                          });
+                                        },
+                                        width: double.maxFinite,
+                                        height: getVerticalSize(48),
+                                        text: "Continue",
+                                        // margin: getMargin(top: 74),
+                                        buttonStyle:
+                                            CustomButtonStyles.fillTeal400,
+                                        buttonTextStyle: CustomTextStyles
+                                            .titleSmallPrimary_1,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : SizedBox(),
+                ],
+              );
+      }),
     ));
   }
 }
 
 class Pages extends StatelessWidget {
+  final BookChapterModel chapter;
   final text;
   final color;
   int FontSize;
@@ -356,7 +415,8 @@ class Pages extends StatelessWidget {
       {this.text,
       this.color,
       required this.FontSize,
-      required this.fontFamily});
+      required this.fontFamily,
+      required this.chapter});
   @override
   Widget build(BuildContext context) {
     var bold = 22 + FontSize.toInt();
@@ -370,8 +430,7 @@ class Pages extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-              Text(
-                  "What is in it for me? Learn how to become an effecive unofficial project manager",
+              Text(chapter.title!,
                   maxLines: 5,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
@@ -382,8 +441,7 @@ class Pages extends StatelessWidget {
                       fontWeight: FontWeight.w900)),
               Padding(
                 padding: const EdgeInsets.only(top: 10),
-                child: Text(
-                    "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.",
+                child: Text(chapter.description!,
                     maxLines: 15,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.left,
