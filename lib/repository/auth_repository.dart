@@ -29,10 +29,10 @@ class AuthRepository {
       } else if (response.statusCode == 400) {
         return left(response.data["message"]);
       } else {
-        return left("Some error accured");
+        return left("Login failed! please try again");
       }
     } catch (e) {
-      return left(e.toString());
+      return left("Login failed! please try again");
     }
   }
 
@@ -61,10 +61,10 @@ class AuthRepository {
       } else if (response.statusCode == 400) {
         return left(response.data["message"]);
       } else {
-        return left("Some error accured");
+        return left("Register failed! please try again");
       }
     } catch (e) {
-      return left(e.toString());
+      return left('Register failed! please try again');
     }
   }
 
@@ -82,12 +82,12 @@ class AuthRepository {
         }
         return right(true);
       } else if (response.statusCode == 500) {
-        return left("Internal server error");
+        return left("Some error accured! Please try again");
       } else {
-        return left("Some error accured");
+        return left("Some error accured! Please try again");
       }
     } catch (e) {
-      return left("Internal server error");
+      return left("Some error accured! Please try again");
     }
   }
 
@@ -105,12 +105,12 @@ class AuthRepository {
         }
         return right(true);
       } else if (response.statusCode == 500) {
-        return left("Internal server error");
+        return left("Some error accured! Please try again");
       } else {
-        return left("Some error accured");
+        return left("Some error accured! Please try again");
       }
     } catch (e) {
-      return left("Internal server error");
+      return left("Some error accured! Please try again");
     }
   }
 
@@ -129,20 +129,20 @@ class AuthRepository {
         }
         return right(true);
       } else if (response.statusCode == 500) {
-        return left("Internal server error");
+        return left("Some error accured! Please try again");
       } else {
-        return left("Some error accured");
+        return left("Some error accured! Please try again");
       }
     } catch (e) {
-      return left("Internal server error");
+      return left("Some error accured! Please try again");
     }
   }
 
   Future<Either<String, bool>> updatePassword(
       {required String email, required String password}) async {
     try {
-      Response response = await dioClient
-          .post(ApiEndpoint.updatePassword, data: {"email": email, "password": password});
+      Response response = await dioClient.post(ApiEndpoint.updatePassword,
+          data: {"email": email, "password": password});
       if (response.statusCode == 200) {
         dynamic data = response.data;
         if (data.runtimeType == String) {
@@ -153,12 +153,12 @@ class AuthRepository {
         }
         return right(true);
       } else if (response.statusCode == 500) {
-        return left("Internal server error");
+        return left("Some error accured! Please try again");
       } else {
-        return left("Some error accured");
+        return left("Some error accured! Please try again");
       }
     } catch (e) {
-      return left("Internal server error");
+      return left("Some error accured! Please try again");
     }
   }
 }

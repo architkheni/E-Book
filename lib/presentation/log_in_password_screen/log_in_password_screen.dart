@@ -18,6 +18,7 @@ class LogInPasswordScreen extends StatefulWidget {
 
 class _LogInPasswordScreenState extends State<LogInPasswordScreen> {
   bool isCheckbox = false;
+  bool obsecure = true;
 
   TextEditingController passwordController = TextEditingController();
 
@@ -143,22 +144,26 @@ class _LogInPasswordScreenState extends State<LogInPasswordScreen> {
                                             CustomTextStyles.bodyMediumGray500,
                                         textInputType:
                                             TextInputType.visiblePassword,
-                                        suffix: Container(
-                                            margin: getMargin(
-                                                left: 30,
-                                                top: 12,
-                                                right: 16,
-                                                bottom: 12),
-                                            child: CustomImageView(
-                                                svgPath: ImageConstant.imgEye)),
+                                        suffix: IconButton(
+                                          iconSize: 23,
+                                          onPressed: () {
+                                            setState(() {
+                                              obsecure = !obsecure;
+                                            });
+                                          },
+                                          splashColor: Colors.transparent,
+                                          icon: Icon(obsecure
+                                              ? Icons.visibility_off
+                                              : Icons.visibility),
+                                          color: appTheme.gray500,
+                                        ),
                                         suffixConstraints: BoxConstraints(
                                             maxHeight: getVerticalSize(48)),
-                                        obscureText: true,
+                                        obscureText: obsecure,
                                         filled: true,
                                         fillColor: appTheme.blueGray50),
                                     CustomElevatedButton(
                                         onTap: () {
-
                                           context.read<AuthProvider>().logIn(
                                               context,
                                               email: widget.email,

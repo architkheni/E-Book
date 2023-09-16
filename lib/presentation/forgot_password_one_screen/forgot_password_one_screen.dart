@@ -6,12 +6,22 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
-class ForgotPasswordOneScreen extends StatelessWidget {
+class ForgotPasswordOneScreen extends StatefulWidget {
   final String email;
   ForgotPasswordOneScreen({Key? key, required this.email})
       : super(
           key: key,
         );
+
+  @override
+  State<ForgotPasswordOneScreen> createState() =>
+      _ForgotPasswordOneScreenState();
+}
+
+class _ForgotPasswordOneScreenState extends State<ForgotPasswordOneScreen> {
+  bool obsecure = true;
+
+  bool reObsecure = true;
 
   TextEditingController newpasswordController = TextEditingController();
 
@@ -160,23 +170,25 @@ class ForgotPasswordOneScreen extends StatelessWidget {
                                           textInputAction: TextInputAction.next,
                                           textInputType:
                                               TextInputType.visiblePassword,
-                                          suffix: Container(
-                                            margin: getMargin(
-                                              left: 12,
-                                              top: 12,
-                                              right: 16,
-                                              bottom: 12,
-                                            ),
-                                            child: CustomImageView(
-                                              svgPath: ImageConstant.imgEye,
-                                            ),
+                                          suffix: IconButton(
+                                            splashColor: Colors.transparent,
+                                            iconSize: 23,
+                                            onPressed: () {
+                                              setState(() {
+                                                obsecure = !obsecure;
+                                              });
+                                            },
+                                            icon: Icon(obsecure
+                                                ? Icons.visibility_off
+                                                : Icons.visibility),
+                                            color: appTheme.gray500,
                                           ),
                                           suffixConstraints: BoxConstraints(
                                             maxHeight: getVerticalSize(
                                               48,
                                             ),
                                           ),
-                                          obscureText: true,
+                                          obscureText: obsecure,
                                           filled: true,
                                           fillColor: appTheme.blueGray50,
                                         ),
@@ -197,23 +209,25 @@ class ForgotPasswordOneScreen extends StatelessWidget {
                                               .bodyMediumGray500,
                                           textInputType:
                                               TextInputType.visiblePassword,
-                                          suffix: Container(
-                                            margin: getMargin(
-                                              left: 30,
-                                              top: 12,
-                                              right: 16,
-                                              bottom: 12,
-                                            ),
-                                            child: CustomImageView(
-                                              svgPath: ImageConstant.imgEye,
-                                            ),
+                                          suffix: IconButton(
+                                            splashColor: Colors.transparent,
+                                            iconSize: 23,
+                                            onPressed: () {
+                                              setState(() {
+                                                reObsecure = !reObsecure;
+                                              });
+                                            },
+                                            icon: Icon(reObsecure
+                                                ? Icons.visibility_off
+                                                : Icons.visibility),
+                                            color: appTheme.gray500,
                                           ),
                                           suffixConstraints: BoxConstraints(
                                             maxHeight: getVerticalSize(
                                               48,
                                             ),
                                           ),
-                                          obscureText: true,
+                                          obscureText: reObsecure,
                                           filled: true,
                                           fillColor: appTheme.blueGray50,
                                         ),
@@ -250,7 +264,7 @@ class ForgotPasswordOneScreen extends StatelessWidget {
                                               context
                                                   .read<AuthProvider>()
                                                   .updatePassword(context,
-                                                      email: email,
+                                                      email: widget.email,
                                                       password:
                                                           newpasswordController
                                                               .text);

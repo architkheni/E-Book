@@ -108,7 +108,7 @@ class CustomTextFormField extends StatelessWidget {
         child: TextFormField(
           controller: controller,
           onTap: onTap,
-          focusNode: focusNode ?? FocusNode(),
+          focusNode: focusNode,
           autofocus: autofocus!,
           enabled: enabled,
           style: textStyle,

@@ -25,6 +25,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  bool obsecure = true;
+
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
@@ -141,17 +143,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           hintText: "Password",
                           hintStyle: CustomTextStyles.bodyMediumGray500,
                           textInputType: TextInputType.visiblePassword,
-                          suffix: Container(
-                            margin: getMargin(
-                                left: 30, top: 12, right: 16, bottom: 12),
-                            child: CustomImageView(
-                              svgPath: ImageConstant.imgEye,
-                            ),
+                          suffix: IconButton(
+                            splashColor: Colors.transparent,
+                            iconSize: 23,
+                            onPressed: () {
+                              setState(() {
+                                obsecure = !obsecure;
+                              });
+                            },
+                            icon: Icon(obsecure
+                                ? Icons.visibility_off
+                                : Icons.visibility),
+                            color: appTheme.gray500,
                           ),
                           suffixConstraints: BoxConstraints(
                             maxHeight: getVerticalSize(48),
                           ),
-                          obscureText: true,
+                          obscureText: obsecure,
                           filled: true,
                           fillColor: appTheme.blueGray50,
                         ),
