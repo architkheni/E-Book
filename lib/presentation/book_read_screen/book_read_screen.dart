@@ -60,37 +60,6 @@ class _BookReadViewState extends State<BookReadView> {
     PageController controller = PageController();
     int _curr = 0;
 
-    // final List<Widget> entries = <Widget>[
-    //   Center(
-    //       child: Pages(
-    //     text: "Page One",
-    //     color: Colors.teal,
-    //     FontSize: _currentSliderValue,
-    //     fontFamily: fontFamily,
-    //   )),
-    //   Center(
-    //       child: Pages(
-    //     text: "Page Two",
-    //     color: Colors.red.shade100,
-    //     FontSize: _currentSliderValue,
-    //     fontFamily: fontFamily,
-    //   )),
-    //   Center(
-    //       child: Pages(
-    //     text: "Page Three",
-    //     color: Colors.grey,
-    //     FontSize: _currentSliderValue,
-    //     fontFamily: fontFamily,
-    //   )),
-    //   Center(
-    //       child: Pages(
-    //     text: "Page Four",
-    //     color: Colors.yellow.shade100,
-    //     FontSize: _currentSliderValue,
-    //     fontFamily: fontFamily,
-    //   ))
-    // ];
-
     return SafeArea(
         child: Scaffold(
       backgroundColor: appTheme.gray90003,
@@ -404,6 +373,7 @@ class _BookReadViewState extends State<BookReadView> {
   }
 }
 
+// ignore: must_be_immutable
 class Pages extends StatelessWidget {
   final BookChapterModel chapter;
   final text;

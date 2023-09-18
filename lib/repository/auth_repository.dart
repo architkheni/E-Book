@@ -32,7 +32,7 @@ class AuthRepository {
         return left("Login failed! please try again");
       }
     } catch (e) {
-      return left("Login failed! please try again");
+      return left("These credentials do not match our records.");
     }
   }
 
@@ -143,6 +143,29 @@ class AuthRepository {
     try {
       Response response = await dioClient.post(ApiEndpoint.updatePassword,
           data: {"email": email, "password": password});
+      if (response.statusCode == 200) {
+        dynamic data = response.data;
+        if (data.runtimeType == String) {
+          data = jsonDecode(data);
+        }
+        if (data["status"] == false) {
+          return left(data["message"]);
+        }
+        return right(true);
+      } else if (response.statusCode == 500) {
+        return left("Some error accured! Please try again");
+      } else {
+        return left("Some error accured! Please try again");
+      }
+    } catch (e) {
+      return left("Some error accured! Please try again");
+    }
+  }
+
+  Future<Either<String, bool>> logout({required String token}) async {
+    try {
+      Response response = await dioClient.post(ApiEndpoint.logout,
+          options: Options(headers: {"Authorization": "Bearer $token"}));
       if (response.statusCode == 200) {
         dynamic data = response.data;
         if (data.runtimeType == String) {

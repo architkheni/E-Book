@@ -9,10 +9,10 @@ import 'package:provider/provider.dart';
 import '../../widgets/app_bar/appbar_image.dart';
 import '../../widgets/app_bar/appbar_subtitle.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
-import '../langugaes_screen/langugaes_screen.dart';
 
 class CategoriesScreen extends StatefulWidget {
-  CategoriesScreen({Key? key}) : super(key: key);
+  final bool? goIsProfile;
+  CategoriesScreen({Key? key, this.goIsProfile}) : super(key: key);
 
   @override
   State<CategoriesScreen> createState() => _CategoriesScreenState();
@@ -177,11 +177,15 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(snackBar);
                                 } else {
-                                  // TODO: category select api
                                   context
                                       .read<ProfileProvider>()
                                       .saveUserCategory(context,
-                                          category: selectedId);
+                                          category: selectedId,
+                                          onSuccess: widget.goIsProfile == null
+                                              ? null
+                                              : () {
+                                                  Navigator.pop(context);
+                                                });
                                 }
                               },
                               width: double.maxFinite,

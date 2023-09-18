@@ -1,5 +1,9 @@
 import 'package:book/core/utils/color_constant.dart';
+import 'package:book/core/utils/size_utils.dart';
+import 'package:book/provider/auth_provider.dart';
 import 'package:book/provider/profile_provider.dart';
+import 'package:book/theme/custom_button_style.dart';
+import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -175,7 +179,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => CategoriesScreen()),
+                                    builder: (context) => CategoriesScreen(
+                                          goIsProfile: true,
+                                        )),
                               );
                               break;
                             case 2:
@@ -198,7 +204,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               );
                               break;
                             case 5:
-                              // TODO: share profile
                               Share.share("Share your book");
                               break;
                             default:
@@ -255,6 +260,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     );
                   },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 16, right: 16, top: 20),
+                child: CustomElevatedButton(
+                  onTap: () async {
+                    context.read<AuthProvider>().logout(context);
+                  },
+                  width: double.maxFinite,
+                  height: getVerticalSize(48),
+                  text: "Log out",
+                  // margin: getMargin(top: 74),
+                  buttonStyle: CustomButtonStyles.fillTeal400,
+                  buttonTextStyle: CustomTextStyles.titleSmallPrimary_1,
                 ),
               ),
             ],

@@ -23,13 +23,17 @@ class ProfileProvider extends ChangeNotifier {
   }
 
   void saveUserCategory(BuildContext context,
-      {required List<int> category}) async {
+      {required List<int> category, void Function()? onSuccess}) async {
     String token = await appStorage.getToken();
     Either<String, bool> result = await ProfileRepository.instance
         .saveUserCategory(token: token, category: category);
     result.fold((l) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l)));
     }, (r) {
+      if (onSuccess != null) {
+        onSuccess();
+        return;
+      }
       Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => LangugaesScreen(),
       ));

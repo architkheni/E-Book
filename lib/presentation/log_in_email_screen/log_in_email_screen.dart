@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:book/core/app_export.dart';
-import 'package:book/presentation/log_in_password_screen/log_in_password_screen.dart';
 import 'package:book/presentation/sign_up_screen/sign_up_screen.dart';
 import 'package:book/provider/auth_provider.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
@@ -19,6 +18,10 @@ class LogInEmailScreen extends StatefulWidget {
 }
 
 class _LogInEmailScreenState extends State<LogInEmailScreen> {
+  bool isCheckbox = false;
+  bool obsecure = true;
+
+  TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -73,19 +76,37 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                         filled: true,
                         fillColor: appTheme.blueGray50,
                       ),
+                      CustomTextFormField(
+                          controller: passwordController,
+                          margin: getMargin(top: 24),
+                          contentPadding:
+                              getPadding(left: 16, top: 15, bottom: 15),
+                          textStyle: CustomTextStyles.bodyMediumGray500,
+                          hintText: "Password",
+                          hintStyle: CustomTextStyles.bodyMediumGray500,
+                          textInputType: TextInputType.visiblePassword,
+                          suffix: IconButton(
+                            iconSize: 23,
+                            onPressed: () {
+                              setState(() {
+                                obsecure = !obsecure;
+                              });
+                            },
+                            splashColor: Colors.transparent,
+                            icon: Icon(obsecure
+                                ? Icons.visibility_off
+                                : Icons.visibility),
+                            color: appTheme.gray500,
+                          ),
+                          suffixConstraints:
+                              BoxConstraints(maxHeight: getVerticalSize(48)),
+                          obscureText: obsecure,
+                          filled: true,
+                          fillColor: appTheme.blueGray50),
                       CustomElevatedButton(
                         onTap: () {
                           var velidEmail = emailV(emailController.text);
-                          if (velidEmail == true) {
-                            // TODO: go to the password page
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LogInPasswordScreen(
-                                        email: emailController.text,
-                                      )),
-                            );
-                          } else {
+                          if (velidEmail == false) {
                             SnackBar snackBar = SnackBar(
                               content:
                                   Text("Please enter a valid email address"),
@@ -93,7 +114,21 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                             );
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(snackBar);
+                            return;
                           }
+                          if (passwordController.text.trim().isEmpty) {
+                            SnackBar snackBar = SnackBar(
+                              content: Text("Password is not empty")
+                              ,
+                              backgroundColor: appTheme.teal400,
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                            return;
+                          }
+                          context.read<AuthProvider>().logIn(context,
+                              email: emailController.text,
+                              password: passwordController.text.trim());
                         },
                         width: double.maxFinite,
                         height: getVerticalSize(48),
@@ -104,8 +139,18 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          context.read<AuthProvider>().forgotPassword(context,
-                              email: emailController.text.trim());
+                          var velidEmail = emailV(emailController.text);
+                          if (velidEmail == true) {
+                            context.read<AuthProvider>().forgotPassword(context,
+                                email: emailController.text.trim());
+                          } else {
+                            SnackBar snackBar = SnackBar(
+                              content: Text("Please enter a email address"),
+                              backgroundColor: appTheme.teal400,
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          }
                         },
                         child: Padding(
                           padding: getPadding(top: 16),

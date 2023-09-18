@@ -21,7 +21,10 @@ class AuthProvider extends ChangeNotifier {
     Either<String, UserModel> result =
         await AuthRepository.instance.logIn(email: email, password: password);
     result.fold((l) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l)));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(l),
+        backgroundColor: appTheme.teal400,
+      ));
     }, (r) {
       appStorage.setToken(r.apiToken!);
       appStorage.setUser(r.toString());
@@ -141,6 +144,28 @@ class AuthProvider extends ChangeNotifier {
           builder: (context) => LogInEmailScreen(),
         ),
       );
+    });
+  }
+
+  void logout(BuildContext context) async {
+    String token = await appStorage.getToken();
+    Either<String, bool> result =
+        await AuthRepository.instance.logout(token: token);
+    result.fold((l) {
+      SnackBar snackBar = SnackBar(
+        content: Text(l),
+        backgroundColor: appTheme.teal400,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }, (r) {
+      NavigatorState navigatorState = Navigator.of(context);
+      AppStorage appStorage = AppStorage();
+      appStorage.dispose();
+      navigatorState.pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) => LogInEmailScreen(),
+          ),
+          (route) => false);
     });
   }
 }

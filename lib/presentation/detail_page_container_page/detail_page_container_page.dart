@@ -120,8 +120,9 @@ class _DetailViewState extends State<DetailView> {
                                                                         .bookId!);
                                                                 log(isFavorite
                                                                     .toString());
-                                                                return GestureDetector(
-                                                                  onTap: () {
+                                                                return IconButton(
+                                                                  onPressed:
+                                                                      () {
                                                                     if (isFavorite) {
                                                                       context
                                                                           .read<
@@ -138,16 +139,16 @@ class _DetailViewState extends State<DetailView> {
                                                                               1);
                                                                     }
                                                                   },
-                                                                  child:
-                                                                      CustomImageView(
-                                                                    imagePath: isFavorite
-                                                                        ? ImageConstant
-                                                                            .likeIcon
-                                                                        : ImageConstant
-                                                                            .like,
-                                                                    height: 20,
-                                                                    width: 20,
-                                                                  ),
+                                                                  icon:
+                                                                      isFavorite
+                                                                          ? Icon(
+                                                                              Icons.favorite,
+                                                                              color: Colors.red,
+                                                                            )
+                                                                          : Icon(
+                                                                              Icons.favorite_border,
+                                                                              color: Colors.white,
+                                                                            ),
                                                                 );
                                                               }),
                                                             ),
@@ -187,7 +188,9 @@ class _DetailViewState extends State<DetailView> {
                                                                 MaterialPageRoute(
                                                                     builder:
                                                                         (context) =>
-                                                                            BookReadScreen(bookId: widget.bookId,)),
+                                                                            BookReadScreen(
+                                                                              bookId: widget.bookId,
+                                                                            )),
                                                               );
                                                             },
                                                             child: Container(
