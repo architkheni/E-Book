@@ -8,17 +8,17 @@ class AppStorage {
 
   Future<String> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('token') ?? "";
+    return prefs.getString('token') ?? '';
   }
 
-  void setUser(String user) async {
+  Future<void> setUser(String user) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('user', user);
   }
 
   Future<String> getUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('user') ?? "";
+    return prefs.getString('user') ?? '';
   }
 
   void setLogin(bool value) async {
@@ -29,6 +29,16 @@ class AppStorage {
   Future<bool> getLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getBool('isLogin') ?? false;
+  }
+
+  void setDarkMode(bool value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isDark', value);
+  }
+
+  Future<bool> getDarkMode() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isDark') ?? false;
   }
 
   void dispose() async {

@@ -6,13 +6,14 @@ class BookChapterModel {
   String? createdAt;
   String? updatedAt;
 
-  BookChapterModel(
-      {this.id,
-      this.bookId,
-      this.title,
-      this.description,
-      this.createdAt,
-      this.updatedAt});
+  BookChapterModel({
+    this.id,
+    this.bookId,
+    this.title,
+    this.description,
+    this.createdAt,
+    this.updatedAt,
+  });
 
   BookChapterModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -24,13 +25,13 @@ class BookChapterModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['book_id'] = this.bookId;
-    data['title'] = this.title;
-    data['description'] = this.description;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['book_id'] = bookId;
+    data['title'] = title;
+    data['description'] = description;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }

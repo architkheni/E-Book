@@ -5,7 +5,6 @@ import 'package:book/presentation/forgot_password_one_screen/forgot_password_one
 import 'package:book/presentation/forgot_password_screen/forgot_password_screen.dart';
 import 'package:book/presentation/forgot_password_two_screen/forgot_password_two_screen.dart';
 import 'package:book/presentation/home_recommended_for_you_see_all_one_screen/home_recommended_for_you_see_all_one_screen.dart';
-import 'package:book/presentation/home_recommended_for_you_see_all_screen/home_recommended_for_you_see_all_screen.dart';
 import 'package:book/presentation/home_screen_container_screen/home_screen_container_screen.dart';
 import 'package:book/presentation/langugaes_screen/langugaes_screen.dart';
 import 'package:book/presentation/log_in_email_screen/log_in_email_screen.dart';
@@ -45,27 +44,31 @@ class AppRoutes {
   static const String bottomPage = '/bottom-page';
 
   static Map<String, WidgetBuilder> routes = {
-    logInEmailScreen: (context) => LogInEmailScreen(),
+    logInEmailScreen: (context) => const LogInEmailScreen(),
     forgotPasswordTwoScreen: (context) => ForgotPasswordTwoScreen(),
-    signUpScreen: (context) => SignUpScreen(),
-    categoriesScreen: (context) => CategoriesScreen(),
+    signUpScreen: (context) => const SignUpScreen(),
+    categoriesScreen: (context) => const CategoriesScreen(),
     homeScreenContainerScreen: (context) => HomeScreenContainerScreen(),
-    logInPasswordScreen: (context) => LogInPasswordScreen(
-          email: "",
+    logInPasswordScreen: (context) => const LogInPasswordScreen(
+          email: '',
         ),
     forgotPasswordScreen: (context) => ForgotPasswordScreen(
-          email: "",
+          email: '',
         ),
-    langugaesScreen: (context) => LangugaesScreen(),
-    homeRecommendedForYouSeeAllScreen: (context) =>
-        HomeRecommendedForYouSeeAllScreen(
-          title: '',
-          books: [],
-        ),
-    forgotPasswordOneScreen: (context) => ForgotPasswordOneScreen(email: ""),
+    langugaesScreen: (context) => const LangugaesScreen(),
+    // TODO: comment becase flag is not come
+    // homeRecommendedForYouSeeAllScreen: (context) =>
+    //     HomeRecommendedForYouSeeAllScreen(
+    //       title: '',
+    //       books: [],
+    //     ),
+    forgotPasswordOneScreen: (context) =>
+        const ForgotPasswordOneScreen(email: ''),
     homeRecommendedForYouSeeAllOneScreen: (context) =>
         HomeRecommendedForYouSeeAllOneScreen(),
-    appNavigationScreen: (context) => AppNavigationScreen(),
-    bottomPage: (context) => BottombarPage(buttomIndex: 0,)
+    appNavigationScreen: (context) => const AppNavigationScreen(),
+    bottomPage: (context) => BottombarPage(
+          buttomIndex: 0,
+        ),
   };
 }

@@ -1,4 +1,5 @@
 import 'package:book/core/app_export.dart';
+import 'package:book/core/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -8,6 +9,7 @@ class AppbarSubtitle extends StatelessWidget {
     required this.text,
     this.margin,
     this.onTap,
+    this.style,
   }) : super(
           key: key,
         );
@@ -17,9 +19,11 @@ class AppbarSubtitle extends StatelessWidget {
   EdgeInsetsGeometry? margin;
 
   Function? onTap;
+  TextStyle? style;
 
   @override
   Widget build(BuildContext context) {
+    bool isLight = Theme.of(context).brightness == Brightness.light;
     return GestureDetector(
       onTap: () {
         onTap?.call();
@@ -30,9 +34,12 @@ class AppbarSubtitle extends StatelessWidget {
           text,
           overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.left,
-          style: theme.textTheme.headlineSmall!.copyWith(
-            color: theme.colorScheme.onPrimary.withOpacity(1),
-          ),
+          style: style ??
+              theme.textTheme.headlineSmall!.copyWith(
+                color: isLight
+                    ? ColorConstant.black
+                    : theme.colorScheme.onPrimary.withOpacity(1),
+              ),
         ),
       ),
     );

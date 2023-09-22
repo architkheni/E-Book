@@ -1,3 +1,4 @@
+import 'package:book/core/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/app_export.dart';
@@ -11,6 +12,7 @@ class Chipviewframefo2ItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isLight = Theme.of(context).brightness == Brightness.light;
     return RawChip(
       padding: getPadding(left: 16, right: 16),
       showCheckmark: false,
@@ -19,14 +21,14 @@ class Chipviewframefo2ItemWidget extends StatelessWidget {
         text,
         textAlign: TextAlign.left,
         style: TextStyle(
-          color: appTheme.blueGray50,
+          color: isLight ? ColorConstant.black : appTheme.blueGray50,
           fontSize: getFontSize(12),
           fontFamily: 'Outfit',
           fontWeight: FontWeight.w100,
         ),
       ),
       selected: false,
-      backgroundColor: appTheme.blueGray900,
+      backgroundColor: isLight ? ColorConstant.kF3F3F3 : appTheme.blueGray900,
       selectedColor: appTheme.blueGray900,
       shape: RoundedRectangleBorder(
         side: BorderSide.none,

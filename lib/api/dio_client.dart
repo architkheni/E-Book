@@ -10,7 +10,7 @@ class DioClient {
     init();
   }
 
-  static DioClient _instance = DioClient._();
+  static final DioClient _instance = DioClient._();
 
   factory DioClient() {
     return _instance;
@@ -19,7 +19,7 @@ class DioClient {
   void init() {
     dio.options = BaseOptions(
       baseUrl: ApiEndpoint.baseUrl,
-      headers: {"Content-Type": "application/json"},
+      headers: {'Content-Type': 'application/json'},
     );
     dio.interceptors.add(apiInterceptors.interceptorsWrapper());
     dio.interceptors.add(apiInterceptors.prettyDioLogger());

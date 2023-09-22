@@ -1,16 +1,22 @@
 import 'package:book/core/app_export.dart';
+import 'package:book/core/utils/color_constant.dart';
 import 'package:book/model/book_model.dart';
 import 'package:book/presentation/detail_page_container_page/detail_page_container_page.dart';
+import 'package:book/presentation/home_recommended_for_you_see_all_screen/provider/view_all_book_provider.dart';
 import 'package:book/widgets/app_bar/appbar_image.dart';
+import 'package:book/widgets/app_bar/appbar_subtitle.dart';
 import 'package:book/widgets/app_bar/custom_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeRecommendedForYouSeeAllScreen extends StatefulWidget {
-  final List<BookModel> books;
   final String title;
-  HomeRecommendedForYouSeeAllScreen(
-      {Key? key, required this.title, required this.books})
-      : super(key: key);
+  final String param;
+  const HomeRecommendedForYouSeeAllScreen({
+    Key? key,
+    required this.title,
+    required this.param,
+  }) : super(key: key);
 
   @override
   State<HomeRecommendedForYouSeeAllScreen> createState() =>
@@ -25,349 +31,393 @@ class _HomeRecommendedForYouSeeAllScreenState
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
-    double _width = MediaQuery.of(context).size.width;
-    double _height = MediaQuery.of(context).size.height;
-    return SafeArea(
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    bool isLight = Theme.of(context).brightness == Brightness.light;
+    return ChangeNotifierProvider(
+      create: (context) =>
+          ViewAllBookProvider()..getViewAllBooks(param: widget.param),
+      child: SafeArea(
         child: Scaffold(
-      backgroundColor: theme.colorScheme.onPrimaryContainer.withOpacity(1),
-      appBar: CustomAppBar(
-          height: 60,
-          leadingWidth: 35,
-          leading: Container(
-            child: AppbarImage(
-                height: 20,
-                width: 15,
-                svgPath: ImageConstant.imgArrowleftBlueGray50,
-                margin: getMargin(left: 16, top: 17, bottom: 18),
-                onTap: () {
-                  onTapArrowleft2(context);
-                }),
-          ),
-          title: Padding(
-            padding: getPadding(left: 15),
-            child: widget.title == 'Favourite'
-                ? CustomImageView(
-                    imagePath: ImageConstant.favouritesImage,
-                    height: 35,
-                  )
-                : widget.title == 'In Progress'
-                    ? CustomImageView(
-                        imagePath: ImageConstant.inProgressImage,
-                        height: 35,
-                      )
-                    : widget.title == 'Finished'
-                        ? CustomImageView(
-                            imagePath: ImageConstant.finishedImage,
-                            height: 35,
-                          )
-                        : widget.title == 'My History'
-                            ? CustomImageView(
-                                imagePath: ImageConstant.myHistoryImage,
-                                height: 35,
-                              )
-                            : widget.title == 'Recently Added'
-                                ? CustomImageView(
-                                    imagePath: ImageConstant.recentlyAddedImage,
-                                    height: 35,
-                                  )
-                                : widget.title == 'Recommended For You'
-                                    ? CustomImageView(
-                                        imagePath: ImageConstant.frame136Image,
-                                        height: 35,
-                                      )
-                                    : widget.title == 'Similar Books'
-                                        ? CustomImageView(
-                                            imagePath:
-                                                ImageConstant.similarBooksImage,
-                                            height: 35,
-                                          )
-                                        : widget.title == 'Top Search'
-                                            ? CustomImageView(
-                                                imagePath: ImageConstant
-                                                    .topSearchImage,
-                                                height: 35,
-                                              )
-                                            : widget.title == 'Categories'
-                                                ? CustomImageView(
-                                                    imagePath: ImageConstant
-                                                        .categoriesImage,
-                                                    height: 35,
-                                                  )
-                                                : widget.title == 'Popular'
-                                                    ? CustomImageView(
-                                                        imagePath: ImageConstant
-                                                            .popularImage,
-                                                        height: 35,
-                                                      )
-                                                    : SizedBox.shrink(),
-          )),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 17, right: 20),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Text(
-                  "${widget.books.length} Items",
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.left,
-                  style: CustomTextStyles.titleSmallWhiteA700,
-                ),
-                Spacer(),
-                Text(
-                  "Sort By  ",
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.left,
-                  style: CustomTextStyles.bodyMediumGray400,
-                ),
-                DropdownButton<String>(
-                  // padding: EdgeInsets.zero,
-                  isDense: true,
-                  underline: SizedBox.shrink(),
-                  style: CustomTextStyles.titleSmallWhiteA700,
-                  icon: Icon(Icons.keyboard_arrow_down_outlined,
-                      color: appTheme.whiteA700),
-                  value: selectedValue,
-                  dropdownColor:
-                      theme.colorScheme.onPrimaryContainer.withOpacity(1),
-                  onChanged: (newValue) {
-                    setState(() {
-                      selectedValue = newValue!;
-                    });
-                  },
-                  items: <String>['A to Z', 'Z to A']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-              ],
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          appBar: CustomAppBar(
+            height: 60,
+            leadingWidth: 35,
+            leading: AppbarImage(
+              height: 20,
+              width: 15,
+              svgPath: ImageConstant.imgArrowleftBlueGray50,
+              margin: getMargin(left: 16, top: 17, bottom: 18),
+              onTap: () {
+                onTapArrowleft2(context);
+              },
+              color: isLight ? ColorConstant.black : null,
             ),
-            SizedBox(height: 10),
-            Expanded(
-              child: ListView.separated(
-                  physics: BouncingScrollPhysics(),
-                  shrinkWrap: true,
-                  separatorBuilder: (context, index) {
-                    return SizedBox(height: 10);
-                  },
-                  itemCount: widget.books.length,
-                  itemBuilder: (context, index) {
-                    BookModel book = widget.books[index];
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  DetailPageContainerPage(bookId: book.bookId!),
-                            ));
-                      },
-                      child: Container(
-                        decoration: AppDecoration.fill4.copyWith(
-                          borderRadius: BorderRadiusStyle.roundedBorder8,
+            title: Padding(
+              padding: getPadding(left: 11),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: appTheme.teal400,
+                      width: 2,
+                    ),
+                  ),
+                ),
+                padding: const EdgeInsets.only(bottom: 3),
+                child: AppbarSubtitle(
+                  text: widget.title,
+                ),
+              ),
+            ),
+          ),
+          body: Consumer<ViewAllBookProvider>(
+            builder: (context, provider, child) {
+              if (provider.isLoading) {
+                return Center(
+                  child: CircularProgressIndicator(color: appTheme.teal400),
+                );
+              }
+              return Padding(
+                padding: const EdgeInsets.only(left: 17, right: 20),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          '${provider.books.length} Items',
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.left,
+                          style: CustomTextStyles.titleSmallWhiteA700.copyWith(
+                            color: isLight ? ColorConstant.black : null,
+                          ),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(9.0),
-                              child: CustomImageView(
-                                url: book.frontCover,
-                                height: _height / 8,
-                                width: _width / 5,
-                                fit: BoxFit.fill,
-                                radius: BorderRadius.circular(5),
+                        const Spacer(),
+                        Text(
+                          'Sort By  ',
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.left,
+                          style: CustomTextStyles.bodyMediumGray400.copyWith(
+                            color: isLight ? ColorConstant.black : null,
+                          ),
+                        ),
+                        DropdownButton<String>(
+                          // padding: EdgeInsets.zero,
+                          isDense: true,
+                          underline: const SizedBox.shrink(),
+                          style: CustomTextStyles.titleSmallWhiteA700.copyWith(
+                            color: isLight ? ColorConstant.black : null,
+                          ),
+                          icon: Icon(
+                            Icons.keyboard_arrow_down_outlined,
+                            color: isLight
+                                ? ColorConstant.black
+                                : appTheme.whiteA700,
+                          ),
+                          value: selectedValue,
+                          dropdownColor: isLight
+                              ? ColorConstant.whiteA700
+                              : theme.colorScheme.onPrimaryContainer
+                                  .withOpacity(1),
+                          onChanged: (newValue) {
+                            setState(() {
+                              selectedValue = newValue!;
+                            });
+                          },
+                          items: <String>['A to Z', 'Z to A']
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(
+                                value,
+                                style: TextStyle(
+                                  color: isLight ? ColorConstant.black : null,
+                                ),
                               ),
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 5, top: 1, bottom: 4),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          book.name ?? "Book Name",
-                                          overflow: TextOverflow.ellipsis,
-                                          textAlign: TextAlign.left,
-                                          style: theme.textTheme.labelLarge,
-                                        ),
-                                        Spacer(),
-                                        widget.title == 'In Progress'
-                                            ? SizedBox()
-                                            : widget.title == 'Finished'
-                                                ? SizedBox()
-                                                : Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            right: 10,
-                                                            bottom: 7),
-                                                    child: CustomImageView(
-                                                      svgPath: ImageConstant
-                                                          .imgLockTeal400,
-                                                      height: 16,
-                                                      width: 13,
-                                                    ),
-                                                  ),
-                                      ],
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Expanded(
+                      child: ListView.separated(
+                        physics: const BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        separatorBuilder: (context, index) {
+                          return const SizedBox(height: 10);
+                        },
+                        itemCount: provider.books.length,
+                        itemBuilder: (context, index) {
+                          BookModel book = provider.books[index];
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DetailPageContainerPage(
+                                    bookId: book.bookId!,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              decoration: AppDecoration.fill4.copyWith(
+                                borderRadius: BorderRadiusStyle.roundedBorder8,
+                                color: isLight ? ColorConstant.kF3F3F3 : null,
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(9.0),
+                                    child: CustomImageView(
+                                      url: book.frontCover,
+                                      height: height / 8,
+                                      width: width / 5,
+                                      fit: BoxFit.fill,
+                                      radius: BorderRadius.circular(5),
                                     ),
-                                    Container(
-                                      // color: Colors.deepPurple,
-                                      height: _height / 9,
-                                      width: _width / 1.4,
-                                      child: Stack(
-                                        alignment: Alignment.topCenter,
+                                  ),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 5,
+                                        top: 1,
+                                        bottom: 4,
+                                      ),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
                                         children: [
-                                          Align(
-                                            alignment: Alignment.bottomLeft,
-                                            child: Column(
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                book.name ?? 'Book Name',
+                                                overflow: TextOverflow.ellipsis,
+                                                textAlign: TextAlign.left,
+                                                style: theme
+                                                    .textTheme.labelLarge!
+                                                    .copyWith(
+                                                  color: isLight
+                                                      ? ColorConstant.black
+                                                      : null,
+                                                ),
+                                              ),
+                                              const Spacer(),
+                                              widget.title == 'In Progress'
+                                                  ? const SizedBox()
+                                                  : widget.title == 'Finished'
+                                                      ? const SizedBox()
+                                                      : Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                            right: 10,
+                                                            bottom: 7,
+                                                          ),
+                                                          child:
+                                                              CustomImageView(
+                                                            svgPath: ImageConstant
+                                                                .imgLockTeal400,
+                                                            height: 16,
+                                                            width: 13,
+                                                          ),
+                                                        ),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            // color: Colors.deepPurple,
+                                            height: height / 9,
+                                            width: width / 1.4,
+                                            child: Stack(
+                                              alignment: Alignment.topCenter,
                                               children: [
-                                                Spacer(),
-                                                Row(
-                                                  children: [
-                                                    CustomImageView(
-                                                      svgPath: ImageConstant
-                                                          .imgGgread,
-                                                      height: 16,
-                                                      width: 16,
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 4,
-                                                              top: 1,
-                                                              bottom: 1),
-                                                      child: Text(
-                                                        "${book.originalAudiobookLength ?? 0}m",
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        textAlign:
-                                                            TextAlign.left,
-                                                        style: CustomTextStyles
-                                                            .bodySmallTeal400,
-                                                      ),
-                                                    ),
-                                                    Spacer(),
-                                                    widget.title == 'Finished'
-                                                        ? Padding(
+                                                Align(
+                                                  alignment:
+                                                      Alignment.bottomLeft,
+                                                  child: Column(
+                                                    children: [
+                                                      const Spacer(),
+                                                      Row(
+                                                        children: [
+                                                          CustomImageView(
+                                                            svgPath:
+                                                                ImageConstant
+                                                                    .imgGgread,
+                                                            height: 16,
+                                                            width: 16,
+                                                          ),
+                                                          Padding(
                                                             padding:
                                                                 const EdgeInsets
                                                                     .only(
-                                                                    right: 10),
-                                                            child: Container(
-                                                              height: 20,
-                                                              width: 70,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            5),
-                                                                color: appTheme
-                                                                    .teal400,
+                                                              left: 4,
+                                                              top: 1,
+                                                              bottom: 1,
+                                                            ),
+                                                            child: Text(
+                                                              '${book.originalAudiobookLength ?? 0}m',
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .left,
+                                                              style: CustomTextStyles
+                                                                  .bodySmallTeal400
+                                                                  .copyWith(
+                                                                color: isLight
+                                                                    ? ColorConstant
+                                                                        .black
+                                                                    : null,
                                                               ),
-                                                              child: Center(
-                                                                child: Text(
-                                                                  "Finished",
+                                                            ),
+                                                          ),
+                                                          const Spacer(),
+                                                          widget.title ==
+                                                                  'Finished'
+                                                              ? Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .only(
+                                                                    right: 10,
+                                                                  ),
+                                                                  child:
+                                                                      Container(
+                                                                    height: 20,
+                                                                    width: 70,
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      borderRadius:
+                                                                          BorderRadius
+                                                                              .circular(
+                                                                        5,
+                                                                      ),
+                                                                      color: appTheme
+                                                                          .teal400,
+                                                                    ),
+                                                                    child:
+                                                                        Center(
+                                                                      child:
+                                                                          Text(
+                                                                        'Finished',
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                        textAlign:
+                                                                            TextAlign.left,
+                                                                        style: theme
+                                                                            .textTheme
+                                                                            .labelLarge!
+                                                                            .copyWith(
+                                                                          color: isLight
+                                                                              ? ColorConstant.black
+                                                                              : null,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                )
+                                                              : const SizedBox(),
+                                                        ],
+                                                      ),
+                                                      widget.title ==
+                                                              'In Progress'
+                                                          ? Row(
+                                                              children: [
+                                                                Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .centerLeft,
+                                                                  child:
+                                                                      Container(
+                                                                    height: 3,
+                                                                    width:
+                                                                        width /
+                                                                            3,
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      borderRadius:
+                                                                          BorderRadius
+                                                                              .circular(
+                                                                        5,
+                                                                      ),
+                                                                      // color: appTheme
+                                                                      //     .teal400,
+                                                                    ),
+                                                                    child:
+                                                                        LinearProgressIndicator(
+                                                                      color: appTheme
+                                                                          .teal400,
+                                                                      backgroundColor:
+                                                                          appTheme
+                                                                              .whiteA700,
+                                                                      value:
+                                                                          0.4,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                const SizedBox(
+                                                                  width: 7,
+                                                                ),
+                                                                Text(
+                                                                  '10/20',
                                                                   overflow:
                                                                       TextOverflow
                                                                           .ellipsis,
                                                                   textAlign:
                                                                       TextAlign
                                                                           .left,
-                                                                  style: theme
-                                                                      .textTheme
-                                                                      .labelLarge,
+                                                                  style: CustomTextStyles
+                                                                      .bodySmallThin_1,
                                                                 ),
-                                                              ),
-                                                            ),
-                                                          )
-                                                        : SizedBox()
-                                                  ],
+                                                              ],
+                                                            )
+                                                          : const SizedBox(),
+                                                    ],
+                                                  ),
                                                 ),
-                                                widget.title == 'In Progress'
-                                                    ? Row(
-                                                        children: [
-                                                          Align(
-                                                            alignment: Alignment
-                                                                .centerLeft,
-                                                            child: Container(
-                                                              height: 3,
-                                                              width: _width / 3,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            5),
-                                                                // color: appTheme
-                                                                //     .teal400,
-                                                              ),
-                                                              child:
-                                                                  LinearProgressIndicator(
-                                                                color: appTheme
-                                                                    .teal400,
-                                                                backgroundColor:
-                                                                    appTheme
-                                                                        .whiteA700,
-                                                                value: 0.4,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            width: 7,
-                                                          ),
-                                                          Text(
-                                                            "10/20",
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: CustomTextStyles
-                                                                .bodySmallThin_1,
-                                                          )
-                                                        ],
-                                                      )
-                                                    : SizedBox(),
+                                                Align(
+                                                  alignment: Alignment.topLeft,
+                                                  child: Text(
+                                                    '${book.description}',
+                                                    maxLines: 5,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    textAlign: TextAlign.left,
+                                                    style: CustomTextStyles
+                                                        .bodySmallThin_1
+                                                        .copyWith(
+                                                      color: isLight
+                                                          ? ColorConstant.black
+                                                          : null,
+                                                    ),
+                                                  ),
+                                                ),
                                               ],
-                                            ),
-                                          ),
-                                          Align(
-                                            alignment: Alignment.topLeft,
-                                            child: Text(
-                                              "${book.description}",
-                                              maxLines: 5,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: CustomTextStyles
-                                                  .bodySmallThin_1,
                                             ),
                                           ),
                                         ],
                                       ),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
-                          ],
-                        ),
+                          );
+                        },
                       ),
-                    );
-                  }),
-            ),
-          ],
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
         ),
       ),
-    ));
+    );
   }
 
   ///Handling route based on bottom click actions

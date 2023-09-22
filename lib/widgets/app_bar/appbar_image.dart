@@ -11,6 +11,7 @@ class AppbarImage extends StatelessWidget {
     this.svgPath,
     this.margin,
     this.onTap,
+    this.color,
   }) : super(
           key: key,
         );
@@ -18,6 +19,8 @@ class AppbarImage extends StatelessWidget {
   double height;
 
   double width;
+
+  Color? color;
 
   String? imagePath;
 
@@ -36,6 +39,7 @@ class AppbarImage extends StatelessWidget {
       child: Padding(
         padding: margin ?? EdgeInsets.zero,
         child: CustomImageView(
+          color: color,
           svgPath: svgPath,
           imagePath: imagePath,
           height: height,

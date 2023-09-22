@@ -11,9 +11,10 @@ class HomeScreenContainerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
     return SafeArea(
-        child: Scaffold(
-      backgroundColor: theme.colorScheme.onPrimaryContainer.withOpacity(1),
-    ));
+      child: Scaffold(
+        backgroundColor: theme.colorScheme.onPrimaryContainer.withOpacity(1),
+      ),
+    );
   }
 
   ///Handling route based on bottom click actions

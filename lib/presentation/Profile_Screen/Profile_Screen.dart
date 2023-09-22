@@ -1,8 +1,14 @@
+// ignore_for_file: file_names
+
+import 'dart:developer';
+
+import 'package:book/ColorTheme/ColorTheme.dart';
 import 'package:book/core/utils/color_constant.dart';
 import 'package:book/core/utils/size_utils.dart';
 import 'package:book/provider/auth_provider.dart';
 import 'package:book/provider/profile_provider.dart';
 import 'package:book/theme/custom_button_style.dart';
+import 'package:book/widgets/app_bar/appbar_subtitle.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,19 +25,19 @@ import 'Contact_Us.dart';
 import 'editProfile.dart';
 
 class ProfileScreen extends StatefulWidget {
-  ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 final List<String> entries = <String>[
-  "Your Membership",
-  "Presonalisation",
-  "Content Language",
-  "App Theme",
-  "Contact Us",
-  "Share"
+  'Your Membership',
+  'Presonalisation',
+  'Content Language',
+  'App Theme',
+  'Contact Us',
+  'Share',
 ];
 
 final List<String> imageList = <String>[
@@ -40,7 +46,7 @@ final List<String> imageList = <String>[
   ImageConstant.contentlanguage,
   ImageConstant.appTheme,
   ImageConstant.contactUs,
-  ImageConstant.share
+  ImageConstant.share,
 ];
 bool light = true;
 // final List<int> colorCodes = <int>[600, 500, 100];
@@ -56,230 +62,304 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     // final themeProviderr = Provider.of<ThemeProvider>(context);
 
-    double _width = MediaQuery.of(context).size.width;
+    double width = MediaQuery.of(context).size.width;
+    bool isLight = Theme.of(context).brightness == Brightness.light;
+
     return SafeArea(
-        child: Scaffold(
-      body: Container(
-        width: _width,
-        color: Color(0xFF181A1A),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 16, right: 16, top: 25),
-          child: Column(
-            children: [
-              Align(
-                  alignment: Alignment.centerLeft,
-                  child: CustomImageView(
-                    imagePath: ImageConstant.profileImage,
-                    height: 35,
-                  )),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => EditProfile()),
-                  );
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 25, bottom: 25),
-                  child: Container(
-                    // color: Colors.green[100],
-                    width: _width,
-                    height: 80,
-                    child: Row(
-                      children: [
-                        Container(
-                            width: 80,
-                            height: 80,
-                            // color: Colors.red[300],
-                            child: CircleAvatar(
-                              backgroundImage:
-                                  AssetImage(ImageConstant.profile),
-                            ) /*  CustomImageView(
-                            imagePath: ImageConstant.profile,
-                          ), */
-                            ),
-                        Spacer(),
-                        Container(
-                          height: 80,
-                          width: _width - 130,
-                          // color: Colors.yellow[400],
-                          child: Column(
-                            children: [
-                              Spacer(),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Consumer<ProfileProvider>(
-                                    builder: (context, provider, child) {
-                                  return Text(
-                                    provider.username,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style:
-                                        CustomTextStyles.titleMediumWhiteA700,
-                                  );
-                                }),
-                              ),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Consumer<ProfileProvider>(
-                                    builder: (context, provider, child) {
-                                  return Text(
-                                    provider.email,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: CustomTextStyles.titleSmallWhiteA400,
-                                  );
-                                }),
-                              ),
-                              Spacer()
-                            ],
+      child: Scaffold(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        body: SizedBox(
+          width: width,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 16, right: 16, top: 25),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: appTheme.teal400,
+                            width: 2,
                           ),
-                        )
-                      ],
+                        ),
+                      ),
+                      padding: const EdgeInsets.only(bottom: 3),
+                      child: AppbarSubtitle(
+                        text: 'Profile',
+                      ),
                     ),
                   ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  height: 0.5,
-                  width: _width,
-                  color: appTheme.blueGray400,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: ListView.builder(
-                  itemCount: entries.length,
-                  physics: BouncingScrollPhysics(),
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ListTile(
-                        onTap: () {
-                          //  Navigator.push(
-                          //               context,
-                          //               MaterialPageRoute(
-                          //                   builder: (context) =>
-                          //                       HomeRecommendedForYouSeeAllScreen()),
-                          //             );
-
-                          switch (index) {
-                            case 0:
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => PaymentScreen()),
-                              );
-                              break;
-                            case 1:
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CategoriesScreen(
-                                          goIsProfile: true,
-                                        )),
-                              );
-                              break;
-                            case 2:
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LangugaesScreen(
-                                          start: false,
-                                        )),
-                              );
-
-                              break;
-                            case 3:
-                              break;
-                            case 4:
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ContactUsScreen()),
-                              );
-                              break;
-                            case 5:
-                              Share.share("Share your book");
-                              break;
-                            default:
-                          }
-                        },
-                        dense: true,
-                        contentPadding: EdgeInsets.zero,
-                        leading: Container(
-                          height: 50,
-                          width: 50,
-                          child: CustomImageView(
-                            imagePath: imageList[index],
-                          ),
+                  GestureDetector(
+                    onTap: () async {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const EditProfile(),
                         ),
-                        title: Text(
-                          "${entries[index]}",
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: CustomTextStyles.titleSmallWhiteA400,
-                        ),
-                        trailing: index == 0
-                            ? Text(
-                                "Package Name",
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.left,
-                                style: CustomTextStyles.titleSmallWhiteA400,
-                              )
-                            : index == 3
-                                ? Switch(
-                                    value: light,
-                                    // themeProviderr.isdarkMode,
-                                    activeColor: ColorConstant.primaryColor,
-
-                                    onChanged: (bool value) {
-                                      setState(() {
-                                        light = value;
-                                        // final provider =
-                                        //     Provider.of<ThemeProvider>(
-                                        //         context,
-                                        //         listen: false);
-                                        // provider.toggleTheme(value);
-                                        // saveTheme(value);
-                                      });
-                                    },
-                                  )
-                                : Padding(
-                                    padding: const EdgeInsets.only(right: 15),
-                                    child: CustomImageView(
-                                      svgPath: ImageConstant.imgArrowright,
-                                      height: 16,
-                                      width: 16,
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 25, bottom: 25),
+                      child: SizedBox(
+                        // color: Colors.green[100],
+                        width: width,
+                        height: 80,
+                        child: Row(
+                          children: [
+                            Consumer<ProfileProvider>(
+                              builder: (context, provider, child) {
+                                return SizedBox(
+                                  width: 80,
+                                  height: 80,
+                                  // color: Colors.red[300],
+                                  child: provider.uploadImage == null
+                                      ? CircleAvatar(
+                                          backgroundImage:
+                                              AssetImage(ImageConstant.profile),
+                                        )
+                                      : ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                          child: Image.network(
+                                            provider.uploadImage!,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ), /*  CustomImageView(
+                                  imagePath: ImageConstant.profile,
+                                ), */
+                                );
+                              },
+                            ),
+                            const Spacer(),
+                            SizedBox(
+                              height: 80,
+                              width: width - 130,
+                              // color: Colors.yellow[400],
+                              child: Column(
+                                children: [
+                                  const Spacer(),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Consumer<ProfileProvider>(
+                                      builder: (context, provider, child) {
+                                        return Text(
+                                          provider.username,
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.left,
+                                          style: CustomTextStyles
+                                              .titleMediumWhiteA700
+                                              .copyWith(
+                                            color: isLight
+                                                ? ColorConstant.black
+                                                : null,
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Consumer<ProfileProvider>(
+                                      builder: (context, provider, child) {
+                                        return Text(
+                                          provider.email,
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.left,
+                                          style: CustomTextStyles
+                                              .titleSmallWhiteA400
+                                              .copyWith(
+                                            color: isLight
+                                                ? ColorConstant.black
+                                                : null,
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      height: 0.5,
+                      width: width,
+                      color: appTheme.blueGray400,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: ListView.builder(
+                      itemCount: entries.length,
+                      physics: const BouncingScrollPhysics(),
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ListTile(
+                            onTap: () {
+                              switch (index) {
+                                case 0:
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const PaymentScreen(),
+                                    ),
+                                  );
+                                  break;
+                                case 1:
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const CategoriesScreen(
+                                        goIsProfile: true,
+                                      ),
+                                    ),
+                                  );
+                                  break;
+                                case 2:
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const LangugaesScreen(
+                                        start: false,
+                                        goIsProfile: true,
+                                      ),
+                                    ),
+                                  );
+
+                                  break;
+                                case 3:
+                                  break;
+                                case 4:
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ContactUsScreen(),
+                                    ),
+                                  );
+                                  break;
+                                case 5:
+                                  Share.share('Share your book');
+                                  break;
+                                default:
+                              }
+                            },
+                            dense: true,
+                            contentPadding: EdgeInsets.zero,
+                            leading: Container(
+                              height: 50,
+                              width: 50,
+                              decoration: BoxDecoration(
+                                color: isLight
+                                    ? ColorConstant.kF3F3F3
+                                    : ColorConstant.k272828,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Center(
+                                child: CustomImageView(
+                                  height: 25,
+                                  width: 25,
+                                  imagePath: imageList[index],
+                                ),
+                              ),
+                            ),
+                            title: Text(
+                              entries[index],
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.left,
+                              style:
+                                  CustomTextStyles.titleSmallWhiteA400.copyWith(
+                                fontWeight: FontWeight.w500,
+                                color: isLight ? ColorConstant.black : null,
+                              ),
+                            ),
+                            trailing: index == 0
+                                ? Text(
+                                    'Package Name',
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: CustomTextStyles.titleSmallWhiteA400
+                                        .copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      color:
+                                          isLight ? ColorConstant.black : null,
+                                    ),
+                                  )
+                                : index == 3
+                                    ? Consumer<ThemeProvider>(
+                                        builder:
+                                            (context, themeProvider, child) {
+                                          return Switch(
+                                            value: themeProvider.isdarkMode,
+                                            activeColor:
+                                                ColorConstant.primaryColor,
+                                            onChanged: (bool value) {
+                                              final provider =
+                                                  Provider.of<ThemeProvider>(
+                                                context,
+                                                listen: false,
+                                              );
+                                              log(value.toString());
+                                              provider.toggleTheme(value);
+                                            },
+                                          );
+                                        },
+                                      )
+                                    : Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 15),
+                                        child: CustomImageView(
+                                          svgPath: ImageConstant.imgArrowright,
+                                          height: 16,
+                                          width: 16,
+                                          color: isLight
+                                              ? ColorConstant.black
+                                              : null,
+                                        ),
+                                      ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 10, right: 10, top: 20),
+                    child: CustomElevatedButton(
+                      onTap: () async {
+                        context.read<AuthProvider>().logout(context);
+                      },
+                      width: double.maxFinite,
+                      height: getVerticalSize(48),
+                      text: 'Log out',
+                      buttonStyle: CustomButtonStyles.fillTeal400,
+                      buttonTextStyle:
+                          CustomTextStyles.titleSmallPrimary_1.copyWith(
+                        color: isLight ? ColorConstant.whiteA700 : null,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 16, right: 16, top: 20),
-                child: CustomElevatedButton(
-                  onTap: () async {
-                    context.read<AuthProvider>().logout(context);
-                  },
-                  width: double.maxFinite,
-                  height: getVerticalSize(48),
-                  text: "Log out",
-                  // margin: getMargin(top: 74),
-                  buttonStyle: CustomButtonStyles.fillTeal400,
-                  buttonTextStyle: CustomTextStyles.titleSmallPrimary_1,
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),
-    ));
+    );
   }
 }

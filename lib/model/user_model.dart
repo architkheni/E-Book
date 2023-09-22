@@ -18,23 +18,24 @@ class UserModel {
   String? updatedAt;
   String? apiToken;
 
-  UserModel(
-      {this.id,
-      this.username,
-      this.name,
-      this.email,
-      this.contactNumber,
-      this.emailVerifiedAt,
-      this.activationToken,
-      this.userType,
-      this.registrationId,
-      this.deviceId,
-      this.image,
-      this.status,
-      this.deletedAt,
-      this.createdAt,
-      this.updatedAt,
-      this.apiToken});
+  UserModel({
+    this.id,
+    this.username,
+    this.name,
+    this.email,
+    this.contactNumber,
+    this.emailVerifiedAt,
+    this.activationToken,
+    this.userType,
+    this.registrationId,
+    this.deviceId,
+    this.image,
+    this.status,
+    this.deletedAt,
+    this.createdAt,
+    this.updatedAt,
+    this.apiToken,
+  });
 
   UserModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -56,23 +57,23 @@ class UserModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['username'] = this.username;
-    data['name'] = this.name;
-    data['email'] = this.email;
-    data['contact_number'] = this.contactNumber;
-    data['email_verified_at'] = this.emailVerifiedAt;
-    data['activation_token'] = this.activationToken;
-    data['user_type'] = this.userType;
-    data['registration_id'] = this.registrationId;
-    data['device_id'] = this.deviceId;
-    data['image'] = this.image;
-    data['status'] = this.status;
-    data['deleted_at'] = this.deletedAt;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['api_token'] = this.apiToken;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['username'] = username;
+    data['name'] = name;
+    data['email'] = email;
+    data['contact_number'] = contactNumber;
+    data['email_verified_at'] = emailVerifiedAt;
+    data['activation_token'] = activationToken;
+    data['user_type'] = userType;
+    data['registration_id'] = registrationId;
+    data['device_id'] = deviceId;
+    data['image'] = image;
+    data['status'] = status;
+    data['deleted_at'] = deletedAt;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    data['api_token'] = apiToken;
     return data;
   }
 

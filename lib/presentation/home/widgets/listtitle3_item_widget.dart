@@ -10,14 +10,14 @@ class Listtitle3ItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double _width = MediaQuery.of(context).size.width;
-    double _height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return SizedBox(
-      width: _width / 2.1,
+      width: width / 2.1,
       child: Align(
         alignment: Alignment.centerRight,
-        child: Container(
-          width: _width / 2.2,
+        child: SizedBox(
+          width: width / 2.2,
           // color: Colors.green[500],
           child: Stack(
             alignment: Alignment.center,
@@ -25,7 +25,7 @@ class Listtitle3ItemWidget extends StatelessWidget {
               Align(
                 alignment: Alignment.bottomLeft,
                 child: Padding(
-                  padding: EdgeInsets.only(bottom: 19),
+                  padding: const EdgeInsets.only(bottom: 19),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,15 +34,15 @@ class Listtitle3ItemWidget extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            "The Good Guy",
+                            'The Good Guy',
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.left,
                             style: theme.textTheme.titleSmall,
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Padding(
                             padding: const EdgeInsets.only(right: 10),
-                            child: Container(
+                            child: SizedBox(
                               height: 18,
                               width: 15,
                               child: CustomImageView(
@@ -50,23 +50,23 @@ class Listtitle3ItemWidget extends StatelessWidget {
                                 fit: BoxFit.fill,
                               ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                       Text(
-                        "A Fanklin",
+                        'A Fanklin',
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
                         style: theme.textTheme.bodyMedium,
                       ),
                       Text(
-                        "Banish Forgutable Forever",
+                        'Banish Forgutable Forever',
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
                         style: theme.textTheme.bodySmall,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: 5),
+                        padding: const EdgeInsets.only(top: 5),
                         child: Row(
                           children: [
                             Container(
@@ -78,7 +78,7 @@ class Listtitle3ItemWidget extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Text(
-                                  "Blinks",
+                                  'Blinks',
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.left,
                                   style: theme.textTheme.bodySmall,
@@ -86,10 +86,13 @@ class Listtitle3ItemWidget extends StatelessWidget {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsets.only(left: 4, top: 1, bottom: 1),
+                              padding: const EdgeInsets.only(
+                                left: 4,
+                                top: 1,
+                                bottom: 1,
+                              ),
                               child: Text(
-                                "21 min",
+                                '21 min',
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
                                 style: theme.textTheme.bodySmall,
@@ -109,10 +112,10 @@ class Listtitle3ItemWidget extends StatelessWidget {
                   children: [
                     Align(
                       alignment: Alignment.topLeft,
-                      child: Container(
+                      child: SizedBox(
                         // color: Colors.pink,
-                        height: _height / 5.3,
-                        width: _width,
+                        height: height / 5.3,
+                        width: width,
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
@@ -120,18 +123,18 @@ class Listtitle3ItemWidget extends StatelessWidget {
                               padding: const EdgeInsets.only(top: 70),
                               child: CustomImageView(
                                 imagePath: ImageConstant.bookBackImage,
-                                height: _height / 5.3,
-                                width: _width,
+                                height: height / 5.3,
+                                width: width,
                                 fit: BoxFit.fill,
                                 // alignment: Alignment.center,
                               ),
                             ),
                             Align(
                               alignment: Alignment.center,
-                              child: Container(
+                              child: SizedBox(
                                 // color: Colors.black,
-                                height: _height / 5.3,
-                                width: _width / 3.3,
+                                height: height / 5.3,
+                                width: width / 3.3,
                                 child: CustomImageView(
                                   imagePath:
                                       ImageConstant.imgE50c016fb6a84145x100,

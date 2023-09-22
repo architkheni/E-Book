@@ -12,7 +12,7 @@ class Chipviewframefo2ItemWidget extends StatelessWidget {
       showCheckmark: false,
       labelPadding: EdgeInsets.zero,
       label: Text(
-        "Personal growth",
+        'Personal growth',
         textAlign: TextAlign.left,
         style: TextStyle(
           color: appTheme.blueGray50,

@@ -123,7 +123,7 @@ class CustomTextFormField extends StatelessWidget {
         ),
       );
   InputDecoration get decoration => InputDecoration(
-        hintText: hintText ?? "",
+        hintText: hintText ?? '',
         hintStyle: hintStyle,
         prefixIcon: prefix,
         prefixIconConstraints: prefixConstraints,
@@ -132,7 +132,7 @@ class CustomTextFormField extends StatelessWidget {
         fillColor: fillColor,
         filled: filled,
         isDense: true,
-        counterText: "",
+        counterText: '',
         contentPadding: contentPadding,
         border: defaultBorderDecoration ??
             OutlineInputBorder(

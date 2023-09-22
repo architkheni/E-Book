@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';  
+import 'package:flutter/material.dart';
 
 import '../core/app_export.dart';
 
 class CustomIconButton extends StatelessWidget {
-  CustomIconButton({
+  const CustomIconButton({
     Key? key,
     this.alignment,
     this.margin,
@@ -46,12 +46,12 @@ class CustomIconButton extends StatelessWidget {
   Widget get iconButtonWidget => Padding(
         padding: margin ?? EdgeInsets.zero,
         child: IconButton(
-          visualDensity: VisualDensity(
+          visualDensity: const VisualDensity(
             vertical: -4,
             horizontal: -4,
           ),
           iconSize: getSize(height ?? 0),
-          padding: EdgeInsets.all(0),
+          padding: const EdgeInsets.all(0),
           icon: Container(
             alignment: Alignment.center,
             width: getSize(width ?? 0),

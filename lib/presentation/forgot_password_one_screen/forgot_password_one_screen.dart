@@ -1,4 +1,5 @@
 import 'package:book/core/app_export.dart';
+import 'package:book/core/utils/color_constant.dart';
 import 'package:book/provider/auth_provider.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:book/widgets/custom_text_form_field.dart';
@@ -8,7 +9,7 @@ import 'package:provider/provider.dart';
 // ignore: must_be_immutable
 class ForgotPasswordOneScreen extends StatefulWidget {
   final String email;
-  ForgotPasswordOneScreen({Key? key, required this.email})
+  const ForgotPasswordOneScreen({Key? key, required this.email})
       : super(
           key: key,
         );
@@ -27,15 +28,16 @@ class _ForgotPasswordOneScreenState extends State<ForgotPasswordOneScreen> {
 
   TextEditingController newpasswordoneController = TextEditingController();
 
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
+    bool isLight = Theme.of(context).brightness == Brightness.light;
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: theme.colorScheme.onPrimaryContainer.withOpacity(1),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         resizeToAvoidBottomInset: false,
         body: Form(
           key: _formKey,
@@ -84,10 +86,13 @@ class _ForgotPasswordOneScreenState extends State<ForgotPasswordOneScreen> {
                           left: 16,
                         ),
                         child: Text(
-                          "Set Password",
+                          'Set Password',
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
-                          style: theme.textTheme.headlineLarge,
+                          style: isLight
+                              ? theme.textTheme.headlineLarge!
+                                  .copyWith(color: Colors.black)
+                              : theme.textTheme.headlineLarge,
                         ),
                       ),
                       Container(
@@ -105,6 +110,7 @@ class _ForgotPasswordOneScreenState extends State<ForgotPasswordOneScreen> {
                         ),
                         decoration: AppDecoration.fill.copyWith(
                           borderRadius: BorderRadiusStyle.roundedBorder12,
+                          color: isLight ? ColorConstant.kF3F3F3 : null,
                         ),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
@@ -127,10 +133,12 @@ class _ForgotPasswordOneScreenState extends State<ForgotPasswordOneScreen> {
                                 top: 13,
                               ),
                               child: Text(
-                                "Code verified",
+                                'Code verified',
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
-                                style: theme.textTheme.titleMedium,
+                                style: theme.textTheme.titleMedium!.copyWith(
+                                  color: isLight ? ColorConstant.black : null,
+                                ),
                               ),
                             ),
                             Container(
@@ -164,7 +172,7 @@ class _ForgotPasswordOneScreenState extends State<ForgotPasswordOneScreen> {
                                           ),
                                           textStyle: CustomTextStyles
                                               .bodyMediumGray500,
-                                          hintText: "Enter new password",
+                                          hintText: 'Enter new password',
                                           hintStyle: CustomTextStyles
                                               .bodyMediumGray500,
                                           textInputAction: TextInputAction.next,
@@ -178,9 +186,11 @@ class _ForgotPasswordOneScreenState extends State<ForgotPasswordOneScreen> {
                                                 obsecure = !obsecure;
                                               });
                                             },
-                                            icon: Icon(obsecure
-                                                ? Icons.visibility_off
-                                                : Icons.visibility),
+                                            icon: Icon(
+                                              obsecure
+                                                  ? Icons.visibility_off
+                                                  : Icons.visibility,
+                                            ),
                                             color: appTheme.gray500,
                                           ),
                                           suffixConstraints: BoxConstraints(
@@ -190,7 +200,9 @@ class _ForgotPasswordOneScreenState extends State<ForgotPasswordOneScreen> {
                                           ),
                                           obscureText: obsecure,
                                           filled: true,
-                                          fillColor: appTheme.blueGray50,
+                                          fillColor: isLight
+                                              ? ColorConstant.kE1E1E1
+                                              : appTheme.blueGray50,
                                         ),
                                         CustomTextFormField(
                                           controller: newpasswordoneController,
@@ -204,7 +216,7 @@ class _ForgotPasswordOneScreenState extends State<ForgotPasswordOneScreen> {
                                           ),
                                           textStyle: CustomTextStyles
                                               .bodyMediumGray500,
-                                          hintText: "Re-type new password",
+                                          hintText: 'Re-type new password',
                                           hintStyle: CustomTextStyles
                                               .bodyMediumGray500,
                                           textInputType:
@@ -217,9 +229,11 @@ class _ForgotPasswordOneScreenState extends State<ForgotPasswordOneScreen> {
                                                 reObsecure = !reObsecure;
                                               });
                                             },
-                                            icon: Icon(reObsecure
-                                                ? Icons.visibility_off
-                                                : Icons.visibility),
+                                            icon: Icon(
+                                              reObsecure
+                                                  ? Icons.visibility_off
+                                                  : Icons.visibility,
+                                            ),
                                             color: appTheme.gray500,
                                           ),
                                           suffixConstraints: BoxConstraints(
@@ -229,18 +243,25 @@ class _ForgotPasswordOneScreenState extends State<ForgotPasswordOneScreen> {
                                           ),
                                           obscureText: reObsecure,
                                           filled: true,
-                                          fillColor: appTheme.blueGray50,
+                                          fillColor: isLight
+                                              ? ColorConstant.kE1E1E1
+                                              : appTheme.blueGray50,
                                         ),
                                         Padding(
                                           padding: getPadding(
                                             top: 7,
                                           ),
                                           child: Text(
-                                            "At-least 8 characters",
+                                            'At-least 8 characters',
                                             overflow: TextOverflow.ellipsis,
                                             textAlign: TextAlign.left,
                                             style: CustomTextStyles
-                                                .bodySmallGray400,
+                                                .bodySmallGray400
+                                                .copyWith(
+                                              color: isLight
+                                                  ? ColorConstant.black
+                                                  : null,
+                                            ),
                                           ),
                                         ),
                                         CustomElevatedButton(
@@ -253,8 +274,9 @@ class _ForgotPasswordOneScreenState extends State<ForgotPasswordOneScreen> {
                                                     .trim()
                                                     .isEmpty) {
                                               SnackBar snackBar = SnackBar(
-                                                content: Text(
-                                                    "Please enter valid password"),
+                                                content: const Text(
+                                                  'Please enter valid password',
+                                                ),
                                                 backgroundColor:
                                                     appTheme.teal400,
                                               );
@@ -263,25 +285,32 @@ class _ForgotPasswordOneScreenState extends State<ForgotPasswordOneScreen> {
                                             } else {
                                               context
                                                   .read<AuthProvider>()
-                                                  .updatePassword(context,
-                                                      email: widget.email,
-                                                      password:
-                                                          newpasswordController
-                                                              .text);
+                                                  .updatePassword(
+                                                    context,
+                                                    email: widget.email,
+                                                    password:
+                                                        newpasswordController
+                                                            .text,
+                                                  );
                                             }
                                           },
                                           width: double.maxFinite,
                                           height: getVerticalSize(
                                             48,
                                           ),
-                                          text: "Set Password",
+                                          text: 'Set Password',
                                           margin: getMargin(
                                             top: 15,
                                           ),
                                           buttonStyle:
                                               CustomButtonStyles.fillTeal400,
                                           buttonTextStyle: CustomTextStyles
-                                              .titleSmallPrimary_1,
+                                              .titleSmallPrimary_1
+                                              .copyWith(
+                                            color: isLight
+                                                ? ColorConstant.whiteA700
+                                                : null,
+                                          ),
                                         ),
                                       ],
                                     ),

@@ -1,3 +1,4 @@
+import 'package:book/ColorTheme/ColorTheme.dart';
 import 'package:book/core/storage/app_storage.dart';
 import 'package:book/provider/auth_provider.dart';
 import 'package:book/provider/explore_provider.dart';
@@ -16,37 +17,51 @@ void main() async {
     DeviceOrientation.portraitUp,
   ]);
   bool isLogin = await AppStorage().getLogin();
+  bool isDark = await AppStorage().getDarkMode();
 
   ///Please update theme as per your need if required.
   ThemeHelper().changeTheme('primary');
-  runApp(MyApp(
-    isLogin: isLogin,
-  ));
+  runApp(
+    MyApp(
+      isLogin: isLogin,
+      isDark: isDark,
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   final bool isLogin;
+  final bool isDark;
 
-  const MyApp({Key? key, required this.isLogin}) : super(key: key);
+  const MyApp({Key? key, required this.isLogin, required this.isDark})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (context) => ThemeProvider()..toggleTheme(isDark),
+        ),
         ChangeNotifierProvider(create: (context) => AuthProvider()),
         ChangeNotifierProvider(create: (context) => ProfileProvider()),
         ChangeNotifierProvider(create: (context) => HomePovider()),
         ChangeNotifierProvider(create: (context) => ExploreProvider()),
         ChangeNotifierProvider(create: (context) => WishlistProvider()),
       ],
-      child: MaterialApp(
-        theme: ThemeData(
-          visualDensity: VisualDensity.standard,
-        ),
-        title: 'book',
-        debugShowCheckedModeBanner: false,
-        initialRoute:
-            isLogin ? AppRoutes.bottomPage : AppRoutes.logInEmailScreen,
-        routes: AppRoutes.routes,
+      child: Consumer<ThemeProvider>(
+        builder: (context, themeProvider, child) {
+          return MaterialApp(
+            theme: MyThemes.lightTheme,
+            themeMode: themeProvider.themeMode,
+            // themeMode: ThemeMode.light,
+            darkTheme: MyThemes.darktheme,
+            title: 'book',
+            debugShowCheckedModeBanner: false,
+            initialRoute:
+                isLogin ? AppRoutes.bottomPage : AppRoutes.logInEmailScreen,
+            routes: AppRoutes.routes,
+          );
+        },
       ),
     );
   }

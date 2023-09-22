@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:book/core/app_export.dart';
+import 'package:flutter/material.dart';
 
 class AppDecoration {
   static BoxDecoration get fill => BoxDecoration(
@@ -16,14 +16,14 @@ class AppDecoration {
           ),
         ),
       );
-        static BoxDecoration get gradientnamegray90003opacity0namegray90003 =>
+  static BoxDecoration get gradientnamegray90003opacity0namegray90003 =>
       BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment(
+          begin: const Alignment(
             0.5,
             0,
           ),
-          end: Alignment(
+          end: const Alignment(
             0.5,
             1,
           ),
@@ -43,7 +43,7 @@ class AppDecoration {
   static BoxDecoration get fill3 => BoxDecoration(
         color: appTheme.teal400,
       );
-  static BoxDecoration get outline => BoxDecoration();
+  static BoxDecoration get outline => const BoxDecoration();
   static BoxDecoration get black => BoxDecoration(
         color: theme.colorScheme.onPrimaryContainer.withOpacity(1),
       );
@@ -53,11 +53,11 @@ class AppDecoration {
   static BoxDecoration
       get gradientnamegray90001nameonPrimaryContaineropacity1 => BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment(
+              begin: const Alignment(
                 0.5,
                 0,
               ),
-              end: Alignment(
+              end: const Alignment(
                 0.5,
                 0.55,
               ),
@@ -75,7 +75,7 @@ class BorderRadiusStyle {
       8,
     ),
   );
-   static BorderRadius roundedBorder10 = BorderRadius.circular(
+  static BorderRadius roundedBorder10 = BorderRadius.circular(
     getHorizontalSize(
       10,
     ),

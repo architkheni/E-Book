@@ -231,5 +231,6 @@ class ImageConstant {
   static String popularImage = 'assets/images/popular.png';
   static String payment = 'assets/images/payment.png';
 
-  static String membership = 'assets/images/membership.png';
+  static String premium1Year = 'assets/images/premium_1_year.png';
+  static String premium1Month = 'assets/images/premium_1_month.png';
 }

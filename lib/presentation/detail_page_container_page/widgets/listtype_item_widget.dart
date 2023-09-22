@@ -20,7 +20,7 @@ class ListtypeItemWidget extends StatelessWidget {
             bottom: 25,
           ),
           child: Text(
-            "a",
+            'a',
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.left,
             style: CustomTextStyles.titleMediumWhiteA700,
@@ -35,7 +35,7 @@ class ListtypeItemWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  "B",
+                  'B',
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
                   style: CustomTextStyles.titleMediumWhiteA700,
@@ -45,7 +45,7 @@ class ListtypeItemWidget extends StatelessWidget {
                     top: 2,
                   ),
                   child: Text(
-                    "Subscribe to unlock all 2 key ideas from book ",
+                    'Subscribe to unlock all 2 key ideas from book ',
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.left,
                     style: CustomTextStyles.bodyMediumThin,

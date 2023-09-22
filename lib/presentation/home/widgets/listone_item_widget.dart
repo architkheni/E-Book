@@ -10,15 +10,15 @@ class ListoneItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double _width = MediaQuery.of(context).size.width;
-    double _height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return SizedBox(
-      width: _width / 2.7,
+      width: width / 2.7,
       child: Align(
         alignment: Alignment.centerRight,
         child: Container(
-          width: _width / 2.7,
-          height: _height / 4,
+          width: width / 2.7,
+          height: height / 4,
           padding: getPadding(
             left: 8,
             right: 8,
@@ -31,12 +31,10 @@ class ListoneItemWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Container(
-                child: CustomImageView(
-                  svgPath: ImageConstant.img,
-                  height: 30,
-                  width: 30,
-                ),
+              CustomImageView(
+                svgPath: ImageConstant.img,
+                height: 30,
+                width: 30,
               ),
               Padding(
                 padding: getPadding(
@@ -44,7 +42,7 @@ class ListoneItemWidget extends StatelessWidget {
                   top: 16,
                 ),
                 child: Text(
-                  "Demo Text iusdhub  db sahd  sabdhs db sahd sa ds ad sadisdhshad bs dh shdb hs dasd sahbasdbas dsa dsad sadsad sd f jh  ",
+                  'Demo Text iusdhub  db sahd  sabdhs db sahd sa ds ad sadisdhshad bs dh shdb hs dasd sahbasdbas dsa dsad sadsad sd f jh  ',
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
@@ -59,12 +57,16 @@ class ListoneItemWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomImageView(
-                        imagePath: ImageConstant.imgE50c016fb6a8454x37,
-                        height: 70,
-                        width: 50),
-                    Spacer(),
+                      imagePath: ImageConstant.imgE50c016fb6a8454x37,
+                      height: 70,
+                      width: 50,
+                    ),
+                    const Spacer(),
                     CustomImageView(
-                        svgPath: ImageConstant.img, height: 20, width: 25),
+                      svgPath: ImageConstant.img,
+                      height: 20,
+                      width: 25,
+                    ),
                   ],
                 ),
               ),

@@ -1,5 +1,6 @@
+import 'package:book/core/app_export.dart';
+import 'package:book/core/utils/color_constant.dart';
 import 'package:flutter/material.dart';
- import 'package:book/core/app_export.dart';
 
 // ignore: must_be_immutable
 class Liste50c016fb6aItemWidget extends StatelessWidget {
@@ -10,6 +11,7 @@ class Liste50c016fb6aItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isLight = Theme.of(context).brightness == Brightness.light;
     return Align(
       alignment: Alignment.center,
       child: Container(
@@ -19,9 +21,10 @@ class Liste50c016fb6aItemWidget extends StatelessWidget {
           right: 8,
           bottom: 7,
         ),
-         decoration: AppDecoration.fill4.copyWith(
-                        borderRadius: BorderRadiusStyle.roundedBorder8,
-                      ),
+        decoration: AppDecoration.fill4.copyWith(
+          borderRadius: BorderRadiusStyle.roundedBorder8,
+          color: isLight ? ColorConstant.kF3F3F3 : null,
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -80,7 +83,7 @@ class Liste50c016fb6aItemWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      "",
+                      '',
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
                       style: theme.textTheme.labelLarge,
@@ -115,7 +118,7 @@ class Liste50c016fb6aItemWidget extends StatelessWidget {
                                     bottom: 1,
                                   ),
                                   child: Text(
-                                    "8m",
+                                    '8m',
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
                                     style: CustomTextStyles.bodySmallTeal400,
@@ -131,7 +134,9 @@ class Liste50c016fb6aItemWidget extends StatelessWidget {
                               maxLines: 5,
                               overflow: TextOverflow.ellipsis,
                               textAlign: TextAlign.left,
-                              style: CustomTextStyles.bodySmallThin_1,
+                              style: CustomTextStyles.bodySmallThin_1.copyWith(
+                                color: isLight ? ColorConstant.black : null,
+                              ),
                             ),
                           ),
                         ],

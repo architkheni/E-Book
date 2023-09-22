@@ -14,7 +14,7 @@ class ChipviewframefoItemWidget extends StatelessWidget {
       label: Padding(
         padding: getPadding(left: 10, right: 10),
         child: Text(
-          "Personal growth",
+          'Personal growth',
           textAlign: TextAlign.left,
           style: TextStyle(
             color: appTheme.blueGray50,

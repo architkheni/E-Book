@@ -21,17 +21,19 @@ class AuthProvider extends ChangeNotifier {
     Either<String, UserModel> result =
         await AuthRepository.instance.logIn(email: email, password: password);
     result.fold((l) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(l),
-        backgroundColor: appTheme.teal400,
-      ));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(l),
+          backgroundColor: appTheme.teal400,
+        ),
+      );
     }, (r) {
       appStorage.setToken(r.apiToken!);
       appStorage.setUser(r.toString());
       appStorage.setLogin(true);
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => CategoriesScreen()),
+        MaterialPageRoute(builder: (context) => const CategoriesScreen()),
       );
     });
   }
@@ -52,21 +54,25 @@ class AuthProvider extends ChangeNotifier {
       password: password,
     );
     result.fold((l) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(l),
-        backgroundColor: appTheme.teal400,
-      ));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(l),
+          backgroundColor: appTheme.teal400,
+        ),
+      );
     }, (r) {
       appStorage.setToken(r.apiToken!);
       appStorage.setUser(r.toString());
       appStorage.setLogin(true);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("user has been save successfully"),
-        backgroundColor: appTheme.teal400,
-      ));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text('user has been save successfully'),
+          backgroundColor: appTheme.teal400,
+        ),
+      );
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => CategoriesScreen()),
+        MaterialPageRoute(builder: (context) => const CategoriesScreen()),
       );
     });
   }
@@ -75,10 +81,12 @@ class AuthProvider extends ChangeNotifier {
     Either<String, bool> result =
         await AuthRepository.instance.forgotPassword(email: email);
     result.fold((l) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(l),
-        backgroundColor: appTheme.teal400,
-      ));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(l),
+          backgroundColor: appTheme.teal400,
+        ),
+      );
     }, (r) {
       Navigator.push(
         context,
@@ -95,27 +103,36 @@ class AuthProvider extends ChangeNotifier {
     Either<String, bool> result =
         await AuthRepository.instance.resendOtp(email: email);
     result.fold((l) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(l),
-        backgroundColor: appTheme.teal400,
-      ));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(l),
+          backgroundColor: appTheme.teal400,
+        ),
+      );
     }, (r) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("otp sent successfully"),
-        backgroundColor: appTheme.teal400,
-      ));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text('otp sent successfully'),
+          backgroundColor: appTheme.teal400,
+        ),
+      );
     });
   }
 
-  void verifyOtp(BuildContext context,
-      {required String email, required String code}) async {
+  void verifyOtp(
+    BuildContext context, {
+    required String email,
+    required String code,
+  }) async {
     Either<String, bool> result =
         await AuthRepository.instance.verifyToken(email: email, code: code);
     result.fold((l) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(l),
-        backgroundColor: appTheme.teal400,
-      ));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(l),
+          backgroundColor: appTheme.teal400,
+        ),
+      );
     }, (r) {
       Navigator.push(
         context,
@@ -128,20 +145,25 @@ class AuthProvider extends ChangeNotifier {
     });
   }
 
-  void updatePassword(BuildContext context,
-      {required String email, required String password}) async {
+  void updatePassword(
+    BuildContext context, {
+    required String email,
+    required String password,
+  }) async {
     Either<String, bool> result = await AuthRepository.instance
         .updatePassword(email: email, password: password);
     result.fold((l) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(l),
-        backgroundColor: appTheme.teal400,
-      ));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(l),
+          backgroundColor: appTheme.teal400,
+        ),
+      );
     }, (r) {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => LogInEmailScreen(),
+          builder: (context) => const LogInEmailScreen(),
         ),
       );
     });
@@ -162,10 +184,11 @@ class AuthProvider extends ChangeNotifier {
       AppStorage appStorage = AppStorage();
       appStorage.dispose();
       navigatorState.pushAndRemoveUntil(
-          MaterialPageRoute(
-            builder: (context) => LogInEmailScreen(),
-          ),
-          (route) => false);
+        MaterialPageRoute(
+          builder: (context) => const LogInEmailScreen(),
+        ),
+        (route) => false,
+      );
     });
   }
 }

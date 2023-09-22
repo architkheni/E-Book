@@ -16,11 +16,11 @@ class CategoryModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['category_id'] = this.categoryId;
-    data['name'] = this.name;
-    data['status'] = this.status;
-    data['total_book'] = this.totalBook;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['category_id'] = categoryId;
+    data['name'] = name;
+    data['status'] = status;
+    data['total_book'] = totalBook;
     return data;
   }
 

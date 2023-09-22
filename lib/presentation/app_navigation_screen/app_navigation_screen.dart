@@ -8,645 +8,642 @@ class AppNavigationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
     return SafeArea(
-        child: Scaffold(
-            backgroundColor: theme.colorScheme.onPrimary.withOpacity(1),
-            body: SizedBox(
-                width: getHorizontalSize(375),
+      child: Scaffold(
+        backgroundColor: theme.colorScheme.onPrimary.withOpacity(1),
+        body: SizedBox(
+          width: getHorizontalSize(375),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                decoration: AppDecoration.fill5,
                 child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                          decoration: AppDecoration.fill5,
-                          child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: getPadding(
+                          left: 20,
+                          top: 10,
+                          right: 20,
+                          bottom: 10,
+                        ),
+                        child: Text(
+                          'App Navigation',
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: appTheme.black900,
+                            fontSize: getFontSize(20),
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: getPadding(left: 20),
+                        child: Text(
+                          "Check your app's UI from the below demo screens of your app.",
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: appTheme.blueGray400,
+                            fontSize: getFontSize(16),
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: getPadding(top: 5),
+                      child: Divider(
+                        height: getVerticalSize(1),
+                        thickness: getVerticalSize(1),
+                        color: appTheme.black900,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Container(
+                    decoration: AppDecoration.fill5,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            onTapLoginEmail(context);
+                          },
+                          child: Container(
+                            decoration: AppDecoration.fill5,
+                            child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Padding(
-                                        padding: getPadding(
-                                            left: 20,
-                                            top: 10,
-                                            right: 20,
-                                            bottom: 10),
-                                        child: Text("App Navigation",
-                                            overflow: TextOverflow.ellipsis,
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                                color: appTheme.black900,
-                                                fontSize: getFontSize(20),
-                                                fontFamily: 'Roboto',
-                                                fontWeight: FontWeight.w400)))),
-                                Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Padding(
-                                        padding: getPadding(left: 20),
-                                        child: Text(
-                                            "Check your app's UI from the below demo screens of your app.",
-                                            overflow: TextOverflow.ellipsis,
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                                color: appTheme.blueGray400,
-                                                fontSize: getFontSize(16),
-                                                fontFamily: 'Roboto',
-                                                fontWeight: FontWeight.w400)))),
-                                Padding(
-                                    padding: getPadding(top: 5),
-                                    child: Divider(
-                                        height: getVerticalSize(1),
-                                        thickness: getVerticalSize(1),
-                                        color: appTheme.black900))
-                              ])),
-                      Expanded(
-                          child: SingleChildScrollView(
-                              child: Container(
-                                  decoration: AppDecoration.fill5,
-                                  child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        GestureDetector(
-                                            onTap: () {
-                                              onTapLoginEmail(context);
-                                            },
-                                            child: Container(
-                                                decoration: AppDecoration.fill5,
-                                                child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Padding(
-                                                              padding:
-                                                                  getPadding(
-                                                                      left: 20,
-                                                                      top: 10,
-                                                                      right: 20,
-                                                                      bottom:
-                                                                          10),
-                                                              child: Text(
-                                                                  "Log in (Email)",
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style: TextStyle(
-                                                                      color: appTheme
-                                                                          .black900,
-                                                                      fontSize:
-                                                                          getFontSize(
-                                                                              20),
-                                                                      fontFamily:
-                                                                          'Roboto',
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400)))),
-                                                      Padding(
-                                                          padding: getPadding(
-                                                              top: 5),
-                                                          child: Divider(
-                                                              height:
-                                                                  getVerticalSize(
-                                                                      1),
-                                                              thickness:
-                                                                  getVerticalSize(
-                                                                      1),
-                                                              color: appTheme
-                                                                  .blueGray400))
-                                                    ]))),
-                                        GestureDetector(
-                                            onTap: () {
-                                              onTapForgotPasswordTwo(context);
-                                            },
-                                            child: Container(
-                                                decoration: AppDecoration.fill5,
-                                                child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Padding(
-                                                              padding:
-                                                                  getPadding(
-                                                                      left: 20,
-                                                                      top: 10,
-                                                                      right: 20,
-                                                                      bottom:
-                                                                          10),
-                                                              child: Text(
-                                                                  "Forgot Password Two",
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style: TextStyle(
-                                                                      color: appTheme
-                                                                          .black900,
-                                                                      fontSize:
-                                                                          getFontSize(
-                                                                              20),
-                                                                      fontFamily:
-                                                                          'Roboto',
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400)))),
-                                                      Padding(
-                                                          padding: getPadding(
-                                                              top: 5),
-                                                          child: Divider(
-                                                              height:
-                                                                  getVerticalSize(
-                                                                      1),
-                                                              thickness:
-                                                                  getVerticalSize(
-                                                                      1),
-                                                              color: appTheme
-                                                                  .blueGray400))
-                                                    ]))),
-                                        GestureDetector(
-                                            onTap: () {
-                                              onTapSignup(context);
-                                            },
-                                            child: Container(
-                                                decoration: AppDecoration.fill5,
-                                                child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Padding(
-                                                              padding:
-                                                                  getPadding(
-                                                                      left: 20,
-                                                                      top: 10,
-                                                                      right: 20,
-                                                                      bottom:
-                                                                          10),
-                                                              child: Text(
-                                                                  "Sign up",
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style: TextStyle(
-                                                                      color: appTheme
-                                                                          .black900,
-                                                                      fontSize:
-                                                                          getFontSize(
-                                                                              20),
-                                                                      fontFamily:
-                                                                          'Roboto',
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400)))),
-                                                      Padding(
-                                                          padding: getPadding(
-                                                              top: 5),
-                                                          child: Divider(
-                                                              height:
-                                                                  getVerticalSize(
-                                                                      1),
-                                                              thickness:
-                                                                  getVerticalSize(
-                                                                      1),
-                                                              color: appTheme
-                                                                  .blueGray400))
-                                                    ]))),
-                                        GestureDetector(
-                                            onTap: () {
-                                              onTapCategories(context);
-                                            },
-                                            child: Container(
-                                                decoration: AppDecoration.fill5,
-                                                child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Padding(
-                                                              padding:
-                                                                  getPadding(
-                                                                      left: 20,
-                                                                      top: 10,
-                                                                      right: 20,
-                                                                      bottom:
-                                                                          10),
-                                                              child: Text(
-                                                                  "Categories",
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style: TextStyle(
-                                                                      color: appTheme
-                                                                          .black900,
-                                                                      fontSize:
-                                                                          getFontSize(
-                                                                              20),
-                                                                      fontFamily:
-                                                                          'Roboto',
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400)))),
-                                                      Padding(
-                                                          padding: getPadding(
-                                                              top: 5),
-                                                          child: Divider(
-                                                              height:
-                                                                  getVerticalSize(
-                                                                      1),
-                                                              thickness:
-                                                                  getVerticalSize(
-                                                                      1),
-                                                              color: appTheme
-                                                                  .blueGray400))
-                                                    ]))),
-                                        GestureDetector(
-                                            onTap: () {
-                                              onTapHomeScreenContainer(context);
-                                            },
-                                            child: Container(
-                                                decoration: AppDecoration.fill5,
-                                                child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Padding(
-                                                              padding:
-                                                                  getPadding(
-                                                                      left: 20,
-                                                                      top: 10,
-                                                                      right: 20,
-                                                                      bottom:
-                                                                          10),
-                                                              child: Text(
-                                                                  "Home Screen - Container",
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style: TextStyle(
-                                                                      color: appTheme
-                                                                          .black900,
-                                                                      fontSize:
-                                                                          getFontSize(
-                                                                              20),
-                                                                      fontFamily:
-                                                                          'Roboto',
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400)))),
-                                                      Padding(
-                                                          padding: getPadding(
-                                                              top: 5),
-                                                          child: Divider(
-                                                              height:
-                                                                  getVerticalSize(
-                                                                      1),
-                                                              thickness:
-                                                                  getVerticalSize(
-                                                                      1),
-                                                              color: appTheme
-                                                                  .blueGray400))
-                                                    ]))),
-                                        GestureDetector(
-                                            onTap: () {
-                                              onTapLoginPassword(context);
-                                            },
-                                            child: Container(
-                                                decoration: AppDecoration.fill5,
-                                                child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Padding(
-                                                              padding:
-                                                                  getPadding(
-                                                                      left: 20,
-                                                                      top: 10,
-                                                                      right: 20,
-                                                                      bottom:
-                                                                          10),
-                                                              child: Text(
-                                                                  "Log in (Password)",
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style: TextStyle(
-                                                                      color: appTheme
-                                                                          .black900,
-                                                                      fontSize:
-                                                                          getFontSize(
-                                                                              20),
-                                                                      fontFamily:
-                                                                          'Roboto',
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400)))),
-                                                      Padding(
-                                                          padding: getPadding(
-                                                              top: 5),
-                                                          child: Divider(
-                                                              height:
-                                                                  getVerticalSize(
-                                                                      1),
-                                                              thickness:
-                                                                  getVerticalSize(
-                                                                      1),
-                                                              color: appTheme
-                                                                  .blueGray400))
-                                                    ]))),
-                                        GestureDetector(
-                                            onTap: () {
-                                              onTapForgotPassword(context);
-                                            },
-                                            child: Container(
-                                                decoration: AppDecoration.fill5,
-                                                child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Padding(
-                                                              padding:
-                                                                  getPadding(
-                                                                      left: 20,
-                                                                      top: 10,
-                                                                      right: 20,
-                                                                      bottom:
-                                                                          10),
-                                                              child: Text(
-                                                                  "Forgot Password",
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style: TextStyle(
-                                                                      color: appTheme
-                                                                          .black900,
-                                                                      fontSize:
-                                                                          getFontSize(
-                                                                              20),
-                                                                      fontFamily:
-                                                                          'Roboto',
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400)))),
-                                                      Padding(
-                                                          padding: getPadding(
-                                                              top: 5),
-                                                          child: Divider(
-                                                              height:
-                                                                  getVerticalSize(
-                                                                      1),
-                                                              thickness:
-                                                                  getVerticalSize(
-                                                                      1),
-                                                              color: appTheme
-                                                                  .blueGray400))
-                                                    ]))),
-                                        GestureDetector(
-                                            onTap: () {
-                                              onTapLangugaes(context);
-                                            },
-                                            child: Container(
-                                                decoration: AppDecoration.fill5,
-                                                child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Padding(
-                                                              padding:
-                                                                  getPadding(
-                                                                      left: 20,
-                                                                      top: 10,
-                                                                      right: 20,
-                                                                      bottom:
-                                                                          10),
-                                                              child: Text(
-                                                                  "Langugaes",
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style: TextStyle(
-                                                                      color: appTheme
-                                                                          .black900,
-                                                                      fontSize:
-                                                                          getFontSize(
-                                                                              20),
-                                                                      fontFamily:
-                                                                          'Roboto',
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400)))),
-                                                      Padding(
-                                                          padding: getPadding(
-                                                              top: 5),
-                                                          child: Divider(
-                                                              height:
-                                                                  getVerticalSize(
-                                                                      1),
-                                                              thickness:
-                                                                  getVerticalSize(
-                                                                      1),
-                                                              color: appTheme
-                                                                  .blueGray400))
-                                                    ]))),
-                                        GestureDetector(
-                                            onTap: () {
-                                              onTapHomeRecommendedforyouSeeAll(
-                                                  context);
-                                            },
-                                            child: Container(
-                                                decoration: AppDecoration.fill5,
-                                                child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      Align(
-                                                        alignment: Alignment
-                                                            .centerLeft,
-                                                        child: Padding(
-                                                          padding: getPadding(
-                                                              left: 20,
-                                                              top: 10,
-                                                              right: 20,
-                                                              bottom: 10),
-                                                          child: Text(
-                                                            "home > Recommended for you > See All",
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: TextStyle(
-                                                                color: appTheme
-                                                                    .black900,
-                                                                fontSize:
-                                                                    getFontSize(
-                                                                        20),
-                                                                fontFamily:
-                                                                    'Roboto',
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                          padding: getPadding(
-                                                              top: 5),
-                                                          child: Divider(
-                                                              height:
-                                                                  getVerticalSize(
-                                                                      1),
-                                                              thickness:
-                                                                  getVerticalSize(
-                                                                      1),
-                                                              color: appTheme
-                                                                  .blueGray400))
-                                                    ]))),
-                                        GestureDetector(
-                                          onTap: () {
-                                            onTapForgotPasswordOne(context);
-                                          },
-                                          child: Container(
-                                            decoration: AppDecoration.fill5,
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                Align(
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                  child: Padding(
-                                                    padding: getPadding(
-                                                        left: 20,
-                                                        top: 10,
-                                                        right: 20,
-                                                        bottom: 10),
-                                                    child: Text(
-                                                      "Forgot Password One",
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: TextStyle(
-                                                          color:
-                                                              appTheme.black900,
-                                                          fontSize:
-                                                              getFontSize(20),
-                                                          fontFamily: 'Roboto',
-                                                          fontWeight:
-                                                              FontWeight.w400),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                    padding: getPadding(top: 5),
-                                                    child: Divider(
-                                                        height:
-                                                            getVerticalSize(1),
-                                                        thickness:
-                                                            getVerticalSize(1),
-                                                        color: appTheme
-                                                            .blueGray400))
-                                              ],
-                                            ),
-                                          ),
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: getPadding(
+                                      left: 20,
+                                      top: 10,
+                                      right: 20,
+                                      bottom: 10,
+                                    ),
+                                    child: Text(
+                                      'Log in (Email)',
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: appTheme.black900,
+                                        fontSize: getFontSize(
+                                          20,
                                         ),
-                                        GestureDetector(
-                                            onTap: () {
-                                              onTapHomeRecommendedforyouSeeAllOne(
-                                                  context);
-                                            },
-                                            child: Container(
-                                                decoration: AppDecoration.fill5,
-                                                child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Padding(
-                                                              padding:
-                                                                  getPadding(
-                                                                      left: 20,
-                                                                      top: 10,
-                                                                      right: 20,
-                                                                      bottom:
-                                                                          10),
-                                                              child: Text(
-                                                                  "home > Recommended for you > See All One",
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style: TextStyle(
-                                                                      color: appTheme
-                                                                          .black900,
-                                                                      fontSize:
-                                                                          getFontSize(
-                                                                              20),
-                                                                      fontFamily:
-                                                                          'Roboto',
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400)))),
-                                                      Padding(
-                                                          padding: getPadding(
-                                                              top: 5),
-                                                          child: Divider(
-                                                              height:
-                                                                  getVerticalSize(
-                                                                      1),
-                                                              thickness:
-                                                                  getVerticalSize(
-                                                                      1),
-                                                              color: appTheme
-                                                                  .blueGray400))
-                                                    ])))
-                                      ]))))
-                    ]))));
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: getPadding(
+                                    top: 5,
+                                  ),
+                                  child: Divider(
+                                    height: getVerticalSize(
+                                      1,
+                                    ),
+                                    thickness: getVerticalSize(
+                                      1,
+                                    ),
+                                    color: appTheme.blueGray400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            onTapForgotPasswordTwo(context);
+                          },
+                          child: Container(
+                            decoration: AppDecoration.fill5,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: getPadding(
+                                      left: 20,
+                                      top: 10,
+                                      right: 20,
+                                      bottom: 10,
+                                    ),
+                                    child: Text(
+                                      'Forgot Password Two',
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: appTheme.black900,
+                                        fontSize: getFontSize(
+                                          20,
+                                        ),
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: getPadding(
+                                    top: 5,
+                                  ),
+                                  child: Divider(
+                                    height: getVerticalSize(
+                                      1,
+                                    ),
+                                    thickness: getVerticalSize(
+                                      1,
+                                    ),
+                                    color: appTheme.blueGray400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            onTapSignup(context);
+                          },
+                          child: Container(
+                            decoration: AppDecoration.fill5,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: getPadding(
+                                      left: 20,
+                                      top: 10,
+                                      right: 20,
+                                      bottom: 10,
+                                    ),
+                                    child: Text(
+                                      'Sign up',
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: appTheme.black900,
+                                        fontSize: getFontSize(
+                                          20,
+                                        ),
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: getPadding(
+                                    top: 5,
+                                  ),
+                                  child: Divider(
+                                    height: getVerticalSize(
+                                      1,
+                                    ),
+                                    thickness: getVerticalSize(
+                                      1,
+                                    ),
+                                    color: appTheme.blueGray400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            onTapCategories(context);
+                          },
+                          child: Container(
+                            decoration: AppDecoration.fill5,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: getPadding(
+                                      left: 20,
+                                      top: 10,
+                                      right: 20,
+                                      bottom: 10,
+                                    ),
+                                    child: Text(
+                                      'Categories',
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: appTheme.black900,
+                                        fontSize: getFontSize(
+                                          20,
+                                        ),
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: getPadding(
+                                    top: 5,
+                                  ),
+                                  child: Divider(
+                                    height: getVerticalSize(
+                                      1,
+                                    ),
+                                    thickness: getVerticalSize(
+                                      1,
+                                    ),
+                                    color: appTheme.blueGray400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            onTapHomeScreenContainer(context);
+                          },
+                          child: Container(
+                            decoration: AppDecoration.fill5,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: getPadding(
+                                      left: 20,
+                                      top: 10,
+                                      right: 20,
+                                      bottom: 10,
+                                    ),
+                                    child: Text(
+                                      'Home Screen - Container',
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: appTheme.black900,
+                                        fontSize: getFontSize(
+                                          20,
+                                        ),
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: getPadding(
+                                    top: 5,
+                                  ),
+                                  child: Divider(
+                                    height: getVerticalSize(
+                                      1,
+                                    ),
+                                    thickness: getVerticalSize(
+                                      1,
+                                    ),
+                                    color: appTheme.blueGray400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            onTapLoginPassword(context);
+                          },
+                          child: Container(
+                            decoration: AppDecoration.fill5,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: getPadding(
+                                      left: 20,
+                                      top: 10,
+                                      right: 20,
+                                      bottom: 10,
+                                    ),
+                                    child: Text(
+                                      'Log in (Password)',
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: appTheme.black900,
+                                        fontSize: getFontSize(
+                                          20,
+                                        ),
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: getPadding(
+                                    top: 5,
+                                  ),
+                                  child: Divider(
+                                    height: getVerticalSize(
+                                      1,
+                                    ),
+                                    thickness: getVerticalSize(
+                                      1,
+                                    ),
+                                    color: appTheme.blueGray400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            onTapForgotPassword(context);
+                          },
+                          child: Container(
+                            decoration: AppDecoration.fill5,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: getPadding(
+                                      left: 20,
+                                      top: 10,
+                                      right: 20,
+                                      bottom: 10,
+                                    ),
+                                    child: Text(
+                                      'Forgot Password',
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: appTheme.black900,
+                                        fontSize: getFontSize(
+                                          20,
+                                        ),
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: getPadding(
+                                    top: 5,
+                                  ),
+                                  child: Divider(
+                                    height: getVerticalSize(
+                                      1,
+                                    ),
+                                    thickness: getVerticalSize(
+                                      1,
+                                    ),
+                                    color: appTheme.blueGray400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            onTapLangugaes(context);
+                          },
+                          child: Container(
+                            decoration: AppDecoration.fill5,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: getPadding(
+                                      left: 20,
+                                      top: 10,
+                                      right: 20,
+                                      bottom: 10,
+                                    ),
+                                    child: Text(
+                                      'Langugaes',
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: appTheme.black900,
+                                        fontSize: getFontSize(
+                                          20,
+                                        ),
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: getPadding(
+                                    top: 5,
+                                  ),
+                                  child: Divider(
+                                    height: getVerticalSize(
+                                      1,
+                                    ),
+                                    thickness: getVerticalSize(
+                                      1,
+                                    ),
+                                    color: appTheme.blueGray400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            onTapHomeRecommendedforyouSeeAll(
+                              context,
+                            );
+                          },
+                          child: Container(
+                            decoration: AppDecoration.fill5,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: getPadding(
+                                      left: 20,
+                                      top: 10,
+                                      right: 20,
+                                      bottom: 10,
+                                    ),
+                                    child: Text(
+                                      'home > Recommended for you > See All',
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: appTheme.black900,
+                                        fontSize: getFontSize(
+                                          20,
+                                        ),
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: getPadding(
+                                    top: 5,
+                                  ),
+                                  child: Divider(
+                                    height: getVerticalSize(
+                                      1,
+                                    ),
+                                    thickness: getVerticalSize(
+                                      1,
+                                    ),
+                                    color: appTheme.blueGray400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            onTapForgotPasswordOne(context);
+                          },
+                          child: Container(
+                            decoration: AppDecoration.fill5,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: getPadding(
+                                      left: 20,
+                                      top: 10,
+                                      right: 20,
+                                      bottom: 10,
+                                    ),
+                                    child: Text(
+                                      'Forgot Password One',
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: appTheme.black900,
+                                        fontSize: getFontSize(20),
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: getPadding(top: 5),
+                                  child: Divider(
+                                    height: getVerticalSize(1),
+                                    thickness: getVerticalSize(1),
+                                    color: appTheme.blueGray400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            onTapHomeRecommendedforyouSeeAllOne(
+                              context,
+                            );
+                          },
+                          child: Container(
+                            decoration: AppDecoration.fill5,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: getPadding(
+                                      left: 20,
+                                      top: 10,
+                                      right: 20,
+                                      bottom: 10,
+                                    ),
+                                    child: Text(
+                                      'home > Recommended for you > See All One',
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: appTheme.black900,
+                                        fontSize: getFontSize(
+                                          20,
+                                        ),
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: getPadding(
+                                    top: 5,
+                                  ),
+                                  child: Divider(
+                                    height: getVerticalSize(
+                                      1,
+                                    ),
+                                    thickness: getVerticalSize(
+                                      1,
+                                    ),
+                                    color: appTheme.blueGray400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   /// Navigates to the logInEmailScreen when the action is triggered.
@@ -746,6 +743,8 @@ class AppNavigationScreen extends StatelessWidget {
   /// to push the named route for the homeRecommendedForYouSeeAllOneScreen.
   onTapHomeRecommendedforyouSeeAllOne(BuildContext context) {
     Navigator.pushNamed(
-        context, AppRoutes.homeRecommendedForYouSeeAllOneScreen);
+      context,
+      AppRoutes.homeRecommendedForYouSeeAllOneScreen,
+    );
   }
 }

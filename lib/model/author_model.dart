@@ -10,17 +10,18 @@ class AuthorModel {
   String? image;
   String? status;
 
-  AuthorModel(
-      {this.authorId,
-      this.name,
-      this.education,
-      this.description,
-      this.designation,
-      this.mobileNo,
-      this.emailId,
-      this.address,
-      this.image,
-      this.status});
+  AuthorModel({
+    this.authorId,
+    this.name,
+    this.education,
+    this.description,
+    this.designation,
+    this.mobileNo,
+    this.emailId,
+    this.address,
+    this.image,
+    this.status,
+  });
 
   AuthorModel.fromJson(Map<String, dynamic> json) {
     authorId = json['author_id'];
@@ -36,17 +37,17 @@ class AuthorModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['author_id'] = this.authorId;
-    data['name'] = this.name;
-    data['education'] = this.education;
-    data['description'] = this.description;
-    data['designation'] = this.designation;
-    data['mobile_no'] = this.mobileNo;
-    data['email_id'] = this.emailId;
-    data['address'] = this.address;
-    data['image'] = this.image;
-    data['status'] = this.status;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['author_id'] = authorId;
+    data['name'] = name;
+    data['education'] = education;
+    data['description'] = description;
+    data['designation'] = designation;
+    data['mobile_no'] = mobileNo;
+    data['email_id'] = emailId;
+    data['address'] = address;
+    data['image'] = image;
+    data['status'] = status;
     return data;
   }
 }

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:book/model/media_model.dart';
+
 class BookModel {
   int? bookId;
   String? categoryName;
@@ -44,51 +46,60 @@ class BookModel {
   String? originalPrintLength;
   String? originalAudiobookLength;
   String? introduction;
+  String? deletedAt;
+  String? createdAt;
+  String? updatedAt;
+  List<MediaModel>? media;
 
-  BookModel(
-      {this.bookId,
-      this.categoryName,
-      this.subcategoryName,
-      this.authorName,
-      this.name,
-      this.title,
-      this.topicCover,
-      this.description,
-      this.format,
-      this.edition,
-      this.keywords,
-      this.language,
-      this.publisher,
-      this.dateOfPublication,
-      this.frontCover,
-      this.filePath,
-      this.fileSamplePath,
-      this.price,
-      this.discount,
-      this.discountedPrice,
-      this.isWishlist,
-      this.image,
-      this.type,
-      this.mainTitle,
-      this.countryPublisher,
-      this.yearPublished,
-      this.decadePublished,
-      this.author2,
-      this.author3,
-      this.author4,
-      this.freeBook,
-      this.summary,
-      this.profession,
-      this.targetAudience,
-      this.gender,
-      this.isbn10,
-      this.isbn13,
-      this.classification,
-      this.originalContentType,
-      this.originalMaterialType,
-      this.originalPrintLength,
-      this.originalAudiobookLength,
-      this.introduction});
+  BookModel({
+    this.bookId,
+    this.categoryName,
+    this.subcategoryName,
+    this.authorName,
+    this.name,
+    this.title,
+    this.topicCover,
+    this.description,
+    this.format,
+    this.edition,
+    this.keywords,
+    this.language,
+    this.publisher,
+    this.dateOfPublication,
+    this.frontCover,
+    this.filePath,
+    this.fileSamplePath,
+    this.price,
+    this.discount,
+    this.discountedPrice,
+    this.isWishlist,
+    this.image,
+    this.type,
+    this.mainTitle,
+    this.countryPublisher,
+    this.yearPublished,
+    this.decadePublished,
+    this.author2,
+    this.author3,
+    this.author4,
+    this.freeBook,
+    this.summary,
+    this.profession,
+    this.targetAudience,
+    this.gender,
+    this.isbn10,
+    this.isbn13,
+    this.classification,
+    this.originalContentType,
+    this.originalMaterialType,
+    this.originalPrintLength,
+    this.originalAudiobookLength,
+    this.introduction,
+    this.deletedAt,
+    this.createdAt,
+    this.updatedAt,
+    this.media,
+  });
 
   BookModel.fromJson(Map<String, dynamic> json) {
     bookId = json['book_id'];
@@ -134,53 +145,68 @@ class BookModel {
     originalPrintLength = json['original_print_length'];
     originalAudiobookLength = json['original_audiobook_length'];
     introduction = json['introduction'];
+    deletedAt = json['deleted_at'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    if (json['media'] != null) {
+      media = <MediaModel>[];
+      json['media'].forEach((v) {
+        media!.add(MediaModel.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['book_id'] = this.bookId;
-    data['category_name'] = this.categoryName;
-    data['subcategory_name'] = this.subcategoryName;
-    data['author_name'] = this.authorName;
-    data['name'] = this.name;
-    data['title'] = this.title;
-    data['topic_cover'] = this.topicCover;
-    data['description'] = this.description;
-    data['format'] = this.format;
-    data['edition'] = this.edition;
-    data['keywords'] = this.keywords;
-    data['language'] = this.language;
-    data['publisher'] = this.publisher;
-    data['date_of_publication'] = this.dateOfPublication;
-    data['front_cover'] = this.frontCover;
-    data['file_path'] = this.filePath;
-    data['file_sample_path'] = this.fileSamplePath;
-    data['price'] = this.price;
-    data['discount'] = this.discount;
-    data['discounted_price'] = this.discountedPrice;
-    data['is_wishlist'] = this.isWishlist;
-    data['image'] = this.image;
-    data['type'] = this.type;
-    data['main_title'] = this.mainTitle;
-    data['country_publisher'] = this.countryPublisher;
-    data['year_published'] = this.yearPublished;
-    data['decade_published'] = this.decadePublished;
-    data['author2'] = this.author2;
-    data['author3'] = this.author3;
-    data['author4'] = this.author4;
-    data['free_book'] = this.freeBook;
-    data['summary'] = this.summary;
-    data['profession'] = this.profession;
-    data['target_audience'] = this.targetAudience;
-    data['gender'] = this.gender;
-    data['isbn10'] = this.isbn10;
-    data['isbn13'] = this.isbn13;
-    data['classification'] = this.classification;
-    data['original_content_type'] = this.originalContentType;
-    data['original_material_type'] = this.originalMaterialType;
-    data['original_print_length'] = this.originalPrintLength;
-    data['original_audiobook_length'] = this.originalAudiobookLength;
-    data['introduction'] = this.introduction;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['book_id'] = bookId;
+    data['category_name'] = categoryName;
+    data['subcategory_name'] = subcategoryName;
+    data['author_name'] = authorName;
+    data['name'] = name;
+    data['title'] = title;
+    data['topic_cover'] = topicCover;
+    data['description'] = description;
+    data['format'] = format;
+    data['edition'] = edition;
+    data['keywords'] = keywords;
+    data['language'] = language;
+    data['publisher'] = publisher;
+    data['date_of_publication'] = dateOfPublication;
+    data['front_cover'] = frontCover;
+    data['file_path'] = filePath;
+    data['file_sample_path'] = fileSamplePath;
+    data['price'] = price;
+    data['discount'] = discount;
+    data['discounted_price'] = discountedPrice;
+    data['is_wishlist'] = isWishlist;
+    data['image'] = image;
+    data['type'] = type;
+    data['main_title'] = mainTitle;
+    data['country_publisher'] = countryPublisher;
+    data['year_published'] = yearPublished;
+    data['decade_published'] = decadePublished;
+    data['author2'] = author2;
+    data['author3'] = author3;
+    data['author4'] = author4;
+    data['free_book'] = freeBook;
+    data['summary'] = summary;
+    data['profession'] = profession;
+    data['target_audience'] = targetAudience;
+    data['gender'] = gender;
+    data['isbn10'] = isbn10;
+    data['isbn13'] = isbn13;
+    data['classification'] = classification;
+    data['original_content_type'] = originalContentType;
+    data['original_material_type'] = originalMaterialType;
+    data['original_print_length'] = originalPrintLength;
+    data['original_audiobook_length'] = originalAudiobookLength;
+    data['introduction'] = introduction;
+    data['deleted_at'] = deletedAt;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    if (media != null) {
+      data['media'] = media!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 

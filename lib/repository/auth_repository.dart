@@ -15,24 +15,28 @@ class AuthRepository {
 
   DioClient dioClient = DioClient();
 
-  Future<Either<String, UserModel>> logIn(
-      {required String email, required String password}) async {
+  Future<Either<String, UserModel>> logIn({
+    required String email,
+    required String password,
+  }) async {
     try {
-      Response response = await dioClient.post(ApiEndpoint.login,
-          data: {"email": email, "password": password});
+      Response response = await dioClient.post(
+        ApiEndpoint.login,
+        data: {'email': email, 'password': password},
+      );
       if (response.statusCode == 200) {
         dynamic data = response.data;
         if (data.runtimeType == String) {
           data = jsonDecode(data);
         }
-        return right(UserModel.fromJson(data["data"]));
+        return right(UserModel.fromJson(data['data']));
       } else if (response.statusCode == 400) {
-        return left(response.data["message"]);
+        return left(response.data['message']);
       } else {
-        return left("Login failed! please try again");
+        return left('Login failed! please try again');
       }
     } catch (e) {
-      return left("These credentials do not match our records.");
+      return left('These credentials do not match our records.');
     }
   }
 
@@ -44,24 +48,27 @@ class AuthRepository {
     required String password,
   }) async {
     try {
-      Response response = await dioClient.post(ApiEndpoint.register, data: {
-        "user_type": "user",
-        "name": name,
-        "username": username,
-        "contact_number": mobileNo,
-        "email": email,
-        "password": password,
-      });
+      Response response = await dioClient.post(
+        ApiEndpoint.register,
+        data: {
+          'user_type': 'user',
+          'name': name,
+          'username': username,
+          'contact_number': mobileNo,
+          'email': email,
+          'password': password,
+        },
+      );
       if (response.statusCode == 200) {
         dynamic data = response.data;
         if (data.runtimeType == String) {
           data = jsonDecode(data);
         }
-        return right(UserModel.fromJson(data["data"]));
+        return right(UserModel.fromJson(data['data']));
       } else if (response.statusCode == 400) {
-        return left(response.data["message"]);
+        return left(response.data['message']);
       } else {
-        return left("Register failed! please try again");
+        return left('Register failed! please try again');
       }
     } catch (e) {
       return left('Register failed! please try again');
@@ -71,117 +78,125 @@ class AuthRepository {
   Future<Either<String, bool>> forgotPassword({required String email}) async {
     try {
       Response response = await dioClient
-          .post(ApiEndpoint.forgetPassword, data: {"email": email});
+          .post(ApiEndpoint.forgetPassword, data: {'email': email});
       if (response.statusCode == 200) {
         dynamic data = response.data;
         if (data.runtimeType == String) {
           data = jsonDecode(data);
         }
-        if (data["status"] == false) {
-          return left(data["message"]);
+        if (data['status'] == false) {
+          return left(data['message']);
         }
         return right(true);
       } else if (response.statusCode == 500) {
-        return left("Some error accured! Please try again");
+        return left('Some error accured! Please try again');
       } else {
-        return left("Some error accured! Please try again");
+        return left('Some error accured! Please try again');
       }
     } catch (e) {
-      return left("Some error accured! Please try again");
+      return left('Some error accured! Please try again');
     }
   }
 
   Future<Either<String, bool>> resendOtp({required String email}) async {
     try {
       Response response =
-          await dioClient.post(ApiEndpoint.resendOtp, data: {"email": email});
+          await dioClient.post(ApiEndpoint.resendOtp, data: {'email': email});
       if (response.statusCode == 200) {
         dynamic data = response.data;
         if (data.runtimeType == String) {
           data = jsonDecode(data);
         }
-        if (data["status"] == false) {
-          return left(data["message"]);
+        if (data['status'] == false) {
+          return left(data['message']);
         }
         return right(true);
       } else if (response.statusCode == 500) {
-        return left("Some error accured! Please try again");
+        return left('Some error accured! Please try again');
       } else {
-        return left("Some error accured! Please try again");
+        return left('Some error accured! Please try again');
       }
     } catch (e) {
-      return left("Some error accured! Please try again");
+      return left('Some error accured! Please try again');
     }
   }
 
-  Future<Either<String, bool>> verifyToken(
-      {required String email, required String code}) async {
+  Future<Either<String, bool>> verifyToken({
+    required String email,
+    required String code,
+  }) async {
     try {
       Response response = await dioClient
-          .post(ApiEndpoint.verifyToken, data: {"email": email, "code": code});
+          .post(ApiEndpoint.verifyToken, data: {'email': email, 'code': code});
       if (response.statusCode == 200) {
         dynamic data = response.data;
         if (data.runtimeType == String) {
           data = jsonDecode(data);
         }
-        if (data["status"] == false) {
-          return left(data["message"]);
+        if (data['status'] == false) {
+          return left(data['message']);
         }
         return right(true);
       } else if (response.statusCode == 500) {
-        return left("Some error accured! Please try again");
+        return left('Some error accured! Please try again');
       } else {
-        return left("Some error accured! Please try again");
+        return left('Some error accured! Please try again');
       }
     } catch (e) {
-      return left("Some error accured! Please try again");
+      return left('Some error accured! Please try again');
     }
   }
 
-  Future<Either<String, bool>> updatePassword(
-      {required String email, required String password}) async {
+  Future<Either<String, bool>> updatePassword({
+    required String email,
+    required String password,
+  }) async {
     try {
-      Response response = await dioClient.post(ApiEndpoint.updatePassword,
-          data: {"email": email, "password": password});
+      Response response = await dioClient.post(
+        ApiEndpoint.updatePassword,
+        data: {'email': email, 'password': password},
+      );
       if (response.statusCode == 200) {
         dynamic data = response.data;
         if (data.runtimeType == String) {
           data = jsonDecode(data);
         }
-        if (data["status"] == false) {
-          return left(data["message"]);
+        if (data['status'] == false) {
+          return left(data['message']);
         }
         return right(true);
       } else if (response.statusCode == 500) {
-        return left("Some error accured! Please try again");
+        return left('Some error accured! Please try again');
       } else {
-        return left("Some error accured! Please try again");
+        return left('Some error accured! Please try again');
       }
     } catch (e) {
-      return left("Some error accured! Please try again");
+      return left('Some error accured! Please try again');
     }
   }
 
   Future<Either<String, bool>> logout({required String token}) async {
     try {
-      Response response = await dioClient.post(ApiEndpoint.logout,
-          options: Options(headers: {"Authorization": "Bearer $token"}));
+      Response response = await dioClient.post(
+        ApiEndpoint.logout,
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+      );
       if (response.statusCode == 200) {
         dynamic data = response.data;
         if (data.runtimeType == String) {
           data = jsonDecode(data);
         }
-        if (data["status"] == false) {
-          return left(data["message"]);
+        if (data['status'] == false) {
+          return left(data['message']);
         }
         return right(true);
       } else if (response.statusCode == 500) {
-        return left("Some error accured! Please try again");
+        return left('Some error accured! Please try again');
       } else {
-        return left("Some error accured! Please try again");
+        return left('Some error accured! Please try again');
       }
     } catch (e) {
-      return left("Some error accured! Please try again");
+      return left('Some error accured! Please try again');
     }
   }
 }
