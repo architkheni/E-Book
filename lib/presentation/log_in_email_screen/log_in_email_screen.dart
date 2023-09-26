@@ -184,7 +184,8 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                       ),
                       Padding(
                         padding: getPadding(
-                          top: 32,
+                          top: 24,
+                          bottom: 24,
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

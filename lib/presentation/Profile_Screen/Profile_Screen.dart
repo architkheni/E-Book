@@ -114,17 +114,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 return SizedBox(
                                   width: 80,
                                   height: 80,
-                                  // color: Colors.red[300],
-                                  child: provider.uploadImage == null
+                                  child: provider.uploadImage.isEmpty
                                       ? CircleAvatar(
-                                          backgroundImage:
-                                              AssetImage(ImageConstant.profile),
+                                          backgroundColor: isLight
+                                              ? ColorConstant.kF3F3F3
+                                              : ColorConstant.k626666,
+                                          child: Icon(
+                                            Icons.person,
+                                            size: 40,
+                                            color: isLight
+                                                ? ColorConstant.black
+                                                : ColorConstant.whiteA700,
+                                          ),
                                         )
                                       : ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(50),
                                           child: Image.network(
-                                            provider.uploadImage!,
+                                            provider.uploadImage,
                                             fit: BoxFit.cover,
                                           ),
                                         ), /*  CustomImageView(

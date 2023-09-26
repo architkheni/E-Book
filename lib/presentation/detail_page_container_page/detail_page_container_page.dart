@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:book/model/book_chapter_model.dart';
 import 'package:book/model/book_model.dart';
-import 'package:book/presentation/book_read_screen/book_read_screen.dart';
 import 'package:book/presentation/home/widgets/listtitle1_item_widget.dart';
+import 'package:book/presentation/payment_screen/payment_screen.dart';
 import 'package:book/provider/detail_provider.dart';
 import 'package:book/provider/wishlist_provider.dart';
 import 'package:flutter/material.dart';
@@ -11,9 +11,9 @@ import 'package:provider/provider.dart';
 
 import '../../core/app_export.dart';
 import '../../core/utils/color_constant.dart';
-import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_icon_button.dart';
 import '../detail_page_container_page/widgets/chipviewframefo2_item_widget.dart';
+import '../home_recommended_for_you_see_all_screen/home_recommended_for_you_see_all_screen.dart';
 
 class DetailPageContainerPage extends StatelessWidget {
   final int bookId;
@@ -97,67 +97,98 @@ class _DetailViewState extends State<DetailView> {
                                           child: Padding(
                                             padding: const EdgeInsets.only(
                                               right: 20,
+                                              left: 20,
                                             ),
-                                            child: SizedBox(
-                                              height: 35,
-                                              width: 35,
-                                              // color: Colors.red,
-                                              child: Center(
-                                                child:
-                                                    Consumer<WishlistProvider>(
-                                                  builder: (
-                                                    context,
-                                                    wishlistProvider,
-                                                    child,
-                                                  ) {
-                                                    bool isFavorite =
-                                                        wishlistProvider.bookId
-                                                            .contains(
-                                                      provider.detailModel.book!
-                                                          .bookId!,
-                                                    );
-                                                    log(
-                                                      isFavorite.toString(),
-                                                    );
-                                                    return IconButton(
-                                                      onPressed: () {
-                                                        if (isFavorite) {
-                                                          context
-                                                              .read<
-                                                                  WishlistProvider>()
-                                                              .addRemoveBookInWishlist(
-                                                                provider
-                                                                    .detailModel
-                                                                    .book!,
-                                                                0,
-                                                              );
-                                                        } else {
-                                                          context
-                                                              .read<
-                                                                  WishlistProvider>()
-                                                              .addRemoveBookInWishlist(
-                                                                provider
-                                                                    .detailModel
-                                                                    .book!,
-                                                                1,
-                                                              );
-                                                        }
-                                                      },
-                                                      icon: isFavorite
-                                                          ? const Icon(
-                                                              Icons.favorite,
-                                                              color: Colors.red,
-                                                            )
-                                                          : const Icon(
-                                                              Icons
-                                                                  .favorite_border,
-                                                              color:
-                                                                  Colors.white,
-                                                            ),
-                                                    );
-                                                  },
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: appTheme.teal400
+                                                        .withOpacity(0.5),
+                                                  ),
+                                                  height: 35,
+                                                  width: 50,
+                                                  child: IconButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    icon: const Icon(
+                                                      Icons.arrow_back_ios_new,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
+                                                SizedBox(
+                                                  height: 35,
+                                                  width: 35,
+                                                  child: Center(
+                                                    child: Consumer<
+                                                        WishlistProvider>(
+                                                      builder: (
+                                                        context,
+                                                        wishlistProvider,
+                                                        child,
+                                                      ) {
+                                                        bool isFavorite =
+                                                            wishlistProvider
+                                                                .bookId
+                                                                .contains(
+                                                          provider
+                                                                  .detailModel
+                                                                  .book
+                                                                  ?.bookId ??
+                                                              0,
+                                                        );
+                                                        log(
+                                                          isFavorite.toString(),
+                                                        );
+                                                        return IconButton(
+                                                          onPressed: () {
+                                                            if (isFavorite) {
+                                                              context
+                                                                  .read<
+                                                                      WishlistProvider>()
+                                                                  .addRemoveBookInWishlist(
+                                                                    provider
+                                                                        .detailModel
+                                                                        .book!,
+                                                                    0,
+                                                                  );
+                                                            } else {
+                                                              context
+                                                                  .read<
+                                                                      WishlistProvider>()
+                                                                  .addRemoveBookInWishlist(
+                                                                    provider
+                                                                        .detailModel
+                                                                        .book!,
+                                                                    1,
+                                                                  );
+                                                            }
+                                                          },
+                                                          icon: isFavorite
+                                                              ? const Icon(
+                                                                  Icons
+                                                                      .favorite,
+                                                                  color: Colors
+                                                                      .red,
+                                                                )
+                                                              : const Icon(
+                                                                  Icons
+                                                                      .favorite_border,
+                                                                  color: Colors
+                                                                      .red,
+                                                                ),
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ),
@@ -183,22 +214,22 @@ class _DetailViewState extends State<DetailView> {
                                           ),
                                           child: GestureDetector(
                                             onTap: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      BookReadScreen(
-                                                    bookId: widget.bookId,
-                                                  ),
-                                                ),
-                                              );
                                               // Navigator.push(
                                               //   context,
                                               //   MaterialPageRoute(
                                               //     builder: (context) =>
-                                              //         const PaymentScreen(),
+                                              //         BookReadScreen(
+                                              //       bookId: widget.bookId,
+                                              //     ),
                                               //   ),
                                               // );
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const PaymentScreen(),
+                                                ),
+                                              );
                                             },
                                             child: Container(
                                               height: 60,
@@ -328,7 +359,7 @@ class _DetailViewState extends State<DetailView> {
                                             bottom: 1,
                                           ),
                                           child: Text(
-                                            '18 min ',
+                                            '${provider.detailModel.book?.originalPrintLength}',
                                             overflow: TextOverflow.ellipsis,
                                             textAlign: TextAlign.left,
                                             style: theme.textTheme.titleSmall,
@@ -737,41 +768,47 @@ class _DetailViewState extends State<DetailView> {
                                               : null,
                                         ),
                                       ),
-                                      CustomElevatedButton(
-                                        text: 'Show all',
-                                        margin: getMargin(top: 7, bottom: 7),
-                                        rightIcon: Container(
-                                          margin: getMargin(left: 4),
-                                          child: CustomImageView(
-                                            svgPath: ImageConstant
-                                                .imgArrowrightTeal400,
-                                            height: getSize(16),
-                                            width: getSize(16),
-                                            margin: getMargin(
-                                              left: 4,
-                                              top: 4,
-                                              bottom: 4,
-                                            ),
-                                          ),
-                                        ),
-                                        buttonStyle: CustomButtonStyles.none,
-                                        buttonTextStyle:
-                                            CustomTextStyles.labelLargeTeal400,
+                                      InkWell(
                                         onTap: () {
-                                          // TODO: comment becase flag is not come
-                                          // Navigator.push(
-                                          // context,
-                                          //   MaterialPageRoute(
-                                          //       builder: (context) =>
-                                          //           HomeRecommendedForYouSeeAllScreen(
-                                          //             title:
-                                          //                 "Similar Books",
-                                          //             books: provider
-                                          //                 .detailModel
-                                          //                 .recommendedBook,
-                                          //           )),
-                                          // );
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const HomeRecommendedForYouSeeAllScreen(
+                                                title: 'Similar Books',
+                                                param: 'flag_recommend',
+                                              ),
+                                            ),
+                                          );
                                         },
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                              padding: getPadding(
+                                                top: 7,
+                                                bottom: 7,
+                                              ),
+                                              child: Text(
+                                                'Show all',
+                                                overflow: TextOverflow.ellipsis,
+                                                textAlign: TextAlign.left,
+                                                style: CustomTextStyles
+                                                    .labelLargeTeal400Bold,
+                                              ),
+                                            ),
+                                            CustomImageView(
+                                              svgPath: ImageConstant
+                                                  .imgArrowrightTeal400,
+                                              height: getSize(16),
+                                              width: getSize(16),
+                                              margin: getMargin(
+                                                left: 4,
+                                                top: 7,
+                                                bottom: 7,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ],
                                   ),

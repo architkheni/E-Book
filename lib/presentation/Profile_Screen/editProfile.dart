@@ -39,7 +39,7 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   File? file;
-  String? uploadImage;
+  String uploadImage = '';
 
   @override
   Widget build(BuildContext context) {
@@ -85,33 +85,62 @@ class _EditProfileState extends State<EditProfile> {
                     padding: const EdgeInsets.only(top: 20),
                     child: GestureDetector(
                       onTap: pickImage,
-                      child: SizedBox(
-                        width: 100,
-                        height: 100,
-                        // color: Colors.red[300],
-                        child: file == null
-                            ? uploadImage == null
-                                ? CircleAvatar(
-                                    backgroundImage:
-                                        AssetImage(ImageConstant.profile),
-                                  )
+                      child: Stack(
+                        children: [
+                          SizedBox(
+                            width: 100,
+                            height: 100,
+                            // color: Colors.red[300],
+                            child: file == null
+                                ? uploadImage.isEmpty
+                                    ? CircleAvatar(
+                                        backgroundColor: isLight
+                                            ? ColorConstant.kF3F3F3
+                                            : ColorConstant.k626666,
+                                        child: Icon(
+                                          Icons.person,
+                                          size: 50,
+                                          color: isLight
+                                              ? ColorConstant.black
+                                              : ColorConstant.whiteA700,
+                                        ),
+                                      )
+                                    : ClipRRect(
+                                        borderRadius: BorderRadius.circular(50),
+                                        child: Image.network(
+                                          uploadImage,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      )
                                 : ClipRRect(
                                     borderRadius: BorderRadius.circular(50),
-                                    child: Image.network(
-                                      uploadImage!,
+                                    child: Image.file(
+                                      file!,
                                       fit: BoxFit.cover,
                                     ),
-                                  )
-                            : ClipRRect(
-                                borderRadius: BorderRadius.circular(50),
-                                child: Image.file(
-                                  file!,
-                                  fit: BoxFit.cover,
-                                ),
+                                  ),
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: ColorConstant.primaryColor,
+                                shape: BoxShape.circle,
                               ),
+                              padding: const EdgeInsets.all(6),
+                              child: Icon(
+                                Icons.upload_rounded,
+                                color: ColorConstant.black,
+                                size: 20,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
+                  const SizedBox(height: 20),
                   Text(
                     'Change Profile Picture',
                     overflow: TextOverflow.ellipsis,
@@ -337,7 +366,7 @@ class _EditProfileState extends State<EditProfile> {
     usernameController.text = userModel.username!;
     emailController.text = userModel.email!;
     contactNumberController.text = userModel.contactNumber!;
-    uploadImage = userModel.image;
+    uploadImage = userModel.image ?? '';
     setState(() {});
   }
 

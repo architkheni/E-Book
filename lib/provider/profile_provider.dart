@@ -14,19 +14,22 @@ class ProfileProvider extends ChangeNotifier {
   AppStorage appStorage = AppStorage();
   String username = '';
   String email = '';
-  String? uploadImage;
+  String uploadImage = '';
 
   void init() async {
     String data = await appStorage.getUser();
     UserModel userModel = UserModel.fromJson(jsonDecode(data));
     username = userModel.username!;
     email = userModel.email!;
-    uploadImage = userModel.image;
+    uploadImage = userModel.image ?? '';
     notifyListeners();
   }
 
-  void saveUserCategory(BuildContext context,
-      {required List<int> category, void Function()? onSuccess,}) async {
+  void saveUserCategory(
+    BuildContext context, {
+    required List<int> category,
+    void Function()? onSuccess,
+  }) async {
     String token = await appStorage.getToken();
     Either<String, bool> result = await ProfileRepository.instance
         .saveUserCategory(token: token, category: category);
@@ -37,14 +40,19 @@ class ProfileProvider extends ChangeNotifier {
         onSuccess();
         return;
       }
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => const LangugaesScreen(),
-      ),);
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => const LangugaesScreen(),
+        ),
+      );
     });
   }
 
-  void saveUserLanguage(BuildContext context,
-      {required List<int> language, void Function()? onSuccess,}) async {
+  void saveUserLanguage(
+    BuildContext context, {
+    required List<int> language,
+    void Function()? onSuccess,
+  }) async {
     String token = await appStorage.getToken();
     Either<String, bool> result = await ProfileRepository.instance
         .saveUserLanguage(token: token, languages: language);

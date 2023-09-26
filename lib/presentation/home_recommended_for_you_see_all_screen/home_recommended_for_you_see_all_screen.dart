@@ -12,10 +12,12 @@ import 'package:provider/provider.dart';
 class HomeRecommendedForYouSeeAllScreen extends StatefulWidget {
   final String title;
   final String param;
+  final String? jsonKey;
   const HomeRecommendedForYouSeeAllScreen({
     Key? key,
     required this.title,
     required this.param,
+    this.jsonKey,
   }) : super(key: key);
 
   @override
@@ -35,8 +37,8 @@ class _HomeRecommendedForYouSeeAllScreenState
     double height = MediaQuery.of(context).size.height;
     bool isLight = Theme.of(context).brightness == Brightness.light;
     return ChangeNotifierProvider(
-      create: (context) =>
-          ViewAllBookProvider()..getViewAllBooks(param: widget.param),
+      create: (context) => ViewAllBookProvider()
+        ..getViewAllBooks(param: widget.param, key: widget.jsonKey),
       child: SafeArea(
         child: Scaffold(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -149,7 +151,10 @@ class _HomeRecommendedForYouSeeAllScreenState
                         },
                         itemCount: provider.books.length,
                         itemBuilder: (context, index) {
-                          BookModel book = provider.books[index];
+                          List<BookModel> books = selectedValue == 'Z to A'
+                              ? provider.books.reversed.toList()
+                              : provider.books;
+                          BookModel book = books[index];
                           return GestureDetector(
                             onTap: () {
                               Navigator.push(

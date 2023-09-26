@@ -313,7 +313,7 @@ class HomeScreenPage extends StatelessWidget {
                                               ),
                                             ),
                                             const Spacer(),
-                                            GestureDetector(
+                                            InkWell(
                                               onTap: () {
                                                 Navigator.push(
                                                   context,
@@ -327,30 +327,34 @@ class HomeScreenPage extends StatelessWidget {
                                                   ),
                                                 );
                                               },
-                                              child: Padding(
-                                                padding: getPadding(
-                                                  top: 7,
-                                                  bottom: 7,
-                                                ),
-                                                child: Text(
-                                                  'Show all',
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  textAlign: TextAlign.left,
-                                                  style: CustomTextStyles
-                                                      .labelLargeTeal400Bold,
-                                                ),
-                                              ),
-                                            ),
-                                            CustomImageView(
-                                              svgPath: ImageConstant
-                                                  .imgArrowrightTeal400,
-                                              height: getSize(16),
-                                              width: getSize(16),
-                                              margin: getMargin(
-                                                left: 4,
-                                                top: 7,
-                                                bottom: 7,
+                                              child: Row(
+                                                children: [
+                                                  Padding(
+                                                    padding: getPadding(
+                                                      top: 7,
+                                                      bottom: 7,
+                                                    ),
+                                                    child: Text(
+                                                      'Show all',
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      textAlign: TextAlign.left,
+                                                      style: CustomTextStyles
+                                                          .labelLargeTeal400Bold,
+                                                    ),
+                                                  ),
+                                                  CustomImageView(
+                                                    svgPath: ImageConstant
+                                                        .imgArrowrightTeal400,
+                                                    height: getSize(16),
+                                                    width: getSize(16),
+                                                    margin: getMargin(
+                                                      left: 4,
+                                                      top: 7,
+                                                      bottom: 7,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                           ],
@@ -407,7 +411,7 @@ class HomeScreenPage extends StatelessWidget {
                                               ),
                                             ),
                                             const Spacer(),
-                                            GestureDetector(
+                                            InkWell(
                                               onTap: () {
                                                 Navigator.push(
                                                   context,
@@ -420,30 +424,34 @@ class HomeScreenPage extends StatelessWidget {
                                                   ),
                                                 );
                                               },
-                                              child: Padding(
-                                                padding: getPadding(
-                                                  top: 5,
-                                                  bottom: 5,
-                                                ),
-                                                child: Text(
-                                                  'Show all',
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  textAlign: TextAlign.left,
-                                                  style: CustomTextStyles
-                                                      .labelLargeTeal400Bold,
-                                                ),
-                                              ),
-                                            ),
-                                            CustomImageView(
-                                              svgPath: ImageConstant
-                                                  .imgArrowrightTeal400,
-                                              height: getSize(16),
-                                              width: getSize(16),
-                                              margin: getMargin(
-                                                left: 4,
-                                                top: 4,
-                                                bottom: 4,
+                                              child: Row(
+                                                children: [
+                                                  Padding(
+                                                    padding: getPadding(
+                                                      top: 7,
+                                                      bottom: 7,
+                                                    ),
+                                                    child: Text(
+                                                      'Show all',
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      textAlign: TextAlign.left,
+                                                      style: CustomTextStyles
+                                                          .labelLargeTeal400Bold,
+                                                    ),
+                                                  ),
+                                                  CustomImageView(
+                                                    svgPath: ImageConstant
+                                                        .imgArrowrightTeal400,
+                                                    height: getSize(16),
+                                                    width: getSize(16),
+                                                    margin: getMargin(
+                                                      left: 4,
+                                                      top: 7,
+                                                      bottom: 7,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                           ],
@@ -578,45 +586,47 @@ class HomeScreenPage extends StatelessWidget {
                                               ),
                                             ),
                                             const Spacer(),
-                                            GestureDetector(
+                                            InkWell(
                                               onTap: () {
-                                                // TODO: comment becase flag is not come
-                                                // Navigator.push(
-                                                //   context,
-                                                //   MaterialPageRoute(
-                                                //       builder: (context) =>
-                                                //           HomeRecommendedForYouSeeAllScreen(
-                                                //             title: "Popular",
-                                                //             books: provider
-                                                //                 .dashboardModel
-                                                //                 .popularBook,
-                                                //           )),
-                                                // );
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const HomeRecommendedForYouSeeAllScreen(
+                                                      title: 'Popular',
+                                                      param: 'recently_added',
+                                                    ),
+                                                  ),
+                                                );
                                               },
-                                              child: Padding(
-                                                padding: getPadding(
-                                                  top: 5,
-                                                  bottom: 5,
-                                                ),
-                                                child: Text(
-                                                  'Show all',
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  textAlign: TextAlign.left,
-                                                  style: CustomTextStyles
-                                                      .labelLargeTeal400Bold,
-                                                ),
-                                              ),
-                                            ),
-                                            CustomImageView(
-                                              svgPath: ImageConstant
-                                                  .imgArrowrightTeal400,
-                                              height: getSize(16),
-                                              width: getSize(16),
-                                              margin: getMargin(
-                                                left: 4,
-                                                top: 4,
-                                                bottom: 4,
+                                              child: Row(
+                                                children: [
+                                                  Padding(
+                                                    padding: getPadding(
+                                                      top: 7,
+                                                      bottom: 7,
+                                                    ),
+                                                    child: Text(
+                                                      'Show all',
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      textAlign: TextAlign.left,
+                                                      style: CustomTextStyles
+                                                          .labelLargeTeal400Bold,
+                                                    ),
+                                                  ),
+                                                  CustomImageView(
+                                                    svgPath: ImageConstant
+                                                        .imgArrowrightTeal400,
+                                                    height: getSize(16),
+                                                    width: getSize(16),
+                                                    margin: getMargin(
+                                                      left: 4,
+                                                      top: 7,
+                                                      bottom: 7,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                           ],
@@ -673,7 +683,7 @@ class HomeScreenPage extends StatelessWidget {
                                               ),
                                             ),
                                             const Spacer(),
-                                            GestureDetector(
+                                            InkWell(
                                               onTap: () {
                                                 Navigator.push(
                                                   context,
@@ -686,30 +696,34 @@ class HomeScreenPage extends StatelessWidget {
                                                   ),
                                                 );
                                               },
-                                              child: Padding(
-                                                padding: getPadding(
-                                                  top: 5,
-                                                  bottom: 5,
-                                                ),
-                                                child: Text(
-                                                  'Show all',
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  textAlign: TextAlign.left,
-                                                  style: CustomTextStyles
-                                                      .labelLargeTeal400Bold,
-                                                ),
-                                              ),
-                                            ),
-                                            CustomImageView(
-                                              svgPath: ImageConstant
-                                                  .imgArrowrightTeal400,
-                                              height: getSize(16),
-                                              width: getSize(16),
-                                              margin: getMargin(
-                                                left: 4,
-                                                top: 4,
-                                                bottom: 4,
+                                              child: Row(
+                                                children: [
+                                                  Padding(
+                                                    padding: getPadding(
+                                                      top: 7,
+                                                      bottom: 7,
+                                                    ),
+                                                    child: Text(
+                                                      'Show all',
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      textAlign: TextAlign.left,
+                                                      style: CustomTextStyles
+                                                          .labelLargeTeal400Bold,
+                                                    ),
+                                                  ),
+                                                  CustomImageView(
+                                                    svgPath: ImageConstant
+                                                        .imgArrowrightTeal400,
+                                                    height: getSize(16),
+                                                    width: getSize(16),
+                                                    margin: getMargin(
+                                                      left: 4,
+                                                      top: 7,
+                                                      bottom: 7,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                           ],

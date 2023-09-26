@@ -307,6 +307,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Padding(
                           padding: getPadding(
                             top: 24,
+                            bottom: 24,
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,

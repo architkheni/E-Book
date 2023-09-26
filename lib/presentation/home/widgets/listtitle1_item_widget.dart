@@ -206,7 +206,7 @@ class Listtitle1ItemWidget extends StatelessWidget {
                               )
                             : const Icon(
                                 Icons.favorite_border,
-                                color: Colors.white,
+                                color: Colors.red,
                               ),
                       );
                     },

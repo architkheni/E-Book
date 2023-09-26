@@ -150,16 +150,19 @@ class HomeRepository {
 
   Future<Either<String, List<BookModel>>> getViewAllBooks({
     required String param,
+    required String token,
+    required String key,
   }) async {
     try {
       Response response =
-          await dioClient.post(ApiEndpoint.viewAll, data: {'param': param});
+          await dioClient.post(ApiEndpoint.viewAll, data: {'param': param},
+        options: Options(headers: {'Authorization': 'Bearer $token'}),);
       if (response.statusCode == 200) {
         dynamic data = response.data;
         if (data.runtimeType == String) {
           data = jsonDecode(data);
         }
-        List<BookModel> book = (data['book_detail'] as List<dynamic>)
+        List<BookModel> book = (data[key] as List<dynamic>)
             .map((e) => BookModel.fromJson(e))
             .toList();
         return right(book);

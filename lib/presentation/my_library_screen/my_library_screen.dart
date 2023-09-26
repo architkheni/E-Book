@@ -1,5 +1,7 @@
 import 'package:book/core/app_export.dart';
 import 'package:book/core/utils/color_constant.dart';
+import 'package:book/presentation/home_recommended_for_you_see_all_screen/home_recommended_for_you_see_all_screen.dart';
+import 'package:book/presentation/home_recommended_for_you_see_all_screen/provider/view_all_book_provider.dart';
 import 'package:book/provider/wishlist_provider.dart';
 import 'package:book/widgets/app_bar/appbar_subtitle.dart';
 import 'package:flutter/material.dart';
@@ -80,43 +82,47 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                           return ListTile(
                             onTap: () {
                               setState(() {
-                                // if (index == 0)
-                                // TODO: comment becase flag is not come
-                                // // Navigator.push(
-                                // //   context,
-                                // //   MaterialPageRoute(
-                                // //       builder: (context) =>
-                                // //           HomeRecommendedForYouSeeAllScreen(
-                                // //             title: "Favourite",
-                                // //             books: provider.wishlist,
-                                // //           )),
-                                // // );
-                                // if (index == 1) {
-                                //   TODO: comment becase flag is not come
-                                //   // Navigator.push(
-                                //   //   context,
-                                //   //   MaterialPageRoute(
-                                //   //       builder: (context) =>
-                                //   //           HomeRecommendedForYouSeeAllScreen(
-                                //   //             title: "In Progress",
-                                //   //             books: [],
-                                //   //           )),
-                                //   // );
-                                //   if (index == 2) {
-                                //     // TODO: comment becase flag is not come
-                                //     // Navigator.push(
-                                //     //   context,
-                                //     //   MaterialPageRoute(
-                                //     //       builder: (context) =>
-                                //     //           HomeRecommendedForYouSeeAllScreen(
-                                //     //             title: "Finished",
-                                //     //             books: [],
-                                //     //           )),
-                                //     // );
-                                //     selected = index;
-                                //   }
-                                // }
-                                // onTapRowfavorite(context);
+                                if (index == 0) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const HomeRecommendedForYouSeeAllScreen(
+                                        title: 'Favourite',
+                                        param: 'favorites',
+                                        jsonKey: 'favorites',
+                                      ),
+                                    ),
+                                  );
+                                }
+                                if (index == 1) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const HomeRecommendedForYouSeeAllScreen(
+                                        title: 'In Progress',
+                                        param: 'progress',
+                                        jsonKey: 'progress',
+                                      ),
+                                    ),
+                                  );
+                                }
+                                if (index == 2) {
+                                  // TODO: comment becase flag is not come
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const HomeRecommendedForYouSeeAllScreen(
+                                        title: 'Finished',
+                                        param: 'finished',
+                                        jsonKey: 'finished',
+                                      ),
+                                    ),
+                                  );
+                                }
+                                selected = index;
                               });
                             },
                             dense: true,
@@ -360,16 +366,17 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                       const Spacer(),
                       GestureDetector(
                         onTap: () {
-                          // TODO: comment becase flag is not come
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //       builder: (context) =>
-                          //           HomeRecommendedForYouSeeAllScreen(
-                          //             title: "My History",
-                          //             books: [],
-                          //           )),
-                          // );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const HomeRecommendedForYouSeeAllScreen(
+                                title: 'My History',
+                                param: 'history',
+                                jsonKey: 'my_history',
+                              ),
+                            ),
+                          );
                         },
                         child: Padding(
                           padding: getPadding(top: 2, bottom: 7),
@@ -395,28 +402,47 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                   ),
                 ),
                 Expanded(
-                  child: Container(
-                    height: getVerticalSize(648),
-                    width: double.maxFinite,
-                    margin: getMargin(top: 9),
-                    child: Stack(
-                      // alignment: Alignment.bottomCenter,
-                      children: [
-                        Padding(
-                          padding: getPadding(left: 17, right: 20),
-                          child: ListView.separated(
-                            physics: const BouncingScrollPhysics(),
-                            shrinkWrap: true,
-                            separatorBuilder: (context, index) {
-                              return SizedBox(height: getVerticalSize(12));
-                            },
-                            itemCount: 2,
-                            itemBuilder: (context, index) {
-                              return const Liste50c016fb6aItemWidget();
-                            },
+                  child: ChangeNotifierProvider(
+                    create: (BuildContext context) => ViewAllBookProvider()
+                      ..getViewAllBooks(param: 'history', key: 'my_history'),
+                    child: Consumer<ViewAllBookProvider>(
+                      builder: (context, viewAllProvider, child) {
+                        if (viewAllProvider.isLoading) {
+                          return Center(
+                            child: CircularProgressIndicator(
+                              color: ColorConstant.primaryColor,
+                            ),
+                          );
+                        }
+                        return Container(
+                          height: getVerticalSize(648),
+                          width: double.maxFinite,
+                          margin: getMargin(top: 9),
+                          child: Stack(
+                            // alignment: Alignment.bottomCenter,
+                            children: [
+                              Padding(
+                                padding: getPadding(left: 17, right: 20),
+                                child: ListView.separated(
+                                  physics: const BouncingScrollPhysics(),
+                                  shrinkWrap: true,
+                                  separatorBuilder: (context, index) {
+                                    return SizedBox(
+                                      height: getVerticalSize(12),
+                                    );
+                                  },
+                                  itemCount: viewAllProvider.books.length,
+                                  itemBuilder: (context, index) {
+                                    return Liste50c016fb6aItemWidget(
+                                      book: viewAllProvider.books[index],
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
+                        );
+                      },
                     ),
                   ),
                 ),
