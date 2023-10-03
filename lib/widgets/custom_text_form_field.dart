@@ -12,7 +12,7 @@ class CustomTextFormField extends StatelessWidget {
     this.controller,
     this.onTap,
     this.focusNode,
-    this.autofocus = true,
+    this.autofocus = false,
     this.enabled = true,
     this.textStyle,
     this.obscureText = false,
@@ -34,6 +34,7 @@ class CustomTextFormField extends StatelessWidget {
     this.disabledBorderDecoration,
     this.onChanged,
     this.validator,
+    this.minLines,
   }) : super(
           key: key,
         );
@@ -63,6 +64,8 @@ class CustomTextFormField extends StatelessWidget {
   final TextInputType? textInputType;
 
   final int? maxLines;
+
+  final int? minLines;
 
   final String? hintText;
 
@@ -106,6 +109,7 @@ class CustomTextFormField extends StatelessWidget {
         width: width ?? double.maxFinite,
         margin: margin,
         child: TextFormField(
+          minLines: minLines,
           controller: controller,
           onTap: onTap,
           focusNode: focusNode,

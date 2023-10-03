@@ -100,7 +100,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   void resendOtp(BuildContext context, {required String email}) async {
-    Either<String, bool> result =
+    Either<String, String> result =
         await AuthRepository.instance.resendOtp(email: email);
     result.fold((l) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -112,7 +112,7 @@ class AuthProvider extends ChangeNotifier {
     }, (r) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text('otp sent successfully'),
+          content: Text(r),
           backgroundColor: appTheme.teal400,
         ),
       );
@@ -199,7 +199,7 @@ class AuthProvider extends ChangeNotifier {
               });
             },
             child: Text(
-              'Yes 👍',
+              'Yes',
               style: TextStyle(color: appTheme.teal400),
             ),
           ),
@@ -208,12 +208,41 @@ class AuthProvider extends ChangeNotifier {
               Navigator.pop(context);
             },
             child: Text(
-              'No 👎',
+              'No',
               style: TextStyle(color: appTheme.teal400),
             ),
           ),
         ],
       ),
     );
+  }
+
+  void changePassword(
+    BuildContext context, {
+    required String currentPassword,
+    required String newPassword,
+  }) async {
+    String token = await appStorage.getToken();
+    Either<String, bool> result = await AuthRepository.instance.changePassword(
+      token: token,
+      currentPassword: currentPassword,
+      newPassword: newPassword,
+    );
+    result.fold((l) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(l),
+          backgroundColor: appTheme.teal400,
+        ),
+      );
+    }, (r) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text('Password change successfully'),
+          backgroundColor: appTheme.teal400,
+        ),
+      );
+      Navigator.of(context).pop();
+    });
   }
 }

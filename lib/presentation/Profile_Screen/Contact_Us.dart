@@ -225,7 +225,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 0),
+                    padding: const EdgeInsets.only(top: 5),
                     child: CustomTextFormField(
                       controller: messageController,
 
@@ -245,7 +245,9 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                       // enabled: false,
 
                       hintStyle: CustomTextStyles.bodyMediumGray200,
-                      textInputType: TextInputType.emailAddress,
+                      textInputType: TextInputType.multiline,
+                      maxLines: 4,
+                      minLines: 1,
                       filled: true,
                       fillColor: isLight
                           ? ColorConstant.kF3F3F3

@@ -12,8 +12,6 @@ import 'package:provider/provider.dart';
 import '../../core/app_export.dart';
 import '../../core/utils/color_constant.dart';
 import '../../widgets/custom_icon_button.dart';
-import '../detail_page_container_page/widgets/chipviewframefo2_item_widget.dart';
-import '../home_recommended_for_you_see_all_screen/home_recommended_for_you_see_all_screen.dart';
 
 class DetailPageContainerPage extends StatelessWidget {
   final int bookId;
@@ -342,42 +340,46 @@ class _DetailViewState extends State<DetailView> {
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
-                                  Expanded(
-                                    flex: 2,
-                                    child: Row(
-                                      children: [
-                                        const Spacer(),
-                                        CustomImageView(
-                                          imagePath: ImageConstant.clock,
-                                          height: 20,
-                                          width: 20,
-                                        ),
-                                        Padding(
-                                          padding: getPadding(
-                                            left: 9,
-                                            top: 1,
-                                            bottom: 1,
+                                  if (provider.detailModel.book
+                                          ?.originalPrintLength !=
+                                      null) ...[
+                                    Expanded(
+                                      flex: 2,
+                                      child: Row(
+                                        children: [
+                                          const Spacer(),
+                                          CustomImageView(
+                                            imagePath: ImageConstant.clock,
+                                            height: 20,
+                                            width: 20,
                                           ),
-                                          child: Text(
-                                            '${provider.detailModel.book?.originalPrintLength}',
-                                            overflow: TextOverflow.ellipsis,
-                                            textAlign: TextAlign.left,
-                                            style: theme.textTheme.titleSmall,
+                                          Padding(
+                                            padding: getPadding(
+                                              left: 9,
+                                              top: 1,
+                                              bottom: 1,
+                                            ),
+                                            child: Text(
+                                              '${provider.detailModel.book?.originalPrintLength}',
+                                              overflow: TextOverflow.ellipsis,
+                                              textAlign: TextAlign.left,
+                                              style: theme.textTheme.titleSmall,
+                                            ),
                                           ),
-                                        ),
-                                        const Spacer(),
-                                      ],
+                                          const Spacer(),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Container(
-                                    width: 1,
-                                    color: const Color.fromARGB(
-                                      162,
-                                      255,
-                                      255,
-                                      255,
+                                    Container(
+                                      width: 1,
+                                      color: const Color.fromARGB(
+                                        162,
+                                        255,
+                                        255,
+                                        255,
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                   Expanded(
                                     flex: 2,
                                     child: Row(
@@ -391,7 +393,7 @@ class _DetailViewState extends State<DetailView> {
                                         Padding(
                                           padding: getPadding(left: 9, top: 2),
                                           child: Text(
-                                            '7 key ideas',
+                                            '${provider.detailModel.bookChapter.length} key ideas',
                                             overflow: TextOverflow.ellipsis,
                                             textAlign: TextAlign.left,
                                             style: theme.textTheme.titleSmall,
@@ -476,28 +478,28 @@ class _DetailViewState extends State<DetailView> {
                               ),
                             ),
                           ),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 16, top: 13),
-                              child: Wrap(
-                                runSpacing: getVerticalSize(5),
-                                spacing: getHorizontalSize(5),
-                                children: List<Widget>.generate(
-                                  5,
-                                  (index) => const Chipviewframefo2ItemWidget(
-                                    text: 'Demo Text',
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
+                          // Align(
+                          //   alignment: Alignment.centerLeft,
+                          //   child: Padding(
+                          //     padding: const EdgeInsets.only(left: 16, top: 13),
+                          //     child: Wrap(
+                          //       runSpacing: getVerticalSize(5),
+                          //       spacing: getHorizontalSize(5),
+                          //       children: List<Widget>.generate(
+                          //         5,
+                          //         (index) => const Chipviewframefo2ItemWidget(
+                          //           text: 'Demo Text',
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Padding(
                               padding: const EdgeInsets.only(left: 16, top: 27),
                               child: Text(
-                                '${provider.detailModel.bookChapter.length} Chapters',
+                                '${provider.detailModel.bookChapter.length} Key Concepts',
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
                                 style: theme.textTheme.titleLarge!.copyWith(
@@ -606,7 +608,7 @@ class _DetailViewState extends State<DetailView> {
                                       padding:
                                           const EdgeInsets.only(bottom: 20),
                                       child: Text(
-                                        '0$index',
+                                        '0${index + 1}',
                                         overflow: TextOverflow.ellipsis,
                                         textAlign: TextAlign.left,
                                         style: CustomTextStyles
@@ -768,48 +770,48 @@ class _DetailViewState extends State<DetailView> {
                                               : null,
                                         ),
                                       ),
-                                      InkWell(
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const HomeRecommendedForYouSeeAllScreen(
-                                                title: 'Similar Books',
-                                                param: 'flag_recommend',
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                        child: Row(
-                                          children: [
-                                            Padding(
-                                              padding: getPadding(
-                                                top: 7,
-                                                bottom: 7,
-                                              ),
-                                              child: Text(
-                                                'Show all',
-                                                overflow: TextOverflow.ellipsis,
-                                                textAlign: TextAlign.left,
-                                                style: CustomTextStyles
-                                                    .labelLargeTeal400Bold,
-                                              ),
-                                            ),
-                                            CustomImageView(
-                                              svgPath: ImageConstant
-                                                  .imgArrowrightTeal400,
-                                              height: getSize(16),
-                                              width: getSize(16),
-                                              margin: getMargin(
-                                                left: 4,
-                                                top: 7,
-                                                bottom: 7,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
+                                      // InkWell(
+                                      //   onTap: () {
+                                      //     Navigator.push(
+                                      //       context,
+                                      //       MaterialPageRoute(
+                                      //         builder: (context) =>
+                                      //             const HomeRecommendedForYouSeeAllScreen(
+                                      //           title: 'Similar Books',
+                                      //           param: 'flag_recommend',
+                                      //         ),
+                                      //       ),
+                                      //     );
+                                      //   },
+                                      //   child: Row(
+                                      //     children: [
+                                      //       Padding(
+                                      //         padding: getPadding(
+                                      //           top: 7,
+                                      //           bottom: 7,
+                                      //         ),
+                                      //         child: Text(
+                                      //           'Show all',
+                                      //           overflow: TextOverflow.ellipsis,
+                                      //           textAlign: TextAlign.left,
+                                      //           style: CustomTextStyles
+                                      //               .labelLargeTeal400Bold,
+                                      //         ),
+                                      //       ),
+                                      //       CustomImageView(
+                                      //         svgPath: ImageConstant
+                                      //             .imgArrowrightTeal400,
+                                      //         height: getSize(16),
+                                      //         width: getSize(16),
+                                      //         margin: getMargin(
+                                      //           left: 4,
+                                      //           top: 7,
+                                      //           bottom: 7,
+                                      //         ),
+                                      //       ),
+                                      //     ],
+                                      //   ),
+                                      // ),
                                     ],
                                   ),
                                 )

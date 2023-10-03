@@ -3,11 +3,11 @@
 import 'package:book/core/utils/color_constant.dart';
 import 'package:book/model/book_model.dart';
 import 'package:book/model/category_model.dart';
-import 'package:book/presentation/home/widgets/listtitle1_item_widget.dart';
 import 'package:book/provider/explore_provider.dart';
 import 'package:book/provider/home_provider.dart';
 import 'package:book/widgets/app_bar/appbar_image.dart';
 import 'package:book/widgets/app_bar/appbar_subtitle.dart';
+import 'package:book/widgets/book_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +16,10 @@ import '../../widgets/custom_text_form_field.dart';
 import '../home_recommended_for_you_see_all_screen/home_recommended_for_you_see_all_screen.dart';
 
 class ExplorePage extends StatefulWidget {
-  const ExplorePage({Key? key}) : super(key: key);
+  final String? categoryName;
+  final int? categoryId;
+  const ExplorePage({Key? key, this.categoryName, this.categoryId})
+      : super(key: key);
 
   @override
   State<ExplorePage> createState() => _ExplorePageState();
@@ -30,6 +33,11 @@ class _ExplorePageState extends State<ExplorePage> {
 
   @override
   void initState() {
+    if (widget.categoryId != null) {
+      context.read<ExploreProvider>().getSubCategories(widget.categoryId!);
+      searchController.text = widget.categoryName!;
+      selectCategory = widget.categoryName;
+    }
     super.initState();
   }
 
@@ -57,7 +65,7 @@ class _ExplorePageState extends State<ExplorePage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      if (selectCategory != null)
+                      if (selectCategory != null || widget.categoryId != null)
                         AppbarImage(
                           height: 20,
                           width: 15,
@@ -65,6 +73,16 @@ class _ExplorePageState extends State<ExplorePage> {
                           svgPath: ImageConstant.imgArrowleftBlueGray50,
                           margin: getMargin(right: 16),
                           onTap: () {
+                            if (widget.categoryId != null) {
+                              if (selectSubCategory == null) {
+                                Navigator.pop(context);
+                              } else {
+                                setState(() {
+                                  selectSubCategory = null;
+                                });
+                              }
+                              return;
+                            }
                             setState(() {
                               selectCategory = null;
                               searchController.clear();
@@ -83,7 +101,7 @@ class _ExplorePageState extends State<ExplorePage> {
                         ),
                         padding: const EdgeInsets.only(bottom: 3),
                         child: AppbarSubtitle(
-                          text: 'Explore',
+                          text: 'Search',
                         ),
                       ),
                     ],
@@ -173,29 +191,44 @@ class _ExplorePageState extends State<ExplorePage> {
                                     });
                                   },
                                   child: Container(
+                                    padding: const EdgeInsets.all(8.0),
                                     decoration: BoxDecoration(
                                       color: isLight
                                           ? ColorConstant.kF3F3F3
                                           : appTheme.blueGray900,
                                       borderRadius: BorderRadius.circular(10),
                                     ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        categories[index].name ??
-                                            'Personal growth',
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                          color: isLight
-                                              ? ColorConstant.black
-                                              : appTheme.blueGray50,
-                                          fontSize: getFontSize(
-                                            12,
-                                          ),
-                                          fontFamily: 'Outfit',
-                                          fontWeight: FontWeight.w100,
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        CustomImageView(
+                                          svgPath:
+                                              ImageConstant.imgGroup1171274896,
+                                          height: 12,
+                                          width: 12,
+                                          margin: getMargin(right: 5),
+                                          color: isLight ? Colors.black : null,
                                         ),
-                                      ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 0.0),
+                                          child: Text(
+                                            categories[index].name ??
+                                                'Personal growth',
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                              color: isLight
+                                                  ? ColorConstant.black
+                                                  : appTheme.blueGray50,
+                                              fontSize: getFontSize(
+                                                12,
+                                              ),
+                                              fontFamily: 'Outfit',
+                                              fontWeight: FontWeight.w100,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
@@ -230,6 +263,7 @@ class _ExplorePageState extends State<ExplorePage> {
                                           });
                                         },
                                         child: Container(
+                                          padding: const EdgeInsets.all(8.0),
                                           decoration: BoxDecoration(
                                             color: isLight
                                                 ? ColorConstant.kF3F3F3
@@ -237,22 +271,34 @@ class _ExplorePageState extends State<ExplorePage> {
                                             borderRadius:
                                                 BorderRadius.circular(10),
                                           ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Text(
-                                              subCategories[index].name!,
-                                              textAlign: TextAlign.left,
-                                              style: TextStyle(
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              CustomImageView(
+                                                svgPath: ImageConstant
+                                                    .imgGroup1171274896,
+                                                height: 12,
+                                                width: 12,
+                                                margin: getMargin(right: 5),
                                                 color: isLight
-                                                    ? ColorConstant.black
-                                                    : appTheme.blueGray50,
-                                                fontSize: getFontSize(
-                                                  12,
-                                                ),
-                                                fontFamily: 'Outfit',
-                                                fontWeight: FontWeight.w100,
+                                                    ? Colors.black
+                                                    : null,
                                               ),
-                                            ),
+                                              Text(
+                                                subCategories[index].name!,
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                  color: isLight
+                                                      ? ColorConstant.black
+                                                      : appTheme.blueGray50,
+                                                  fontSize: getFontSize(
+                                                    12,
+                                                  ),
+                                                  fontFamily: 'Outfit',
+                                                  fontWeight: FontWeight.w100,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ),
@@ -469,7 +515,7 @@ class _ExplorePageState extends State<ExplorePage> {
                                   itemBuilder: (context, index) {
                                     BookModel book = provider
                                         .dashboardModel.recentlyAddBook[index];
-                                    return Listtitle1ItemWidget(
+                                    return BookTile(
                                       book: book,
                                     );
                                   },

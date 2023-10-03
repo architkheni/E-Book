@@ -6,6 +6,7 @@ class ApiEndpoint {
   static const String resendOtp = '/resend-otp';
   static const String verifyToken = '/verify-token';
   static const String updatePassword = '/update-password';
+  static const String changePassword = '/change-password';
   static const String logout = '/logout';
   static const String dashboardDetails = '/dashboard-detail';
   static const String categoryList = '/category-list';

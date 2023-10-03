@@ -6,7 +6,6 @@ import 'package:book/provider/wishlist_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-// ignore: must_be_immutable
 class Listtitle1ItemWidget extends StatelessWidget {
   final BookModel book;
   const Listtitle1ItemWidget({Key? key, required this.book})
@@ -53,15 +52,16 @@ class Listtitle1ItemWidget extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Text(
-                              book.title ?? 'The Good Guy',
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.left,
-                              style: theme.textTheme.titleSmall!.copyWith(
-                                color: isLight ? ColorConstant.black : null,
+                            Expanded(
+                              child: Text(
+                                book.title ?? 'The Good Guy',
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.left,
+                                style: theme.textTheme.titleSmall!.copyWith(
+                                  color: isLight ? ColorConstant.black : null,
+                                ),
                               ),
                             ),
-                            const Spacer(),
                             Padding(
                               padding: const EdgeInsets.only(right: 10),
                               child: SizedBox(
@@ -84,7 +84,7 @@ class Listtitle1ItemWidget extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          book.categoryName ?? 'Banish Forgutable Forever',
+                          book.description ?? 'Banish Forgutable Forever',
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: theme.textTheme.bodySmall!.copyWith(
@@ -96,8 +96,7 @@ class Listtitle1ItemWidget extends StatelessWidget {
                           child: Row(
                             children: [
                               Container(
-                                height: 15,
-                                width: 40,
+                                padding: const EdgeInsets.all(3),
                                 decoration: BoxDecoration(
                                   color: appTheme.teal400,
                                   borderRadius: BorderRadius.circular(5),
@@ -114,21 +113,26 @@ class Listtitle1ItemWidget extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 4,
-                                  top: 1,
-                                  bottom: 1,
-                                ),
-                                child: Text(
-                                  '${book.originalAudiobookLength} min',
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.left,
-                                  style: theme.textTheme.bodySmall!.copyWith(
-                                    color: isLight ? ColorConstant.black : null,
-                                  ),
-                                ),
-                              ),
+                              book.originalAudiobookLength != null
+                                  ? Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 4,
+                                        top: 1,
+                                        bottom: 1,
+                                      ),
+                                      child: Text(
+                                        '${book.originalAudiobookLength} min',
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.left,
+                                        style:
+                                            theme.textTheme.bodySmall!.copyWith(
+                                          color: isLight
+                                              ? ColorConstant.black
+                                              : null,
+                                        ),
+                                      ),
+                                    )
+                                  : const SizedBox.shrink(),
                             ],
                           ),
                         ),

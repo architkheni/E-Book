@@ -40,12 +40,6 @@ class _BottombarPageState extends State<BottombarPage> {
     const ExplorePage(),
     const MyLibraryScreen(),
     const ProfileScreen(),
-
-    // ViewDetailsScreen(),
-    // ViewCommentScreen(),
-    // // BuyScreen(),
-    // RoomMembersScreen(),
-    // RoomsScreen()
   ];
 
   // ignore: cancel_subscriptions, unused_field

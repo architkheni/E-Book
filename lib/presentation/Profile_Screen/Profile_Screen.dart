@@ -33,7 +33,7 @@ class ProfileScreen extends StatefulWidget {
 
 final List<String> entries = <String>[
   'Your Membership',
-  'Presonalisation',
+  'Preferred Categories',
   'Content Language',
   'App Theme',
   'Contact Us',
@@ -115,25 +115,73 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   width: 80,
                                   height: 80,
                                   child: provider.uploadImage.isEmpty
-                                      ? CircleAvatar(
-                                          backgroundColor: isLight
-                                              ? ColorConstant.kF3F3F3
-                                              : ColorConstant.k626666,
-                                          child: Icon(
-                                            Icons.person,
-                                            size: 40,
-                                            color: isLight
-                                                ? ColorConstant.black
-                                                : ColorConstant.whiteA700,
-                                          ),
+                                      ? Stack(
+                                          children: [
+                                            CircleAvatar(
+                                              backgroundColor: isLight
+                                                  ? ColorConstant.kF3F3F3
+                                                  : ColorConstant.k626666,
+                                              child: Icon(
+                                                Icons.person,
+                                                size: 40,
+                                                color: isLight
+                                                    ? ColorConstant.black
+                                                    : ColorConstant.whiteA700,
+                                              ),
+                                            ),
+                                            Positioned(
+                                              bottom: 0,
+                                              right: 0,
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: ColorConstant
+                                                      .primaryColor,
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                padding:
+                                                    const EdgeInsets.all(6),
+                                                child: Icon(
+                                                  Icons.upload_rounded,
+                                                  color: isLight
+                                                      ? ColorConstant.whiteA700
+                                                      : ColorConstant.black,
+                                                  size: 20,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         )
-                                      : ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(50),
-                                          child: Image.network(
-                                            provider.uploadImage,
-                                            fit: BoxFit.cover,
-                                          ),
+                                      : Stack(
+                                          children: [
+                                            ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                              child: Image.network(
+                                                provider.uploadImage,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                            Positioned(
+                                              bottom: 0,
+                                              right: 0,
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: ColorConstant
+                                                      .primaryColor,
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                padding:
+                                                    const EdgeInsets.all(6),
+                                                child: Icon(
+                                                  Icons.upload_rounded,
+                                                  color: isLight
+                                                      ? ColorConstant.whiteA700
+                                                      : ColorConstant.black,
+                                                  size: 20,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ), /*  CustomImageView(
                                   imagePath: ImageConstant.profile,
                                 ), */
@@ -178,6 +226,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           style: CustomTextStyles
                                               .titleSmallWhiteA400
                                               .copyWith(
+                                            fontWeight: FontWeight.w100,
                                             color: isLight
                                                 ? ColorConstant.black
                                                 : null,

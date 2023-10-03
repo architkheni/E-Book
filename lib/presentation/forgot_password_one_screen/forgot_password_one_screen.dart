@@ -86,7 +86,7 @@ class _ForgotPasswordOneScreenState extends State<ForgotPasswordOneScreen> {
                           left: 16,
                         ),
                         child: Text(
-                          'Set Password',
+                          'Reset Password',
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: isLight
@@ -298,7 +298,7 @@ class _ForgotPasswordOneScreenState extends State<ForgotPasswordOneScreen> {
                                           height: getVerticalSize(
                                             48,
                                           ),
-                                          text: 'Set Password',
+                                          text: 'Reset Password',
                                           margin: getMargin(
                                             top: 15,
                                           ),

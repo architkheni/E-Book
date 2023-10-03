@@ -7,6 +7,7 @@ import 'package:book/core/app_export.dart';
 import 'package:book/core/storage/app_storage.dart';
 import 'package:book/core/utils/color_constant.dart';
 import 'package:book/model/user_model.dart';
+import 'package:book/presentation/change_password/change_password_screen.dart';
 import 'package:book/provider/profile_provider.dart';
 import 'package:book/widgets/app_bar/appbar_image.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
@@ -64,11 +65,19 @@ class _EditProfileState extends State<EditProfile> {
           ),
           title: Padding(
             padding: getPadding(left: 11),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                AppbarSubtitle(text: 'Profile details'),
-              ],
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: appTheme.teal400,
+                    width: 2,
+                  ),
+                ),
+              ),
+              padding: const EdgeInsets.only(bottom: 3),
+              child: AppbarSubtitle(
+                text: 'Profile Details',
+              ),
             ),
           ),
         ),
@@ -131,7 +140,9 @@ class _EditProfileState extends State<EditProfile> {
                               padding: const EdgeInsets.all(6),
                               child: Icon(
                                 Icons.upload_rounded,
-                                color: ColorConstant.black,
+                                color: isLight
+                                    ? ColorConstant.whiteA700
+                                    : ColorConstant.black,
                                 size: 20,
                               ),
                             ),
@@ -299,6 +310,39 @@ class _EditProfileState extends State<EditProfile> {
                           : appTheme.grayTextfiled,
                     ),
                   ),
+                  Material(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(8),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ChangePasswordScreen(),
+                          ),
+                        );
+                      },
+                      borderRadius: BorderRadius.circular(8),
+                      child: Container(
+                        width: double.maxFinite,
+                        height: getVerticalSize(48),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: ColorConstant.primaryColor),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Change Password',
+                            style:
+                                CustomTextStyles.titleSmallPrimary_1.copyWith(
+                              color: ColorConstant.primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
                   CustomElevatedButton(
                     onTap: () {
                       var name = validateName(nameController.text);

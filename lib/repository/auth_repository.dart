@@ -98,7 +98,7 @@ class AuthRepository {
     }
   }
 
-  Future<Either<String, bool>> resendOtp({required String email}) async {
+  Future<Either<String, String>> resendOtp({required String email}) async {
     try {
       Response response =
           await dioClient.post(ApiEndpoint.resendOtp, data: {'email': email});
@@ -110,7 +110,7 @@ class AuthRepository {
         if (data['status'] == false) {
           return left(data['message']);
         }
-        return right(true);
+        return right(data['message']);
       } else if (response.statusCode == 500) {
         return left('Some error accured! Please try again');
       } else {
@@ -195,6 +195,36 @@ class AuthRepository {
       } else {
         return left('Some error accured! Please try again');
       }
+    } catch (e) {
+      return left('Some error accured! Please try again');
+    }
+  }
+
+  Future<Either<String, bool>> changePassword({
+    required String token,
+    required String currentPassword,
+    required String newPassword,
+  }) async {
+    try {
+      Response response = await dioClient.post(
+        ApiEndpoint.changePassword,
+        data: {
+          'old_password':currentPassword,
+          'new_password':newPassword,
+        },
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+      );
+      if (response.statusCode == 200) {
+        dynamic data = response.data;
+        if (data.runtimeType == String) {
+          data = jsonDecode(data);
+        }
+        if (data['status'] == false) {
+          return left(data['message']);
+        }
+        return right(true);
+      }
+      return left('Some error accured! Please try again');
     } catch (e) {
       return left('Some error accured! Please try again');
     }

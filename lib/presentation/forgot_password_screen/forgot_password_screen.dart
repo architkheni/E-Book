@@ -41,7 +41,7 @@ class ForgotPasswordScreen extends StatelessWidget {
               Padding(
                 padding: getPadding(left: 16),
                 child: Text(
-                  'Verify Code',
+                  'Verify Your Account',
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
                   style: isLight
@@ -70,7 +70,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                       width: getHorizontalSize(317),
                       margin: getMargin(right: 8),
                       child: Text(
-                        'An authentication code has been sent to your email.',
+                        'A verification code has been sent to your email.',
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
@@ -133,7 +133,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Don’t receive a code?',
+                            'Didn’t receive a code?',
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.left,
                             style: CustomTextStyles.bodyMediumThin.copyWith(

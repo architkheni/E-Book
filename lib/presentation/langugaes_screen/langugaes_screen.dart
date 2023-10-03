@@ -1,6 +1,11 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:book/core/app_export.dart';
+import 'package:book/core/storage/app_storage.dart';
 import 'package:book/core/utils/color_constant.dart';
 import 'package:book/model/language_model.dart';
+import 'package:book/model/user_model.dart';
 import 'package:book/presentation/langugaes_screen/provider/language_provider.dart';
 import 'package:book/provider/profile_provider.dart';
 import 'package:book/widgets/app_bar/appbar_image.dart';
@@ -24,7 +29,21 @@ class LangugaesScreen extends StatefulWidget {
 
 class _LangugaesScreenState extends State<LangugaesScreen> {
   List<int> selectedId = [];
-  List<int> selectedIndex = [];
+
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
+
+  void init() async {
+    String user = await AppStorage().getUser();
+    log(user);
+    UserModel userModel = UserModel.fromJson(jsonDecode(user));
+    List<int> languages = userModel.languages ?? [];
+    selectedId.addAll(languages);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -137,15 +156,12 @@ class _LangugaesScreenState extends State<LangugaesScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Padding(
-                  padding: getPadding(top: 1),
-                  child: Text(
-                    'Select languages you enjoy reading',
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.left,
-                    style: CustomTextStyles.bodyMediumThin
-                        .copyWith(color: isLight ? ColorConstant.black : null),
-                  ),
+                Text(
+                  'Select languages you enjoy reading',
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.left,
+                  style: CustomTextStyles.bodyMediumThin
+                      .copyWith(color: isLight ? ColorConstant.black : null),
                 ),
                 Consumer<LanguageProvider>(
                   builder: (context, provider, child) {
@@ -153,21 +169,21 @@ class _LangugaesScreenState extends State<LangugaesScreen> {
                     return Align(
                       alignment: Alignment.center,
                       child: Padding(
-                        padding: getPadding(left: 21, top: 22),
+                        padding: getPadding(top: 22),
                         child: Wrap(
                           runSpacing: getVerticalSize(5),
                           spacing: getHorizontalSize(5),
                           children: List<Widget>.generate(
                             language.length,
                             (index) => RawChip(
-                              padding: getPadding(right: 16),
+                              padding: getPadding(right: 12, left: 5),
                               showCheckmark: false,
                               labelPadding: EdgeInsets.zero,
                               label: Text(
                                 '${language[index].name}',
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
-                                  color: selectedIndex.contains(index)
+                                  color: selectedId.contains(language[index].id)
                                       ? isLight
                                           ? ColorConstant.whiteA700
                                           : appTheme.blueGray50
@@ -179,7 +195,7 @@ class _LangugaesScreenState extends State<LangugaesScreen> {
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
-                              avatar: selectedIndex.contains(index)
+                              avatar: selectedId.contains(language[index].id)
                                   ? CustomImageView(
                                       imagePath: ImageConstant.checked,
                                       height: 23,
@@ -194,13 +210,14 @@ class _LangugaesScreenState extends State<LangugaesScreen> {
                                       height: 23,
                                       width: 23,
                                       margin: getMargin(right: 10),
-                                      color: selectedIndex.contains(index)
+                                      color: selectedId
+                                              .contains(language[index].id)
                                           ? null
                                           : isLight
                                               ? Colors.black
                                               : null,
                                     ),
-                              selected: selectedIndex.contains(index),
+                              selected: selectedId.contains(language[index].id),
                               backgroundColor: isLight
                                   ? Colors.transparent
                                   : theme.colorScheme.primary,
@@ -213,11 +230,9 @@ class _LangugaesScreenState extends State<LangugaesScreen> {
                               ),
                               onSelected: (value) {
                                 setState(() {
-                                  if (selectedIndex.contains(index)) {
-                                    selectedIndex.remove(index);
+                                  if (selectedId.contains(language[index].id)) {
                                     selectedId.remove(language[index].id);
                                   } else {
-                                    selectedIndex.add(index);
                                     selectedId.add(language[index].id!);
                                   }
                                 });
@@ -233,7 +248,7 @@ class _LangugaesScreenState extends State<LangugaesScreen> {
                   padding: const EdgeInsets.only(top: 50),
                   child: CustomElevatedButton(
                     onTap: () {
-                      if (selectedIndex.isEmpty) {
+                      if (selectedId.isEmpty) {
                         SnackBar snackBar = SnackBar(
                           content: const Text('Select minimum 1 Languages'),
                           backgroundColor: appTheme.teal400,

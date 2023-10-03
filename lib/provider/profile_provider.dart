@@ -42,7 +42,9 @@ class ProfileProvider extends ChangeNotifier {
       }
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => const LangugaesScreen(),
+          builder: (context) => const LangugaesScreen(
+            start: true,
+          ),
         ),
       );
     });

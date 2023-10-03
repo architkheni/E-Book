@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:book/ColorTheme/ColorTheme.dart';
 import 'package:book/core/storage/app_storage.dart';
 import 'package:book/provider/auth_provider.dart';
@@ -7,17 +9,24 @@ import 'package:book/provider/profile_provider.dart';
 import 'package:book/provider/wishlist_provider.dart';
 import 'package:book/routes/app_routes.dart';
 import 'package:book/theme/theme_helper.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import 'firebase_options.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+);
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
   bool isLogin = await AppStorage().getLogin();
   bool isDark = await AppStorage().getDarkMode();
+  log(isDark.toString());
 
   ///Please update theme as per your need if required.
   ThemeHelper().changeTheme('primary');

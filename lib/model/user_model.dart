@@ -13,6 +13,8 @@ class UserModel {
   String? deviceId;
   String? image;
   String? status;
+  List<int>? categories;
+  List<int>? languages;
   String? deletedAt;
   String? createdAt;
   String? updatedAt;
@@ -31,6 +33,8 @@ class UserModel {
     this.deviceId,
     this.image,
     this.status,
+    this.categories,
+    this.languages,
     this.deletedAt,
     this.createdAt,
     this.updatedAt,
@@ -50,6 +54,8 @@ class UserModel {
     deviceId = json['device_id'];
     image = json['image'];
     status = json['status'];
+    // categories =  json['categories'];
+    // languages = json['languages'];
     deletedAt = json['deleted_at'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -70,6 +76,8 @@ class UserModel {
     data['device_id'] = deviceId;
     data['image'] = image;
     data['status'] = status;
+    data['categories'] = categories;
+    data['languages'] = languages;
     data['deleted_at'] = deletedAt;
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;

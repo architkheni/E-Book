@@ -204,6 +204,7 @@ class ImageConstant {
 
   static String saveAllBook = 'assets/images/SaveAllBook.png';
   static String inReed = 'assets/images/inReed.png';
+  static String sandClock = 'assets/images/sand-clock.png';
   static String bookFinish = 'assets/images/BookFinish.png';
   static String contactUsPng = 'assets/images/Contact_Us.png';
 
@@ -233,4 +234,11 @@ class ImageConstant {
 
   static String premium1Year = 'assets/images/premium_1_year.png';
   static String premium1Month = 'assets/images/premium_1_month.png';
+
+  static String favouriteEmptyLight = 'assets/images/favourite_empty_light.png';
+  static String favouriteEmptyDark = 'assets/images/favourite_empty_dark.png';
+  static String progressEmptyLight = 'assets/images/progress_empty_light.png';
+  static String progressEmptyDark = 'assets/images/progress_empty_dark.png';
+  static String finishedEmptyLight = 'assets/images/finished_empty_light.png';
+  static String finishedEmptyDark = 'assets/images/finished_empty_dark.png';
 }

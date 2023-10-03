@@ -43,6 +43,8 @@ class AppStorage {
 
   void dispose() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
+    prefs.setString('token', '');
+    prefs.setString('user', '');
+    prefs.setBool('isLogin', false);
   }
 }

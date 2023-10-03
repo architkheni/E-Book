@@ -5,7 +5,9 @@ import '../../../core/app_export.dart';
 
 class Chipviewframefo2ItemWidget extends StatelessWidget {
   final String text;
-  const Chipviewframefo2ItemWidget({Key? key, required this.text})
+
+  final Function()? onTap;
+  const Chipviewframefo2ItemWidget({Key? key, required this.text, this.onTap})
       : super(
           key: key,
         );
@@ -14,7 +16,8 @@ class Chipviewframefo2ItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isLight = Theme.of(context).brightness == Brightness.light;
     return RawChip(
-      padding: getPadding(left: 16, right: 16),
+      onPressed: onTap,
+      padding: getPadding(left: 5, right: 10),
       showCheckmark: false,
       labelPadding: EdgeInsets.zero,
       label: Text(
@@ -36,7 +39,13 @@ class Chipviewframefo2ItemWidget extends StatelessWidget {
           getHorizontalSize(8),
         ),
       ),
-      onSelected: (value) {},
+      avatar: CustomImageView(
+        svgPath: ImageConstant.imgGroup1171274896,
+        height: 12,
+        width: 12,
+        margin: getMargin(right: 3),
+        color: isLight ? Colors.black : null,
+      ),
     );
   }
 }
