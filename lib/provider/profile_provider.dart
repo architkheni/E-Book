@@ -35,12 +35,17 @@ class ProfileProvider extends ChangeNotifier {
         .saveUserCategory(token: token, category: category);
     result.fold((l) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l)));
-    }, (r) {
+    }, (r) async {
+      NavigatorState navigator = Navigator.of(context);
+      String data = await appStorage.getUser();
+      UserModel userModel = UserModel.fromJson(jsonDecode(data));
+      userModel.categories = category;
+      appStorage.setUser(jsonEncode(userModel));
       if (onSuccess != null) {
         onSuccess();
         return;
       }
-      Navigator.of(context).push(
+      navigator.push(
         MaterialPageRoute(
           builder: (context) => const LangugaesScreen(
             start: true,
@@ -60,13 +65,17 @@ class ProfileProvider extends ChangeNotifier {
         .saveUserLanguage(token: token, languages: language);
     result.fold((l) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l)));
-    }, (r) {
+    }, (r) async {
+      NavigatorState navigator = Navigator.of(context);
+      String data = await appStorage.getUser();
+      UserModel userModel = UserModel.fromJson(jsonDecode(data));
+      userModel.languages = language;
+      appStorage.setUser(jsonEncode(userModel));
       if (onSuccess != null) {
         onSuccess();
         return;
       }
-      Navigator.push(
-        context,
+      navigator.push(
         MaterialPageRoute(builder: (context) => BottombarPage(buttomIndex: 0)),
       );
     });

@@ -41,8 +41,8 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
     bool isLight = Theme.of(context).brightness == Brightness.light;
     return SafeArea(
       child: ChangeNotifierProvider(
-        create: (context) => ViewAllBookProvider()
-          ..getViewAllBooks(param: 'history', key: 'history'),
+        create: (context) =>
+            ViewAllBookProvider()..getViewAllBooks(param: 'history'),
         child: Consumer<ViewAllBookProvider>(
           builder: (context, viewAllProvider, child) {
             return Scaffold(
@@ -95,7 +95,6 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                                                 const HomeRecommendedForYouSeeAllScreen(
                                               title: 'Favourite',
                                               param: 'favorites',
-                                              jsonKey: 'favorites',
                                             ),
                                           ),
                                         ).then((value) {
@@ -112,7 +111,6 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                                                 const HomeRecommendedForYouSeeAllScreen(
                                               title: 'In Progress',
                                               param: 'progress',
-                                              jsonKey: 'progress',
                                             ),
                                           ),
                                         ).then((value) {
@@ -129,7 +127,6 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                                                 const HomeRecommendedForYouSeeAllScreen(
                                               title: 'Finished',
                                               param: 'finished',
-                                              jsonKey: 'finished',
                                             ),
                                           ),
                                         ).then((value) {
@@ -405,7 +402,6 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                                             const HomeRecommendedForYouSeeAllScreen(
                                           title: 'My History',
                                           param: 'history',
-                                          jsonKey: 'history',
                                         ),
                                       ),
                                     );

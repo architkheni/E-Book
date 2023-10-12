@@ -26,7 +26,7 @@ void main() async {
   ]);
   bool isLogin = await AppStorage().getLogin();
   bool isDark = await AppStorage().getDarkMode();
-
+  
   ///Please update theme as per your need if required.
   ThemeHelper().changeTheme('primary');
   runApp(
