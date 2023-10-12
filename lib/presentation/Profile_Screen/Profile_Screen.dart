@@ -370,7 +370,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 context,
                                                 listen: false,
                                               );
-                                              log(value.toString());
                                               provider.toggleTheme(value);
                                             },
                                           );

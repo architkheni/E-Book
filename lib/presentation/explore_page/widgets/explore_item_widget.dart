@@ -68,7 +68,7 @@ class ExploreItemWidget extends StatelessWidget {
                         style: theme.textTheme.bodyMedium,
                       ),
                       Text(
-                        book?.categoryName ?? 'Banish Forgutable Forever',
+                        book?.categoryName?[0] ?? 'Banish Forgutable Forever',
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
                         style: theme.textTheme.bodySmall,

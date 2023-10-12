@@ -1,7 +1,5 @@
 // ignore_for_file: file_names
 
-import 'dart:developer';
-
 import 'package:book/core/storage/app_storage.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +15,6 @@ class ThemeProvider extends ChangeNotifier {
     themeMode = isOn ? ThemeMode.dark : ThemeMode.light;
     notifyListeners();
     appStorage.setDarkMode(isOn);
-    log(themeMode.toString());
   }
 }
 

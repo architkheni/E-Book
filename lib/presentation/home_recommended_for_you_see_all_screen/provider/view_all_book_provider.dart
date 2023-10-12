@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:book/core/storage/app_storage.dart';
 import 'package:book/model/book_model.dart';
 import 'package:book/repository/home_repository.dart';
@@ -14,6 +16,7 @@ class ViewAllBookProvider extends ChangeNotifier {
     Either<String, List<BookModel>> result = await HomeRepository.instance
         .getViewAllBooks(param: param, token: token, key: key ?? 'book_detail');
     result.fold((l) {
+      log(l);
       setLoading(false);
     }, (r) {
       r.sort(

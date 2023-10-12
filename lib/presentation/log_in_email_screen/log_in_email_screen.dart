@@ -7,6 +7,8 @@ import 'package:book/provider/auth_provider.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:book/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
 class LogInEmailScreen extends StatefulWidget {
@@ -246,6 +248,15 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                         ),
                       ),
                       CustomElevatedButton(
+                        onTap: () async {
+                          final LoginResult result =
+                              await FacebookAuth.instance.login();
+                          if (result.status == LoginStatus.success) {
+                            final data =
+                                await FacebookAuth.instance.getUserData();
+                            print(data);
+                          }
+                        },
                         width: double.maxFinite,
                         height: 48,
                         text: 'Login with Facebook',
@@ -270,6 +281,11 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                       Padding(
                         padding: const EdgeInsets.only(top: 16),
                         child: CustomElevatedButton(
+                          onTap: () async {
+                            final googleSignIn = GoogleSignIn();
+                            GoogleSignInAccount? googleSignInAccount =
+                                await googleSignIn.signIn();
+                          },
                           width: double.maxFinite,
                           height: 48,
                           text: 'Login with Google',

@@ -36,7 +36,7 @@ class AuthRepository {
         return left('Login failed! please try again');
       }
     } catch (e) {
-      return left('These credentials do not match our records.');
+      return left(e.toString());
     }
   }
 
@@ -209,8 +209,8 @@ class AuthRepository {
       Response response = await dioClient.post(
         ApiEndpoint.changePassword,
         data: {
-          'old_password':currentPassword,
-          'new_password':newPassword,
+          'old_password': currentPassword,
+          'new_password': newPassword,
         },
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );

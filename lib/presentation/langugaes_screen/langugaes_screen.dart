@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:book/core/app_export.dart';
 import 'package:book/core/storage/app_storage.dart';
@@ -38,10 +37,11 @@ class _LangugaesScreenState extends State<LangugaesScreen> {
 
   void init() async {
     String user = await AppStorage().getUser();
-    log(user);
     UserModel userModel = UserModel.fromJson(jsonDecode(user));
-    List<int> languages = userModel.languages ?? [];
-    selectedId.addAll(languages);
+    List<dynamic> languages = userModel.languages ?? [];
+    for (var element in languages) {
+      selectedId.add(element);
+    }
     setState(() {});
   }
 
@@ -250,7 +250,7 @@ class _LangugaesScreenState extends State<LangugaesScreen> {
                     onTap: () {
                       if (selectedId.isEmpty) {
                         SnackBar snackBar = SnackBar(
-                          content: const Text('Select minimum 1 Languages'),
+                          content: const Text('Select a minimum of 1 language'),
                           backgroundColor: appTheme.teal400,
                         );
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);

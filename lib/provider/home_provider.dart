@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:book/core/storage/app_storage.dart';
 import 'package:book/presentation/home/model/dashboard_model.dart';
 import 'package:book/repository/home_repository.dart';
@@ -20,6 +22,7 @@ class HomePovider extends ChangeNotifier {
         await HomeRepository.instance.getDashboardDetail(token: token);
     result.fold((l) {
       setLoading(false);
+      log(l);
     }, (r) {
       dashboardModel = r;
       setLoading(false);

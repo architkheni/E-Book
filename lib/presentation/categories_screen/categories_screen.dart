@@ -36,8 +36,10 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   void init() async {
     String user = await AppStorage().getUser();
     UserModel userModel = UserModel.fromJson(jsonDecode(user));
-    List<int> categories = userModel.categories ?? [];
-    selectedId.addAll(categories);
+    List<dynamic> categories = userModel.categories ?? [];
+    for (var element in categories) {
+      selectedId.add(element);
+    }
     setState(() {});
   }
 

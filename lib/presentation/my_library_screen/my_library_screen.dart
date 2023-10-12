@@ -42,7 +42,7 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
     return SafeArea(
       child: ChangeNotifierProvider(
         create: (context) => ViewAllBookProvider()
-          ..getViewAllBooks(param: 'history', key: 'my_history'),
+          ..getViewAllBooks(param: 'history', key: 'history'),
         child: Consumer<ViewAllBookProvider>(
           builder: (context, viewAllProvider, child) {
             return Scaffold(
@@ -98,7 +98,11 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                                               jsonKey: 'favorites',
                                             ),
                                           ),
-                                        );
+                                        ).then((value) {
+                                          setState(() {
+                                            selected = null;
+                                          });
+                                        });
                                       }
                                       if (index == 1) {
                                         Navigator.push(
@@ -111,7 +115,11 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                                               jsonKey: 'progress',
                                             ),
                                           ),
-                                        );
+                                        ).then((value) {
+                                          setState(() {
+                                            selected = null;
+                                          });
+                                        });
                                       }
                                       if (index == 2) {
                                         Navigator.push(
@@ -124,7 +132,11 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                                               jsonKey: 'finished',
                                             ),
                                           ),
-                                        );
+                                        ).then((value) {
+                                          setState(() {
+                                            selected = null;
+                                          });
+                                        });
                                       }
                                       selected = index;
                                     });
@@ -393,7 +405,7 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                                             const HomeRecommendedForYouSeeAllScreen(
                                           title: 'My History',
                                           param: 'history',
-                                          jsonKey: 'my_history',
+                                          jsonKey: 'history',
                                         ),
                                       ),
                                     );

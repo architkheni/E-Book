@@ -4,9 +4,11 @@ import 'package:book/model/media_model.dart';
 
 class BookModel {
   int? bookId;
-  String? categoryName;
-  String? subcategoryName;
-  String? authorName;
+  int? totalChapters;
+  int? readCahpters;
+  dynamic categoryName;
+  dynamic subcategoryName;
+  dynamic authorName;
   String? name;
   String? title;
   String? topicCover;
@@ -53,6 +55,8 @@ class BookModel {
 
   BookModel({
     this.bookId,
+    this.totalChapters,
+    this.readCahpters,
     this.categoryName,
     this.subcategoryName,
     this.authorName,
@@ -103,6 +107,8 @@ class BookModel {
 
   BookModel.fromJson(Map<String, dynamic> json) {
     bookId = json['book_id'];
+    totalChapters = json['total_chapters'];
+    readCahpters = json['read_cahpters'];
     categoryName = json['category_name'];
     subcategoryName = json['subcategory_name'];
     authorName = json['author_name'];
@@ -159,6 +165,8 @@ class BookModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['book_id'] = bookId;
+    data['total_chapters'] = totalChapters;
+    data['read_cahpters'] = readCahpters;
     data['category_name'] = categoryName;
     data['subcategory_name'] = subcategoryName;
     data['author_name'] = authorName;

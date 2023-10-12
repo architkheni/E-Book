@@ -20,13 +20,12 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-);
+  );
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
   bool isLogin = await AppStorage().getLogin();
   bool isDark = await AppStorage().getDarkMode();
-  log(isDark.toString());
 
   ///Please update theme as per your need if required.
   ThemeHelper().changeTheme('primary');

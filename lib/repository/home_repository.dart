@@ -6,6 +6,7 @@ import 'package:book/model/book_chapter_model.dart';
 import 'package:book/model/book_model.dart';
 import 'package:book/model/category_model.dart';
 import 'package:book/model/language_model.dart';
+import 'package:book/model/subcategory_model.dart';
 import 'package:book/presentation/detail_page_container_page/model/detail_model.dart';
 import 'package:book/presentation/home/model/dashboard_model.dart';
 import 'package:dartz/dartz.dart';
@@ -61,7 +62,7 @@ class HomeRepository {
     }
   }
 
-  Future<Either<String, List<CategoryModel>>> getSubCategories(
+  Future<Either<String, List<SubcategoryModel>>> getSubCategories(
     int categoryId,
   ) async {
     try {
@@ -75,8 +76,32 @@ class HomeRepository {
         data = data['data'];
         return right(
           (data as List<dynamic>)
-              .map((e) => CategoryModel.fromJson(e))
+              .map((e) => SubcategoryModel.fromJson(e))
               .toList(),
+        );
+      }
+      return left('some error accured');
+    } catch (e) {
+      return left(e.toString());
+    }
+  }
+
+  Future<Either<String, List<BookModel>>> getCategoryBooks(
+    int subCategoryId,
+  ) async {
+    try {
+      Response response = await dioClient.post(
+        ApiEndpoint.subCategoryBookList,
+        data: FormData.fromMap({'subcategory_id': subCategoryId}),
+      );
+      if (response.statusCode == 200) {
+        dynamic data = response.data;
+        if (data.runtimeType == String) {
+          data = jsonDecode(data);
+        }
+        data = data['Books'];
+        return right(
+          (data as List<dynamic>).map((e) => BookModel.fromJson(e)).toList(),
         );
       }
       return left('some error accured');
@@ -154,9 +179,11 @@ class HomeRepository {
     required String key,
   }) async {
     try {
-      Response response =
-          await dioClient.post(ApiEndpoint.viewAll, data: {'param': param},
-        options: Options(headers: {'Authorization': 'Bearer $token'}),);
+      Response response = await dioClient.post(
+        ApiEndpoint.viewAll,
+        data: {'param': param},
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+      );
       if (response.statusCode == 200) {
         dynamic data = response.data;
         if (data.runtimeType == String) {
@@ -170,7 +197,7 @@ class HomeRepository {
         return left('some error accured');
       }
     } catch (e) {
-      return left('some error accured');
+      return left(e.toString());
     }
   }
 }

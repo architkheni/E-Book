@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:book/core/app_export.dart';
 import 'package:book/core/utils/color_constant.dart';
 import 'package:book/core/utils/string_utils.dart';
-import 'package:book/model/book_model.dart';
 import 'package:book/presentation/explore_page/explore_page.dart';
 import 'package:book/provider/home_provider.dart';
 import 'package:book/widgets/app_bar/appbar_subtitle.dart';
@@ -71,7 +70,7 @@ class HomeScreenPage extends StatelessWidget {
                         Padding(
                           padding: getPadding(left: 6),
                           child: Text(
-                            'Free book of the Day',
+                            'Free Book of the Day',
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.left,
                             style: theme.textTheme.titleLarge!.copyWith(
@@ -99,8 +98,8 @@ class HomeScreenPage extends StatelessWidget {
                                     MaterialPageRoute(
                                       builder: (context) {
                                         return DetailPageContainerPage(
-                                          bookId: provider.dashboardModel
-                                              .mainBook![0].bookId!,
+                                          bookId: provider
+                                              .dashboardModel.mainBook!.bookId!,
                                         );
                                       },
                                     ),
@@ -114,7 +113,7 @@ class HomeScreenPage extends StatelessWidget {
                                       decoration: BoxDecoration(
                                         image: DecorationImage(
                                           image: NetworkImage(
-                                            provider.dashboardModel.mainBook![0]
+                                            provider.dashboardModel.mainBook!
                                                 .frontCover!,
                                           ),
                                           fit: BoxFit.fill,
@@ -154,8 +153,8 @@ class HomeScreenPage extends StatelessWidget {
                                       child: Align(
                                         alignment: Alignment.bottomCenter,
                                         child: CustomImageView(
-                                          url: provider.dashboardModel
-                                              .mainBook![0].frontCover,
+                                          url: provider.dashboardModel.mainBook!
+                                              .frontCover,
                                           height: height / 3.75,
                                           width: width / 2.3,
                                           fit: BoxFit.fill,
@@ -167,45 +166,64 @@ class HomeScreenPage extends StatelessWidget {
                               )
                             : const SizedBox.shrink(),
                         provider.dashboardModel.mainBook != null &&
-                                provider.dashboardModel.mainBook![0].name !=
-                                    null
+                                provider.dashboardModel.mainBook!.name != null
                             ? Padding(
                                 padding: getPadding(left: 6, top: 7),
                                 child: Text(
-                                  provider.dashboardModel.mainBook![0].title!,
+                                  provider.dashboardModel.mainBook!.title!,
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.left,
                                   style: theme.textTheme.titleSmall!.copyWith(
                                     color: isLight ? ColorConstant.black : null,
+                                    fontSize: 17,
                                   ),
                                 ),
                               )
                             : const SizedBox.shrink(),
                         provider.dashboardModel.mainBook != null &&
-                                provider.dashboardModel.mainBook![0]
-                                        .authorName !=
+                                provider.dashboardModel.mainBook!.authorName !=
                                     null
                             ? Padding(
                                 padding: getPadding(left: 6),
-                                child: Text(
-                                  "${provider.dashboardModel.mainBook![0].authorName!} & ${provider.dashboardModel.mainBook![0].author2 ?? ''}",
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.left,
-                                  style:
-                                      CustomTextStyles.bodyMediumThin.copyWith(
-                                    color: isLight ? ColorConstant.black : null,
-                                  ),
+                                child: Builder(
+                                  builder: (context) {
+                                    String author = '';
+                                    List<dynamic> list = (provider
+                                            .dashboardModel
+                                            .mainBook!
+                                            .authorName as List<dynamic>)
+                                        .where((element) => element != null)
+                                        .toList();
+
+                                    for (var i = 0; i < list.length; i++) {
+                                      author += list[i];
+                                      author +=
+                                          ((list.length - 1) == i) ? '' : ', ';
+                                    }
+
+                                    return Text(
+                                      author,
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.left,
+                                      style: CustomTextStyles.bodyMediumThin
+                                          .copyWith(
+                                        color: isLight
+                                            ? ColorConstant.black
+                                            : null,
+                                        fontSize: 17,
+                                      ),
+                                    );
+                                  },
                                 ),
                               )
                             : const SizedBox.shrink(),
                         provider.dashboardModel.mainBook != null &&
-                                provider.dashboardModel.mainBook![0]
-                                        .description !=
+                                provider.dashboardModel.mainBook!.description !=
                                     null
                             ? Padding(
                                 padding: getPadding(left: 6),
                                 child: Text(
-                                  provider.dashboardModel.mainBook![0]
+                                  provider.dashboardModel.mainBook!
                                           .description ??
                                       '',
                                   overflow: TextOverflow.ellipsis,
@@ -213,13 +231,14 @@ class HomeScreenPage extends StatelessWidget {
                                   style:
                                       CustomTextStyles.bodyMediumThin.copyWith(
                                     color: isLight ? ColorConstant.black : null,
+                                    fontSize: 13,
                                   ),
                                 ),
                               )
                             : const SizedBox.shrink(),
                         provider.dashboardModel.mainBook != null
                             ? Padding(
-                                padding: getPadding(left: 6, top: 10),
+                                padding: getPadding(left: 6, top: 5),
                                 child: Row(
                                   children: [
                                     Container(
@@ -230,7 +249,7 @@ class HomeScreenPage extends StatelessWidget {
                                       ),
                                       child: Center(
                                         child: Text(
-                                          provider.dashboardModel.mainBook![0]
+                                          provider.dashboardModel.mainBook!
                                               .type!.capitlize,
                                           overflow: TextOverflow.ellipsis,
                                           textAlign: TextAlign.left,
@@ -243,7 +262,7 @@ class HomeScreenPage extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    provider.dashboardModel.mainBook![0]
+                                    provider.dashboardModel.mainBook!
                                                 .originalAudiobookLength !=
                                             null
                                         ? Padding(
@@ -252,7 +271,7 @@ class HomeScreenPage extends StatelessWidget {
                                               top: 1,
                                             ),
                                             child: Text(
-                                              '${provider.dashboardModel.mainBook![0].originalAudiobookLength} min',
+                                              '${provider.dashboardModel.mainBook!.originalAudiobookLength} min',
                                               overflow: TextOverflow.ellipsis,
                                               textAlign: TextAlign.left,
                                               style: theme.textTheme.bodySmall!
@@ -358,31 +377,22 @@ class HomeScreenPage extends StatelessWidget {
                               )
                             : const SizedBox.shrink(),
                         provider.dashboardModel.recommendedBook.isNotEmpty
-                            ? Align(
-                                alignment: Alignment.centerRight,
-                                child: SizedBox(
-                                  height: getVerticalSize(290),
-                                  child: ListView.separated(
-                                    physics: const BouncingScrollPhysics(),
-                                    padding: getPadding(top: 10),
-                                    scrollDirection: Axis.horizontal,
-                                    separatorBuilder: (
-                                      context,
-                                      index,
-                                    ) {
-                                      return SizedBox(
-                                        width: getHorizontalSize(13),
-                                      );
-                                    },
-                                    itemCount: provider
-                                        .dashboardModel.recommendedBook.length,
-                                    itemBuilder: (context, index) {
-                                      BookModel book = provider.dashboardModel
-                                          .recommendedBook[index];
-                                      return BookTile(
-                                        book: book,
-                                      );
-                                    },
+                            ? Padding(
+                                padding: getPadding(top: 20, bottom: 20),
+                                child: SingleChildScrollView(
+                                  physics: const BouncingScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: List.generate(
+                                      provider.dashboardModel.recommendedBook
+                                          .length,
+                                      (index) => BookTile(
+                                        book: provider.dashboardModel
+                                            .recommendedBook[index],
+                                      ),
+                                    ),
                                   ),
                                 ),
                               )
@@ -451,31 +461,22 @@ class HomeScreenPage extends StatelessWidget {
                               )
                             : const SizedBox.shrink(),
                         provider.dashboardModel.topSearchBook.isNotEmpty
-                            ? Align(
-                                alignment: Alignment.centerRight,
-                                child: SizedBox(
-                                  height: getVerticalSize(290),
-                                  child: ListView.separated(
-                                    padding: getPadding(top: 16),
-                                    physics: const BouncingScrollPhysics(),
-                                    scrollDirection: Axis.horizontal,
-                                    separatorBuilder: (
-                                      context,
-                                      index,
-                                    ) {
-                                      return SizedBox(
-                                        width: getHorizontalSize(13),
-                                      );
-                                    },
-                                    itemCount: provider
-                                        .dashboardModel.topSearchBook.length,
-                                    itemBuilder: (context, index) {
-                                      BookModel book = provider
-                                          .dashboardModel.topSearchBook[index];
-                                      return BookTile(
-                                        book: book,
-                                      );
-                                    },
+                            ? Padding(
+                                padding: getPadding(top: 20, bottom: 20),
+                                child: SingleChildScrollView(
+                                  physics: const BouncingScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: List.generate(
+                                      provider
+                                          .dashboardModel.topSearchBook.length,
+                                      (index) => BookTile(
+                                        book: provider.dashboardModel
+                                            .topSearchBook[index],
+                                      ),
+                                    ),
                                   ),
                                 ),
                               )
@@ -637,31 +638,22 @@ class HomeScreenPage extends StatelessWidget {
                               )
                             : const SizedBox.shrink(),
                         provider.dashboardModel.popularBook.isNotEmpty
-                            ? Align(
-                                alignment: Alignment.centerRight,
-                                child: SizedBox(
-                                  height: getVerticalSize(290),
-                                  child: ListView.separated(
-                                    padding: getPadding(top: 16),
-                                    physics: const BouncingScrollPhysics(),
-                                    scrollDirection: Axis.horizontal,
-                                    separatorBuilder: (
-                                      context,
-                                      index,
-                                    ) {
-                                      return SizedBox(
-                                        width: getHorizontalSize(13),
-                                      );
-                                    },
-                                    itemCount: provider
-                                        .dashboardModel.popularBook.length,
-                                    itemBuilder: (context, index) {
-                                      BookModel book = provider
-                                          .dashboardModel.popularBook[index];
-                                      return BookTile(
-                                        book: book,
-                                      );
-                                    },
+                            ? Padding(
+                                padding: getPadding(top: 20, bottom: 20),
+                                child: SingleChildScrollView(
+                                  physics: const BouncingScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: List.generate(
+                                      provider
+                                          .dashboardModel.popularBook.length,
+                                      (index) => BookTile(
+                                        book: provider
+                                            .dashboardModel.popularBook[index],
+                                      ),
+                                    ),
                                   ),
                                 ),
                               )
@@ -730,31 +722,22 @@ class HomeScreenPage extends StatelessWidget {
                               )
                             : const SizedBox.shrink(),
                         provider.dashboardModel.recentlyAddBook.isNotEmpty
-                            ? Align(
-                                alignment: Alignment.centerRight,
-                                child: SizedBox(
-                                  height: getVerticalSize(290),
-                                  child: ListView.separated(
-                                    padding: getPadding(top: 16),
-                                    physics: const BouncingScrollPhysics(),
-                                    scrollDirection: Axis.horizontal,
-                                    separatorBuilder: (
-                                      context,
-                                      index,
-                                    ) {
-                                      return SizedBox(
-                                        width: getHorizontalSize(13),
-                                      );
-                                    },
-                                    itemCount: provider
-                                        .dashboardModel.recentlyAddBook.length,
-                                    itemBuilder: (context, index) {
-                                      BookModel book = provider.dashboardModel
-                                          .recentlyAddBook[index];
-                                      return BookTile(
-                                        book: book,
-                                      );
-                                    },
+                            ? Padding(
+                                padding: getPadding(top: 20, bottom: 20),
+                                child: SingleChildScrollView(
+                                  physics: const BouncingScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: List.generate(
+                                      provider.dashboardModel.recentlyAddBook
+                                          .length,
+                                      (index) => BookTile(
+                                        book: provider.dashboardModel
+                                            .recentlyAddBook[index],
+                                      ),
+                                    ),
                                   ),
                                 ),
                               )

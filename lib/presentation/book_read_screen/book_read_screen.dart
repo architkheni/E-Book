@@ -532,10 +532,11 @@ class Pages extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
                   child: Html(
                     data: chapter.description!,
                     style: {
-                      'p': Style(
+                      '*': Style(
                         color: isLight
                             ? ColorConstant.black
                             : ColorConstant.whiteA700,

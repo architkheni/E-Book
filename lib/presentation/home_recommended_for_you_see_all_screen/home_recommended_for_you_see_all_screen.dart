@@ -30,6 +30,22 @@ class _HomeRecommendedForYouSeeAllScreenState
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
   String selectedValue = 'A to Z';
 
+  List<String> filterOption = ['A to Z', 'Z to A'];
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  void init() {
+    if (widget.param == 'progress' || widget.param == 'favorites') {
+      filterOption.add('Least Progress');
+      filterOption.add('Most Progress');
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
@@ -80,6 +96,26 @@ class _HomeRecommendedForYouSeeAllScreenState
                   child: CircularProgressIndicator(color: appTheme.teal400),
                 );
               }
+              List<BookModel> books = provider.books;
+              if (selectedValue == 'A to Z') {
+                books = provider.books;
+              } else if (selectedValue == 'Z to A') {
+                books = provider.books.reversed.toList();
+              } else if (selectedValue == 'Least Progress') {
+                books.sort(
+                  (a, b) => (a.readCahpters! / a.totalChapters!) >
+                          (b.readCahpters! / b.totalChapters!)
+                      ? 1
+                      : -1,
+                );
+              } else if (selectedValue == 'Most Progress') {
+                books.sort(
+                  (a, b) => (a.readCahpters! / a.totalChapters!) >
+                          (b.readCahpters! / b.totalChapters!)
+                      ? -1
+                      : 1,
+                );
+              }
               return Padding(
                 padding: const EdgeInsets.only(left: 17, right: 20),
                 child: Column(
@@ -124,11 +160,13 @@ class _HomeRecommendedForYouSeeAllScreenState
                                 : theme.colorScheme.onPrimaryContainer
                                     .withOpacity(1),
                             onChanged: (newValue) {
-                              setState(() {
-                                selectedValue = newValue!;
-                              });
+                              if (selectedValue != newValue) {
+                                setState(() {
+                                  selectedValue = newValue!;
+                                });
+                              }
                             },
-                            items: <String>['A to Z', 'Z to A']
+                            items: filterOption
                                 .map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
@@ -254,12 +292,8 @@ class _HomeRecommendedForYouSeeAllScreenState
                                       separatorBuilder: (context, index) {
                                         return const SizedBox(height: 10);
                                       },
-                                      itemCount: provider.books.length,
+                                      itemCount: books.length,
                                       itemBuilder: (context, index) {
-                                        List<BookModel> books = selectedValue ==
-                                                'Z to A'
-                                            ? provider.books.reversed.toList()
-                                            : provider.books;
                                         BookModel book = books[index];
                                         return GestureDetector(
                                           onTap: () {
@@ -461,7 +495,7 @@ class _HomeRecommendedForYouSeeAllScreenState
                                                                                   child: LinearProgressIndicator(
                                                                                     color: appTheme.teal400,
                                                                                     backgroundColor: appTheme.whiteA700,
-                                                                                    value: 0.4,
+                                                                                    value: book.readCahpters! / book.totalChapters!,
                                                                                   ),
                                                                                 ),
                                                                               ),
@@ -469,7 +503,7 @@ class _HomeRecommendedForYouSeeAllScreenState
                                                                                 width: 7,
                                                                               ),
                                                                               Text(
-                                                                                '10/20',
+                                                                                '${book.readCahpters}/${book.totalChapters}',
                                                                                 overflow: TextOverflow.ellipsis,
                                                                                 textAlign: TextAlign.left,
                                                                                 style: CustomTextStyles.bodySmallThin_1,

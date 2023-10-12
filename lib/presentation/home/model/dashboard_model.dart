@@ -22,9 +22,7 @@ class DashboardModel {
 
   factory DashboardModel.fromJson(Map<String, dynamic> json) {
     return DashboardModel(
-      mainBook: json['main_book'] != null
-          ? BookModel.fromJson(json['main_book'] as Map<String, dynamic>)
-          : null,
+      mainBook: BookModel.fromJson(json['main_book']),
       popularBook: json['popular_book'] != null
           ? (json['popular_book'] as List<dynamic>)
               .map((e) => BookModel.fromJson(e))

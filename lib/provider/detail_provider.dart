@@ -15,7 +15,7 @@ class DetailProvider extends ChangeNotifier {
   }
 
   Future<void> getBookDetails(int bookId) async {
-    Either<String, DetailModel> result =
+    Either<String, DetailModel> result =  
         await HomeRepository.instance.getBookDetails(bookId);
     result.fold((l) {
       log(l);

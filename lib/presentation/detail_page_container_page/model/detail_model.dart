@@ -22,10 +22,7 @@ class DetailModel {
 
   factory DetailModel.fromJson(Map<String, dynamic> json) {
     return DetailModel(
-      book: (json['book_detail'] as List<dynamic>)
-          .map((e) => BookModel.fromJson(e))
-          .toList()
-          .first,
+      book: BookModel.fromJson(json['book_detail']),
       bookChapter: json['book_chapter'] != null
           ? (json['book_chapter'] as List<dynamic>)
               .map((e) => BookChapterModel.fromJson(e))

@@ -1,8 +1,9 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:book/core/utils/color_constant.dart';
-import 'package:book/model/book_model.dart';
 import 'package:book/model/category_model.dart';
+import 'package:book/model/subcategory_model.dart';
+import 'package:book/presentation/detail_page_container_page/detail_page_container_page.dart';
 import 'package:book/provider/explore_provider.dart';
 import 'package:book/provider/home_provider.dart';
 import 'package:book/widgets/app_bar/appbar_image.dart';
@@ -240,7 +241,7 @@ class _ExplorePageState extends State<ExplorePage> {
                     } else ...{
                       Consumer<ExploreProvider>(
                         builder: (context, provider, child) {
-                          List<CategoryModel> subCategories =
+                          List<SubcategoryModel> subCategories =
                               provider.subCategories;
                           return provider.isLoading
                               ? const SizedBox.shrink()
@@ -256,6 +257,12 @@ class _ExplorePageState extends State<ExplorePage> {
                                       ),
                                       child: GestureDetector(
                                         onTap: () {
+                                          context
+                                              .read<ExploreProvider>()
+                                              .getSubcategoriesBooks(
+                                                subCategories[index]
+                                                    .subcategoryId!,
+                                              );
                                           setState(() {
                                             searchController.text =
                                                 subCategories[index].name!;
@@ -309,119 +316,155 @@ class _ExplorePageState extends State<ExplorePage> {
                       ),
                     },
                   } else ...{
-                    ListView.separated(
-                      physics: const BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      padding: EdgeInsets.zero,
-                      separatorBuilder: (context, index) {
-                        return const SizedBox(height: 10);
-                      },
-                      itemCount: 3,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          decoration: AppDecoration.fill4.copyWith(
-                            borderRadius: BorderRadiusStyle.roundedBorder8,
-                            color: isLight ? Colors.transparent : null,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(9.0),
-                                child: CustomImageView(
-                                  imagePath:
-                                      ImageConstant.imgE50c016fb6a84106x74,
-                                  height: height / 10,
-                                  width: width / 6,
-                                  fit: BoxFit.fill,
-                                  radius: BorderRadius.circular(5),
-                                ),
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 5,
-                                    top: 1,
-                                    bottom: 4,
+                    Consumer<ExploreProvider>(
+                      builder: (
+                        BuildContext context,
+                        ExploreProvider provider,
+                        Widget? child,
+                      ) {
+                        if (provider.isLoading) {
+                          return Center(
+                            child: CircularProgressIndicator(
+                              color: ColorConstant.primaryColor,
+                            ),
+                          );
+                        }
+                        return ListView.separated(
+                          physics: const BouncingScrollPhysics(),
+                          shrinkWrap: true,
+                          padding: EdgeInsets.zero,
+                          separatorBuilder: (context, index) {
+                            return const SizedBox(height: 10);
+                          },
+                          itemCount: provider.books.length,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        DetailPageContainerPage(
+                                      bookId: provider.books[index].bookId!,
+                                    ),
                                   ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'The Marketing Age',
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.left,
-                                        style: theme.textTheme.titleSmall!
-                                            .copyWith(
-                                          color: isLight
-                                              ? ColorConstant.black
-                                              : null,
+                                );
+                              },
+                              child: Container(
+                                decoration: AppDecoration.fill4.copyWith(
+                                  borderRadius:
+                                      BorderRadiusStyle.roundedBorder8,
+                                  color: isLight ? Colors.transparent : null,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(9.0),
+                                      child: CustomImageView(
+                                        url: provider.books[index].frontCover,
+                                        height: height / 10,
+                                        width: width / 6,
+                                        fit: BoxFit.fill,
+                                        radius: BorderRadius.circular(5),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                          left: 5,
+                                          top: 1,
+                                          bottom: 4,
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              provider.books[index].title ??
+                                                  'Book title',
+                                              overflow: TextOverflow.ellipsis,
+                                              textAlign: TextAlign.left,
+                                              style: theme.textTheme.titleSmall!
+                                                  .copyWith(
+                                                color: isLight
+                                                    ? ColorConstant.black
+                                                    : null,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 7),
+                                            Text(
+                                              provider.books[index]
+                                                      .authorName ??
+                                                  'Book author name',
+                                              overflow: TextOverflow.ellipsis,
+                                              textAlign: TextAlign.left,
+                                              style: theme.textTheme.labelLarge!
+                                                  .copyWith(
+                                                color: isLight
+                                                    ? ColorConstant.black
+                                                    : null,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 7),
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.headphones,
+                                                  color: isLight
+                                                      ? ColorConstant.black
+                                                      : appTheme.whiteA700,
+                                                  size: 20,
+                                                ),
+                                                const SizedBox(width: 5),
+                                                Text(
+                                                  '${provider.books[index].originalAudiobookLength}m',
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.left,
+                                                  style: theme
+                                                      .textTheme.labelLarge!
+                                                      .copyWith(
+                                                    color: isLight
+                                                        ? ColorConstant.black
+                                                        : null,
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 10),
+                                                Icon(
+                                                  Icons.visibility_outlined,
+                                                  color: isLight
+                                                      ? ColorConstant.black
+                                                      : appTheme.whiteA700,
+                                                  size: 20,
+                                                ),
+                                                const SizedBox(width: 5),
+                                                Text(
+                                                  '${provider.books[index].originalAudiobookLength}m',
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.left,
+                                                  style: theme
+                                                      .textTheme.labelLarge!
+                                                      .copyWith(
+                                                    color: isLight
+                                                        ? ColorConstant.black
+                                                        : null,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                      const SizedBox(height: 7),
-                                      Text(
-                                        'Mark mcallister',
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.left,
-                                        style: theme.textTheme.labelLarge!
-                                            .copyWith(
-                                          color: isLight
-                                              ? ColorConstant.black
-                                              : null,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 7),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.headphones,
-                                            color: isLight
-                                                ? ColorConstant.black
-                                                : appTheme.whiteA700,
-                                            size: 20,
-                                          ),
-                                          const SizedBox(width: 5),
-                                          Text(
-                                            '8m',
-                                            overflow: TextOverflow.ellipsis,
-                                            textAlign: TextAlign.left,
-                                            style: theme.textTheme.labelLarge!
-                                                .copyWith(
-                                              color: isLight
-                                                  ? ColorConstant.black
-                                                  : null,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 10),
-                                          Icon(
-                                            Icons.visibility_outlined,
-                                            color: isLight
-                                                ? ColorConstant.black
-                                                : appTheme.whiteA700,
-                                            size: 20,
-                                          ),
-                                          const SizedBox(width: 5),
-                                          Text(
-                                            '8m',
-                                            overflow: TextOverflow.ellipsis,
-                                            textAlign: TextAlign.left,
-                                            style: theme.textTheme.labelLarge!
-                                                .copyWith(
-                                              color: isLight
-                                                  ? ColorConstant.black
-                                                  : null,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
+                            );
+                          },
                         );
                       },
                     ),
@@ -497,28 +540,21 @@ class _ExplorePageState extends State<ExplorePage> {
                   Consumer<HomePovider>(
                     builder: (context, provider, child) {
                       return provider.dashboardModel.recentlyAddBook.isNotEmpty
-                          ? Align(
-                              alignment: Alignment.centerRight,
-                              child: SizedBox(
-                                height: getVerticalSize(287),
-                                child: ListView.separated(
-                                  padding: getPadding(left: 1, top: 31),
-                                  physics: const BouncingScrollPhysics(),
-                                  scrollDirection: Axis.horizontal,
-                                  separatorBuilder: (context, index) {
-                                    return SizedBox(
-                                      width: getHorizontalSize(13),
-                                    );
-                                  },
-                                  itemCount: provider
-                                      .dashboardModel.recentlyAddBook.length,
-                                  itemBuilder: (context, index) {
-                                    BookModel book = provider
-                                        .dashboardModel.recentlyAddBook[index];
-                                    return BookTile(
-                                      book: book,
-                                    );
-                                  },
+                          ? Padding(
+                              padding: getPadding(top: 20, bottom: 20),
+                              child: SingleChildScrollView(
+                                physics: const BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: List.generate(
+                                    provider
+                                        .dashboardModel.recentlyAddBook.length,
+                                    (index) => BookTile(
+                                      book: provider.dashboardModel
+                                          .recentlyAddBook[index],
+                                    ),
+                                  ),
                                 ),
                               ),
                             )
