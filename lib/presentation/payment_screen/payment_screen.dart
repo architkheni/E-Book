@@ -8,6 +8,7 @@ import 'package:book/widgets/app_bar/appbar_subtitle.dart';
 import 'package:book/widgets/app_bar/custom_app_bar.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/utils/image_constant.dart';
 
@@ -35,7 +36,7 @@ class PaymentScreenState extends State<PaymentScreen> {
             color: isLight ? ColorConstant.black : null,
             margin: getMargin(left: 16, top: 17, bottom: 18),
             onTap: () {
-              Navigator.pop(context);
+              context.pop();
             },
           ),
           title: Padding(

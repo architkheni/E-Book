@@ -2,9 +2,10 @@ import 'package:book/core/app_export.dart';
 import 'package:book/core/utils/color_constant.dart';
 import 'package:book/core/utils/string_utils.dart';
 import 'package:book/model/book_model.dart';
-import 'package:book/presentation/detail_page_container_page/detail_page_container_page.dart';
 import 'package:book/provider/wishlist_provider.dart';
+import 'package:book/router/app_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
@@ -22,16 +23,7 @@ class BookTile extends StatelessWidget {
     bool isLight = Theme.of(context).brightness == Brightness.light;
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return DetailPageContainerPage(
-                bookId: book.bookId!,
-              );
-            },
-          ),
-        );
+        context.push(AppRoutesPath.bookDetail, extra: book.bookId!);
       },
       child: Padding(
         padding: const EdgeInsets.only(right: 16.0),
@@ -165,6 +157,7 @@ class BookTile extends StatelessWidget {
                           textAlign: TextAlign.left,
                           style: theme.textTheme.bodySmall!.copyWith(
                             color: isLight ? ColorConstant.black : null,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:book/core/app_export.dart';
 import 'package:book/core/storage/app_storage.dart';
@@ -7,14 +8,15 @@ import 'package:book/model/language_model.dart';
 import 'package:book/model/user_model.dart';
 import 'package:book/presentation/langugaes_screen/provider/language_provider.dart';
 import 'package:book/provider/profile_provider.dart';
+import 'package:book/router/app_routes.dart';
 import 'package:book/widgets/app_bar/appbar_image.dart';
 import 'package:book/widgets/app_bar/custom_app_bar.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../widgets/app_bar/appbar_subtitle.dart';
-import '../custom_bottom_bar/custom_bottom_bar.dart';
 
 class LangugaesScreen extends StatefulWidget {
   final bool? start;
@@ -66,7 +68,7 @@ class _LangugaesScreenState extends State<LangugaesScreen> {
                     color: isLight ? ColorConstant.black : null,
                     margin: getMargin(left: 16, top: 17, bottom: 18),
                     onTap: () {
-                      Navigator.pop(context);
+                      context.pop();
                     },
                   ),
                   title: Padding(
@@ -85,13 +87,7 @@ class _LangugaesScreenState extends State<LangugaesScreen> {
                       ),
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  BottombarPage(buttomIndex: 0),
-                            ),
-                          );
+                          context.go(AppRoutesPath.home);
                         },
                         child: const Text(
                           'Skip',
@@ -104,18 +100,11 @@ class _LangugaesScreenState extends State<LangugaesScreen> {
                           const EdgeInsets.only(right: 16, top: 10, left: 10),
                       child: AppbarImage(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  BottombarPage(buttomIndex: 0),
-                            ),
-                          );
+                          context.pop();
                         },
                         height: getVerticalSize(14),
                         width: getHorizontalSize(8),
                         svgPath: ImageConstant.imgArrowright,
-                        // margin: getMargin(left: 10, top: 16, right: 16, bottom: 5),
                       ),
                     ),
                   ],
@@ -130,7 +119,7 @@ class _LangugaesScreenState extends State<LangugaesScreen> {
                     color: isLight ? ColorConstant.black : null,
                     margin: getMargin(left: 16, top: 17, bottom: 18),
                     onTap: () {
-                      Navigator.pop(context);
+                      context.pop();
                     },
                   ),
                   title: Padding(
@@ -246,36 +235,50 @@ class _LangugaesScreenState extends State<LangugaesScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 50),
-                  child: CustomElevatedButton(
-                    onTap: () {
-                      if (selectedId.isEmpty) {
-                        SnackBar snackBar = SnackBar(
-                          content: const Text('Select a minimum of 1 language'),
-                          backgroundColor: appTheme.teal400,
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      } else {
-                        //
-                        context.read<ProfileProvider>().saveUserLanguage(
-                              context,
-                              language: selectedId,
-                              onSuccess: widget.goIsProfile != null
-                                  ? () {
-                                      Navigator.pop(context);
-                                    }
-                                  : null,
+                  child: Consumer<LanguageProvider>(
+                    builder: (context, provider, child) {
+                      return CustomElevatedButton(
+                        onTap: () {
+                          List<int> setId = [];
+                          List<int> id =
+                              provider.language.map((e) => e.id!).toList();
+                          for (var element in selectedId) {
+                            if (id.contains(element)) {
+                              setId.add(element);
+                            }
+                          }
+                          log(setId.length.toString());
+                          if (setId.isEmpty) {
+                            SnackBar snackBar = SnackBar(
+                              content:
+                                  const Text('Select a minimum of 1 language'),
+                              backgroundColor: appTheme.teal400,
                             );
-                      }
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          } else {
+                            context.read<ProfileProvider>().saveUserLanguage(
+                                  context,
+                                  language: setId,
+                                  onSuccess: widget.goIsProfile != null
+                                      ? () {
+                                          context.pop();
+                                        }
+                                      : null,
+                                );
+                          }
+                        },
+                        width: double.maxFinite,
+                        height: getVerticalSize(48),
+                        text: 'Continue',
+                        // margin: getMargin(top: 74),
+                        buttonStyle: CustomButtonStyles.fillTeal400,
+                        buttonTextStyle:
+                            CustomTextStyles.titleSmallPrimary_1.copyWith(
+                          color: isLight ? ColorConstant.whiteA700 : null,
+                        ),
+                      );
                     },
-                    width: double.maxFinite,
-                    height: getVerticalSize(48),
-                    text: 'Continue',
-                    // margin: getMargin(top: 74),
-                    buttonStyle: CustomButtonStyles.fillTeal400,
-                    buttonTextStyle:
-                        CustomTextStyles.titleSmallPrimary_1.copyWith(
-                      color: isLight ? ColorConstant.whiteA700 : null,
-                    ),
                   ),
                 ),
               ],

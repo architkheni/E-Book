@@ -4,6 +4,7 @@ import 'package:book/provider/auth_provider.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:book/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 // ignore_for_file: must_be_immutable
@@ -103,15 +104,6 @@ class ForgotPasswordScreen extends StatelessWidget {
                               email: email,
                               code: entercodeController.text,
                             );
-
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //       builder: (context) =>
-                        //           ForgotPasswordOneScreen(
-                        //             email: email,
-                        //           )),
-                        // );
                       },
                       width: double.maxFinite,
                       height: getVerticalSize(48),
@@ -182,6 +174,6 @@ class ForgotPasswordScreen extends StatelessWidget {
   /// This function takes a [BuildContext] object as a parameter, which is used
   /// to navigate back to the previous screen.
   onTapImgArrowleft(BuildContext context) {
-    Navigator.pop(context);
+    context.pop();
   }
 }

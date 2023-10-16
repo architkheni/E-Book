@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:book/ColorTheme/ColorTheme.dart';
 import 'package:book/core/storage/app_storage.dart';
 import 'package:book/provider/auth_provider.dart';
@@ -7,11 +5,13 @@ import 'package:book/provider/explore_provider.dart';
 import 'package:book/provider/home_provider.dart';
 import 'package:book/provider/profile_provider.dart';
 import 'package:book/provider/wishlist_provider.dart';
-import 'package:book/routes/app_routes.dart';
+import 'package:book/router/app_router.dart';
+import 'package:book/router/app_routes.dart';
 import 'package:book/theme/theme_helper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
@@ -26,8 +26,7 @@ void main() async {
   ]);
   bool isLogin = await AppStorage().getLogin();
   bool isDark = await AppStorage().getDarkMode();
-  
-  ///Please update theme as per your need if required.
+
   ThemeHelper().changeTheme('primary');
   runApp(
     MyApp(
@@ -45,6 +44,9 @@ class MyApp extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
+    GoRouter goRouter = AppRouter.getRouter(
+      initialLocation: isLogin ? AppRoutesPath.home : AppRoutesPath.logInEmail,
+    );
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -58,16 +60,13 @@ class MyApp extends StatelessWidget {
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, child) {
-          return MaterialApp(
+          return MaterialApp.router(
             theme: MyThemes.lightTheme,
             themeMode: themeProvider.themeMode,
-            // themeMode: ThemeMode.light,
             darkTheme: MyThemes.darktheme,
             title: 'book',
             debugShowCheckedModeBanner: false,
-            initialRoute:
-                isLogin ? AppRoutes.bottomPage : AppRoutes.logInEmailScreen,
-            routes: AppRoutes.routes,
+            routerConfig: goRouter,
           );
         },
       ),

@@ -2,13 +2,12 @@ import 'dart:convert';
 
 import 'package:book/core/storage/app_storage.dart';
 import 'package:book/model/user_model.dart';
-import 'package:book/presentation/langugaes_screen/langugaes_screen.dart';
 import 'package:book/repository/profile_repository.dart';
+import 'package:book/router/app_routes.dart';
 import 'package:book/theme/theme_helper.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
-
-import '../presentation/custom_bottom_bar/custom_bottom_bar.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfileProvider extends ChangeNotifier {
   AppStorage appStorage = AppStorage();
@@ -36,7 +35,6 @@ class ProfileProvider extends ChangeNotifier {
     result.fold((l) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l)));
     }, (r) async {
-      NavigatorState navigator = Navigator.of(context);
       String data = await appStorage.getUser();
       UserModel userModel = UserModel.fromJson(jsonDecode(data));
       userModel.categories = category;
@@ -45,13 +43,8 @@ class ProfileProvider extends ChangeNotifier {
         onSuccess();
         return;
       }
-      navigator.push(
-        MaterialPageRoute(
-          builder: (context) => const LangugaesScreen(
-            start: true,
-          ),
-        ),
-      );
+      // ignore: use_build_context_synchronously
+      context.push(AppRoutesPath.language);
     });
   }
 
@@ -66,7 +59,6 @@ class ProfileProvider extends ChangeNotifier {
     result.fold((l) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l)));
     }, (r) async {
-      NavigatorState navigator = Navigator.of(context);
       String data = await appStorage.getUser();
       UserModel userModel = UserModel.fromJson(jsonDecode(data));
       userModel.languages = language;
@@ -75,9 +67,8 @@ class ProfileProvider extends ChangeNotifier {
         onSuccess();
         return;
       }
-      navigator.push(
-        MaterialPageRoute(builder: (context) => BottombarPage(buttomIndex: 0)),
-      );
+      // ignore: use_build_context_synchronously
+      context.go(AppRoutesPath.home);
     });
   }
 
@@ -104,7 +95,6 @@ class ProfileProvider extends ChangeNotifier {
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }, (r) async {
-      NavigatorState navigator = Navigator.of(context);
       SnackBar snackBar = SnackBar(
         content: const Text('User profile has been updated successfully'),
         backgroundColor: appTheme.teal400,
@@ -112,7 +102,8 @@ class ProfileProvider extends ChangeNotifier {
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       await appStorage.setUser(r.toString());
       init();
-      navigator.pop();
+      // ignore: use_build_context_synchronously
+      context.pop();
     });
   }
 
@@ -141,7 +132,7 @@ class ProfileProvider extends ChangeNotifier {
         backgroundColor: appTheme.teal400,
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      Navigator.pop(context);
+      context.pop();
     });
   }
 }

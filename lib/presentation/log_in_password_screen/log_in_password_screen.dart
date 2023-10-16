@@ -6,6 +6,7 @@ import 'package:book/widgets/app_bar/custom_app_bar.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:book/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class LogInPasswordScreen extends StatefulWidget {
@@ -220,6 +221,6 @@ class _LogInPasswordScreenState extends State<LogInPasswordScreen> {
   /// This function takes a [BuildContext] object as a parameter, which is used
   /// to navigate back to the previous screen.
   onTapArrowleft1(BuildContext context) {
-    Navigator.pop(context);
+    context.pop();
   }
 }

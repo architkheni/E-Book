@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:book/core/app_export.dart';
 import 'package:book/core/storage/app_storage.dart';
@@ -9,6 +10,7 @@ import 'package:book/provider/explore_provider.dart';
 import 'package:book/provider/profile_provider.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../widgets/app_bar/appbar_image.dart';
@@ -40,6 +42,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     for (var element in categories) {
       selectedId.add(element);
     }
+    log(selectedId.toString());
     setState(() {});
   }
 
@@ -66,7 +69,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             color: isLight ? ColorConstant.black : null,
             margin: getMargin(left: 16, top: 17, bottom: 18),
             onTap: () {
-              Navigator.pop(context);
+              context.pop();
             },
           ),
           title: Padding(
@@ -211,42 +214,58 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                               const SizedBox(
                                 height: 20,
                               ),
-                              CustomElevatedButton(
-                                onTap: () {
-                                  if (selectedId.length <= 2) {
-                                    SnackBar snackBar = SnackBar(
-                                      content: const Text(
-                                        'Select minimum 3 Categories',
-                                      ),
-                                      backgroundColor: appTheme.teal400,
-                                    );
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(snackBar);
-                                  } else {
-                                    context
-                                        .read<ProfileProvider>()
-                                        .saveUserCategory(
-                                          context,
-                                          category: selectedId,
-                                          onSuccess: widget.goIsProfile == null
-                                              ? null
-                                              : () {
-                                                  Navigator.pop(context);
-                                                },
+                              Consumer<ExploreProvider>(
+                                builder: (context, provider, child) {
+                                  return CustomElevatedButton(
+                                    onTap: () {
+                                      List<int> setId = [];
+                                      List<int> id = provider.categories
+                                          .map((e) => e.categoryId!)
+                                          .toList();
+                                      for (var element in selectedId) {
+                                        if (id.contains(element)) {
+                                          setId.add(element);
+                                        }
+                                      }
+                                      log(setId.length.toString());
+                                      if (setId.length <= 2) {
+                                        SnackBar snackBar = SnackBar(
+                                          content: const Text(
+                                            'Select a minimum 3 Categories',
+                                          ),
+                                          backgroundColor: appTheme.teal400,
                                         );
-                                  }
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(snackBar);
+                                      } else {
+                                        context
+                                            .read<ProfileProvider>()
+                                            .saveUserCategory(
+                                              context,
+                                              category: setId,
+                                              onSuccess:
+                                                  widget.goIsProfile == null
+                                                      ? null
+                                                      : () {
+                                                          context.pop();
+                                                        },
+                                            );
+                                      }
+                                    },
+                                    width: double.maxFinite,
+                                    height: getVerticalSize(48),
+                                    text: 'Continue',
+                                    // margin: getMargin(top: 188),
+                                    buttonStyle: CustomButtonStyles.fillTeal400,
+                                    buttonTextStyle: CustomTextStyles
+                                        .titleSmallPrimary_1
+                                        .copyWith(
+                                      color: isLight
+                                          ? ColorConstant.whiteA700
+                                          : null,
+                                    ),
+                                  );
                                 },
-                                width: double.maxFinite,
-                                height: getVerticalSize(48),
-                                text: 'Continue',
-                                // margin: getMargin(top: 188),
-                                buttonStyle: CustomButtonStyles.fillTeal400,
-                                buttonTextStyle: CustomTextStyles
-                                    .titleSmallPrimary_1
-                                    .copyWith(
-                                  color:
-                                      isLight ? ColorConstant.whiteA700 : null,
-                                ),
                               ),
                               Align(
                                 alignment: Alignment.center,

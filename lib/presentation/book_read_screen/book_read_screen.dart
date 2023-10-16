@@ -5,6 +5,7 @@ import 'package:book/model/book_chapter_model.dart';
 import 'package:book/presentation/book_read_screen/provider/book_read_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/app_export.dart';
@@ -86,7 +87,7 @@ class _BookReadViewState extends State<BookReadView> {
                     ShowBox = false;
                   });
                 } else {
-                  Navigator.pop(context);
+                  context.pop();
                 }
               },
               height: 24,

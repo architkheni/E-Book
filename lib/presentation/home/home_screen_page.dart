@@ -3,19 +3,33 @@ import 'dart:ui';
 import 'package:book/core/app_export.dart';
 import 'package:book/core/utils/color_constant.dart';
 import 'package:book/core/utils/string_utils.dart';
-import 'package:book/presentation/explore_page/explore_page.dart';
+import 'package:book/provider/explore_provider.dart';
 import 'package:book/provider/home_provider.dart';
+import 'package:book/provider/wishlist_provider.dart';
+import 'package:book/router/app_routes.dart';
 import 'package:book/widgets/app_bar/appbar_subtitle.dart';
 import 'package:book/widgets/book_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../detail_page_container_page/detail_page_container_page.dart';
 import '../detail_page_container_page/widgets/chipviewframefo2_item_widget.dart';
-import '../home_recommended_for_you_see_all_screen/home_recommended_for_you_see_all_screen.dart';
 
-class HomeScreenPage extends StatelessWidget {
+class HomeScreenPage extends StatefulWidget {
   const HomeScreenPage({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreenPage> createState() => _HomeScreenPageState();
+}
+
+class _HomeScreenPageState extends State<HomeScreenPage> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<HomePovider>().getDashboardDetails();
+    context.read<ExploreProvider>().getAllCategories();
+    context.read<WishlistProvider>().getWishListBook();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,16 +107,10 @@ class HomeScreenPage extends StatelessWidget {
                         provider.dashboardModel.mainBook != null
                             ? GestureDetector(
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) {
-                                        return DetailPageContainerPage(
-                                          bookId: provider
-                                              .dashboardModel.mainBook!.bookId!,
-                                        );
-                                      },
-                                    ),
+                                  context.push(
+                                    AppRoutesPath.bookDetail,
+                                    extra: provider
+                                        .dashboardModel.mainBook!.bookId!,
                                   );
                                 },
                                 child: Stack(
@@ -258,6 +266,7 @@ class HomeScreenPage extends StatelessWidget {
                                             color: isLight
                                                 ? ColorConstant.black
                                                 : null,
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                       ),
@@ -332,15 +341,12 @@ class HomeScreenPage extends StatelessWidget {
                                     const Spacer(),
                                     InkWell(
                                       onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const HomeRecommendedForYouSeeAllScreen(
-                                              title: 'Recommended For You',
-                                              param: 'flag_recommend',
-                                            ),
-                                          ),
+                                        context.push(
+                                          AppRoutesPath.viewAllBook,
+                                          extra: {
+                                            'title': 'Recommended For You',
+                                            'param': 'flag_recommend',
+                                          },
                                         );
                                       },
                                       child: Row(
@@ -416,15 +422,12 @@ class HomeScreenPage extends StatelessWidget {
                                     const Spacer(),
                                     InkWell(
                                       onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const HomeRecommendedForYouSeeAllScreen(
-                                              title: 'Top Search',
-                                              param: 'flag_top_sell',
-                                            ),
-                                          ),
+                                        context.push(
+                                          AppRoutesPath.viewAllBook,
+                                          extra: {
+                                            'title': 'Top Search',
+                                            'param': 'flag_top_sell',
+                                          },
                                         );
                                       },
                                       child: Row(
@@ -498,35 +501,6 @@ class HomeScreenPage extends StatelessWidget {
                                       ),
                                     ),
                                     const Spacer(),
-                                    // GestureDetector(
-                                    //   onTap: () {
-                                    //     Navigator.push(
-                                    //       context,
-                                    //       MaterialPageRoute(
-                                    //           builder: (context) =>
-                                    //               HomeRecommendedForYouSeeAllScreen(
-                                    //                 Title: "Categories",
-                                    //               )),
-                                    //     );
-                                    //   },
-                                    //   child: Padding(
-                                    //     padding: getPadding(top: 5, bottom: 5),
-                                    //     child: Text(
-                                    //       "Show all",
-                                    //       overflow: TextOverflow.ellipsis,
-                                    //       textAlign: TextAlign.left,
-                                    //       style: CustomTextStyles
-                                    //           .labelLargeTeal400Bold,
-                                    //     ),
-                                    //   ),
-                                    // ),
-                                    // CustomImageView(
-                                    //   svgPath: ImageConstant.imgArrowrightTeal400,
-                                    //   height: getSize(16),
-                                    //   width: getSize(16),
-                                    //   margin:
-                                    //       getMargin(left: 4, top: 4, bottom: 4),
-                                    // ),
                                   ],
                                 ),
                               )
@@ -549,20 +523,18 @@ class HomeScreenPage extends StatelessWidget {
                                           '';
                                       return Chipviewframefo2ItemWidget(
                                         onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => ExplorePage(
-                                                categoryId: provider
-                                                    .dashboardModel
-                                                    .categories[index]
-                                                    .categoryId,
-                                                categoryName: provider
-                                                    .dashboardModel
-                                                    .categories[index]
-                                                    .name,
-                                              ),
-                                            ),
+                                          context.push(
+                                            AppRoutesPath.explore,
+                                            extra: {
+                                              'categoryId': provider
+                                                  .dashboardModel
+                                                  .categories[index]
+                                                  .categoryId,
+                                              'categoryName': provider
+                                                  .dashboardModel
+                                                  .categories[index]
+                                                  .name,
+                                            },
                                           );
                                         },
                                         text: text,
@@ -593,15 +565,12 @@ class HomeScreenPage extends StatelessWidget {
                                     const Spacer(),
                                     InkWell(
                                       onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const HomeRecommendedForYouSeeAllScreen(
-                                              title: 'Popular',
-                                              param: 'recently_added',
-                                            ),
-                                          ),
+                                        context.push(
+                                          AppRoutesPath.viewAllBook,
+                                          extra: {
+                                            'title': 'Popular',
+                                            'param': 'recently_added',
+                                          },
                                         );
                                       },
                                       child: Row(
@@ -677,15 +646,12 @@ class HomeScreenPage extends StatelessWidget {
                                     const Spacer(),
                                     InkWell(
                                       onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const HomeRecommendedForYouSeeAllScreen(
-                                              title: 'Recently Added',
-                                              param: 'recently_added',
-                                            ),
-                                          ),
+                                        context.push(
+                                          AppRoutesPath.viewAllBook,
+                                          extra: {
+                                            'title': 'Recently Added',
+                                            'param': 'recently_added',
+                                          },
                                         );
                                       },
                                       child: Row(

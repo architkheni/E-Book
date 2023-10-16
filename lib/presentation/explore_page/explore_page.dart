@@ -3,18 +3,18 @@
 import 'package:book/core/utils/color_constant.dart';
 import 'package:book/model/category_model.dart';
 import 'package:book/model/subcategory_model.dart';
-import 'package:book/presentation/detail_page_container_page/detail_page_container_page.dart';
 import 'package:book/provider/explore_provider.dart';
 import 'package:book/provider/home_provider.dart';
+import 'package:book/router/app_routes.dart';
 import 'package:book/widgets/app_bar/appbar_image.dart';
 import 'package:book/widgets/app_bar/appbar_subtitle.dart';
 import 'package:book/widgets/book_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/app_export.dart';
 import '../../widgets/custom_text_form_field.dart';
-import '../home_recommended_for_you_see_all_screen/home_recommended_for_you_see_all_screen.dart';
 
 class ExplorePage extends StatefulWidget {
   final String? categoryName;
@@ -76,7 +76,7 @@ class _ExplorePageState extends State<ExplorePage> {
                           onTap: () {
                             if (widget.categoryId != null) {
                               if (selectSubCategory == null) {
-                                Navigator.pop(context);
+                                context.pop();
                               } else {
                                 setState(() {
                                   selectSubCategory = null;
@@ -340,14 +340,9 @@ class _ExplorePageState extends State<ExplorePage> {
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        DetailPageContainerPage(
-                                      bookId: provider.books[index].bookId!,
-                                    ),
-                                  ),
+                                context.push(
+                                  AppRoutesPath.bookDetail,
+                                  extra: provider.books[index].bookId!,
                                 );
                               },
                               child: Container(
@@ -395,18 +390,42 @@ class _ExplorePageState extends State<ExplorePage> {
                                               ),
                                             ),
                                             const SizedBox(height: 7),
-                                            Text(
-                                              provider.books[index]
-                                                      .authorName ??
-                                                  'Book author name',
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: theme.textTheme.labelLarge!
-                                                  .copyWith(
-                                                color: isLight
-                                                    ? ColorConstant.black
-                                                    : null,
-                                              ),
+                                            Builder(
+                                              builder: (context) {
+                                                String author = '';
+                                                List<dynamic> list = (provider
+                                                            .books[index]
+                                                            .authorName
+                                                        as List<dynamic>)
+                                                    .where(
+                                                      (element) =>
+                                                          element != null,
+                                                    )
+                                                    .toList();
+
+                                                for (var i = 0;
+                                                    i < list.length;
+                                                    i++) {
+                                                  author += list[i];
+                                                  author +=
+                                                      ((list.length - 1) == i)
+                                                          ? ''
+                                                          : ', ';
+                                                }
+                                                return Text(
+                                                  author,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.left,
+                                                  style: theme
+                                                      .textTheme.labelLarge!
+                                                      .copyWith(
+                                                    color: isLight
+                                                        ? ColorConstant.black
+                                                        : null,
+                                                  ),
+                                                );
+                                              },
                                             ),
                                             const SizedBox(height: 7),
                                             Row(
@@ -502,15 +521,12 @@ class _ExplorePageState extends State<ExplorePage> {
                                   const Spacer(),
                                   GestureDetector(
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const HomeRecommendedForYouSeeAllScreen(
-                                            title: 'Recently Added',
-                                            param: 'recently_added',
-                                          ),
-                                        ),
+                                      context.push(
+                                        AppRoutesPath.viewAllBook,
+                                        extra: {
+                                          'title': 'Recently Added',
+                                          'param': 'recently_added',
+                                        },
                                       );
                                     },
                                     child: Padding(

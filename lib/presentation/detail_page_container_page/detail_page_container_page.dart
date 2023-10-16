@@ -1,13 +1,13 @@
 import 'dart:ui';
 
 import 'package:book/model/book_chapter_model.dart';
-import 'package:book/presentation/book_read_screen/book_read_screen.dart';
 import 'package:book/presentation/detail_page_container_page/widgets/chipviewframefo2_item_widget.dart';
-import 'package:book/presentation/payment_screen/payment_screen.dart';
 import 'package:book/provider/detail_provider.dart';
 import 'package:book/provider/wishlist_provider.dart';
+import 'package:book/router/app_routes.dart';
 import 'package:book/widgets/book_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/app_export.dart';
@@ -126,7 +126,7 @@ class _DetailViewState extends State<DetailView> {
                                           alignment: Alignment.center,
                                           child: IconButton(
                                             onPressed: () {
-                                              Navigator.pop(context);
+                                              context.pop();
                                             },
                                             icon: const Icon(
                                               Icons.arrow_back_ios_new,
@@ -213,23 +213,12 @@ class _DetailViewState extends State<DetailView> {
                                         int isFree = provider
                                             .detailModel.book!.freeBook!;
                                         if (isFree == 1) {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  BookReadScreen(
-                                                bookId: widget.bookId,
-                                              ),
-                                            ),
+                                          context.push(
+                                            AppRoutesPath.bookRead,
+                                            extra: widget.bookId,
                                           );
                                         } else {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const PaymentScreen(),
-                                            ),
-                                          );
+                                          context.push(AppRoutesPath.payment);
                                         }
                                       },
                                       child: Container(

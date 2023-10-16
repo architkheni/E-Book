@@ -1,12 +1,13 @@
 import 'package:book/core/app_export.dart';
 import 'package:book/core/utils/color_constant.dart';
 import 'package:book/model/book_model.dart';
-import 'package:book/presentation/detail_page_container_page/detail_page_container_page.dart';
 import 'package:book/presentation/home_recommended_for_you_see_all_screen/provider/view_all_book_provider.dart';
+import 'package:book/router/app_routes.dart';
 import 'package:book/widgets/app_bar/appbar_image.dart';
 import 'package:book/widgets/app_bar/appbar_subtitle.dart';
 import 'package:book/widgets/app_bar/custom_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class HomeRecommendedForYouSeeAllScreen extends StatefulWidget {
@@ -97,24 +98,27 @@ class _HomeRecommendedForYouSeeAllScreenState
                 );
               }
               List<BookModel> books = provider.books;
-              if (selectedValue == 'A to Z') {
-                books = provider.books;
-              } else if (selectedValue == 'Z to A') {
-                books = provider.books.reversed.toList();
-              } else if (selectedValue == 'Least Progress') {
-                books.sort(
-                  (a, b) => (a.readCahpters! / a.totalChapters!) >
-                          (b.readCahpters! / b.totalChapters!)
-                      ? 1
-                      : -1,
-                );
-              } else if (selectedValue == 'Most Progress') {
-                books.sort(
-                  (a, b) => (a.readCahpters! / a.totalChapters!) >
-                          (b.readCahpters! / b.totalChapters!)
-                      ? -1
-                      : 1,
-                );
+              if (widget.param != 'finished') {
+                if (selectedValue == 'A to Z') {
+                  books.sort((a, b) => a.name!.compareTo(b.name!));
+                } else if (selectedValue == 'Z to A') {
+                  books.sort((a, b) => a.name!.compareTo(b.name!));
+                  books = books.reversed.toList();
+                } else if (selectedValue == 'Least Progress') {
+                  books.sort(
+                    (a, b) => (a.readCahpters! / a.totalChapters!) >
+                            (b.readCahpters! / b.totalChapters!)
+                        ? 1
+                        : -1,
+                  );
+                } else if (selectedValue == 'Most Progress') {
+                  books.sort(
+                    (a, b) => (a.readCahpters! / a.totalChapters!) >
+                            (b.readCahpters! / b.totalChapters!)
+                        ? -1
+                        : 1,
+                  );
+                }
               }
               return Padding(
                 padding: const EdgeInsets.only(left: 17, right: 20),
@@ -131,7 +135,8 @@ class _HomeRecommendedForYouSeeAllScreenState
                           ),
                         ),
                         const Spacer(),
-                        if (widget.param != 'history') ...[
+                        if (widget.param != 'history' &&
+                            widget.param != 'finished') ...[
                           Text(
                             'Sort By  ',
                             overflow: TextOverflow.ellipsis,
@@ -302,14 +307,9 @@ class _HomeRecommendedForYouSeeAllScreenState
                                             BookModel book = books[index];
                                             return GestureDetector(
                                               onTap: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        DetailPageContainerPage(
-                                                      bookId: book.bookId!,
-                                                    ),
-                                                  ),
+                                                context.push(
+                                                  AppRoutesPath.bookDetail,
+                                                  extra: book.bookId!,
                                                 );
                                               },
                                               child: Container(
@@ -566,6 +566,6 @@ class _HomeRecommendedForYouSeeAllScreenState
   /// This function takes a [BuildContext] object as a parameter, which is used
   /// to navigate back to the previous screen.
   onTapArrowleft2(BuildContext context) {
-    Navigator.pop(context);
+    context.pop();
   }
 }

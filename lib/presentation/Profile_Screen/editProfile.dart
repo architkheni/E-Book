@@ -7,11 +7,12 @@ import 'package:book/core/app_export.dart';
 import 'package:book/core/storage/app_storage.dart';
 import 'package:book/core/utils/color_constant.dart';
 import 'package:book/model/user_model.dart';
-import 'package:book/presentation/change_password/change_password_screen.dart';
 import 'package:book/provider/profile_provider.dart';
+import 'package:book/router/app_routes.dart';
 import 'package:book/widgets/app_bar/appbar_image.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -60,7 +61,7 @@ class _EditProfileState extends State<EditProfile> {
             margin: getMargin(left: 16, top: 17, bottom: 18),
             color: isLight ? ColorConstant.black : null,
             onTap: () {
-              Navigator.pop(context);
+              context.pop();
             },
           ),
           title: Padding(
@@ -88,6 +89,7 @@ class _EditProfileState extends State<EditProfile> {
             width: width,
             // color: Colors.red,
             child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
                   Padding(
@@ -315,12 +317,7 @@ class _EditProfileState extends State<EditProfile> {
                     borderRadius: BorderRadius.circular(8),
                     child: InkWell(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ChangePasswordScreen(),
-                          ),
-                        );
+                        context.push(AppRoutesPath.changePassword);
                       },
                       borderRadius: BorderRadius.circular(8),
                       child: Container(
@@ -394,6 +391,7 @@ class _EditProfileState extends State<EditProfile> {
                       color: isLight ? ColorConstant.whiteA700 : null,
                     ),
                   ),
+                  const SizedBox(height: 100),
                 ],
               ),
             ),

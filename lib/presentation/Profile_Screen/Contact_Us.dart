@@ -9,6 +9,7 @@ import 'package:book/model/user_model.dart';
 import 'package:book/provider/profile_provider.dart';
 import 'package:book/widgets/app_bar/appbar_image.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../widgets/app_bar/appbar_subtitle.dart';
@@ -60,7 +61,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
             color: isLight ? ColorConstant.black : null,
             margin: getMargin(left: 16, top: 17, bottom: 18),
             onTap: () {
-              Navigator.pop(context);
+              context.pop();
             },
           ),
           title: Padding(
@@ -74,6 +75,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
           ),
         ),
         body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.only(left: 16, right: 16),
             child: SizedBox(

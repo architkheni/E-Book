@@ -1,8 +1,9 @@
 import 'package:book/core/app_export.dart';
 import 'package:book/core/utils/color_constant.dart';
 import 'package:book/model/book_model.dart';
-import 'package:book/presentation/detail_page_container_page/detail_page_container_page.dart';
+import 'package:book/router/app_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 // ignore: must_be_immutable
 class Liste50c016fb6aItemWidget extends StatelessWidget {
@@ -17,12 +18,7 @@ class Liste50c016fb6aItemWidget extends StatelessWidget {
     bool isLight = Theme.of(context).brightness == Brightness.light;
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => DetailPageContainerPage(bookId: book.bookId!),
-          ),
-        );
+        context.push(AppRoutesPath.bookDetail, extra: book.bookId!);
       },
       child: Align(
         alignment: Alignment.center,

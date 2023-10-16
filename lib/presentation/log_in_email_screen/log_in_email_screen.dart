@@ -2,12 +2,13 @@ import 'dart:io';
 
 import 'package:book/core/app_export.dart';
 import 'package:book/core/utils/color_constant.dart';
-import 'package:book/presentation/sign_up_screen/sign_up_screen.dart';
 import 'package:book/provider/auth_provider.dart';
+import 'package:book/router/app_routes.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:book/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
@@ -345,12 +346,7 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const SignUpScreen(),
-                                  ),
-                                );
+                                context.push(AppRoutesPath.signUp);
                               },
                               child: Text(
                                 'Sign up',

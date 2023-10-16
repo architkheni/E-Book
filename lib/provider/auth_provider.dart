@@ -1,12 +1,10 @@
 import 'package:book/core/storage/app_storage.dart';
 import 'package:book/model/user_model.dart';
-import 'package:book/presentation/categories_screen/categories_screen.dart';
-import 'package:book/presentation/forgot_password_one_screen/forgot_password_one_screen.dart';
-import 'package:book/presentation/forgot_password_screen/forgot_password_screen.dart';
-import 'package:book/presentation/log_in_email_screen/log_in_email_screen.dart';
 import 'package:book/repository/auth_repository.dart';
+import 'package:book/router/app_routes.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../core/app_export.dart';
 
@@ -31,10 +29,7 @@ class AuthProvider extends ChangeNotifier {
       appStorage.setToken(r.apiToken!);
       appStorage.setUser(r.toString());
       appStorage.setLogin(true);
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const CategoriesScreen()),
-      );
+      context.push(AppRoutesPath.category);
     });
   }
 
@@ -70,10 +65,7 @@ class AuthProvider extends ChangeNotifier {
           backgroundColor: appTheme.teal400,
         ),
       );
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const CategoriesScreen()),
-      );
+      context.push(AppRoutesPath.category);
     });
   }
 
@@ -88,14 +80,7 @@ class AuthProvider extends ChangeNotifier {
         ),
       );
     }, (r) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ForgotPasswordScreen(
-            email: email,
-          ),
-        ),
-      );
+      context.push(AppRoutesPath.forgotPassword, extra: email);
     });
   }
 
@@ -134,14 +119,7 @@ class AuthProvider extends ChangeNotifier {
         ),
       );
     }, (r) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ForgotPasswordOneScreen(
-            email: email,
-          ),
-        ),
-      );
+      context.push(AppRoutesPath.forgotPasswordOne, extra: email);
     });
   }
 
@@ -160,12 +138,7 @@ class AuthProvider extends ChangeNotifier {
         ),
       );
     }, (r) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const LogInEmailScreen(),
-        ),
-      );
+      context.push(AppRoutesPath.logInEmail);
     });
   }
 
@@ -187,15 +160,10 @@ class AuthProvider extends ChangeNotifier {
                 );
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
               }, (r) {
-                NavigatorState navigatorState = Navigator.of(context);
+                Navigator.pop(context);
                 AppStorage appStorage = AppStorage();
                 appStorage.dispose();
-                navigatorState.pushAndRemoveUntil(
-                  MaterialPageRoute(
-                    builder: (context) => const LogInEmailScreen(),
-                  ),
-                  (route) => false,
-                );
+                context.go(AppRoutesPath.logInEmail);
               });
             },
             child: Text(
@@ -242,7 +210,7 @@ class AuthProvider extends ChangeNotifier {
           backgroundColor: appTheme.teal400,
         ),
       );
-      Navigator.of(context).pop();
+      context.pop();
     });
   }
 }
