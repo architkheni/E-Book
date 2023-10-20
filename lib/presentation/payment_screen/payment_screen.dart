@@ -1,5 +1,10 @@
+import 'dart:convert';
+import 'dart:developer';
+
+import 'package:book/core/storage/app_storage.dart';
 import 'package:book/core/utils/color_constant.dart';
 import 'package:book/core/utils/size_utils.dart';
+import 'package:book/model/user_model.dart';
 import 'package:book/theme/custom_button_style.dart';
 import 'package:book/theme/custom_text_style.dart';
 import 'package:book/theme/theme_helper.dart';
@@ -8,6 +13,7 @@ import 'package:book/widgets/app_bar/appbar_subtitle.dart';
 import 'package:book/widgets/app_bar/custom_app_bar.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_paypal/flutter_paypal.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/utils/image_constant.dart';
@@ -182,7 +188,9 @@ class PaymentScreenState extends State<PaymentScreen> {
                 ),
                 const SizedBox(height: 40),
                 CustomElevatedButton(
-                  onTap: () {},
+                  onTap: () async {
+                    payment('119.99');
+                  },
                   width: double.maxFinite,
                   height: getVerticalSize(48),
                   text: '\$119.99 / Year',
@@ -194,7 +202,9 @@ class PaymentScreenState extends State<PaymentScreen> {
                 ),
                 const SizedBox(height: 20),
                 CustomElevatedButton(
-                  onTap: () {},
+                  onTap: () async {
+                    payment('19.99');
+                  },
                   width: double.maxFinite,
                   height: getVerticalSize(48),
                   text: '\$19.99 / Month',
@@ -312,6 +322,72 @@ class PaymentScreenState extends State<PaymentScreen> {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  void payment(String price) async {
+    NavigatorState navigatorState = Navigator.of(context);
+    AppStorage appStorage = AppStorage();
+    String userString = await appStorage.getUser();
+    UserModel userModel = UserModel.fromJson(jsonDecode(userString));
+    navigatorState.push(
+      MaterialPageRoute(
+        builder: (BuildContext context) => UsePaypal(
+          sandboxMode: true,
+          clientId:
+              'AdhqFrRbpA6xim3nYJ-64bolDm1kJF42iAgLuUseMQAoEpfupVetVF0lgB7RGPiPobpqIkcLq5AZ9ohW',
+          secretKey:
+              'EEokQiuUtDJkFtr61O_BDjcxiwXnFb647sEVcqGZWOEu6i3dd8Qh1yVVdxzRLWbUADLVMawnRMLv8CVs',
+          returnURL: 'https://samplesite.com/return',
+          cancelURL: 'https://samplesite.com/cancel',
+          transactions: [
+            {
+              'amount': {
+                'total': price,
+                'currency': 'USD',
+                'details': {
+                  'subtotal': price,
+                  'shipping': '0',
+                  'shipping_discount': 0,
+                },
+              },
+              'description': 'The payment transaction description.',
+              'item_list': {
+                'shipping_address': {
+                  'recipient_name': userModel.name,
+                  'line1': 'Travis County',
+                  'line2': '',
+                  'city': 'Austin',
+                  'country_code': 'US',
+                  'postal_code': '73301',
+                  'phone': userModel.contactNumber,
+                  'state': 'Texas',
+                },
+              },
+            }
+          ],
+          note: 'Contact us for any questions',
+          onSuccess: (Map params) async {
+            log('$params');
+          },
+          onError: (error) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text('Error payment'),
+                backgroundColor: appTheme.teal400,
+              ),
+            );
+          },
+          onCancel: (params) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text('Cancel payment'),
+                backgroundColor: appTheme.teal400,
+              ),
+            );
+          },
         ),
       ),
     );

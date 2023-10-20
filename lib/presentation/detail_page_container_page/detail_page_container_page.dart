@@ -327,7 +327,7 @@ class _DetailViewState extends State<DetailView> {
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 if (provider.detailModel.book
-                                        ?.originalPrintLength !=
+                                        ?.originalAudiobookLength !=
                                     null) ...[
                                   Expanded(
                                     flex: 2,
@@ -346,7 +346,7 @@ class _DetailViewState extends State<DetailView> {
                                             bottom: 1,
                                           ),
                                           child: Text(
-                                            '${provider.detailModel.book?.originalPrintLength} min',
+                                            '${provider.detailModel.book?.originalAudiobookLength} min',
                                             overflow: TextOverflow.ellipsis,
                                             textAlign: TextAlign.left,
                                             style: theme.textTheme.titleSmall,
