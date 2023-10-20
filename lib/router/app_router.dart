@@ -3,6 +3,7 @@ import 'package:book/presentation/Profile_Screen/Profile_Screen.dart';
 import 'package:book/presentation/Profile_Screen/editProfile.dart';
 import 'package:book/presentation/book_read_screen/book_read_screen.dart';
 import 'package:book/presentation/categories_screen/categories_screen.dart';
+import 'package:book/presentation/change_password/change_password_screen.dart';
 import 'package:book/presentation/custom_bottom_bar/custom_bottom_bar.dart';
 import 'package:book/presentation/detail_page_container_page/detail_page_container_page.dart';
 import 'package:book/presentation/explore_page/explore_page.dart';
@@ -171,6 +172,13 @@ class AppRouter {
           name: AppRoutesName.editProfile,
           builder: (context, state) {
             return const EditProfile();
+          },
+        ),
+        GoRoute(
+          path: AppRoutesPath.changePassword,
+          name: AppRoutesName.changePassword,
+          builder: (context, state) {
+            return const ChangePasswordScreen();
           },
         ),
         GoRoute(

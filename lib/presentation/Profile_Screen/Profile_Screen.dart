@@ -55,7 +55,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     double width = MediaQuery.of(context).size.width;
     bool isLight = Theme.of(context).brightness == Brightness.light;
 
@@ -108,6 +107,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       ? Stack(
                                           children: [
                                             CircleAvatar(
+                                              radius: 80,
                                               backgroundColor: isLight
                                                   ? ColorConstant.kF3F3F3
                                                   : ColorConstant.k626666,
