@@ -1,10 +1,14 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 import 'dart:developer';
 
 import 'package:book/core/storage/app_storage.dart';
 import 'package:book/core/utils/color_constant.dart';
 import 'package:book/core/utils/size_utils.dart';
+import 'package:book/model/packages_model.dart';
 import 'package:book/model/user_model.dart';
+import 'package:book/provider/package_provider.dart';
+import 'package:book/provider/profile_provider.dart';
 import 'package:book/theme/custom_button_style.dart';
 import 'package:book/theme/custom_text_style.dart';
 import 'package:book/theme/theme_helper.dart';
@@ -15,6 +19,7 @@ import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_paypal/flutter_paypal.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 import '../../core/utils/image_constant.dart';
 
@@ -26,6 +31,17 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class PaymentScreenState extends State<PaymentScreen> {
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
+
+  Future<void> init() async {
+    await context.read<PackageProvider>().getPackagesDetails();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     bool isLight = Theme.of(context).brightness == Brightness.light;
@@ -63,333 +79,293 @@ class PaymentScreenState extends State<PaymentScreen> {
             ),
           ),
         ),
-        body: Padding(
-          padding: getPadding(left: 20, right: 15, top: 10),
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: getPadding(left: 5),
-                  child: Text(
-                    'Ulimited insights from books, courses documentaries, and podcasts.',
-                    style: TextStyle(
-                      color:
-                          isLight ? ColorConstant.black : ColorConstant.kEAF4F4,
-                      fontSize: 22,
+        body: Consumer<PackageProvider>(
+          builder: (context, provider, child) {
+            return Padding(
+              padding: getPadding(left: 20, right: 15, top: 10),
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: getPadding(left: 5),
+                      child: Text(
+                        'Unlimited insights from books, courses documentaries, and podcasts.',
+                        style: TextStyle(
+                          color: isLight
+                              ? ColorConstant.black
+                              : ColorConstant.kEAF4F4,
+                          fontSize: 22,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  'Package 1 Detail',
-                  style: TextStyle(
-                    color:
-                        isLight ? ColorConstant.black : ColorConstant.kEAF4F4,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Padding(
-                  padding: getPadding(left: 5),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              'What you get',
-                              style: TextStyle(
-                                color: isLight
-                                    ? ColorConstant.black
-                                    : ColorConstant.kEAF4F4,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            Padding(
-                              padding: getPadding(left: 8),
-                              child: Text(
-                                'Unlimied Hacks',
-                                style: TextStyle(
-                                  color: isLight
-                                      ? ColorConstant.black
-                                      : ColorConstant.kEAF4F4,
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Padding(
-                              padding: getPadding(left: 8),
-                              child: Text(
-                                'Personalised content',
-                                style: TextStyle(
-                                  color: isLight
-                                      ? ColorConstant.black
-                                      : ColorConstant.kEAF4F4,
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Padding(
-                              padding: getPadding(left: 8),
-                              child: Text(
-                                'Collecion challenges',
-                                style: TextStyle(
-                                  color: isLight
-                                      ? ColorConstant.black
-                                      : ColorConstant.kEAF4F4,
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Padding(
-                              padding: getPadding(left: 8),
-                              child: Text(
-                                'Unlimited boards',
-                                style: TextStyle(
-                                  color: isLight
-                                      ? ColorConstant.black
-                                      : ColorConstant.kEAF4F4,
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Padding(
-                              padding: getPadding(left: 8),
-                              child: Text(
-                                'Streak repair',
-                                style: TextStyle(
-                                  color: isLight
-                                      ? ColorConstant.black
-                                      : ColorConstant.kEAF4F4,
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                    ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) => PackageDetails(
+                        packageData: provider.packagesResponse.data![index],
                       ),
-                      Image.asset(
-                        ImageConstant.premium1Year,
-                        height: 184,
-                      ),
-                    ],
-                  ),
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: 20),
+                      itemCount: provider.packagesResponse.data?.length ?? 0,
+                    ),
+                    const SizedBox(height: 40),
+                  ],
                 ),
-                const SizedBox(height: 40),
-                CustomElevatedButton(
-                  onTap: () async {
-                    payment('119.99');
-                  },
-                  width: double.maxFinite,
-                  height: getVerticalSize(48),
-                  text: '\$119.99 / Year',
-                  buttonStyle: CustomButtonStyles.fillTeal400,
-                  buttonTextStyle:
-                      CustomTextStyles.titleSmallPrimary_1.copyWith(
-                    color: isLight ? ColorConstant.whiteA700 : null,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                CustomElevatedButton(
-                  onTap: () async {
-                    payment('19.99');
-                  },
-                  width: double.maxFinite,
-                  height: getVerticalSize(48),
-                  text: '\$19.99 / Month',
-                  buttonStyle: CustomButtonStyles.fillTeal400,
-                  buttonTextStyle:
-                      CustomTextStyles.titleSmallPrimary_1.copyWith(
-                    color: isLight ? ColorConstant.whiteA700 : null,
-                  ),
-                ),
-                const SizedBox(height: 40),
-                Text(
-                  'Package 2 Detail',
-                  style: TextStyle(
-                    color:
-                        isLight ? ColorConstant.black : ColorConstant.kEAF4F4,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Padding(
-                  padding: getPadding(left: 5),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              'What you get',
-                              style: TextStyle(
-                                color: isLight
-                                    ? ColorConstant.black
-                                    : ColorConstant.kEAF4F4,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            Padding(
-                              padding: getPadding(left: 8),
-                              child: Text(
-                                'Unlimied Hacks',
-                                style: TextStyle(
-                                  color: isLight
-                                      ? ColorConstant.black
-                                      : ColorConstant.kEAF4F4,
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Padding(
-                              padding: getPadding(left: 8),
-                              child: Text(
-                                'Personalised content',
-                                style: TextStyle(
-                                  color: isLight
-                                      ? ColorConstant.black
-                                      : ColorConstant.kEAF4F4,
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Padding(
-                              padding: getPadding(left: 8),
-                              child: Text(
-                                'Collecion challenges',
-                                style: TextStyle(
-                                  color: isLight
-                                      ? ColorConstant.black
-                                      : ColorConstant.kEAF4F4,
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Padding(
-                              padding: getPadding(left: 8),
-                              child: Text(
-                                'Unlimited boards',
-                                style: TextStyle(
-                                  color: isLight
-                                      ? ColorConstant.black
-                                      : ColorConstant.kEAF4F4,
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Padding(
-                              padding: getPadding(left: 8),
-                              child: Text(
-                                'Streak repair',
-                                style: TextStyle(
-                                  color: isLight
-                                      ? ColorConstant.black
-                                      : ColorConstant.kEAF4F4,
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Image.asset(
-                        ImageConstant.premium1Month,
-                        height: 184,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         ),
       ),
     );
   }
+}
 
-  void payment(String price) async {
-    NavigatorState navigatorState = Navigator.of(context);
-    AppStorage appStorage = AppStorage();
-    String userString = await appStorage.getUser();
-    UserModel userModel = UserModel.fromJson(jsonDecode(userString));
-    navigatorState.push(
-      MaterialPageRoute(
-        builder: (BuildContext context) => UsePaypal(
-          sandboxMode: true,
-          clientId:
-              'AdhqFrRbpA6xim3nYJ-64bolDm1kJF42iAgLuUseMQAoEpfupVetVF0lgB7RGPiPobpqIkcLq5AZ9ohW',
-          secretKey:
-              'EEokQiuUtDJkFtr61O_BDjcxiwXnFb647sEVcqGZWOEu6i3dd8Qh1yVVdxzRLWbUADLVMawnRMLv8CVs',
-          returnURL: 'https://samplesite.com/return',
-          cancelURL: 'https://samplesite.com/cancel',
-          transactions: [
-            {
-              'amount': {
-                'total': price,
-                'currency': 'USD',
-                'details': {
-                  'subtotal': price,
-                  'shipping': '0',
-                  'shipping_discount': 0,
-                },
+enum PackageType { annual, monthly }
+
+void payment({
+  required String price,
+  required BuildContext context,
+  required PackageType packageType,
+  required int packageId,
+}) async {
+  NavigatorState navigatorState = Navigator.of(context);
+  AppStorage appStorage = AppStorage();
+  String userString = await appStorage.getUser();
+  UserModel userModel = UserModel.fromJson(jsonDecode(userString));
+  navigatorState.push(
+    MaterialPageRoute(
+      builder: (BuildContext context) => UsePaypal(
+        sandboxMode: true,
+        clientId:
+            'AdhqFrRbpA6xim3nYJ-64bolDm1kJF42iAgLuUseMQAoEpfupVetVF0lgB7RGPiPobpqIkcLq5AZ9ohW',
+        secretKey:
+            'EEokQiuUtDJkFtr61O_BDjcxiwXnFb647sEVcqGZWOEu6i3dd8Qh1yVVdxzRLWbUADLVMawnRMLv8CVs',
+        returnURL: 'https://samplesite.com/return',
+        cancelURL: 'https://samplesite.com/cancel',
+        transactions: [
+          {
+            'amount': {
+              'total': price,
+              'currency': 'USD',
+              'details': {
+                'subtotal': price,
+                'shipping': '0',
+                'shipping_discount': 0,
               },
-              'description': 'The payment transaction description.',
-              'item_list': {
-                'shipping_address': {
-                  'recipient_name': userModel.name,
-                  'line1': 'Travis County',
-                  'line2': '',
-                  'city': 'Austin',
-                  'country_code': 'US',
-                  'postal_code': '73301',
-                  'phone': userModel.contactNumber,
-                  'state': 'Texas',
-                },
+            },
+            'description': 'The payment transaction description.',
+            'item_list': {
+              'shipping_address': {
+                'recipient_name': userModel.name,
+                'line1': 'Travis County',
+                'line2': '',
+                'city': 'Austin',
+                'country_code': 'US',
+                'postal_code': '73301',
+                'phone': userModel.contactNumber,
+                'state': 'Texas',
               },
-            }
-          ],
-          note: 'Contact us for any questions',
-          onSuccess: (Map params) async {
-            log('$params');
-          },
-          onError: (error) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: const Text('Error payment'),
-                backgroundColor: appTheme.teal400,
-              ),
-            );
-          },
-          onCancel: (params) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: const Text('Cancel payment'),
-                backgroundColor: appTheme.teal400,
-              ),
-            );
-          },
-        ),
+            },
+          }
+        ],
+        note: 'Contact us for any questions',
+        onSuccess: (Map params) async {
+          log('$params');
+          try {
+            String transactionId = params['paymentId'];
+            String status = params['status'];
+            String type = params['data']['payer']['payment_method'];
+            context.read<ProfileProvider>().saveTransaction(
+                  context,
+                  transactionId: transactionId,
+                  status: status,
+                  type: type,
+                  packageId: 2,
+                  packageType: '',
+                );
+          } catch (e) {
+            log(e.toString());
+          }
+        },
+        onError: (error) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text('Some error accured in the payment'),
+              backgroundColor: appTheme.teal400,
+            ),
+          );
+        },
+        onCancel: (params) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text('Cancel payment'),
+              backgroundColor: appTheme.teal400,
+            ),
+          );
+        },
       ),
+    ),
+  );
+}
+
+class PackageDetails extends StatelessWidget {
+  final PackageData packageData;
+  const PackageDetails({
+    Key? key,
+    required this.packageData,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    bool isLight = Theme.of(context).brightness == Brightness.light;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 20),
+        Text(
+          '${packageData.name} Detail',
+          style: TextStyle(
+            color: isLight ? ColorConstant.black : ColorConstant.kEAF4F4,
+            fontSize: 22,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        const SizedBox(height: 16),
+        Padding(
+          padding: getPadding(left: 5),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      'What you get',
+                      style: TextStyle(
+                        color: isLight
+                            ? ColorConstant.black
+                            : ColorConstant.kEAF4F4,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Padding(
+                      padding: getPadding(left: 8),
+                      child: Text(
+                        'Unlimied Hacks',
+                        style: TextStyle(
+                          color: isLight
+                              ? ColorConstant.black
+                              : ColorConstant.kEAF4F4,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Padding(
+                      padding: getPadding(left: 8),
+                      child: Text(
+                        'Personalised content',
+                        style: TextStyle(
+                          color: isLight
+                              ? ColorConstant.black
+                              : ColorConstant.kEAF4F4,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Padding(
+                      padding: getPadding(left: 8),
+                      child: Text(
+                        'Collecion challenges',
+                        style: TextStyle(
+                          color: isLight
+                              ? ColorConstant.black
+                              : ColorConstant.kEAF4F4,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Padding(
+                      padding: getPadding(left: 8),
+                      child: Text(
+                        'Unlimited boards',
+                        style: TextStyle(
+                          color: isLight
+                              ? ColorConstant.black
+                              : ColorConstant.kEAF4F4,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Padding(
+                      padding: getPadding(left: 8),
+                      child: Text(
+                        'Streak repair',
+                        style: TextStyle(
+                          color: isLight
+                              ? ColorConstant.black
+                              : ColorConstant.kEAF4F4,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Image.asset(
+                ImageConstant.premium1Year,
+                height: 184,
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 40),
+        CustomElevatedButton(
+          onTap: () async {
+            //TODO: make annualy payment
+            payment(
+              context: context,
+              packageId: packageData.id,
+              packageType: PackageType.annual,
+              price: '${packageData.annualPrice}',
+            );
+          },
+          width: double.maxFinite,
+          height: getVerticalSize(48),
+          text: '\$${packageData.annualPrice} / Year',
+          buttonStyle: CustomButtonStyles.fillTeal400,
+          buttonTextStyle: CustomTextStyles.titleSmallPrimary_1.copyWith(
+            color: isLight ? ColorConstant.whiteA700 : null,
+          ),
+        ),
+        const SizedBox(height: 20),
+        CustomElevatedButton(
+          onTap: () async {
+            //TODO: make monthaly payment
+            payment(
+              context: context,
+              packageId: packageData.id,
+              packageType: PackageType.monthly,
+              price: '${packageData.monthlyPrice}',
+            );
+          },
+          width: double.maxFinite,
+          height: getVerticalSize(48),
+          text: '\$${packageData.monthlyPrice} / Month',
+          buttonStyle: CustomButtonStyles.fillTeal400,
+          buttonTextStyle: CustomTextStyles.titleSmallPrimary_1.copyWith(
+            color: isLight ? ColorConstant.whiteA700 : null,
+          ),
+        ),
+      ],
     );
   }
 }

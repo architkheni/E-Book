@@ -23,4 +23,6 @@ class ApiEndpoint {
   static const String contactUs = '/contact-us';
   static const String viewAll = '/view-all';
   static const String myHistory = '/my-history';
+  static const String saveTransaction = '/save-transaction';
+  static const String packages = '/packages';
 }

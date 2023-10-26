@@ -192,7 +192,7 @@ class _LangugaesScreenState extends State<LangugaesScreen> {
                                       margin: getMargin(right: 10),
                                       color: isLight
                                           ? ColorConstant.whiteA700
-                                          : null,
+                                          : ColorConstant.whiteA700,
                                     )
                                   : CustomImageView(
                                       imagePath: ImageConstant.uilPluscircle,

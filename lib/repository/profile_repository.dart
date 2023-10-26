@@ -140,4 +140,43 @@ class ProfileRepository {
       return left('Detail not save successfully');
     }
   }
+
+  Future<Either<String, Map<String, dynamic>>> saveTransaction({
+    required String token,
+    required String transactionId,
+    required String status,
+    required String type,
+    required int packageId,
+    required String packageType,
+  }) async {
+    try {
+      Response response = await dioClient.post(
+        ApiEndpoint.saveTransaction,
+        data: {
+          'txn_id': transactionId,
+          'payment_status': status,
+          'payment_type': type,
+          'package_id': packageId,
+          'package_type': packageType,
+        },
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+      );
+      if (response.statusCode == 200) {
+        dynamic data = response.data;
+        if (data.runtimeType == String) {
+          data = jsonDecode(data);
+        }
+        return right({
+          'status': data['status'],
+          'message': data['message'],
+        });
+      } else if (response.statusCode == 500) {
+        return left('you already subscribed this package');
+      } else {
+        return left('you already subscribed this package');
+      }
+    } catch (e) {
+      return left('you already subscribed this package');
+    }
+  }
 }

@@ -29,6 +29,7 @@ class ProfileProvider extends ChangeNotifier {
     required List<int> category,
     void Function()? onSuccess,
   }) async {
+    GoRouter navigator = GoRouter.of(context);
     String token = await appStorage.getToken();
     Either<String, bool> result = await ProfileRepository.instance
         .saveUserCategory(token: token, category: category);
@@ -43,8 +44,7 @@ class ProfileProvider extends ChangeNotifier {
         onSuccess();
         return;
       }
-      // ignore: use_build_context_synchronously
-      context.push(AppRoutesPath.language);
+      navigator.push(AppRoutesPath.language);
     });
   }
 
@@ -53,6 +53,7 @@ class ProfileProvider extends ChangeNotifier {
     required List<int> language,
     void Function()? onSuccess,
   }) async {
+    GoRouter navigator = GoRouter.of(context);
     String token = await appStorage.getToken();
     Either<String, bool> result = await ProfileRepository.instance
         .saveUserLanguage(token: token, languages: language);
@@ -67,8 +68,7 @@ class ProfileProvider extends ChangeNotifier {
         onSuccess();
         return;
       }
-      // ignore: use_build_context_synchronously
-      context.go(AppRoutesPath.home);
+      navigator.go(AppRoutesPath.home);
     });
   }
 
@@ -79,6 +79,7 @@ class ProfileProvider extends ChangeNotifier {
     required String contactNumber,
     String? path,
   }) async {
+    GoRouter navigator = GoRouter.of(context);
     String token = await appStorage.getToken();
     Either<String, UserModel> result =
         await ProfileRepository.instance.saveUserProfile(
@@ -102,8 +103,7 @@ class ProfileProvider extends ChangeNotifier {
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       await appStorage.setUser(r.toString());
       init();
-      // ignore: use_build_context_synchronously
-      context.pop();
+      navigator.pop();
     });
   }
 
@@ -126,9 +126,43 @@ class ProfileProvider extends ChangeNotifier {
         backgroundColor: appTheme.teal400,
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    }, (r) async {
+    }, (r) {
       SnackBar snackBar = SnackBar(
         content: Text(r),
+        backgroundColor: appTheme.teal400,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      context.pop();
+    });
+  }
+
+  void saveTransaction(
+    BuildContext context, {
+    required String transactionId,
+    required String status,
+    required String type,
+    required int packageId,
+    required String packageType,
+  }) async {
+    String token = await appStorage.getToken();
+    Either<String, Map<String, dynamic>> result =
+        await ProfileRepository.instance.saveTransaction(
+      token: token,
+      transactionId: transactionId,
+      status: status,
+      type: type,
+      packageId: packageId,
+      packageType: packageType,
+    );
+    result.fold((l) {
+      SnackBar snackBar = SnackBar(
+        content: Text(l),
+        backgroundColor: appTheme.teal400,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }, (r) {
+      SnackBar snackBar = SnackBar(
+        content: Text(r['message']),
         backgroundColor: appTheme.teal400,
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);

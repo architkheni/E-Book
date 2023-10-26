@@ -3,6 +3,7 @@ import 'package:book/core/storage/app_storage.dart';
 import 'package:book/provider/auth_provider.dart';
 import 'package:book/provider/explore_provider.dart';
 import 'package:book/provider/home_provider.dart';
+import 'package:book/provider/package_provider.dart';
 import 'package:book/provider/profile_provider.dart';
 import 'package:book/provider/wishlist_provider.dart';
 import 'package:book/router/app_router.dart';
@@ -57,6 +58,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => HomePovider()),
         ChangeNotifierProvider(create: (context) => ExploreProvider()),
         ChangeNotifierProvider(create: (context) => WishlistProvider()),
+        ChangeNotifierProvider(create: (context) => PackageProvider()),
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, child) {
