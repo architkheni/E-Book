@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class CustomTextFormField extends StatelessWidget {
+
   CustomTextFormField({
     Key? key,
     this.alignment,
@@ -35,12 +36,14 @@ class CustomTextFormField extends StatelessWidget {
     this.onChanged,
     this.validator,
     this.minLines,
+    this.readOnly = false,
   }) : super(
           key: key,
         );
 
   final Alignment? alignment;
 
+  bool readOnly;
   final double? width;
 
   final EdgeInsetsGeometry? margin;
@@ -109,6 +112,7 @@ class CustomTextFormField extends StatelessWidget {
         width: width ?? double.maxFinite,
         margin: margin,
         child: TextFormField(
+          readOnly: readOnly,
           minLines: minLines,
           controller: controller,
           onTap: onTap,

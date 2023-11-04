@@ -36,7 +36,6 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
     bool isLight = Theme.of(context).brightness == Brightness.light;
     mediaQueryData = MediaQuery.of(context);
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -116,7 +115,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                                 child: Stack(
                                   children: [
                                     Container(
-                                      height: height / 3,
+                                      height: (width / 2.3) * 1.8,
                                       width: width,
                                       decoration: BoxDecoration(
                                         image: DecorationImage(
@@ -163,7 +162,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                                         child: CustomImageView(
                                           url: provider.dashboardModel.mainBook!
                                               .frontCover,
-                                          height: height / 3.75,
+                                          height: (width / 2.3) * 1.5,
                                           width: width / 2.3,
                                           fit: BoxFit.fill,
                                         ),
@@ -521,6 +520,10 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                                       String text = provider.dashboardModel
                                               .categories[index].name ??
                                           '';
+                                      String icon = provider.dashboardModel
+                                              .categories[index].icon ??
+                                          '';
+
                                       return Chipviewframefo2ItemWidget(
                                         onTap: () {
                                           context.push(
@@ -538,6 +541,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                                           );
                                         },
                                         text: text,
+                                        icon: icon,
                                       );
                                     }),
                                   ),

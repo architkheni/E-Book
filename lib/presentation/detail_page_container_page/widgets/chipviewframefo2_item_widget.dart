@@ -5,9 +5,10 @@ import '../../../core/app_export.dart';
 
 class Chipviewframefo2ItemWidget extends StatelessWidget {
   final String text;
+  final String? icon;
 
   final Function()? onTap;
-  const Chipviewframefo2ItemWidget({Key? key, required this.text, this.onTap})
+  const Chipviewframefo2ItemWidget({Key? key, required this.text, this.onTap, this.icon})
       : super(
           key: key,
         );
@@ -40,11 +41,12 @@ class Chipviewframefo2ItemWidget extends StatelessWidget {
         ),
       ),
       avatar: CustomImageView(
-        svgPath: ImageConstant.imgGroup1171274896,
+        svgPath: icon == null  ? ImageConstant.imgGroup1171274896 : null,
+        url: icon,
         height: 12,
         width: 12,
         margin: getMargin(right: 3),
-        color: isLight ? Colors.black : null,
+        color: icon != null ? null : isLight ? Colors.black : null,
       ),
     );
   }

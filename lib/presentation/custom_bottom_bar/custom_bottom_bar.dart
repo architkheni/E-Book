@@ -1,6 +1,8 @@
-// ignore_for_file: must_be_immutable, prefer_typing_uninitialized_variables
+import 'dart:developer';
 
+import 'package:book/core/storage/cache_storage.dart';
 import 'package:book/core/utils/color_constant.dart';
+import 'package:book/theme/theme_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -9,11 +11,8 @@ import '../../theme/custom_text_style.dart';
 
 class BottombarPage extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
-  bool? isGuest = false;
-
-  BottombarPage({
+  const BottombarPage({
     Key? key,
-    this.isGuest,
     required this.navigationShell,
   }) : super(key: key);
 
@@ -21,13 +20,34 @@ class BottombarPage extends StatelessWidget {
   Widget build(BuildContext context) {
     int selectedIndex = navigationShell.currentIndex;
     return WillPopScope(
-      onWillPop: () async => true,
+      onWillPop: () async {
+        if (selectedIndex != 0) {
+          navigationShell.goBranch(0);
+          return false;
+        } else if (CacheStorage.count == 0) {
+          return true;
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text('Press back again to exit the app.'),
+              backgroundColor: appTheme.teal400,
+            ),
+          );
+          CacheStorage.count--;
+          Future.delayed(
+            const Duration(seconds: 2),
+            () {
+              CacheStorage.count = 1;
+            },
+          );
+          return false;
+        }
+      },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         bottomNavigationBar: SizedBox(
           height: 70,
           child: BottomAppBar(
-            // color: Color(0xFFFFFFFF),
             color: Theme.of(context).brightness == Brightness.dark
                 ? const Color(0xFF0D0D0D)
                 : const Color(0xFFFFFFFF),

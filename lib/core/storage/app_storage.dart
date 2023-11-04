@@ -41,6 +41,16 @@ class AppStorage {
     return prefs.getBool('isDark') ?? false;
   }
 
+  void setCategoryIsFirst(bool value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isFirstTime', value);
+  }
+
+  Future<bool> getCategoryIsFirst() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isFirstTime') ?? true;
+  }
+
   void dispose() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('token', '');

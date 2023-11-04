@@ -24,6 +24,8 @@ final GlobalKey<NavigatorState> _rootNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'root');
 
 class AppRouter {
+  static late GoRouter instance;
+
   static GoRouter getRouter({String initialLocation = AppRoutesPath.home}) {
     return GoRouter(
       navigatorKey: _rootNavigatorKey,
@@ -142,6 +144,7 @@ class AppRouter {
           },
         ),
         GoRoute(
+          parentNavigatorKey: _rootNavigatorKey,
           path: AppRoutesPath.bookRead,
           name: AppRoutesName.bookRead,
           builder: (context, state) {

@@ -31,6 +31,14 @@ class WishlistProvider extends ChangeNotifier {
     int isWishlist,
   ) async {
     String token = await appStorage.getToken();
+    if (isWishlist == 0) {
+      wishlist = wishlist
+          .where((element) => element.bookId != bookModel.bookId)
+          .toList();
+    } else {
+      wishlist.add(bookModel);
+    }
+    notifyListeners();
     int userId = UserModel.fromJson(jsonDecode(await appStorage.getUser())).id!;
     Either<String, bool> result = await WishlistRepository.instance
         .addRemoveBookInWishlist(token, userId, bookModel.bookId!, isWishlist);
@@ -38,15 +46,16 @@ class WishlistProvider extends ChangeNotifier {
       log(l);
     }, (r) {
       if (r) {
+      } else {
         if (isWishlist == 0) {
+          wishlist.add(bookModel);
+        } else {
           wishlist = wishlist
               .where((element) => element.bookId != bookModel.bookId)
               .toList();
-        } else {
-          wishlist.add(bookModel);
         }
         notifyListeners();
-      } else {}
+      }
     });
   }
 }

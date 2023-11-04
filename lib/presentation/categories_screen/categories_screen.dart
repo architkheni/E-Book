@@ -30,7 +30,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
   @override
   void initState() {
-    context.read<ExploreProvider>().getAllCategories();
     init();
     super.initState();
   }
@@ -42,7 +41,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     for (var element in categories) {
       selectedId.add(element);
     }
-    log(selectedId.toString());
     setState(() {});
   }
 
@@ -118,7 +116,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                               Padding(
                                 padding: getPadding(top: 2),
                                 child: Text(
-                                  'Select the type of book you enjoy reading.',
+                                  'Select the type of books you enjoy reading.',
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.left,
                                   style:
@@ -162,8 +160,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                               ),
                                             ),
                                             avatar: CustomImageView(
-                                              svgPath: ImageConstant
-                                                  .imgGroup1171274896,
+                                              url: categories[index].icon,
                                               height: 12,
                                               width: 12,
                                               margin: getMargin(right: 10),
@@ -171,9 +168,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                 categories[index].categoryId,
                                               )
                                                   ? ColorConstant.whiteA700
-                                                  : isLight
-                                                      ? Colors.black
-                                                      : null,
+                                                  : null,
                                             ),
                                             selected: selectedId.contains(
                                               categories[index].categoryId,
@@ -227,7 +222,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                           setId.add(element);
                                         }
                                       }
-                                      log(setId.length.toString());
                                       if (setId.length <= 2) {
                                         SnackBar snackBar = SnackBar(
                                           content: const Text(
@@ -272,7 +266,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                 child: Padding(
                                   padding: getPadding(top: 12),
                                   child: Text(
-                                    'Select 3 or more genres to continue',
+                                    'Select 3 or more categories to continue',
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
                                     style: CustomTextStyles.bodySmallGray400

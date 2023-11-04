@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:book/core/storage/cache_storage.dart';
 import 'package:book/presentation/detail_page_container_page/model/detail_model.dart';
 import 'package:book/repository/home_repository.dart';
 import 'package:dartz/dartz.dart';
@@ -15,13 +16,19 @@ class DetailProvider extends ChangeNotifier {
   }
 
   Future<void> getBookDetails(int bookId) async {
-    Either<String, DetailModel> result =  
-        await HomeRepository.instance.getBookDetails(bookId);
-    result.fold((l) {
-      log(l);
-    }, (r) {
-      detailModel = r;
+    if (CacheStorage.bookRead.containsKey(bookId)) {
+      detailModel = CacheStorage.bookRead[bookId]!;
       setLoading(false);
-    });
+    } else {
+      Either<String, DetailModel> result =
+          await HomeRepository.instance.getBookDetails(bookId);
+      result.fold((l) {
+        log(l);
+      }, (r) {
+        detailModel = r;
+        CacheStorage.bookRead[bookId] = r;
+        setLoading(false);
+      });
+    }
   }
 }

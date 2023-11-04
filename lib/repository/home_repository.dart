@@ -110,6 +110,30 @@ class HomeRepository {
     }
   }
 
+  Future<Either<String, List<BookModel>>> searchBook(
+    String search,
+  ) async {
+    try {
+      Response response = await dioClient.post(
+        ApiEndpoint.searchBook,
+        data: {'param': search},
+      );
+      if (response.statusCode == 200) {
+        dynamic data = response.data;
+        if (data.runtimeType == String) {
+          data = jsonDecode(data);
+        }
+        data = data['data'];
+        return right(
+          (data as List<dynamic>).map((e) => BookModel.fromJson(e)).toList(),
+        );
+      }
+      return left('some error accured');
+    } catch (e) {
+      return left(e.toString());
+    }
+  }
+
   Future<Either<String, DetailModel>> getBookDetails(int bookId) async {
     try {
       Response response = await dioClient

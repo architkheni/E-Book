@@ -22,7 +22,7 @@ class DetailPageContainerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => DetailProvider(),
+      create: (context) => DetailProvider()..getBookDetails(bookId),
       child: DetailView(bookId),
     );
   }
@@ -40,7 +40,6 @@ class _DetailViewState extends State<DetailView> {
   @override
   void initState() {
     super.initState();
-    context.read<DetailProvider>().getBookDetails(widget.bookId);
   }
 
   @override
@@ -65,14 +64,14 @@ class _DetailViewState extends State<DetailView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: height / 2.3,
+                          height: height / 2,
                           width: width,
                           child: Stack(
                             alignment: Alignment.center,
                             children: [
                               CustomImageView(
                                 url: provider.detailModel.book!.frontCover,
-                                height: height / 2.3,
+                                height: height / 2,
                                 width: width,
                                 fit: BoxFit.fill,
                               ),
@@ -191,9 +190,9 @@ class _DetailViewState extends State<DetailView> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.only(top: 22),
+                                    padding: const EdgeInsets.only(top: 0),
                                     child: SizedBox(
-                                      height: height / 4,
+                                      height: (width / 2.3) * 1.5,
                                       width: width / 2.3,
                                       child: CustomImageView(
                                         url: provider
@@ -504,21 +503,18 @@ class _DetailViewState extends State<DetailView> {
                                 ),
                               ),
                               const SizedBox(width: 10),
-                              CustomIconButton(
-                                height: 32,
-                                width: 32,
-                                decoration: BoxDecoration(
-                                  color: isLight
-                                      ? Colors.transparent
-                                      : ColorConstant.whiteA700,
-                                  shape: BoxShape.circle,
+                              if (provider.detailModel.book!.freeBook! ==
+                                  0) ...[
+                                CustomIconButton(
+                                  height: 32,
+                                  width: 32,
+                                  child: CustomImageView(
+                                    height: 25,
+                                    width: 25,
+                                    imagePath: ImageConstant.imgUillock1,
+                                  ),
                                 ),
-                                padding: const EdgeInsets.all(5),
-                                child: CustomImageView(
-                                  color: ColorConstant.primaryColor,
-                                  imagePath: ImageConstant.inReed,
-                                ),
-                              ),
+                              ],
                             ],
                           ),
                         ),
@@ -559,6 +555,7 @@ class _DetailViewState extends State<DetailView> {
                                       style: CustomTextStyles
                                           .titleMediumWhiteA700
                                           .copyWith(
+                                        fontWeight: FontWeight.w400,
                                         color: isLight
                                             ? ColorConstant.black
                                             : null,
@@ -568,15 +565,18 @@ class _DetailViewState extends State<DetailView> {
                                     ),
                                   ),
                                   const SizedBox(width: 10),
-                                  CustomIconButton(
-                                    height: 32,
-                                    width: 32,
-                                    child: CustomImageView(
-                                      height: 25,
-                                      width: 25,
-                                      imagePath: ImageConstant.imgUillock1,
+                                  if (provider.detailModel.book!.freeBook! ==
+                                      0) ...[
+                                    CustomIconButton(
+                                      height: 32,
+                                      width: 32,
+                                      child: CustomImageView(
+                                        height: 25,
+                                        width: 25,
+                                        imagePath: ImageConstant.imgUillock1,
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ],
                               );
                             },
@@ -614,15 +614,18 @@ class _DetailViewState extends State<DetailView> {
                                 ),
                               ),
                               const SizedBox(width: 10),
-                              CustomIconButton(
-                                height: 32,
-                                width: 32,
-                                child: CustomImageView(
-                                  height: 25,
-                                  width: 25,
-                                  imagePath: ImageConstant.imgUillock1,
+                              if (provider.detailModel.book!.freeBook! ==
+                                  0) ...[
+                                CustomIconButton(
+                                  height: 32,
+                                  width: 32,
+                                  child: CustomImageView(
+                                    height: 25,
+                                    width: 25,
+                                    imagePath: ImageConstant.imgUillock1,
+                                  ),
                                 ),
-                              ),
+                              ],
                             ],
                           ),
                         ),
@@ -651,8 +654,7 @@ class _DetailViewState extends State<DetailView> {
                             width: width,
                             child: Text(
                               '${provider.detailModel.authors[0].description}',
-                              maxLines: 5,
-                              overflow: TextOverflow.ellipsis,
+                              maxLines: null,
                               textAlign: TextAlign.left,
                               style: CustomTextStyles.bodyMediumThin.copyWith(
                                 color: isLight ? ColorConstant.black : null,
@@ -703,6 +705,7 @@ class _DetailViewState extends State<DetailView> {
                                 ),
                               )
                             : const SizedBox.shrink(),
+                        const SizedBox(height: 50),
                       ],
                     ),
                   );

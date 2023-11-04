@@ -16,7 +16,6 @@ class ViewAllBookProvider extends ChangeNotifier {
     Either<String, List<BookModel>> result = await HomeRepository.instance
         .getViewAllBooks(param: param, token: token, key: key ?? 'book_detail');
     result.fold((l) {
-      log(l);
       setLoading(false);
     }, (r) {
       r.sort(

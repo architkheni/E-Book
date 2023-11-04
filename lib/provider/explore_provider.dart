@@ -12,6 +12,7 @@ class ExploreProvider extends ChangeNotifier {
   List<SubcategoryModel> subCategories = [];
   List<BookModel> books = [];
   bool isLoading = false;
+  bool isSearch = false;
 
   void getAllCategories() async {
     Either<String, List<CategoryModel>> result =
@@ -46,8 +47,26 @@ class ExploreProvider extends ChangeNotifier {
     });
   }
 
+  void searchBook(String search) async {
+    setLoading(true);
+    Either<String, List<BookModel>> resultSubCategories =
+        await HomeRepository.instance.searchBook(search);
+    resultSubCategories.fold((l) {
+      log(l);
+    }, (r) {
+      books = r;
+      setIsSearch(true);
+      setLoading(false);
+    });
+  }
+
   void setLoading(bool value) {
     isLoading = value;
+    notifyListeners();
+  }
+
+  void setIsSearch(bool value) {
+    isSearch = value;
     notifyListeners();
   }
 }

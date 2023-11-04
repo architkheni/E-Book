@@ -6,6 +6,7 @@ import 'package:book/provider/auth_provider.dart';
 import 'package:book/router/app_routes.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:book/widgets/custom_text_form_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:go_router/go_router.dart';
@@ -283,9 +284,43 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                         padding: const EdgeInsets.only(top: 16),
                         child: CustomElevatedButton(
                           onTap: () async {
-                            final googleSignIn = GoogleSignIn();
-                            GoogleSignInAccount? googleSignInAccount =
-                                await googleSignIn.signIn();
+                            AuthProvider authProvider =
+                                context.read<AuthProvider>();
+                            ScaffoldMessengerState scaffoldState =
+                                ScaffoldMessenger.of(context);
+                            try {
+                              GoogleSignIn googleSighin = GoogleSignIn();
+                              GoogleSignInAccount? account =
+                                  await googleSighin.signIn();
+                              if (account == null) {
+                                return;
+                              }
+                              GoogleSignInAuthentication auth =
+                                  await account.authentication;
+                              OAuthCredential credential =
+                                  GoogleAuthProvider.credential(
+                                accessToken: auth.accessToken,
+                                idToken: auth.idToken,
+                              );
+                              UserCredential userCredential = await FirebaseAuth
+                                  .instance
+                                  .signInWithCredential(credential);
+                              emailController.text =
+                                  userCredential.user?.email ?? '';
+                              // ignore: use_build_context_synchronously
+                              authProvider.logIn(
+                                context,
+                                email: userCredential.user?.email ?? '',
+                              );
+                            } on FirebaseAuthException catch (e) {
+                              String error = getErrorMessage(e.code);
+                              scaffoldState.showSnackBar(
+                                SnackBar(
+                                  content: Text(error),
+                                  backgroundColor: appTheme.teal400,
+                                ),
+                              );
+                            }
                           },
                           width: double.maxFinite,
                           height: 48,
@@ -372,5 +407,20 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
     bool emailValid = RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
         .hasMatch(email);
     return emailValid;
+  }
+
+  String getErrorMessage(String errorCode) {
+    switch (errorCode) {
+      case 'email-already-exists':
+        return 'Email id already exist';
+      case 'user-not-found':
+        return 'Email id not exist';
+      case 'wrong-password':
+        return 'Invalid password';
+      case 'email-already-in-use':
+        return 'Email id already in use';
+      default:
+        return 'Some error accurred';
+    }
   }
 }

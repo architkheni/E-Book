@@ -47,6 +47,155 @@ class _BookReadViewState extends State<BookReadView> {
     super.initState();
   }
 
+  void showNavigationBar() {
+    List<String> content = context
+        .read<BookReadProvider>()
+        .chapters
+        .map((e) => '${e.title}')
+        .toList();
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        bool isLight = Theme.of(context).brightness == Brightness.light;
+        double height = MediaQuery.of(context).size.height;
+        return Container(
+          height: height * 80 / 100,
+          decoration: BoxDecoration(
+            color: isLight ? ColorConstant.whiteA700 : ColorConstant.k181919,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          child: Column(
+            children: [
+              Align(
+                alignment: Alignment.topCenter,
+                child: Transform.translate(
+                  offset: const Offset(0, -40),
+                  child: GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: isLight
+                            ? ColorConstant.whiteA700
+                            : ColorConstant.k181919,
+                        shape: BoxShape.circle,
+                      ),
+                      height: 110,
+                      width: 110,
+                      child: Center(
+                        child: Container(
+                          height: 90,
+                          width: 90,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: isLight
+                                ? ColorConstant.primaryColor
+                                : ColorConstant.whiteA700,
+                          ),
+                          child: Icon(
+                            Icons.clear_rounded,
+                            size: 60,
+                            color: isLight
+                                ? ColorConstant.whiteA700
+                                : ColorConstant.primaryColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0,
+                          vertical: 6,
+                        ),
+                        child: Text(
+                          'CONTENTS',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            color: isLight ? null : ColorConstant.whiteA700,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                        child: Divider(color: ColorConstant.k5E5E5E),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0,
+                          vertical: 6,
+                        ),
+                        child: Text(
+                          'Acknowledgments',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: isLight ? null : ColorConstant.whiteA700,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                        child: Divider(color: ColorConstant.k5E5E5E),
+                      ),
+                      ListView.separated(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: content.length,
+                        itemBuilder: (context, index) {
+                          String getTitle() {
+                            if (index == 0 || index == content.length - 1) {
+                              return content[index];
+                            }
+                            return '$index. ${content[index]}';
+                          }
+
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20.0,
+                              vertical: 6,
+                            ),
+                            child: Text(
+                              getTitle(),
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: isLight ? null : ColorConstant.whiteA700,
+                              ),
+                            ),
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 18.0),
+                            child: Divider(color: ColorConstant.k5E5E5E),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   void dispose() {
     ShowBox = false;
@@ -117,7 +266,9 @@ class _BookReadViewState extends State<BookReadView> {
                 width: 24,
                 imagePath: ImageConstant.option,
                 margin: getMargin(left: 9, top: 16, right: 32),
-                onTap: () {},
+                onTap: () {
+                  showNavigationBar();
+                },
                 color: isLight ? ColorConstant.black : null,
               ),
             ],
@@ -136,6 +287,7 @@ class _BookReadViewState extends State<BookReadView> {
                           child: PageView(
                             allowImplicitScrolling: true,
                             scrollDirection: Axis.horizontal,
+                            physics: const BouncingScrollPhysics(),
                             controller: controller,
                             onPageChanged: (n) {
                               setState(() {
@@ -145,14 +297,12 @@ class _BookReadViewState extends State<BookReadView> {
                             },
                             children: provider.chapters
                                 .map(
-                                  (e) => Center(
-                                    child: Pages(
-                                      text: 'Page Three',
-                                      chapter: e,
-                                      color: Colors.grey,
-                                      fontSize: _currentSliderValue,
-                                      fontFamily: fontFamily,
-                                    ),
+                                  (e) => Pages(
+                                    text: 'Page Three',
+                                    chapter: e,
+                                    color: Colors.grey,
+                                    fontSize: _currentSliderValue,
+                                    fontFamily: fontFamily,
                                   ),
                                 )
                                 .toList(),
@@ -512,13 +662,14 @@ class Pages extends StatelessWidget {
     var NormalFont = 17 + fontSize.toInt();
     return Padding(
       padding: const EdgeInsets.only(left: 16, right: 16),
-      child: Center(
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              chapter.title!,
+              '${chapter.title}',
               maxLines: 5,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,
@@ -529,23 +680,17 @@ class Pages extends StatelessWidget {
                 fontWeight: FontWeight.w900,
               ),
             ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Html(
-                    data: chapter.description!,
-                    style: {
-                      '*': Style(
-                        color: isLight
-                            ? ColorConstant.black
-                            : ColorConstant.whiteA700,
-                        fontSize: FontSize(NormalFont.toDouble()),
-                      ),
-                    },
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Html(
+                data: '${chapter.description}',
+                style: {
+                  '*': Style(
+                    color:
+                        isLight ? ColorConstant.black : ColorConstant.whiteA700,
+                    fontSize: FontSize(NormalFont.toDouble()),
                   ),
-                ),
+                },
               ),
             ),
           ],

@@ -17,11 +17,27 @@ class BookChapterModel {
     this.updatedAt,
   });
 
+  String getTitle(Map<String, dynamic> json) {
+    if (json['type'] != null) return json['type'];
+    return json['title'];
+  }
+
+  int getId(Map<String, dynamic> json) {
+    if (json['book_id'] != null) return json['book_id'];
+    return json['id'];
+  }
+
+  String getDescription(Map<String, dynamic> json) {
+    if (json['introduction'] != null) return json['introduction'];
+    if (json['summary'] != null) return json['summary'];
+    return json['description'];
+  }
+
   BookChapterModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    id = getId(json);
     bookId = json['book_id'];
-    title = json['title'];
-    description = json['description'];
+    title = getTitle(json);
+    description = getDescription(json);
     readBy = json['read_by'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];

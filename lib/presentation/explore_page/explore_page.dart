@@ -31,6 +31,7 @@ class _ExplorePageState extends State<ExplorePage> {
 
   var selectCategory;
   var selectSubCategory;
+  bool isTextStop = false;
 
   @override
   void initState() {
@@ -39,6 +40,31 @@ class _ExplorePageState extends State<ExplorePage> {
       searchController.text = widget.categoryName!;
       selectCategory = widget.categoryName;
     }
+    searchController.addListener(() {
+      if (searchController.text.trim().isEmpty) {
+        setState(() {
+          selectCategory = null;
+          selectSubCategory = null;
+          isTextStop = false;
+        });
+        return;
+      }
+      if (!isTextStop) {
+        Future.delayed(const Duration(seconds: 2), () {
+          if (searchController.text.trim().isNotEmpty) {
+            context
+                .read<ExploreProvider>()
+                .searchBook(searchController.text.trim());
+            setState(() {
+              selectCategory = searchController.text.trim();
+              selectSubCategory = searchController.text.trim();
+            });
+            isTextStop = false;
+          }
+        });
+        isTextStop = true;
+      }
+    });
     super.initState();
   }
 
@@ -47,7 +73,6 @@ class _ExplorePageState extends State<ExplorePage> {
     bool isLight = Theme.of(context).brightness == Brightness.light;
     mediaQueryData = MediaQuery.of(context);
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -132,9 +157,7 @@ class _ExplorePageState extends State<ExplorePage> {
                     autofocus: false,
                     fillColor:
                         isLight ? ColorConstant.kF3F3F3 : appTheme.blueGray900,
-                    onChanged: (value) {
-                      setState(() {});
-                    },
+                    onChanged: (value) {},
                   ),
                   if (selectSubCategory == null) ...{
                     Padding(
@@ -203,8 +226,7 @@ class _ExplorePageState extends State<ExplorePage> {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         CustomImageView(
-                                          svgPath:
-                                              ImageConstant.imgGroup1171274896,
+                                          url: categories[index].icon,
                                           height: 12,
                                           width: 12,
                                           margin: getMargin(right: 5),
@@ -282,8 +304,7 @@ class _ExplorePageState extends State<ExplorePage> {
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
                                               CustomImageView(
-                                                svgPath: ImageConstant
-                                                    .imgGroup1171274896,
+                                                url: subCategories[index].icon,
                                                 height: 12,
                                                 width: 12,
                                                 margin: getMargin(right: 5),
@@ -353,12 +374,13 @@ class _ExplorePageState extends State<ExplorePage> {
                                 ),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.all(9.0),
                                       child: CustomImageView(
                                         url: provider.books[index].frontCover,
-                                        height: height / 10,
+                                        height: width / 6 * 1.5,
                                         width: width / 6,
                                         fit: BoxFit.fill,
                                         radius: BorderRadius.circular(5),
@@ -377,6 +399,7 @@ class _ExplorePageState extends State<ExplorePage> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
+                                            const SizedBox(height: 9),
                                             Text(
                                               provider.books[index].title ??
                                                   'Book title',
@@ -393,24 +416,33 @@ class _ExplorePageState extends State<ExplorePage> {
                                             Builder(
                                               builder: (context) {
                                                 String author = '';
-                                                List<dynamic> list = (provider
-                                                            .books[index]
-                                                            .authorName
-                                                        as List<dynamic>)
-                                                    .where(
-                                                      (element) =>
-                                                          element != null,
-                                                    )
-                                                    .toList();
+                                                if (provider
+                                                        .books[index]
+                                                        .authorName
+                                                        .runtimeType ==
+                                                    String) {
+                                                  author = provider
+                                                      .books[index].authorName;
+                                                } else {
+                                                  List<dynamic> list = (provider
+                                                              .books[index]
+                                                              .authorName
+                                                          as List<dynamic>)
+                                                      .where(
+                                                        (element) =>
+                                                            element != null,
+                                                      )
+                                                      .toList();
 
-                                                for (var i = 0;
-                                                    i < list.length;
-                                                    i++) {
-                                                  author += list[i];
-                                                  author +=
-                                                      ((list.length - 1) == i)
-                                                          ? ''
-                                                          : ', ';
+                                                  for (var i = 0;
+                                                      i < list.length;
+                                                      i++) {
+                                                    author += list[i];
+                                                    author +=
+                                                        ((list.length - 1) == i)
+                                                            ? ''
+                                                            : ', ';
+                                                  }
                                                 }
                                                 return Text(
                                                   author,

@@ -19,7 +19,6 @@ class BookTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     bool isLight = Theme.of(context).brightness == Brightness.light;
     return GestureDetector(
       onTap: () {
@@ -35,7 +34,7 @@ class BookTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(
-                height: height / 5,
+                height: (width / 3.3) * 1.5,
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
@@ -43,7 +42,7 @@ class BookTile extends StatelessWidget {
                       child: Align(
                         alignment: Alignment.center,
                         child: SizedBox(
-                          height: height / 5,
+                          height: (width / 3.3) * 1.5,
                           width: width / 3.3,
                           child: CustomImageView(
                             url: book.frontCover,
@@ -53,8 +52,8 @@ class BookTile extends StatelessWidget {
                       ),
                     ),
                     Positioned(
-                      right: 5,
-                      top: -5,
+                      right: -5,
+                      top: -10,
                       child: Consumer<WishlistProvider>(
                         builder: (context, wishlistProvider, child) {
                           bool isFavorite =

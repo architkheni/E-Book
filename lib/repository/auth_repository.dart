@@ -17,12 +17,16 @@ class AuthRepository {
 
   Future<Either<String, UserModel>> logIn({
     required String email,
-    required String password,
+    required String? password,
   }) async {
+    Map<String, dynamic> data = {'email': email};
+    if (password != null) {
+      data['password'] = password;
+    }
     try {
       Response response = await dioClient.post(
         ApiEndpoint.login,
-        data: {'email': email, 'password': password},
+        data: data,
       );
       if (response.statusCode == 200) {
         dynamic data = response.data;
@@ -36,7 +40,7 @@ class AuthRepository {
         return left('Login failed! please try again');
       }
     } catch (e) {
-      return left(e.toString());
+      return left('Login failed! please try again');
     }
   }
 
@@ -57,6 +61,38 @@ class AuthRepository {
           'contact_number': mobileNo,
           'email': email,
           'password': password,
+        },
+      );
+      if (response.statusCode == 200) {
+        dynamic data = response.data;
+        if (data.runtimeType == String) {
+          data = jsonDecode(data);
+        }
+        return right(UserModel.fromJson(data['data']));
+      } else if (response.statusCode == 400) {
+        return left(response.data['message']);
+      } else {
+        return left('Register failed! please try again');
+      }
+    } catch (e) {
+      return left('Register failed! please try again');
+    }
+  }
+
+  Future<Either<String, UserModel>> ssoCreate({
+    required String name,
+    required String username,
+    required String mobileNo,
+    required String email,
+  }) async {
+    try {
+      Response response = await dioClient.post(
+        ApiEndpoint.ssoCreate,
+        data: {
+          'name': name,
+          'username': username,
+          'contact_number': mobileNo,
+          'email': email,
         },
       );
       if (response.statusCode == 200) {

@@ -14,7 +14,7 @@ class AuthProvider extends ChangeNotifier {
   void logIn(
     BuildContext context, {
     required String email,
-    required String password,
+    String? password,
   }) async {
     Either<String, UserModel> result =
         await AuthRepository.instance.logIn(email: email, password: password);
@@ -25,11 +25,17 @@ class AuthProvider extends ChangeNotifier {
           backgroundColor: appTheme.teal400,
         ),
       );
-    }, (r) {
+    }, (r) async {
+      GoRouter navigator = GoRouter.of(context);
       appStorage.setToken(r.apiToken!);
       appStorage.setUser(r.toString());
       appStorage.setLogin(true);
-      context.push(AppRoutesPath.category);
+      bool isFirst = await appStorage.getCategoryIsFirst();
+      if (isFirst) {
+        navigator.push(AppRoutesPath.category);
+      } else {
+        navigator.go(AppRoutesPath.home);
+      }
     });
   }
 
@@ -47,6 +53,40 @@ class AuthProvider extends ChangeNotifier {
       mobileNo: mobileNo,
       email: email,
       password: password,
+    );
+    result.fold((l) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(l),
+          backgroundColor: appTheme.teal400,
+        ),
+      );
+    }, (r) {
+      appStorage.setToken(r.apiToken!);
+      appStorage.setUser(r.toString());
+      appStorage.setLogin(true);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text('user has been save successfully'),
+          backgroundColor: appTheme.teal400,
+        ),
+      );
+      context.push(AppRoutesPath.category);
+    });
+  }
+
+  void ssoCreate(
+    BuildContext context, {
+    required String name,
+    required String username,
+    required String mobileNo,
+    required String email,
+  }) async {
+    Either<String, UserModel> result = await AuthRepository.instance.ssoCreate(
+      name: name,
+      username: username,
+      mobileNo: mobileNo,
+      email: email,
     );
     result.fold((l) {
       ScaffoldMessenger.of(context).showSnackBar(

@@ -64,6 +64,7 @@ class ProfileProvider extends ChangeNotifier {
       UserModel userModel = UserModel.fromJson(jsonDecode(data));
       userModel.languages = language;
       appStorage.setUser(jsonEncode(userModel));
+      appStorage.setCategoryIsFirst(false);
       if (onSuccess != null) {
         onSuccess();
         return;

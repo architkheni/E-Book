@@ -69,7 +69,7 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                             ),
                             padding: const EdgeInsets.only(bottom: 3),
                             child: AppbarSubtitle(
-                              text: 'My Libarary',
+                              text: 'My Library',
                             ),
                           ),
                         ),

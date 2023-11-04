@@ -30,7 +30,7 @@ final List<String> entries = <String>[
   'Your Membership',
   'Preferred Categories',
   'Content Language',
-  'App Theme',
+  'Dark Mode',
   'Contact Us',
   'Share',
 ];
@@ -375,10 +375,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       buttonStyle: CustomButtonStyles.fillTeal400,
                       buttonTextStyle:
                           CustomTextStyles.titleSmallPrimary_1.copyWith(
-                        color: isLight ? ColorConstant.whiteA700 : null,
+                        color: isLight
+                            ? ColorConstant.whiteA700
+                            : ColorConstant.black,
                       ),
                     ),
                   ),
+                  const SizedBox(height: 50),
                 ],
               ),
             ),
