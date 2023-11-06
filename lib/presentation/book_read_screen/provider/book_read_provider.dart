@@ -1,3 +1,4 @@
+import 'package:book/core/storage/app_storage.dart';
 import 'package:book/core/storage/cache_storage.dart';
 import 'package:book/model/book_chapter_model.dart';
 import 'package:book/repository/home_repository.dart';
@@ -5,6 +6,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 
 class BookReadProvider extends ChangeNotifier {
+  AppStorage appStorage = AppStorage();
   List<BookChapterModel> chapters = [];
   bool isLoading = true;
 
@@ -23,6 +25,11 @@ class BookReadProvider extends ChangeNotifier {
         setLoading(false);
       });
     }
+  }
+
+  void readChapter(int bookId, int chapterId) async {
+    String token = await appStorage.getToken();
+    await HomeRepository.instance.readChapter(bookId, chapterId, token);
   }
 
   void setLoading(bool value) {

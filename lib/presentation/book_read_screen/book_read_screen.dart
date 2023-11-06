@@ -1,17 +1,21 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: non_constant_identifier_names, prefer_typing_uninitialized_variables, unused_local_variable
 
+import 'package:book/core/storage/cache_storage.dart';
 import 'package:book/core/utils/color_constant.dart';
+import 'package:book/core/utils/string_utils.dart';
 import 'package:book/model/book_chapter_model.dart';
 import 'package:book/presentation/book_read_screen/provider/book_read_provider.dart';
+import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_image.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
-import '../../widgets/custom_elevated_button.dart';
 
 class BookReadScreen extends StatelessWidget {
   final int bookId;
@@ -21,13 +25,14 @@ class BookReadScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (BuildContext context) => BookReadProvider()..getChapter(bookId),
-      child: const BookReadView(),
+      child: BookReadView(bookId: bookId),
     );
   }
 }
 
 class BookReadView extends StatefulWidget {
-  const BookReadView({Key? key}) : super(key: key);
+  final int bookId;
+  const BookReadView({Key? key, required this.bookId}) : super(key: key);
 
   @override
   State<BookReadView> createState() => _BookReadViewState();
@@ -35,16 +40,22 @@ class BookReadView extends StatefulWidget {
 
 bool ShowBox = false;
 int _currentSliderValue = 1;
-String fontFamily = 'Roboto';
-int ShowBorder = 0;
 
 class _BookReadViewState extends State<BookReadView> {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
   @override
   void initState() {
     ShowBox = false;
-    ShowBorder = 0;
+    init();
     super.initState();
+  }
+
+  init() async {
+    await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+  }
+
+  disposFlag() async {
+    await FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SECURE);
   }
 
   void showNavigationBar() {
@@ -60,7 +71,7 @@ class _BookReadViewState extends State<BookReadView> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (context) {
-        bool isLight = Theme.of(context).brightness == Brightness.light;
+        bool isLight = !CacheStorage.isDark;
         double height = MediaQuery.of(context).size.height;
         return Container(
           height: height * 80 / 100,
@@ -124,25 +135,9 @@ class _BookReadViewState extends State<BookReadView> {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
-                            color: isLight ? null : ColorConstant.whiteA700,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                        child: Divider(color: ColorConstant.k5E5E5E),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20.0,
-                          vertical: 6,
-                        ),
-                        child: Text(
-                          'Acknowledgments',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: isLight ? null : ColorConstant.whiteA700,
+                            color: isLight
+                                ? ColorConstant.black
+                                : ColorConstant.whiteA700,
                           ),
                         ),
                       ),
@@ -168,11 +163,13 @@ class _BookReadViewState extends State<BookReadView> {
                               vertical: 6,
                             ),
                             child: Text(
-                              getTitle(),
+                              getTitle().capitlize,
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
-                                color: isLight ? null : ColorConstant.whiteA700,
+                                color: isLight
+                                    ? ColorConstant.black
+                                    : ColorConstant.whiteA700,
                               ),
                             ),
                           );
@@ -199,7 +196,7 @@ class _BookReadViewState extends State<BookReadView> {
   @override
   void dispose() {
     ShowBox = false;
-    ShowBorder = 0;
+    disposFlag();
     super.dispose();
   }
 
@@ -209,7 +206,7 @@ class _BookReadViewState extends State<BookReadView> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     PageController controller = PageController();
-    bool isLight = Theme.of(context).brightness == Brightness.light;
+    bool isLight = !CacheStorage.isDark;
     int curr = 0;
 
     return WillPopScope(
@@ -225,7 +222,8 @@ class _BookReadViewState extends State<BookReadView> {
       },
       child: SafeArea(
         child: Scaffold(
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          backgroundColor:
+              isLight ? ColorConstant.whiteA700 : const Color(0x0f181a1a),
           appBar: CustomAppBar(
             height: 70,
             leadingWidth: 37,
@@ -284,28 +282,61 @@ class _BookReadViewState extends State<BookReadView> {
                         SizedBox(
                           height: height,
                           width: width,
-                          child: PageView(
+                          child: PageView.builder(
                             allowImplicitScrolling: true,
-                            scrollDirection: Axis.horizontal,
-                            physics: const BouncingScrollPhysics(),
                             controller: controller,
-                            onPageChanged: (n) {
-                              setState(() {
-                                curr = n;
-                                if ((provider.chapters.length - 1) == n) {}
-                              });
+                            onPageChanged: (value) {
+                              if (value != 0 ||
+                                  value != provider.chapters.length - 1) {
+                                context.read<BookReadProvider>().readChapter(
+                                      widget.bookId,
+                                      provider.chapters[value].id!,
+                                    );
+                              }
                             },
-                            children: provider.chapters
-                                .map(
-                                  (e) => Pages(
-                                    text: 'Page Three',
-                                    chapter: e,
-                                    color: Colors.grey,
-                                    fontSize: _currentSliderValue,
-                                    fontFamily: fontFamily,
+                            itemBuilder: (context, index) {
+                              BookChapterModel chapter =
+                                  provider.chapters[index];
+                              return Column(
+                                children: [
+                                  Expanded(
+                                    child: Pages(
+                                      chapter: chapter,
+                                      fontSize: _currentSliderValue,
+                                      isLight: isLight,
+                                    ),
                                   ),
-                                )
-                                .toList(),
+                                  if (index ==
+                                      provider.chapters.length - 1) ...[
+                                    CustomElevatedButton(
+                                      onTap: () {},
+                                      width: double.maxFinite,
+                                      height: getVerticalSize(
+                                        48,
+                                      ),
+                                      text: 'Mark As Finish',
+                                      margin: getMargin(
+                                        top: 10,
+                                        left: 20,
+                                        right: 20,
+                                        bottom: 10,
+                                      ),
+                                      buttonStyle:
+                                          CustomButtonStyles.fillTeal400,
+                                      buttonTextStyle: CustomTextStyles
+                                          .titleSmallPrimary_1
+                                          .copyWith(
+                                        color: isLight
+                                            ? ColorConstant.whiteA700
+                                            : null,
+                                      ),
+                                    ),
+                                  ],
+                                ],
+                              );
+                            },
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: provider.chapters.length,
                           ),
                         ),
                         ShowBox == true
@@ -316,7 +347,6 @@ class _BookReadViewState extends State<BookReadView> {
                                 child: Column(
                                   children: [
                                     Container(
-                                      height: height / 3.5,
                                       width: width,
                                       color: isLight
                                           ? ColorConstant.whiteA700
@@ -327,6 +357,7 @@ class _BookReadViewState extends State<BookReadView> {
                                               32,
                                             ),
                                       child: Column(
+                                        mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Padding(
                                             padding:
@@ -337,23 +368,16 @@ class _BookReadViewState extends State<BookReadView> {
                                               // color: Colors.blue[200],
                                               child: Row(
                                                 children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                      left: 10,
-                                                    ),
-                                                    child: CustomImageView(
-                                                      height: 15,
-                                                      width: 15,
-                                                      imagePath: ImageConstant
-                                                          .textImage,
-                                                      color: isLight
-                                                          ? ColorConstant.black
-                                                          : null,
-                                                    ),
+                                                  const SizedBox(width: 10),
+                                                  CustomImageView(
+                                                    height: 15,
+                                                    imagePath:
+                                                        ImageConstant.textImage,
+                                                    color: isLight
+                                                        ? ColorConstant.black
+                                                        : null,
                                                   ),
-                                                  SizedBox(
-                                                    width: width - 60,
+                                                  Expanded(
                                                     child: Slider(
                                                       value: _currentSliderValue
                                                           .toDouble(),
@@ -377,21 +401,15 @@ class _BookReadViewState extends State<BookReadView> {
                                                       },
                                                     ),
                                                   ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                      right: 10,
-                                                    ),
-                                                    child: CustomImageView(
-                                                      height: 23,
-                                                      width: 23,
-                                                      imagePath: ImageConstant
-                                                          .textImage,
-                                                      color: isLight
-                                                          ? ColorConstant.black
-                                                          : null,
-                                                    ),
+                                                  CustomImageView(
+                                                    height: 23,
+                                                    imagePath:
+                                                        ImageConstant.textImage,
+                                                    color: isLight
+                                                        ? ColorConstant.black
+                                                        : null,
                                                   ),
+                                                  const SizedBox(width: 10),
                                                 ],
                                               ),
                                             ),
@@ -400,6 +418,7 @@ class _BookReadViewState extends State<BookReadView> {
                                             padding: const EdgeInsets.only(
                                               left: 16,
                                               right: 16,
+                                              bottom: 20,
                                             ),
                                             child: SizedBox(
                                               height: height / 13,
@@ -413,8 +432,8 @@ class _BookReadViewState extends State<BookReadView> {
                                                     child: GestureDetector(
                                                       onTap: () {
                                                         setState(() {
-                                                          fontFamily = 'Roboto';
-                                                          ShowBorder = 1;
+                                                          CacheStorage.isDark =
+                                                              false;
                                                         });
                                                       },
                                                       child: Padding(
@@ -426,45 +445,25 @@ class _BookReadViewState extends State<BookReadView> {
                                                         child: Container(
                                                           height: height,
                                                           width: width,
-                                                          decoration: ShowBorder ==
-                                                                  1
-                                                              ? BoxDecoration(
-                                                                  border: Border
-                                                                      .all(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            border: isLight
+                                                                ? Border.all(
                                                                     color: appTheme
                                                                         .teal400,
                                                                     width: 2,
-                                                                  ),
-                                                                  borderRadius:
-                                                                      const BorderRadius
-                                                                          .all(
-                                                                    Radius
-                                                                        .circular(
-                                                                      13,
-                                                                    ),
-                                                                  ),
-                                                                )
-                                                              : BoxDecoration(
-                                                                  color: isLight
-                                                                      ? ColorConstant
-                                                                          .kF3F3F3
-                                                                      : ColorConstant
-                                                                          .whiteA700,
-                                                                  border: !isLight
-                                                                      ? Border.all(
-                                                                          width:
-                                                                              2,
-                                                                        )
-                                                                      : null,
-                                                                  borderRadius:
-                                                                      const BorderRadius
-                                                                          .all(
-                                                                    Radius
-                                                                        .circular(
-                                                                      13,
-                                                                    ),
-                                                                  ),
-                                                                ),
+                                                                  )
+                                                                : null,
+                                                            borderRadius:
+                                                                const BorderRadius
+                                                                    .all(
+                                                              Radius.circular(
+                                                                13,
+                                                              ),
+                                                            ),
+                                                            color: ColorConstant
+                                                                .whiteA700,
+                                                          ),
                                                           child: Center(
                                                             child: Text(
                                                               'Aa',
@@ -476,18 +475,9 @@ class _BookReadViewState extends State<BookReadView> {
                                                                   TextAlign
                                                                       .left,
                                                               style: TextStyle(
-                                                                color: ShowBorder ==
-                                                                        1
-                                                                    ? isLight
-                                                                        ? appTheme
-                                                                            .black900
-                                                                        : appTheme
-                                                                            .whiteA700
-                                                                    : appTheme
-                                                                        .black900,
+                                                                color: appTheme
+                                                                    .black900,
                                                                 fontSize: 22,
-                                                                fontFamily:
-                                                                    'Roboto',
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w900,
@@ -506,8 +496,8 @@ class _BookReadViewState extends State<BookReadView> {
                                                     child: GestureDetector(
                                                       onTap: () {
                                                         setState(() {
-                                                          fontFamily = 'Outfit';
-                                                          ShowBorder = 2;
+                                                          CacheStorage.isDark =
+                                                              true;
                                                         });
                                                       },
                                                       child: Padding(
@@ -519,45 +509,25 @@ class _BookReadViewState extends State<BookReadView> {
                                                         child: Container(
                                                           height: height,
                                                           width: width,
-                                                          decoration: ShowBorder ==
-                                                                  2
-                                                              ? BoxDecoration(
-                                                                  border: Border
-                                                                      .all(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            border: !isLight
+                                                                ? Border.all(
                                                                     color: appTheme
                                                                         .teal400,
                                                                     width: 2,
-                                                                  ),
-                                                                  borderRadius:
-                                                                      const BorderRadius
-                                                                          .all(
-                                                                    Radius
-                                                                        .circular(
-                                                                      13,
-                                                                    ),
-                                                                  ),
-                                                                )
-                                                              : BoxDecoration(
-                                                                  color: isLight
-                                                                      ? ColorConstant
-                                                                          .kF3F3F3
-                                                                      : ColorConstant
-                                                                          .whiteA700,
-                                                                  border: !isLight
-                                                                      ? Border.all(
-                                                                          width:
-                                                                              2,
-                                                                        )
-                                                                      : null,
-                                                                  borderRadius:
-                                                                      const BorderRadius
-                                                                          .all(
-                                                                    Radius
-                                                                        .circular(
-                                                                      13,
-                                                                    ),
-                                                                  ),
-                                                                ),
+                                                                  )
+                                                                : null,
+                                                            borderRadius:
+                                                                const BorderRadius
+                                                                    .all(
+                                                              Radius.circular(
+                                                                13,
+                                                              ),
+                                                            ),
+                                                            color: ColorConstant
+                                                                .black,
+                                                          ),
                                                           child: Center(
                                                             child: Text(
                                                               'Aa',
@@ -569,18 +539,9 @@ class _BookReadViewState extends State<BookReadView> {
                                                                   TextAlign
                                                                       .left,
                                                               style: TextStyle(
-                                                                color: ShowBorder ==
-                                                                        2
-                                                                    ? isLight
-                                                                        ? appTheme
-                                                                            .black900
-                                                                        : appTheme
-                                                                            .whiteA700
-                                                                    : appTheme
-                                                                        .black900,
+                                                                color: appTheme
+                                                                    .whiteA700,
                                                                 fontSize: 22,
-                                                                fontFamily:
-                                                                    'Outfit',
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w900,
@@ -592,33 +553,6 @@ class _BookReadViewState extends State<BookReadView> {
                                                     ),
                                                   ),
                                                 ],
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                              left: 16,
-                                              right: 16,
-                                              top: 20,
-                                            ),
-                                            child: CustomElevatedButton(
-                                              onTap: () {
-                                                setState(() {
-                                                  ShowBox = false;
-                                                });
-                                              },
-                                              width: double.maxFinite,
-                                              height: getVerticalSize(48),
-                                              text: 'Continue',
-                                              // margin: getMargin(top: 74),
-                                              buttonStyle: CustomButtonStyles
-                                                  .fillTeal400,
-                                              buttonTextStyle: CustomTextStyles
-                                                  .titleSmallPrimary_1
-                                                  .copyWith(
-                                                color: isLight
-                                                    ? ColorConstant.whiteA700
-                                                    : null,
                                               ),
                                             ),
                                           ),
@@ -642,22 +576,17 @@ class _BookReadViewState extends State<BookReadView> {
 // ignore: must_be_immutable
 class Pages extends StatelessWidget {
   final BookChapterModel chapter;
-  final text;
-  final color;
   int fontSize;
-  String fontFamily;
+  bool isLight;
 
   Pages({
     Key? key,
-    this.text,
-    this.color,
-    required this.fontSize,
-    required this.fontFamily,
     required this.chapter,
+    required this.fontSize,
+    required this.isLight,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    bool isLight = Theme.of(context).brightness == Brightness.light;
     var bold = 22 + fontSize.toInt();
     var NormalFont = 17 + fontSize.toInt();
     return Padding(
@@ -669,14 +598,13 @@ class Pages extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              '${chapter.title}',
+              '${chapter.title?.capitlize}',
               maxLines: 5,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,
               style: TextStyle(
                 color: isLight ? ColorConstant.black : ColorConstant.whiteA700,
                 fontSize: bold.toDouble(),
-                fontFamily: fontFamily,
                 fontWeight: FontWeight.w900,
               ),
             ),
@@ -693,6 +621,7 @@ class Pages extends StatelessWidget {
                 },
               ),
             ),
+            const SizedBox(height: 100),
           ],
         ),
       ),

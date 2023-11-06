@@ -276,23 +276,13 @@ class _HomeRecommendedForYouSeeAllScreenState
                                         ),
                                         const SizedBox(height: 18),
                                         Text(
-                                          'We are waiting for your downloaded book',
+                                          'We are waiting for your first finished book',
                                           style: TextStyle(
                                             color: isLight
                                                 ? ColorConstant.black
                                                 : ColorConstant.kEAF4F4,
                                             fontWeight: FontWeight.w500,
                                             fontSize: 12,
-                                          ),
-                                        ),
-                                        Text(
-                                          'save the titles that catch your interest right here',
-                                          style: TextStyle(
-                                            color: isLight
-                                                ? ColorConstant.black
-                                                : ColorConstant.kEAF4F4,
-                                            fontWeight: FontWeight.w100,
-                                            fontSize: 10,
                                           ),
                                         ),
                                       ],

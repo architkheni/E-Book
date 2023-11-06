@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:book/model/book_chapter_model.dart';
 import 'package:book/presentation/detail_page_container_page/widgets/chipviewframefo2_item_widget.dart';
 import 'package:book/provider/detail_provider.dart';
@@ -69,38 +67,6 @@ class _DetailViewState extends State<DetailView> {
                           child: Stack(
                             alignment: Alignment.center,
                             children: [
-                              CustomImageView(
-                                url: provider.detailModel.book!.frontCover,
-                                height: height / 2,
-                                width: width,
-                                fit: BoxFit.fill,
-                              ),
-                              Positioned.fill(
-                                child: ClipRRect(
-                                  child: BackdropFilter(
-                                    filter: ImageFilter.blur(
-                                      sigmaX: 4,
-                                      sigmaY: 4,
-                                    ),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                          begin: Alignment.topCenter,
-                                          end: Alignment.bottomCenter,
-                                          colors: [
-                                            theme.colorScheme.onPrimaryContainer
-                                                .withOpacity(0.3),
-                                            theme.colorScheme.onPrimaryContainer
-                                                .withOpacity(0.7),
-                                            theme.colorScheme.onPrimaryContainer
-                                                .withOpacity(1),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
@@ -114,20 +80,20 @@ class _DetailViewState extends State<DetailView> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: appTheme.teal400
-                                                .withOpacity(0.5),
-                                          ),
-                                          height: 45,
-                                          width: 45,
-                                          alignment: Alignment.center,
-                                          child: IconButton(
-                                            onPressed: () {
-                                              context.pop();
-                                            },
-                                            icon: const Icon(
+                                        GestureDetector(
+                                          onTap: () {
+                                            context.pop();
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: appTheme.teal400
+                                                  .withOpacity(0.5),
+                                            ),
+                                            height: 45,
+                                            width: 45,
+                                            alignment: Alignment.center,
+                                            child: const Icon(
                                               Icons.arrow_back_ios_new,
                                               color: Colors.white,
                                             ),

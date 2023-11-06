@@ -1,3 +1,4 @@
+import 'package:book/core/storage/cache_storage.dart';
 import 'package:book/presentation/Profile_Screen/Contact_Us.dart';
 import 'package:book/presentation/Profile_Screen/Profile_Screen.dart';
 import 'package:book/presentation/Profile_Screen/editProfile.dart';
@@ -87,9 +88,12 @@ class AppRouter {
           },
         ),
         StatefulShellRoute.indexedStack(
-          builder: (context, state, navigationShell) => BottombarPage(
-            navigationShell: navigationShell,
-          ),
+          builder: (context, state, navigationShell) {
+            CacheStorage.navigationShell = navigationShell;
+            return BottombarPage(
+              navigationShell: CacheStorage.navigationShell,
+            );
+          },
           branches: [
             StatefulShellBranch(
               routes: [
@@ -106,12 +110,7 @@ class AppRouter {
                   path: AppRoutesPath.explore,
                   name: AppRoutesName.explore,
                   builder: (context, state) {
-                    Map<String, dynamic>? data =
-                        state.extra as Map<String, dynamic>?;
-                    return ExplorePage(
-                      categoryId: data?['categoryId'],
-                      categoryName: data?['categoryName'],
-                    );
+                    return const ExplorePage();
                   },
                 ),
               ],

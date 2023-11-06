@@ -228,32 +228,33 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                             ),
                           ),
                           Expanded(
-                            child: Container(
-                              height: getVerticalSize(648),
-                              width: double.maxFinite,
-                              margin: getMargin(top: 9),
-                              child: Stack(
-                                // alignment: Alignment.bottomCenter,
-                                children: [
-                                  Padding(
-                                    padding: getPadding(left: 17, right: 20),
-                                    child: ListView.separated(
-                                      physics: const BouncingScrollPhysics(),
-                                      shrinkWrap: true,
-                                      separatorBuilder: (context, index) {
-                                        return SizedBox(
-                                          height: getVerticalSize(12),
-                                        );
-                                      },
-                                      itemCount: viewAllProvider.books.length,
-                                      itemBuilder: (context, index) {
-                                        return Liste50c016fb6aItemWidget(
-                                          book: viewAllProvider.books[index],
-                                        );
-                                      },
-                                    ),
+                            child: RefreshIndicator(
+                              onRefresh: () async {
+                                context
+                                    .read<ViewAllBookProvider>()
+                                    .getViewAllBooks(param: 'history');
+                              },
+                              child: Container(
+                                width: double.maxFinite,
+                                margin: getMargin(top: 9),
+                                child: Padding(
+                                  padding: getPadding(left: 17, right: 20),
+                                  child: ListView.separated(
+                                    physics: const BouncingScrollPhysics(),
+                                    shrinkWrap: true,
+                                    separatorBuilder: (context, index) {
+                                      return SizedBox(
+                                        height: getVerticalSize(12),
+                                      );
+                                    },
+                                    itemCount: viewAllProvider.books.length,
+                                    itemBuilder: (context, index) {
+                                      return Liste50c016fb6aItemWidget(
+                                        book: viewAllProvider.books[index],
+                                      );
+                                    },
                                   ),
-                                ],
+                                ),
                               ),
                             ),
                           ),

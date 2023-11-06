@@ -197,6 +197,30 @@ class HomeRepository {
     }
   }
 
+  Future<Either<String, bool>> readChapter(
+    int bookId,
+    int chapterId,
+    String token,
+  ) async {
+    try {
+      Response response = await dioClient.post(
+        ApiEndpoint.readingChapter,
+        data: {'book_id': bookId, 'chapter_id': chapterId},
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+      );
+      if (response.statusCode == 200) {
+        dynamic data = response.data;
+        if (data.runtimeType == String) {
+          data = jsonDecode(data);
+        }
+        return right(true);
+      }
+      return left('some error accured');
+    } catch (e) {
+      return left(e.toString());
+    }
+  }
+
   Future<Either<String, List<BookModel>>> getViewAllBooks({
     required String param,
     required String token,

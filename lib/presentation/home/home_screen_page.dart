@@ -1,8 +1,8 @@
-import 'dart:ui';
-
 import 'package:book/core/app_export.dart';
+import 'package:book/core/storage/cache_storage.dart';
 import 'package:book/core/utils/color_constant.dart';
 import 'package:book/core/utils/string_utils.dart';
+import 'package:book/provider/category_provider.dart';
 import 'package:book/provider/explore_provider.dart';
 import 'package:book/provider/home_provider.dart';
 import 'package:book/provider/wishlist_provider.dart';
@@ -112,63 +112,15 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                                         .dashboardModel.mainBook!.bookId!,
                                   );
                                 },
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                      height: (width / 2.3) * 1.8,
-                                      width: width,
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          image: NetworkImage(
-                                            provider.dashboardModel.mainBook!
-                                                .frontCover!,
-                                          ),
-                                          fit: BoxFit.fill,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned.fill(
-                                      child: ClipRRect(
-                                        child: BackdropFilter(
-                                          filter: ImageFilter.blur(
-                                            sigmaX: 4,
-                                            sigmaY: 4,
-                                          ),
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                begin: Alignment.topCenter,
-                                                end: Alignment.bottomCenter,
-                                                colors: [
-                                                  theme.colorScheme
-                                                      .onPrimaryContainer
-                                                      .withOpacity(0.3),
-                                                  theme.colorScheme
-                                                      .onPrimaryContainer
-                                                      .withOpacity(0.7),
-                                                  theme.colorScheme
-                                                      .onPrimaryContainer
-                                                      .withOpacity(1),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned.fill(
-                                      child: Align(
-                                        alignment: Alignment.bottomCenter,
-                                        child: CustomImageView(
-                                          url: provider.dashboardModel.mainBook!
-                                              .frontCover,
-                                          height: (width / 2.3) * 1.5,
-                                          width: width / 2.3,
-                                          fit: BoxFit.fill,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: CustomImageView(
+                                    url: provider
+                                        .dashboardModel.mainBook!.frontCover,
+                                    height: (width / 2.3) * 1.5,
+                                    width: width / 2.3,
+                                    fit: BoxFit.fill,
+                                  ),
                                 ),
                               )
                             : const SizedBox.shrink(),
@@ -295,32 +247,6 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                                 ),
                               )
                             : const SizedBox.shrink(),
-                        // Padding(
-                        //   padding: const EdgeInsets.only(top: 25),
-                        //   child: Align(
-                        //     alignment: Alignment.centerRight,
-                        //     child: Container(
-                        //       height: _height / 3.5,
-                        //       // color: Colors.pink,
-                        //       child: ListView.separated(
-                        //         scrollDirection: Axis.horizontal,
-                        //         physics: BouncingScrollPhysics(),
-                        //         separatorBuilder: (
-                        //           context,
-                        //           index,
-                        //         ) {
-                        //           return SizedBox(
-                        //             width: getHorizontalSize(10),
-                        //           );
-                        //         },
-                        //         itemCount: 4,
-                        //         itemBuilder: (context, index) {
-                        //           return ListoneItemWidget();
-                        //         },
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
                         provider.dashboardModel.recommendedBook.isNotEmpty
                             ? Padding(
                                 padding: getPadding(top: 31),
@@ -526,19 +452,18 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
 
                                       return Chipviewframefo2ItemWidget(
                                         onTap: () {
-                                          context.push(
-                                            AppRoutesPath.explore,
-                                            extra: {
-                                              'categoryId': provider
-                                                  .dashboardModel
-                                                  .categories[index]
-                                                  .categoryId,
-                                              'categoryName': provider
-                                                  .dashboardModel
-                                                  .categories[index]
-                                                  .name,
-                                            },
-                                          );
+                                          CacheStorage.navigationShell
+                                              .goBranch(1);
+                                          context
+                                              .read<CategoryProvider>()
+                                              .changeData(
+                                                provider
+                                                    .dashboardModel
+                                                    .categories[index]
+                                                    .categoryId!,
+                                                provider.dashboardModel
+                                                    .categories[index].name!,
+                                              );
                                         },
                                         text: text,
                                         icon: icon,

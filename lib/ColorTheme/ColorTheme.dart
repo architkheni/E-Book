@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:book/core/storage/app_storage.dart';
+import 'package:book/core/storage/cache_storage.dart';
 import 'package:flutter/material.dart';
 
 import '../core/utils/color_constant.dart';
@@ -12,6 +13,7 @@ class ThemeProvider extends ChangeNotifier {
   void toggleTheme(
     bool isOn,
   ) {
+    CacheStorage.isDark = isOn;
     themeMode = isOn ? ThemeMode.dark : ThemeMode.light;
     notifyListeners();
     appStorage.setDarkMode(isOn);

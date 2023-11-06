@@ -1,7 +1,9 @@
 import 'package:book/ColorTheme/ColorTheme.dart';
 import 'package:book/core/storage/app_storage.dart';
+import 'package:book/core/storage/cache_storage.dart';
 import 'package:book/presentation/langugaes_screen/provider/language_provider.dart';
 import 'package:book/provider/auth_provider.dart';
+import 'package:book/provider/category_provider.dart';
 import 'package:book/provider/explore_provider.dart';
 import 'package:book/provider/home_provider.dart';
 import 'package:book/provider/package_provider.dart';
@@ -32,6 +34,7 @@ void main() async {
   AppRouter.instance = AppRouter.getRouter(
     initialLocation: isLogin ? AppRoutesPath.home : AppRoutesPath.logInEmail,
   );
+  CacheStorage.isDark = isDark;
   runApp(MyApp(isDark: isDark));
 }
 
@@ -43,6 +46,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (context) => CategoryProvider(),
+        ),
         ChangeNotifierProvider(
           create: (context) => ThemeProvider()..toggleTheme(isDark),
         ),

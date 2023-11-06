@@ -91,7 +91,7 @@ class PaymentScreenState extends State<PaymentScreen> {
                     Padding(
                       padding: getPadding(left: 5),
                       child: Text(
-                        'Unlimited insights from books, courses documentaries, and podcasts.',
+                        'Enjoy unlimited audiobooks and summaries',
                         style: TextStyle(
                           color: isLight
                               ? ColorConstant.black
@@ -225,7 +225,7 @@ class PackageDetails extends StatelessWidget {
       children: [
         const SizedBox(height: 20),
         Text(
-          '${packageData.name} Detail',
+          packageData.name,
           style: TextStyle(
             color: isLight ? ColorConstant.black : ColorConstant.kEAF4F4,
             fontSize: 22,
@@ -242,87 +242,146 @@ class PackageDetails extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text(
-                      'What you get',
-                      style: TextStyle(
-                        color: isLight
-                            ? ColorConstant.black
-                            : ColorConstant.kEAF4F4,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Padding(
-                      padding: getPadding(left: 8),
+                    SizedBox(
+                      height: 50,
                       child: Text(
-                        'Unlimied Hacks',
+                        'What you get',
                         style: TextStyle(
                           color: isLight
                               ? ColorConstant.black
                               : ColorConstant.kEAF4F4,
-                          fontSize: 18,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    Padding(
-                      padding: getPadding(left: 8),
-                      child: Text(
-                        'Personalised content',
-                        style: TextStyle(
-                          color: isLight
-                              ? ColorConstant.black
-                              : ColorConstant.kEAF4F4,
-                          fontSize: 18,
+                    SizedBox(
+                      height: 30,
+                      child: Padding(
+                        padding: getPadding(left: 8),
+                        child: Text(
+                          'Unlimied Summaries',
+                          style: TextStyle(
+                            color: isLight
+                                ? ColorConstant.black
+                                : ColorConstant.kEAF4F4,
+                            fontSize: 18,
+                          ),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    Padding(
-                      padding: getPadding(left: 8),
-                      child: Text(
-                        'Collecion challenges',
-                        style: TextStyle(
-                          color: isLight
-                              ? ColorConstant.black
-                              : ColorConstant.kEAF4F4,
-                          fontSize: 18,
+                    SizedBox(
+                      height: 30,
+                      child: Padding(
+                        padding: getPadding(left: 8),
+                        child: Text(
+                          'Unlimied Audiobooks',
+                          style: TextStyle(
+                            color: isLight
+                                ? ColorConstant.black
+                                : ColorConstant.kEAF4F4,
+                            fontSize: 18,
+                          ),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    Padding(
-                      padding: getPadding(left: 8),
-                      child: Text(
-                        'Unlimited boards',
-                        style: TextStyle(
-                          color: isLight
-                              ? ColorConstant.black
-                              : ColorConstant.kEAF4F4,
-                          fontSize: 18,
+                    SizedBox(
+                      height: 30,
+                      child: Padding(
+                        padding: getPadding(left: 8),
+                        child: Text(
+                          'Personalized content',
+                          style: TextStyle(
+                            color: isLight
+                                ? ColorConstant.black
+                                : ColorConstant.kEAF4F4,
+                            fontSize: 18,
+                          ),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    Padding(
-                      padding: getPadding(left: 8),
-                      child: Text(
-                        'Streak repair',
-                        style: TextStyle(
-                          color: isLight
-                              ? ColorConstant.black
-                              : ColorConstant.kEAF4F4,
-                          fontSize: 18,
+                    SizedBox(
+                      height: 30,
+                      child: Padding(
+                        padding: getPadding(left: 8),
+                        child: Text(
+                          '',
+                          style: TextStyle(
+                            color: isLight
+                                ? ColorConstant.black
+                                : ColorConstant.kEAF4F4,
+                            fontSize: 18,
+                          ),
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
-              Image.asset(
-                ImageConstant.premium1Year,
-                height: 184,
+              Container(
+                height: 180,
+                width: 90,
+                decoration: BoxDecoration(
+                  color: ColorConstant.k2D3047,
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: ColorConstant.primaryColor),
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      height: 30,
+                      margin: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: ColorConstant.primaryColor,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Premium',
+                        style: TextStyle(
+                          color: ColorConstant.k2D3047,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 30,
+                      alignment: Alignment.center,
+                      child: Icon(
+                        Icons.check,
+                        color: ColorConstant.whiteA700,
+                        size: 17,
+                      ),
+                    ),
+                    Container(
+                      height: 30,
+                      alignment: Alignment.center,
+                      child: Icon(
+                        Icons.check,
+                        color: ColorConstant.whiteA700,
+                        size: 17,
+                      ),
+                    ),
+                    Container(
+                      height: 30,
+                      alignment: Alignment.center,
+                      child: Icon(
+                        Icons.check,
+                        color: ColorConstant.whiteA700,
+                        size: 17,
+                      ),
+                    ),
+                    Container(
+                      height: 30,
+                      alignment: Alignment.center,
+                      child: const Text(
+                        '1/Year',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

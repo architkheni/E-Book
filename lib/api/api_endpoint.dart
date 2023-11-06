@@ -27,4 +27,5 @@ class ApiEndpoint {
   static const String myHistory = '/my-history';
   static const String saveTransaction = '/save-transaction';
   static const String packages = '/packages';
+  static const String readingChapter = '/reading-chapter';
 }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:book/core/storage/cache_storage.dart';
 import 'package:book/core/utils/color_constant.dart';
 import 'package:book/theme/theme_helper.dart';

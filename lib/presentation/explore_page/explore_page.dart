@@ -3,6 +3,7 @@
 import 'package:book/core/utils/color_constant.dart';
 import 'package:book/model/category_model.dart';
 import 'package:book/model/subcategory_model.dart';
+import 'package:book/provider/category_provider.dart';
 import 'package:book/provider/explore_provider.dart';
 import 'package:book/provider/home_provider.dart';
 import 'package:book/router/app_routes.dart';
@@ -17,10 +18,7 @@ import '../../core/app_export.dart';
 import '../../widgets/custom_text_form_field.dart';
 
 class ExplorePage extends StatefulWidget {
-  final String? categoryName;
-  final int? categoryId;
-  const ExplorePage({Key? key, this.categoryName, this.categoryId})
-      : super(key: key);
+  const ExplorePage({Key? key}) : super(key: key);
 
   @override
   State<ExplorePage> createState() => _ExplorePageState();
@@ -35,11 +33,6 @@ class _ExplorePageState extends State<ExplorePage> {
 
   @override
   void initState() {
-    if (widget.categoryId != null) {
-      context.read<ExploreProvider>().getSubCategories(widget.categoryId!);
-      searchController.text = widget.categoryName!;
-      selectCategory = widget.categoryName;
-    }
     searchController.addListener(() {
       if (searchController.text.trim().isEmpty) {
         setState(() {
@@ -69,6 +62,20 @@ class _ExplorePageState extends State<ExplorePage> {
   }
 
   @override
+  void didChangeDependencies() {
+    context.read<CategoryProvider>().addListener(() {
+      int? id = context.read<CategoryProvider>().categoryId;
+      String name = context.read<CategoryProvider>().categoryName;
+      if (id != null) {
+        context.read<ExploreProvider>().getSubCategories(id);
+        selectCategory = name;
+        setState(() {});
+      }
+    });
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     bool isLight = Theme.of(context).brightness == Brightness.light;
     mediaQueryData = MediaQuery.of(context);
@@ -91,7 +98,7 @@ class _ExplorePageState extends State<ExplorePage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      if (selectCategory != null || widget.categoryId != null)
+                      if (selectCategory != null)
                         AppbarImage(
                           height: 20,
                           width: 15,
@@ -99,16 +106,6 @@ class _ExplorePageState extends State<ExplorePage> {
                           svgPath: ImageConstant.imgArrowleftBlueGray50,
                           margin: getMargin(right: 16),
                           onTap: () {
-                            if (widget.categoryId != null) {
-                              if (selectSubCategory == null) {
-                                context.pop();
-                              } else {
-                                setState(() {
-                                  selectSubCategory = null;
-                                });
-                              }
-                              return;
-                            }
                             setState(() {
                               selectCategory = null;
                               searchController.clear();
@@ -203,9 +200,6 @@ class _ExplorePageState extends State<ExplorePage> {
                                 child: GestureDetector(
                                   onTap: () {
                                     setState(() {
-                                      searchController.text =
-                                          categories[index].name ??
-                                              'Personal growth';
                                       context
                                           .read<ExploreProvider>()
                                           .getSubCategories(
@@ -286,8 +280,6 @@ class _ExplorePageState extends State<ExplorePage> {
                                                     .subcategoryId!,
                                               );
                                           setState(() {
-                                            searchController.text =
-                                                subCategories[index].name!;
                                             selectSubCategory = index;
                                           });
                                         },
