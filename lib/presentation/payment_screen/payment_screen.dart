@@ -9,6 +9,7 @@ import 'package:book/model/packages_model.dart';
 import 'package:book/model/user_model.dart';
 import 'package:book/provider/package_provider.dart';
 import 'package:book/provider/profile_provider.dart';
+import 'package:book/repository/payment_repository.dart';
 import 'package:book/theme/custom_button_style.dart';
 import 'package:book/theme/custom_text_style.dart';
 import 'package:book/theme/theme_helper.dart';
@@ -16,12 +17,202 @@ import 'package:book/widgets/app_bar/appbar_image.dart';
 import 'package:book/widgets/app_bar/appbar_subtitle.dart';
 import 'package:book/widgets/app_bar/custom_app_bar.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
+import 'package:book/widgets/custom_text_form_field.dart';
+import 'package:dartz/dartz.dart' as dz;
 import 'package:flutter/material.dart';
 import 'package:flutter_paypal/flutter_paypal.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/utils/image_constant.dart';
+
+void showPaymentModemSheet({
+  required String price,
+  required BuildContext context,
+  required PackageType packageType,
+  required int packageId,
+}) {
+  bool isLight = Theme.of(context).brightness == Brightness.light;
+  showModalBottomSheet(
+    context: context,
+    backgroundColor: isLight ? ColorConstant.whiteA700 : ColorConstant.k181919,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+    ),
+    builder: (context) {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(height: 10),
+          CustomElevatedButton(
+            onTap: () {
+              Navigator.pop(context);
+              payment(
+                price: price,
+                context: context,
+                packageType: packageType,
+                packageId: packageId,
+              );
+            },
+            width: double.maxFinite,
+            height: getVerticalSize(
+              48,
+            ),
+            text: 'Payment',
+            margin: getMargin(
+              top: 10,
+              left: 20,
+              right: 20,
+              bottom: 10,
+            ),
+            buttonStyle: CustomButtonStyles.fillTeal400,
+            buttonTextStyle: CustomTextStyles.titleSmallPrimary_1.copyWith(
+              color: isLight ? ColorConstant.whiteA700 : null,
+            ),
+          ),
+          CustomElevatedButton(
+            onTap: () {
+              Navigator.pop(context);
+              showPromoCodeDialog(
+                price: price,
+                context: context,
+                packageType: packageType,
+                packageId: packageId,
+              );
+            },
+            width: double.maxFinite,
+            height: getVerticalSize(
+              48,
+            ),
+            text: 'Use promocode',
+            margin: getMargin(
+              top: 0,
+              left: 20,
+              right: 20,
+              bottom: 10,
+            ),
+            buttonStyle: CustomButtonStyles.fillTeal400,
+            buttonTextStyle: CustomTextStyles.titleSmallPrimary_1.copyWith(
+              color: isLight ? ColorConstant.whiteA700 : null,
+            ),
+          ),
+          const SizedBox(height: 10),
+        ],
+      );
+    },
+  );
+}
+
+void showPromoCodeDialog({
+  required String price,
+  required BuildContext context,
+  required PackageType packageType,
+  required int packageId,
+}) async {
+  bool isLight = Theme.of(context).brightness == Brightness.light;
+  showDialog(
+    context: context,
+    builder: (context) {
+      TextEditingController controller = TextEditingController();
+      return Dialog(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 10,
+                bottom: 10,
+                left: 16,
+                right: 16,
+              ),
+              child: CustomTextFormField(
+                controller: controller,
+                margin: getMargin(
+                  top: 1,
+                ),
+                contentPadding: getPadding(
+                  left: 16,
+                  top: 15,
+                  right: 16,
+                  bottom: 15,
+                ),
+                textStyle: CustomTextStyles.bodyMediumGray200.copyWith(
+                  color: isLight ? ColorConstant.black : null,
+                ),
+                hintText: 'Enter promocode',
+                hintStyle: CustomTextStyles.bodyMediumGray200,
+                textInputType: TextInputType.name,
+                filled: true,
+                fillColor:
+                    isLight ? ColorConstant.kF3F3F3 : appTheme.grayTextfiled,
+              ),
+            ),
+            CustomElevatedButton(
+              onTap: () async {
+                String text = controller.text;
+                if (text.trim().isNotEmpty) {
+                  dz.Either<String, Map<String, dynamic>> result =
+                      await PaymentRepository.instance
+                          .applyPromocode(code: text);
+                  result.fold((l) {
+                    Navigator.pop(context);
+                  }, (r) {
+                    int minValue = r['min_cart_value'];
+                    int value = r['value'];
+                    print(minValue);
+                    print(value);
+                    int intPrice = int.parse(price);
+                    if (intPrice > minValue) {
+                      int totalPrice = intPrice - value;
+                      Navigator.pop(context);
+                      payment(
+                        price: totalPrice.toString(),
+                        context: context,
+                        packageType: packageType,
+                        packageId: packageId,
+                      );
+                    } else {
+                      Navigator.pop(context);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content:
+                              Text('Payment minimum value should be $minValue'),
+                          backgroundColor: appTheme.teal400,
+                        ),
+                      );
+                    }
+                  });
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: const Text('Enter valid code'),
+                      backgroundColor: appTheme.teal400,
+                    ),
+                  );
+                }
+              },
+              width: double.maxFinite,
+              height: getVerticalSize(
+                48,
+              ),
+              text: 'Apply promocode',
+              margin: getMargin(
+                top: 0,
+                left: 16,
+                right: 16,
+                bottom: 10,
+              ),
+              buttonStyle: CustomButtonStyles.fillTeal400,
+              buttonTextStyle: CustomTextStyles.titleSmallPrimary_1.copyWith(
+                color: isLight ? ColorConstant.whiteA700 : null,
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({Key? key}) : super(key: key);
@@ -390,7 +581,7 @@ class PackageDetails extends StatelessWidget {
         CustomElevatedButton(
           onTap: () async {
             //TODO: make annualy payment
-            payment(
+            showPaymentModemSheet(
               context: context,
               packageId: packageData.id,
               packageType: PackageType.annual,
@@ -409,7 +600,7 @@ class PackageDetails extends StatelessWidget {
         CustomElevatedButton(
           onTap: () async {
             //TODO: make monthaly payment
-            payment(
+            showPaymentModemSheet(
               context: context,
               packageId: packageData.id,
               packageType: PackageType.monthly,
