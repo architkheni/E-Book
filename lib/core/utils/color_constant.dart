@@ -22,4 +22,5 @@ class ColorConstant {
   static Color k5E5E5E = fromHex('#5E5E5E');
   static Color k181919 = fromHex('#181919');
   static Color k2D3047 = fromHex('#2D3047');
+  static Color grey = Colors.grey;
 }

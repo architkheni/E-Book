@@ -510,7 +510,7 @@ class _HomeRecommendedForYouSeeAllScreenState
                                                                                 '${book.readCahpters}/${book.totalChapters}',
                                                                                 overflow: TextOverflow.ellipsis,
                                                                                 textAlign: TextAlign.left,
-                                                                                style: CustomTextStyles.bodySmallThin_1,
+                                                                                style: CustomTextStyles.bodySmallThin_1.copyWith(color: isLight ? Colors.black : null),
                                                                               ),
                                                                             ],
                                                                           )

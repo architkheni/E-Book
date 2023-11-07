@@ -18,6 +18,7 @@ import 'package:book/presentation/my_library_screen/my_library_screen.dart';
 import 'package:book/presentation/payment_screen/payment_screen.dart';
 import 'package:book/presentation/sign_up_screen/sign_up_screen.dart';
 import 'package:book/router/app_routes.dart';
+import 'package:book/router/custom_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -146,8 +147,10 @@ class AppRouter {
           parentNavigatorKey: _rootNavigatorKey,
           path: AppRoutesPath.bookRead,
           name: AppRoutesName.bookRead,
-          builder: (context, state) {
-            return BookReadScreen(bookId: state.extra as int);
+          pageBuilder: (context, state) {
+            return CustomTransition(
+              child: BookReadScreen(bookId: state.extra as int),
+            );
           },
         ),
         GoRoute(

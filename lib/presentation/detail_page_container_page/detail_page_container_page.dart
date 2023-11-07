@@ -1,5 +1,6 @@
 import 'package:book/model/book_chapter_model.dart';
 import 'package:book/presentation/detail_page_container_page/widgets/chipviewframefo2_item_widget.dart';
+import 'package:book/provider/continue_reading_book_provider.dart';
 import 'package:book/provider/detail_provider.dart';
 import 'package:book/provider/wishlist_provider.dart';
 import 'package:book/router/app_routes.dart';
@@ -178,6 +179,11 @@ class _DetailViewState extends State<DetailView> {
                                         int isFree = provider
                                             .detailModel.book!.freeBook!;
                                         if (isFree == 1) {
+                                          context
+                                              .read<ContinueReadingProvider>()
+                                              .setBook(
+                                                provider.detailModel.book!,
+                                              );
                                           context.push(
                                             AppRoutesPath.bookRead,
                                             extra: widget.bookId,

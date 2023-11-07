@@ -222,13 +222,12 @@ class _BookReadViewState extends State<BookReadView> {
       },
       child: SafeArea(
         child: Scaffold(
-          backgroundColor:
-              isLight ? ColorConstant.whiteA700 : const Color(0x0f181a1a),
+          backgroundColor: isLight ? ColorConstant.whiteA700 : Colors.black,
           appBar: CustomAppBar(
             height: 70,
             leadingWidth: 37,
-            leading: AppbarImage(
-              onTap: () {
+            leading: IconButton(
+              onPressed: () {
                 if (ShowBox) {
                   setState(() {
                     ShowBox = false;
@@ -237,11 +236,10 @@ class _BookReadViewState extends State<BookReadView> {
                   context.pop();
                 }
               },
-              height: 24,
-              width: 24,
-              color: isLight ? ColorConstant.black : null,
-              imagePath: ImageConstant.downArrow,
-              margin: getMargin(left: 13, top: 16, bottom: 16),
+              icon: const Icon(
+                Icons.keyboard_arrow_down,
+                size: 40,
+              ),
             ),
             actions: [
               AppbarImage(

@@ -1,3 +1,5 @@
+import 'package:book/model/book_model.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppStorage {
@@ -49,6 +51,20 @@ class AppStorage {
   Future<bool> getCategoryIsFirst() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getBool('isFirstTime') ?? true;
+  }
+
+  void setCurrentReadingBook(BookModel? book) {
+    GetStorage getStorage = GetStorage();
+    getStorage.write('book', book);
+  }
+
+  BookModel? getCurrentReadingBook() {
+    GetStorage getStorage = GetStorage();
+    final json = getStorage.read('book');
+    if (json == null) {
+      return null;
+    }
+    return BookModel.fromJson(json);
   }
 
   void dispose() async {

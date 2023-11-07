@@ -27,7 +27,7 @@ class MyThemes {
       selectionHandleColor: Colors.grey,
       selectionColor: Colors.grey,
     ),
-    scaffoldBackgroundColor: const Color(0x0f181a1a),
+    scaffoldBackgroundColor: Colors.black,
     colorScheme: const ColorScheme.dark(),
     primaryColor: Colors.black,
     fontFamily: 'outfit',

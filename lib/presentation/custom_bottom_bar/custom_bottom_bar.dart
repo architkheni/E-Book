@@ -1,8 +1,13 @@
 import 'package:book/core/storage/cache_storage.dart';
 import 'package:book/core/utils/color_constant.dart';
+import 'package:book/model/book_model.dart';
+import 'package:book/provider/continue_reading_book_provider.dart';
+import 'package:book/router/app_routes.dart';
 import 'package:book/theme/theme_helper.dart';
+import 'package:book/widgets/custom_image_view.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 import '../../core/utils/image_constant.dart';
 import '../../theme/custom_text_style.dart';
@@ -16,6 +21,7 @@ class BottombarPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     int selectedIndex = navigationShell.currentIndex;
     return WillPopScope(
       onWillPop: () async {
@@ -46,6 +52,7 @@ class BottombarPage extends StatelessWidget {
         bottomNavigationBar: SizedBox(
           height: 70,
           child: BottomAppBar(
+            elevation: 0,
             color: Theme.of(context).brightness == Brightness.dark
                 ? const Color(0xFF0D0D0D)
                 : const Color(0xFFFFFFFF),
@@ -280,7 +287,79 @@ class BottombarPage extends StatelessWidget {
             ),
           ),
         ),
-        body: navigationShell,
+        body: Column(
+          children: [
+            Expanded(child: navigationShell),
+            Consumer<ContinueReadingProvider>(
+              builder: (context, provider, child) {
+                BookModel? book = provider.bookModel;
+                if (book == null) {
+                  return const SizedBox.shrink();
+                }
+                return GestureDetector(
+                  onTap: () {
+                    context.push(
+                      AppRoutesPath.bookRead,
+                      extra: provider.bookModel!.bookId!,
+                    );
+                  },
+                  child: Container(
+                    height: 60,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? const Color(0xFF0D0D0D)
+                          : const Color(0xFFFFFFFF),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: width * 5 / 100,
+                        ),
+                        SizedBox(
+                          height: 52.5,
+                          width: 35,
+                          child: CustomImageView(
+                            url: book.frontCover,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Continue reading',
+                              style: TextStyle(
+                                color: ColorConstant.grey,
+                                fontSize: 12,
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(book.name!),
+                          ],
+                        ),
+                        const Spacer(),
+                        IconButton(
+                          onPressed: () {
+                            context
+                                .read<ContinueReadingProvider>()
+                                .setBook(null);
+                          },
+                          icon: Icon(
+                            Icons.clear,
+                            color: ColorConstant.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
