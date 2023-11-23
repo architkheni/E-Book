@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: non_constant_identifier_names, prefer_typing_uninitialized_variables, unused_local_variable
 
+import 'dart:developer';
+
 import 'package:book/core/storage/cache_storage.dart';
 import 'package:book/core/utils/color_constant.dart';
 import 'package:book/core/utils/string_utils.dart';
@@ -42,7 +44,6 @@ bool ShowBox = false;
 int _currentSliderValue = 1;
 
 class _BookReadViewState extends State<BookReadView> {
-  GlobalKey<NavigatorState> navigatorKey = GlobalKey();
   @override
   void initState() {
     ShowBox = false;
@@ -205,7 +206,6 @@ class _BookReadViewState extends State<BookReadView> {
     mediaQueryData = MediaQuery.of(context);
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    PageController controller = PageController();
     bool isLight = !CacheStorage.isDark;
     int curr = 0;
 
@@ -236,9 +236,10 @@ class _BookReadViewState extends State<BookReadView> {
                   context.pop();
                 }
               },
-              icon: const Icon(
+              icon: Icon(
                 Icons.keyboard_arrow_down,
                 size: 40,
+                color: isLight ? ColorConstant.black : ColorConstant.whiteA700,
               ),
             ),
             actions: [
@@ -271,6 +272,12 @@ class _BookReadViewState extends State<BookReadView> {
           ),
           body: Consumer<BookReadProvider>(
             builder: (context, provider, child) {
+              int position = context
+                  .read<BookReadProvider>()
+                  .getCurrentChapterPosition(widget.bookId);
+              log(position.toString());
+              PageController controller =
+                  PageController(initialPage: position, keepPage: false);
               return provider.isLoading
                   ? Center(
                       child: CircularProgressIndicator(color: appTheme.teal400),
@@ -291,6 +298,12 @@ class _BookReadViewState extends State<BookReadView> {
                                       provider.chapters[value].id!,
                                     );
                               }
+                              context
+                                  .read<BookReadProvider>()
+                                  .saveCurrentChapterPosition(
+                                    widget.bookId,
+                                    value,
+                                  );
                             },
                             itemBuilder: (context, index) {
                               BookChapterModel chapter =
@@ -615,6 +628,7 @@ class Pages extends StatelessWidget {
                     color:
                         isLight ? ColorConstant.black : ColorConstant.whiteA700,
                     fontSize: FontSize(NormalFont.toDouble()),
+                    fontFamily: 'outfit',
                   ),
                 },
               ),

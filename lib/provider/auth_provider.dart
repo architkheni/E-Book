@@ -1,7 +1,9 @@
 import 'package:book/core/storage/app_storage.dart';
+import 'package:book/core/utils/color_constant.dart';
 import 'package:book/model/user_model.dart';
 import 'package:book/repository/auth_repository.dart';
 import 'package:book/router/app_routes.dart';
+import 'package:book/widgets/screen_loader.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -10,14 +12,24 @@ import '../core/app_export.dart';
 
 class AuthProvider extends ChangeNotifier {
   AppStorage appStorage = AppStorage();
+  ScreenLoader screenLoader = ScreenLoader();
 
   void logIn(
     BuildContext context, {
     required String email,
     String? password,
   }) async {
+    screenLoader.show(
+      context,
+      loadingColor: ColorConstant.primaryColor,
+      containerColor: Theme.of(context).brightness == Brightness.dark
+          ? Colors.black
+          : Colors.white,
+      backgroundColor: Colors.black12,
+    );
     Either<String, UserModel> result =
         await AuthRepository.instance.logIn(email: email, password: password);
+    screenLoader.hide();
     result.fold((l) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -47,6 +59,14 @@ class AuthProvider extends ChangeNotifier {
     required String email,
     required String password,
   }) async {
+    screenLoader.show(
+      context,
+      loadingColor: ColorConstant.primaryColor,
+      containerColor: Theme.of(context).brightness == Brightness.dark
+          ? Colors.black
+          : Colors.white,
+      backgroundColor: Colors.black12,
+    );
     Either<String, UserModel> result = await AuthRepository.instance.register(
       name: name,
       username: username,
@@ -54,6 +74,7 @@ class AuthProvider extends ChangeNotifier {
       email: email,
       password: password,
     );
+    screenLoader.hide();
     result.fold((l) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -82,12 +103,21 @@ class AuthProvider extends ChangeNotifier {
     required String mobileNo,
     required String email,
   }) async {
+    screenLoader.show(
+      context,
+      loadingColor: ColorConstant.primaryColor,
+      containerColor: Theme.of(context).brightness == Brightness.dark
+          ? Colors.black
+          : Colors.white,
+      backgroundColor: Colors.black12,
+    );
     Either<String, UserModel> result = await AuthRepository.instance.ssoCreate(
       name: name,
       username: username,
       mobileNo: mobileNo,
       email: email,
     );
+    screenLoader.hide();
     result.fold((l) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -168,8 +198,17 @@ class AuthProvider extends ChangeNotifier {
     required String email,
     required String password,
   }) async {
+    screenLoader.show(
+      context,
+      loadingColor: ColorConstant.primaryColor,
+      containerColor: Theme.of(context).brightness == Brightness.dark
+          ? Colors.black
+          : Colors.white,
+      backgroundColor: Colors.black12,
+    );
     Either<String, bool> result = await AuthRepository.instance
         .updatePassword(email: email, password: password);
+    screenLoader.hide();
     result.fold((l) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -206,6 +245,11 @@ class AuthProvider extends ChangeNotifier {
                 context.go(AppRoutesPath.logInEmail);
               });
             },
+            style: ButtonStyle(
+              overlayColor: MaterialStateProperty.all(
+                ColorConstant.primaryColor.withOpacity(0.10),
+              ),
+            ),
             child: Text(
               'Yes',
               style: TextStyle(color: appTheme.teal400),
@@ -215,6 +259,11 @@ class AuthProvider extends ChangeNotifier {
             onPressed: () {
               Navigator.pop(context);
             },
+            style: ButtonStyle(
+              overlayColor: MaterialStateProperty.all(
+                ColorConstant.primaryColor.withOpacity(0.10),
+              ),
+            ),
             child: Text(
               'No',
               style: TextStyle(color: appTheme.teal400),

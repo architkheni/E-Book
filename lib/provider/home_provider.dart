@@ -17,6 +17,7 @@ class HomePovider extends ChangeNotifier {
   }
 
   void getDashboardDetails() async {
+    setLoading(true);
     String token = await appStorage.getToken();
     Either<String, DashboardModel> result =
         await HomeRepository.instance.getDashboardDetail(token: token);

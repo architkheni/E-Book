@@ -26,7 +26,6 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
   @override
   void initState() {
     super.initState();
-    context.read<HomePovider>().getDashboardDetails();
     context.read<ExploreProvider>().getAllCategories();
     context.read<WishlistProvider>().getWishListBook();
   }
@@ -52,7 +51,9 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
               child: RefreshIndicator(
                 color: appTheme.teal400,
                 onRefresh: () async {
-                  context.read<HomePovider>().getDashboardDetails();
+                  context
+                      .read<HomePovider>()
+                      .getDashboardDetails();
                 },
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
@@ -60,6 +61,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                     padding:
                         const EdgeInsets.only(top: 12, left: 16, right: 16),
                     child: Column(
+                      
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -83,7 +85,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                         Padding(
                           padding: getPadding(left: 6),
                           child: Text(
-                            'Free Book of the Day',
+                            'Free Book for You',
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.left,
                             style: theme.textTheme.titleLarge!.copyWith(
@@ -328,87 +330,87 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                                 ),
                               )
                             : const SizedBox.shrink(),
-                        provider.dashboardModel.topSearchBook.isNotEmpty
-                            ? Padding(
-                                padding: getPadding(top: 20),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      'Top Search',
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.left,
-                                      style:
-                                          theme.textTheme.titleLarge!.copyWith(
-                                        color: isLight
-                                            ? ColorConstant.black
-                                            : null,
-                                      ),
-                                    ),
-                                    const Spacer(),
-                                    InkWell(
-                                      onTap: () {
-                                        context.push(
-                                          AppRoutesPath.viewAllBook,
-                                          extra: {
-                                            'title': 'Top Search',
-                                            'param': 'flag_top_sell',
-                                          },
-                                        );
-                                      },
-                                      child: Row(
-                                        children: [
-                                          Padding(
-                                            padding: getPadding(
-                                              top: 7,
-                                              bottom: 7,
-                                            ),
-                                            child: Text(
-                                              'Show all',
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: CustomTextStyles
-                                                  .labelLargeTeal400Bold,
-                                            ),
-                                          ),
-                                          CustomImageView(
-                                            svgPath: ImageConstant
-                                                .imgArrowrightTeal400,
-                                            height: getSize(16),
-                                            width: getSize(16),
-                                            margin: getMargin(
-                                              left: 4,
-                                              top: 7,
-                                              bottom: 7,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : const SizedBox.shrink(),
-                        provider.dashboardModel.topSearchBook.isNotEmpty
-                            ? Padding(
-                                padding: getPadding(top: 20, bottom: 20),
-                                child: SingleChildScrollView(
-                                  physics: const BouncingScrollPhysics(),
-                                  scrollDirection: Axis.horizontal,
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: List.generate(
-                                      provider
-                                          .dashboardModel.topSearchBook.length,
-                                      (index) => BookTile(
-                                        book: provider.dashboardModel
-                                            .topSearchBook[index],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : const SizedBox.shrink(),
+                        // provider.dashboardModel.topSearchBook.isNotEmpty
+                        //     ? Padding(
+                        //         padding: getPadding(top: 20),
+                        //         child: Row(
+                        //           children: [
+                        //             Text(
+                        //               'Top Search',
+                        //               overflow: TextOverflow.ellipsis,
+                        //               textAlign: TextAlign.left,
+                        //               style:
+                        //                   theme.textTheme.titleLarge!.copyWith(
+                        //                 color: isLight
+                        //                     ? ColorConstant.black
+                        //                     : null,
+                        //               ),
+                        //             ),
+                        //             const Spacer(),
+                        //             InkWell(
+                        //               onTap: () {
+                        //                 context.push(
+                        //                   AppRoutesPath.viewAllBook,
+                        //                   extra: {
+                        //                     'title': 'Top Search',
+                        //                     'param': 'flag_top_sell',
+                        //                   },
+                        //                 );
+                        //               },
+                        //               child: Row(
+                        //                 children: [
+                        //                   Padding(
+                        //                     padding: getPadding(
+                        //                       top: 7,
+                        //                       bottom: 7,
+                        //                     ),
+                        //                     child: Text(
+                        //                       'Show all',
+                        //                       overflow: TextOverflow.ellipsis,
+                        //                       textAlign: TextAlign.left,
+                        //                       style: CustomTextStyles
+                        //                           .labelLargeTeal400Bold,
+                        //                     ),
+                        //                   ),
+                        //                   CustomImageView(
+                        //                     svgPath: ImageConstant
+                        //                         .imgArrowrightTeal400,
+                        //                     height: getSize(16),
+                        //                     width: getSize(16),
+                        //                     margin: getMargin(
+                        //                       left: 4,
+                        //                       top: 7,
+                        //                       bottom: 7,
+                        //                     ),
+                        //                   ),
+                        //                 ],
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       )
+                        //     : const SizedBox.shrink(),
+                        // provider.dashboardModel.topSearchBook.isNotEmpty
+                        //     ? Padding(
+                        //         padding: getPadding(top: 20, bottom: 20),
+                        //         child: SingleChildScrollView(
+                        //           physics: const BouncingScrollPhysics(),
+                        //           scrollDirection: Axis.horizontal,
+                        //           child: Row(
+                        //             crossAxisAlignment:
+                        //                 CrossAxisAlignment.start,
+                        //             children: List.generate(
+                        //               provider
+                        //                   .dashboardModel.topSearchBook.length,
+                        //               (index) => BookTile(
+                        //                 book: provider.dashboardModel
+                        //                     .topSearchBook[index],
+                        //               ),
+                        //             ),
+                        //           ),
+                        //         ),
+                        //       )
+                        //     : const SizedBox.shrink(),
                         provider.dashboardModel.categories.isNotEmpty
                             ? Padding(
                                 padding: getPadding(top: 5),

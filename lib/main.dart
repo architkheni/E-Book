@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(create: (context) => AuthProvider()),
         ChangeNotifierProvider(create: (context) => ProfileProvider()),
-        ChangeNotifierProvider(create: (context) => HomePovider()),
+        ChangeNotifierProvider(create: (context) => HomePovider()..getDashboardDetails()),
         ChangeNotifierProvider(
           create: (context) => ExploreProvider()..getAllCategories(),
         ),

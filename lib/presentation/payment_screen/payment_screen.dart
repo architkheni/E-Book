@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, sdk_version_since
 import 'dart:convert';
 import 'dart:developer';
 
@@ -39,7 +39,7 @@ void showPaymentModemSheet({
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
     ),
-    builder: (context) {
+    builder: (_) {
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -112,7 +112,7 @@ void showPromoCodeDialog({
   bool isLight = Theme.of(context).brightness == Brightness.light;
   showDialog(
     context: context,
-    builder: (context) {
+    builder: (_) {
       TextEditingController controller = TextEditingController();
       return Dialog(
         child: Column(
@@ -327,7 +327,7 @@ void payment({
   UserModel userModel = UserModel.fromJson(jsonDecode(userString));
   navigatorState.push(
     MaterialPageRoute(
-      builder: (BuildContext context) => UsePaypal(
+      builder: (_) => UsePaypal(
         sandboxMode: true,
         clientId:
             'AdhqFrRbpA6xim3nYJ-64bolDm1kJF42iAgLuUseMQAoEpfupVetVF0lgB7RGPiPobpqIkcLq5AZ9ohW',
@@ -373,8 +373,8 @@ void payment({
                   transactionId: transactionId,
                   status: status,
                   type: type,
-                  packageId: 2,
-                  packageType: '',
+                  packageId: packageId,
+                  packageType: packageType.name,
                 );
           } catch (e) {
             log(e.toString());

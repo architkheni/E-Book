@@ -1,4 +1,5 @@
 import 'package:book/model/book_chapter_model.dart';
+import 'package:book/model/category_model.dart';
 import 'package:book/presentation/detail_page_container_page/widgets/chipviewframefo2_item_widget.dart';
 import 'package:book/provider/continue_reading_book_provider.dart';
 import 'package:book/provider/detail_provider.dart';
@@ -402,17 +403,8 @@ class _DetailViewState extends State<DetailView> {
                           alignment: Alignment.centerLeft,
                           child: Builder(
                             builder: (context) {
-                              List<String> categories = [];
-                              for (var element in ((provider
-                                      .detailModel.book!.categoryName ??
-                                  []) as List<dynamic>)) {
-                                categories.add(element);
-                              }
-                              for (var element in ((provider
-                                      .detailModel.book!.subcategoryName ??
-                                  []) as List<dynamic>)) {
-                                categories.add(element);
-                              }
+                              List<CategoryModel> categories =
+                                  provider.detailModel.categoryBook;
                               return Padding(
                                 padding:
                                     const EdgeInsets.only(left: 16, top: 13),
@@ -422,7 +414,8 @@ class _DetailViewState extends State<DetailView> {
                                   children: List<Widget>.generate(
                                     categories.length,
                                     (index) => Chipviewframefo2ItemWidget(
-                                      text: categories[index],
+                                      text: categories[index].name!,
+                                      icon: categories[index].icon,
                                     ),
                                   ),
                                 ),
@@ -575,7 +568,7 @@ class _DetailViewState extends State<DetailView> {
                               const SizedBox(width: 25),
                               Expanded(
                                 child: Text(
-                                  'Final Summary',
+                                  'Conclusion',
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.left,
                                   style:

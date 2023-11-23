@@ -125,19 +125,14 @@ class CustomImageView extends StatelessWidget {
         fit: fit,
         imageUrl: url!,
         color: color,
-        placeholder: (context, url) => SizedBox(
-          height: 30,
-          width: 30,
-          child: LinearProgressIndicator(
-            color: Colors.grey.shade200,
-            backgroundColor: Colors.grey.shade100,
-          ),
+        placeholder: (context, url) => LinearProgressIndicator(
+          color: Colors.grey.shade200,
+          backgroundColor: Colors.grey.shade100,
         ),
-        errorWidget: (context, url, error) => Image.asset(
-          placeHolder,
+        errorWidget: (context, url, error) => Container(
+          decoration: const BoxDecoration(color: Colors.black),
           height: height,
           width: width,
-          fit: fit ?? BoxFit.cover,
         ),
       );
     } else if (imagePath != null && imagePath!.isNotEmpty) {

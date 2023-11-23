@@ -118,9 +118,9 @@ class _EditProfileState extends State<EditProfile> {
                                       )
                                     : ClipRRect(
                                         borderRadius: BorderRadius.circular(50),
-                                        child: Image.network(
-                                          uploadImage,
-                                          fit: BoxFit.cover,
+                                        child: CustomImageView(
+                                          url: uploadImage,
+                                          fit: BoxFit.fill,
                                         ),
                                       )
                                 : ClipRRect(

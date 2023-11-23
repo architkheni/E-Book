@@ -27,6 +27,14 @@ class BookReadProvider extends ChangeNotifier {
     }
   }
 
+  int getCurrentChapterPosition(int bookId) {
+    return appStorage.getCurrentChapterPosition(bookId);
+  }
+
+  void saveCurrentChapterPosition(int book, int position) {
+    appStorage.saveCurrentChapterPosition(book, position);
+  }
+
   void readChapter(int bookId, int chapterId) async {
     String token = await appStorage.getToken();
     await HomeRepository.instance.readChapter(bookId, chapterId, token);

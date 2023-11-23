@@ -149,7 +149,7 @@ class _ExplorePageState extends State<ExplorePage> {
                       ),
                     ),
                     prefixConstraints:
-                        BoxConstraints(maxHeight: getVerticalSize(45)),
+                        BoxConstraints(maxHeight: getVerticalSize(20)),
                     filled: true,
                     autofocus: false,
                     fillColor:
@@ -158,7 +158,7 @@ class _ExplorePageState extends State<ExplorePage> {
                   ),
                   if (selectSubCategory == null) ...{
                     Padding(
-                      padding: getPadding(top: 42),
+                      padding: getPadding(top: 30),
                       child: Text(
                         selectCategory != null ? 'Sub-Category' : 'Categories',
                         overflow: TextOverflow.ellipsis,
@@ -170,12 +170,12 @@ class _ExplorePageState extends State<ExplorePage> {
                     ),
                   } else ...{
                     Padding(
-                      padding: getPadding(top: 10),
+                      padding: getPadding(top: 30),
                       child: Text(
                         'Search Results',
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
-                        style: theme.textTheme.titleMedium!.copyWith(
+                        style: theme.textTheme.titleLarge!.copyWith(
                           color: isLight ? ColorConstant.black : null,
                         ),
                       ),
@@ -259,6 +259,18 @@ class _ExplorePageState extends State<ExplorePage> {
                         builder: (context, provider, child) {
                           List<SubcategoryModel> subCategories =
                               provider.subCategories;
+                          if (provider.isLoading) {
+                            return Center(
+                              child: CircularProgressIndicator(
+                                color: ColorConstant.primaryColor,
+                              ),
+                            );
+                          }
+                          if (subCategories.isEmpty) {
+                            return const Text(
+                              'We don\'t currently have what you\'re looking for. Why not suggest it to us?',
+                            );
+                          }
                           return provider.isLoading
                               ? const SizedBox.shrink()
                               : Wrap(
@@ -340,6 +352,11 @@ class _ExplorePageState extends State<ExplorePage> {
                             child: CircularProgressIndicator(
                               color: ColorConstant.primaryColor,
                             ),
+                          );
+                        }
+                        if (provider.books.isEmpty) {
+                          return const Text(
+                            'We don\'t currently have what you\'re looking for. Why not suggest it to us?',
                           );
                         }
                         return ListView.separated(
@@ -529,7 +546,7 @@ class _ExplorePageState extends State<ExplorePage> {
                     builder: (context, provider, child) {
                       return provider.dashboardModel.recentlyAddBook.isNotEmpty
                           ? Padding(
-                              padding: getPadding(left: 1, top: 45, right: 12),
+                              padding: getPadding(left: 1, top: 30, right: 12),
                               child: Row(
                                 children: [
                                   Text(

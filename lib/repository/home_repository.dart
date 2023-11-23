@@ -134,10 +134,13 @@ class HomeRepository {
     }
   }
 
-  Future<Either<String, DetailModel>> getBookDetails(int bookId) async {
+  Future<Either<String, DetailModel>> getBookDetails(int bookId, {required String token}) async {
     try {
-      Response response = await dioClient
-          .post(ApiEndpoint.bookDetails, data: {'book_id': bookId});
+      Response response = await dioClient.post(
+        ApiEndpoint.bookDetails,
+        data: {'book_id': bookId},
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+      );
       if (response.statusCode == 200) {
         dynamic data = response.data;
         if (data.runtimeType == String) {

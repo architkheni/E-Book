@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:book/core/app_export.dart';
 import 'package:book/core/utils/color_constant.dart';
-import 'package:book/provider/auth_provider.dart';
+import 'package:book/provider/auth_provider.dart' as auth;
 import 'package:book/router/app_routes.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:book/widgets/custom_text_form_field.dart';
@@ -164,7 +164,7 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                                 .showSnackBar(snackBar);
                             return;
                           }
-                          context.read<AuthProvider>().logIn(
+                          context.read<auth.AuthProvider>().logIn(
                                 context,
                                 email: emailController.text,
                                 password: passwordController.text.trim(),
@@ -184,7 +184,7 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                         onTap: () {
                           var velidEmail = emailV(emailController.text);
                           if (velidEmail == true) {
-                            context.read<AuthProvider>().forgotPassword(
+                            context.read<auth.AuthProvider>().forgotPassword(
                                   context,
                                   email: emailController.text.trim(),
                                 );
@@ -284,8 +284,8 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                         padding: const EdgeInsets.only(top: 16),
                         child: CustomElevatedButton(
                           onTap: () async {
-                            AuthProvider authProvider =
-                                context.read<AuthProvider>();
+                            auth.AuthProvider authProvider =
+                                context.read<auth.AuthProvider>();
                             ScaffoldMessengerState scaffoldState =
                                 ScaffoldMessenger.of(context);
                             try {

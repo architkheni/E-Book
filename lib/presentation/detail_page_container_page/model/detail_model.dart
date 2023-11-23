@@ -2,11 +2,13 @@ import 'package:book/model/author_model.dart';
 import 'package:book/model/book_chapter_model.dart';
 import 'package:book/model/book_model.dart';
 import 'package:book/model/book_rating_model.dart';
+import 'package:book/model/category_model.dart';
 
 class DetailModel {
   BookModel? book;
   List<BookChapterModel> bookChapter;
   List<AuthorModel> authors;
+  List<CategoryModel> categoryBook;
   List<BookModel> authorBookList;
   List<BookModel> similarBook;
   List<BookRatingModel> bookRating;
@@ -15,6 +17,7 @@ class DetailModel {
     this.book,
     this.bookChapter = const [],
     this.authors = const [],
+    this.categoryBook = const [],
     this.authorBookList = const [],
     this.similarBook = const [],
     this.bookRating = const [],
@@ -23,6 +26,11 @@ class DetailModel {
   factory DetailModel.fromJson(Map<String, dynamic> json) {
     return DetailModel(
       book: BookModel.fromJson(json['book_detail']),
+      categoryBook: json['book_detail']['category_book'] == null
+          ? []
+          : (json['book_detail']['category_book'] as List<dynamic>)
+              .map((e) => CategoryModel.fromJson(e))
+              .toList(),
       bookChapter: json['book_chapter'] != null
           ? (json['book_chapter'] as List<dynamic>)
               .map((e) => BookChapterModel.fromJson(e))

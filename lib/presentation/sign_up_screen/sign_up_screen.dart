@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:book/core/app_export.dart';
 import 'package:book/core/utils/color_constant.dart';
-import 'package:book/provider/auth_provider.dart';
+import 'package:book/provider/auth_provider.dart' as auth;
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:book/widgets/custom_text_form_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -294,7 +294,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           .showSnackBar(snackBar);
                                     } else {
                                       if (isGoogleChoose) {
-                                        context.read<AuthProvider>().ssoCreate(
+                                        context.read<auth.AuthProvider>().ssoCreate(
                                               context,
                                               name: nameController.text,
                                               username: userNameController.text,
@@ -344,7 +344,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             .showSnackBar(snackBar);
                                         return;
                                       }
-                                      context.read<AuthProvider>().register(
+                                      context.read<auth.AuthProvider>().register(
                                             context,
                                             name: nameController.text,
                                             username: userNameController.text,

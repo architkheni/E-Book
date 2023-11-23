@@ -105,6 +105,11 @@ class _HomeRecommendedForYouSeeAllScreenState
                     .where((element) => bookId.contains(element.bookId))
                     .toList();
               }
+              if (widget.param == 'progress') {
+                books = books
+                    .where((element) => element.readCahpters != 0)
+                    .toList();
+              }
               if (widget.param != 'finished') {
                 if (selectedValue == 'A to Z') {
                   books.sort((a, b) => a.name!.compareTo(b.name!));
@@ -353,29 +358,30 @@ class _HomeRecommendedForYouSeeAllScreenState
                                                         Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
-                                                                  .center,
+                                                                  .start,
                                                           children: [
-                                                            Text(
-                                                              book.name ??
-                                                                  'Book Name',
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .left,
-                                                              style: theme
-                                                                  .textTheme
-                                                                  .titleSmall!
-                                                                  .copyWith(
-                                                                color: isLight
-                                                                    ? ColorConstant
-                                                                        .black
-                                                                    : null,
-                                                                fontSize: 15,
+                                                            Expanded(
+                                                              child: Text(
+                                                                book.name ??
+                                                                    'Book Name',
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .left,
+                                                                style: theme
+                                                                    .textTheme
+                                                                    .titleSmall!
+                                                                    .copyWith(
+                                                                  color: isLight
+                                                                      ? ColorConstant
+                                                                          .black
+                                                                      : null,
+                                                                  fontSize: 15,
+                                                                ),
                                                               ),
                                                             ),
-                                                            const Spacer(),
                                                             widget.title ==
                                                                     'In Progress'
                                                                 ? const SizedBox()

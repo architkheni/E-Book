@@ -11,6 +11,7 @@ import 'package:book/widgets/app_bar/appbar_subtitle.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -47,10 +48,19 @@ bool light = true;
 // final List<int> colorCodes = <int>[600, 500, 100];
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  String version = '';
+
   @override
   void initState() {
     super.initState();
+    getVersion();
     context.read<ProfileProvider>().init();
+  }
+
+  void getVersion() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    version = packageInfo.version;
+    setState(() {});
   }
 
   @override
@@ -143,12 +153,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         )
                                       : Stack(
                                           children: [
-                                            ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(50),
-                                              child: Image.network(
-                                                provider.uploadImage,
-                                                fit: BoxFit.cover,
+                                            Positioned.fill(
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(50),
+                                                child: CustomImageView(
+                                                  url: provider.uploadImage,
+                                                  fit: BoxFit.fill,
+                                                ),
                                               ),
                                             ),
                                             Positioned(
@@ -381,7 +393,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 10),
+                  Text(
+                    'version:- $version',
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                  const SizedBox(height: 100),
                 ],
               ),
             ),
