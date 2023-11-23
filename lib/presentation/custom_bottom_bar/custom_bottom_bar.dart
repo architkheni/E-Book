@@ -64,10 +64,7 @@ class BottombarPage extends StatelessWidget {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      navigationShell.goBranch(
-                        0,
-                        initialLocation: 0 == navigationShell.currentIndex,
-                      );
+                      context.go(AppRoutesPath.home);
                     },
                     child: Container(
                       color: selectedIndex != 0
@@ -119,10 +116,7 @@ class BottombarPage extends StatelessWidget {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      navigationShell.goBranch(
-                        1,
-                        initialLocation: 1 == navigationShell.currentIndex,
-                      );
+                      context.go(AppRoutesPath.explore);
                     },
                     child: Container(
                       width: 60,

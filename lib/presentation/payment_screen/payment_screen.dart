@@ -159,8 +159,6 @@ void showPromoCodeDialog({
                   }, (r) {
                     int minValue = r['min_cart_value'];
                     int value = r['value'];
-                    print(minValue);
-                    print(value);
                     int intPrice = int.parse(price);
                     if (intPrice > minValue) {
                       int totalPrice = intPrice - value;

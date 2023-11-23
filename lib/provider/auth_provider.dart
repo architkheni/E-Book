@@ -7,6 +7,7 @@ import 'package:book/widgets/screen_loader.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../core/app_export.dart';
 
@@ -243,6 +244,8 @@ class AuthProvider extends ChangeNotifier {
                 AppStorage appStorage = AppStorage();
                 appStorage.dispose();
                 context.go(AppRoutesPath.logInEmail);
+                final GoogleSignIn googleSignIn = GoogleSignIn();
+                googleSignIn.signOut();
               });
             },
             style: ButtonStyle(

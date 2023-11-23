@@ -395,7 +395,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    'version:- $version',
+                    'version: v.$version',
                     style: const TextStyle(fontSize: 12),
                   ),
                   const SizedBox(height: 100),
