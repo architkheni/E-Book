@@ -234,7 +234,7 @@ class _HomeRecommendedForYouSeeAllScreenState
                                 ),
                               ],
                             )
-                          : widget.param == 'progress' && provider.books.isEmpty
+                          : widget.param == 'progress' && books.isEmpty
                               ? Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -267,8 +267,7 @@ class _HomeRecommendedForYouSeeAllScreenState
                                     ),
                                   ],
                                 )
-                              : widget.param == 'finished' &&
-                                      provider.books.isEmpty
+                              : widget.param == 'finished' && books.isEmpty
                                   ? Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,

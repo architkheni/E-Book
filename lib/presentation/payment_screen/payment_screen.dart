@@ -163,11 +163,14 @@ void showPromoCodeDialog({
                     if (intPrice > minValue) {
                       int totalPrice = intPrice - value;
                       Navigator.pop(context);
-                      payment(
-                        price: totalPrice.toString(),
+                      showTotalPaymentDialog(
                         context: context,
                         packageType: packageType,
                         packageId: packageId,
+                        promocode: text,
+                        totalPrice: intPrice,
+                        discountPrice: value,
+                        paymentPrice: totalPrice,
                       );
                     } else {
                       Navigator.pop(context);
@@ -206,6 +209,80 @@ void showPromoCodeDialog({
               ),
             ),
           ],
+        ),
+      );
+    },
+  );
+}
+
+void showTotalPaymentDialog({
+  required BuildContext context,
+  required PackageType packageType,
+  required int packageId,
+  required String promocode,
+  required int totalPrice,
+  required int discountPrice,
+  required int paymentPrice,
+}) {
+  bool isLight = Theme.of(context).brightness == Brightness.light;
+  showDialog(
+    context: context,
+    builder: (_) {
+      return Dialog(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 2),
+                child: Row(
+                  children: [
+                    const Expanded(child: Text('Total Price: ')),
+                    Expanded(child: Text('\$${totalPrice.toString()}')),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 2),
+                child: Row(
+                  children: [
+                    const Expanded(child: Text('Discount Price: ')),
+                    Expanded(child: Text('\$${discountPrice.toString()}')),
+                  ],
+                ),
+              ),
+              const Divider(),
+              Padding(
+                padding: const EdgeInsets.only(top: 2, bottom: 10),
+                child: Row(
+                  children: [
+                    const Expanded(child: Text('Payment Price: ')),
+                    Expanded(child: Text('\$${paymentPrice.toString()}')),
+                  ],
+                ),
+              ),
+              CustomElevatedButton(
+                onTap: () async {
+                  payment(
+                    price: paymentPrice.toString(),
+                    context: context,
+                    packageType: packageType,
+                    packageId: packageId,
+                  );
+                },
+                width: double.maxFinite,
+                height: getVerticalSize(
+                  48,
+                ),
+                text: 'Payment',
+                buttonStyle: CustomButtonStyles.fillTeal400,
+                buttonTextStyle: CustomTextStyles.titleSmallPrimary_1.copyWith(
+                  color: isLight ? ColorConstant.whiteA700 : null,
+                ),
+              ),
+            ],
+          ),
         ),
       );
     },
@@ -564,9 +641,12 @@ class PackageDetails extends StatelessWidget {
                     Container(
                       height: 30,
                       alignment: Alignment.center,
-                      child: const Text(
+                      child: Text(
                         '1/Year',
-                        style: TextStyle(fontSize: 12),
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: ColorConstant.whiteA700,
+                        ),
                       ),
                     ),
                   ],
