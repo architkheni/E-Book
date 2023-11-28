@@ -200,6 +200,7 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                                       extra: {
                                         'title': 'My History',
                                         'param': 'history',
+                                        'jsonKey':'history',
                                       },
                                     );
                                   },
@@ -232,7 +233,7 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                               onRefresh: () async {
                                 context
                                     .read<ViewAllBookProvider>()
-                                    .getViewAllBooks(param: 'history');
+                                    .getViewAllBooks(param: 'history', key: 'history');
                               },
                               child: Container(
                                 width: double.maxFinite,

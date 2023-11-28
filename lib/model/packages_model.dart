@@ -4,7 +4,7 @@ class PackagesResponse {
   List<PackageData>? data;
 
   PackagesResponse({
-     this.data,
+    this.data,
   });
 
   factory PackagesResponse.fromJson(Map<String, dynamic> json) =>
@@ -29,6 +29,7 @@ class PackageData {
   String bookType;
   int monthlyPrice;
   int annualPrice;
+  String features;
 
   PackageData({
     required this.id,
@@ -36,6 +37,7 @@ class PackageData {
     required this.bookType,
     required this.monthlyPrice,
     required this.annualPrice,
+    required this.features,
   });
 
   factory PackageData.fromJson(Map<String, dynamic> json) => PackageData(
@@ -44,6 +46,7 @@ class PackageData {
         bookType: json['book_type'],
         monthlyPrice: json['monthly_price'],
         annualPrice: json['annual_price'],
+        features: json['features'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -52,6 +55,7 @@ class PackageData {
         'book_type': bookType,
         'monthly_price': monthlyPrice,
         'annual_price': annualPrice,
+        'features': features,
       };
 
   @override

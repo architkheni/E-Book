@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:book/api/api_endpoint.dart';
 import 'package:book/api/dio_client.dart';
+import 'package:book/model/member_ship_model.dart';
 import 'package:book/model/user_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
@@ -15,7 +16,7 @@ class AuthRepository {
 
   DioClient dioClient = DioClient();
 
-  Future<Either<String, UserModel>> logIn({
+  Future<Either<String, Map<String, dynamic>>> logIn({
     required String email,
     required String? password,
   }) async {
@@ -33,7 +34,11 @@ class AuthRepository {
         if (data.runtimeType == String) {
           data = jsonDecode(data);
         }
-        return right(UserModel.fromJson(data['data']));
+        return right({
+          'data': UserModel.fromJson(data['data']),
+          'membership_details':
+              MembershipModel.fromJson(data['membership_details']),
+        });
       } else if (response.statusCode == 400) {
         return left(response.data['message']);
       } else {

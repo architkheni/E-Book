@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:book/core/storage/app_storage.dart';
+import 'package:book/model/member_ship_model.dart';
 import 'package:book/model/user_model.dart';
 import 'package:book/repository/profile_repository.dart';
 import 'package:book/router/app_routes.dart';
@@ -14,10 +15,15 @@ class ProfileProvider extends ChangeNotifier {
   String username = '';
   String email = '';
   String uploadImage = '';
+  String? packageName;
 
   void init() async {
     String data = await appStorage.getUser();
     UserModel userModel = UserModel.fromJson(jsonDecode(data));
+    String? package = await appStorage.getPackage();
+    if (package != null) {
+      packageName = MembershipModel.fromJson(jsonDecode(package)).packageName;
+    }
     username = userModel.username!;
     email = userModel.email!;
     uploadImage = userModel.image ?? '';

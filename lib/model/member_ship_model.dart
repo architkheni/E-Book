@@ -1,12 +1,15 @@
-class MemberShipModel {
+import 'dart:convert';
+
+class MembershipModel {
   int? transactionId;
   int? userId;
   String? datetime;
-  String? discount;
+  int? discount;
   int? totalAmount;
   String? paymentType;
   String? txnId;
   int? packageId;
+  String? packageName;
   String? packageType;
   String? promocode;
   String? promocodeApplied;
@@ -16,7 +19,7 @@ class MemberShipModel {
   String? createdAt;
   String? updatedAt;
 
-  MemberShipModel({
+  MembershipModel({
     this.transactionId,
     this.userId,
     this.datetime,
@@ -25,6 +28,7 @@ class MemberShipModel {
     this.paymentType,
     this.txnId,
     this.packageId,
+    this.packageName,
     this.packageType,
     this.promocode,
     this.promocodeApplied,
@@ -35,7 +39,7 @@ class MemberShipModel {
     this.updatedAt,
   });
 
-  MemberShipModel.fromJson(Map<String, dynamic> json) {
+  MembershipModel.fromJson(Map<String, dynamic> json) {
     transactionId = json['transaction_id'];
     userId = json['user_id'];
     datetime = json['datetime'];
@@ -44,6 +48,7 @@ class MemberShipModel {
     paymentType = json['payment_type'];
     txnId = json['txn_id'];
     packageId = json['package_id'];
+    packageName = json['package_name'];
     packageType = json['package_type'];
     promocode = json['promocode'];
     promocodeApplied = json['promocode_applied'];
@@ -64,6 +69,7 @@ class MemberShipModel {
     data['payment_type'] = paymentType;
     data['txn_id'] = txnId;
     data['package_id'] = packageId;
+    data['package_name'] = packageName;
     data['package_type'] = packageType;
     data['promocode'] = promocode;
     data['promocode_applied'] = promocodeApplied;
@@ -73,5 +79,10 @@ class MemberShipModel {
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     return data;
+  }
+
+  @override
+  String toString() {
+    return jsonEncode(toJson());
   }
 }

@@ -20,6 +20,7 @@ import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:book/widgets/custom_text_form_field.dart';
 import 'package:dartz/dartz.dart' as dz;
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_paypal/flutter_paypal.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -371,6 +372,8 @@ class PaymentScreenState extends State<PaymentScreen> {
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) => PackageDetails(
                         packageData: provider.packagesResponse.data![index],
+                        packageId: provider.packageId,
+                        packageType: provider.packageType,
                       ),
                       separatorBuilder: (context, index) =>
                           const SizedBox(height: 20),
@@ -478,9 +481,13 @@ void payment({
 
 class PackageDetails extends StatelessWidget {
   final PackageData packageData;
+  final int? packageId;
+  final String? packageType;
   const PackageDetails({
     Key? key,
     required this.packageData,
+    this.packageId,
+    this.packageType,
   }) : super(key: key);
 
   @override
@@ -499,173 +506,192 @@ class PackageDetails extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
-        Padding(
-          padding: getPadding(left: 5),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 50,
-                      child: Text(
-                        'What you get',
-                        style: TextStyle(
-                          color: isLight
-                              ? ColorConstant.black
-                              : ColorConstant.kEAF4F4,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 30,
-                      child: Padding(
-                        padding: getPadding(left: 8),
-                        child: Text(
-                          'Unlimied Summaries',
-                          style: TextStyle(
-                            color: isLight
-                                ? ColorConstant.black
-                                : ColorConstant.kEAF4F4,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 30,
-                      child: Padding(
-                        padding: getPadding(left: 8),
-                        child: Text(
-                          'Unlimied Audiobooks',
-                          style: TextStyle(
-                            color: isLight
-                                ? ColorConstant.black
-                                : ColorConstant.kEAF4F4,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 30,
-                      child: Padding(
-                        padding: getPadding(left: 8),
-                        child: Text(
-                          'Personalized content',
-                          style: TextStyle(
-                            color: isLight
-                                ? ColorConstant.black
-                                : ColorConstant.kEAF4F4,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 30,
-                      child: Padding(
-                        padding: getPadding(left: 8),
-                        child: Text(
-                          '',
-                          style: TextStyle(
-                            color: isLight
-                                ? ColorConstant.black
-                                : ColorConstant.kEAF4F4,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                height: 180,
-                width: 90,
-                decoration: BoxDecoration(
-                  color: ColorConstant.k2D3047,
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: ColorConstant.primaryColor),
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                      height: 30,
-                      margin: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: ColorConstant.primaryColor,
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Premium',
-                        style: TextStyle(
-                          color: ColorConstant.k2D3047,
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: 30,
-                      alignment: Alignment.center,
-                      child: Icon(
-                        Icons.check,
-                        color: ColorConstant.whiteA700,
-                        size: 17,
-                      ),
-                    ),
-                    Container(
-                      height: 30,
-                      alignment: Alignment.center,
-                      child: Icon(
-                        Icons.check,
-                        color: ColorConstant.whiteA700,
-                        size: 17,
-                      ),
-                    ),
-                    Container(
-                      height: 30,
-                      alignment: Alignment.center,
-                      child: Icon(
-                        Icons.check,
-                        color: ColorConstant.whiteA700,
-                        size: 17,
-                      ),
-                    ),
-                    Container(
-                      height: 30,
-                      alignment: Alignment.center,
-                      child: Text(
-                        '1/Year',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: ColorConstant.whiteA700,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+        Html(
+          data: packageData.features,
+          style: {
+            '*': Style(
+              color: isLight ? null : ColorConstant.whiteA700,
+            ),
+          },
         ),
+        // Padding(
+        //   padding: getPadding(left: 5),
+        //   child: Row(
+        //     children: [
+        //       Expanded(
+        //         child: Column(
+        //           crossAxisAlignment: CrossAxisAlignment.start,
+        //           mainAxisAlignment: MainAxisAlignment.start,
+        //           children: [
+        //             SizedBox(
+        //               height: 50,
+        //               child: Text(
+        //                 'What you get',
+        //                 style: TextStyle(
+        //                   color: isLight
+        //                       ? ColorConstant.black
+        //                       : ColorConstant.kEAF4F4,
+        //                   fontSize: 20,
+        //                   fontWeight: FontWeight.w700,
+        //                 ),
+        //               ),
+        //             ),
+        //             SizedBox(
+        //               height: 30,
+        //               child: Padding(
+        //                 padding: getPadding(left: 8),
+        //                 child: Text(
+        //                   'Unlimied Summaries',
+        //                   style: TextStyle(
+        //                     color: isLight
+        //                         ? ColorConstant.black
+        //                         : ColorConstant.kEAF4F4,
+        //                     fontSize: 18,
+        //                   ),
+        //                 ),
+        //               ),
+        //             ),
+        //             SizedBox(
+        //               height: 30,
+        //               child: Padding(
+        //                 padding: getPadding(left: 8),
+        //                 child: Text(
+        //                   'Unlimied Audiobooks',
+        //                   style: TextStyle(
+        //                     color: isLight
+        //                         ? ColorConstant.black
+        //                         : ColorConstant.kEAF4F4,
+        //                     fontSize: 18,
+        //                   ),
+        //                 ),
+        //               ),
+        //             ),
+        //             SizedBox(
+        //               height: 30,
+        //               child: Padding(
+        //                 padding: getPadding(left: 8),
+        //                 child: Text(
+        //                   'Personalized content',
+        //                   style: TextStyle(
+        //                     color: isLight
+        //                         ? ColorConstant.black
+        //                         : ColorConstant.kEAF4F4,
+        //                     fontSize: 18,
+        //                   ),
+        //                 ),
+        //               ),
+        //             ),
+        //             SizedBox(
+        //               height: 30,
+        //               child: Padding(
+        //                 padding: getPadding(left: 8),
+        //                 child: Text(
+        //                   '',
+        //                   style: TextStyle(
+        //                     color: isLight
+        //                         ? ColorConstant.black
+        //                         : ColorConstant.kEAF4F4,
+        //                     fontSize: 18,
+        //                   ),
+        //                 ),
+        //               ),
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //       Container(
+        //         height: 180,
+        //         width: 90,
+        //         decoration: BoxDecoration(
+        //           color: ColorConstant.k2D3047,
+        //           borderRadius: BorderRadius.circular(10),
+        //           border: Border.all(color: ColorConstant.primaryColor),
+        //         ),
+        //         child: Column(
+        //           children: [
+        //             Container(
+        //               height: 30,
+        //               margin: const EdgeInsets.all(8),
+        //               decoration: BoxDecoration(
+        //                 color: ColorConstant.primaryColor,
+        //                 borderRadius: BorderRadius.circular(4),
+        //               ),
+        //               alignment: Alignment.center,
+        //               child: Text(
+        //                 'Premium',
+        //                 style: TextStyle(
+        //                   color: ColorConstant.k2D3047,
+        //                   fontSize: 12,
+        //                   fontWeight: FontWeight.bold,
+        //                 ),
+        //               ),
+        //             ),
+        //             Container(
+        //               height: 30,
+        //               alignment: Alignment.center,
+        //               child: Icon(
+        //                 Icons.check,
+        //                 color: ColorConstant.whiteA700,
+        //                 size: 17,
+        //               ),
+        //             ),
+        //             Container(
+        //               height: 30,
+        //               alignment: Alignment.center,
+        //               child: Icon(
+        //                 Icons.check,
+        //                 color: ColorConstant.whiteA700,
+        //                 size: 17,
+        //               ),
+        //             ),
+        //             Container(
+        //               height: 30,
+        //               alignment: Alignment.center,
+        //               child: Icon(
+        //                 Icons.check,
+        //                 color: ColorConstant.whiteA700,
+        //                 size: 17,
+        //               ),
+        //             ),
+        //             Container(
+        //               height: 30,
+        //               alignment: Alignment.center,
+        //               child: Text(
+        //                 '1/Year',
+        //                 style: TextStyle(
+        //                   fontSize: 12,
+        //                   color: ColorConstant.whiteA700,
+        //                 ),
+        //               ),
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
+
         const SizedBox(height: 40),
         CustomElevatedButton(
-          onTap: () async {
-            //TODO: make annualy payment
-            showPaymentModemSheet(
-              context: context,
-              packageId: packageData.id,
-              packageType: PackageType.annual,
-              price: '${packageData.annualPrice}',
-            );
-          },
+          onTap: (packageData.id == packageId && packageType == 'annual')
+              ? () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content:
+                          const Text('You already subscribed this package'),
+                      backgroundColor: appTheme.teal400,
+                    ),
+                  );
+                }
+              : () async {
+                  //TODO: make annualy payment
+                  showPaymentModemSheet(
+                    context: context,
+                    packageId: packageData.id,
+                    packageType: PackageType.annual,
+                    price: '${packageData.annualPrice}',
+                  );
+                },
           width: double.maxFinite,
           height: getVerticalSize(48),
           text: '\$${packageData.annualPrice} / Year',
@@ -676,15 +702,25 @@ class PackageDetails extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         CustomElevatedButton(
-          onTap: () async {
-            //TODO: make monthaly payment
-            showPaymentModemSheet(
-              context: context,
-              packageId: packageData.id,
-              packageType: PackageType.monthly,
-              price: '${packageData.monthlyPrice}',
-            );
-          },
+          onTap: (packageData.id == packageId && packageType == 'monthly')
+              ? () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content:
+                          const Text('You already subscribed this package'),
+                      backgroundColor: appTheme.teal400,
+                    ),
+                  );
+                }
+              : () async {
+                  //TODO: make monthaly payment
+                  showPaymentModemSheet(
+                    context: context,
+                    packageId: packageData.id,
+                    packageType: PackageType.monthly,
+                    price: '${packageData.monthlyPrice}',
+                  );
+                },
           width: double.maxFinite,
           height: getVerticalSize(48),
           text: '\$${packageData.monthlyPrice} / Month',

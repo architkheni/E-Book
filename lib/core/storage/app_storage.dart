@@ -27,6 +27,16 @@ class AppStorage {
     return prefs.getString('user') ?? '';
   }
 
+  Future<void> setPackage(String user) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('package', user);
+  }
+
+  Future<String?> getPackage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('package');
+  }
+
   void setLogin(bool value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('isLogin', value);

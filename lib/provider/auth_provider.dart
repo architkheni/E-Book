@@ -1,5 +1,6 @@
 import 'package:book/core/storage/app_storage.dart';
 import 'package:book/core/utils/color_constant.dart';
+import 'package:book/model/member_ship_model.dart';
 import 'package:book/model/user_model.dart';
 import 'package:book/repository/auth_repository.dart';
 import 'package:book/router/app_routes.dart';
@@ -28,7 +29,7 @@ class AuthProvider extends ChangeNotifier {
           : Colors.white,
       backgroundColor: Colors.black12,
     );
-    Either<String, UserModel> result =
+    Either<String, Map<String,dynamic>> result =
         await AuthRepository.instance.logIn(email: email, password: password);
     screenLoader.hide();
     result.fold((l) {
@@ -40,8 +41,11 @@ class AuthProvider extends ChangeNotifier {
       );
     }, (r) async {
       GoRouter navigator = GoRouter.of(context);
-      appStorage.setToken(r.apiToken!);
-      appStorage.setUser(r.toString());
+      appStorage.setToken((r['data'] as UserModel).apiToken!);
+      appStorage.setUser((r['data'] as UserModel).toString());
+      if(r['membership_details'] != null) {
+        appStorage.setPackage((r['membership_details'] as MembershipModel).toString());
+      }
       appStorage.setLogin(true);
       bool isFirst = await appStorage.getCategoryIsFirst();
       if (isFirst) {

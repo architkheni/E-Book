@@ -327,17 +327,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             ),
                             trailing: index == 0
-                                ? Text(
-                                    'Package Name',
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: CustomTextStyles.titleSmallWhiteA400
-                                        .copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      color:
-                                          isLight ? ColorConstant.black : null,
-                                    ),
-                                  )
+                                ? Consumer<ProfileProvider>(
+                                  builder: (context,provider,child) {
+                                    return Text(
+                                        provider.packageName ?? 'Package Name',
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.left,
+                                        style: CustomTextStyles.titleSmallWhiteA400
+                                            .copyWith(
+                                          fontWeight: FontWeight.w500,
+                                          color:
+                                              isLight ? ColorConstant.black : null,
+                                        ),
+                                      );
+                                  },
+                                )
                                 : index == 3
                                     ? Consumer<ThemeProvider>(
                                         builder:
