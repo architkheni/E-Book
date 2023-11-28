@@ -41,8 +41,8 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
     bool isLight = Theme.of(context).brightness == Brightness.light;
     return SafeArea(
       child: ChangeNotifierProvider(
-        create: (context) =>
-            ViewAllBookProvider()..getViewAllBooks(param: 'history'),
+        create: (context) => ViewAllBookProvider()
+          ..getViewAllBooks(param: 'history', key: 'history'),
         child: Consumer<ViewAllBookProvider>(
           builder: (context, viewAllProvider, child) {
             return Scaffold(
@@ -200,7 +200,7 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                                       extra: {
                                         'title': 'My History',
                                         'param': 'history',
-                                        'jsonKey':'history',
+                                        'jsonKey': 'history',
                                       },
                                     );
                                   },
@@ -233,7 +233,10 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                               onRefresh: () async {
                                 context
                                     .read<ViewAllBookProvider>()
-                                    .getViewAllBooks(param: 'history', key: 'history');
+                                    .getViewAllBooks(
+                                      param: 'history',
+                                      key: 'history',
+                                    );
                               },
                               child: Container(
                                 width: double.maxFinite,

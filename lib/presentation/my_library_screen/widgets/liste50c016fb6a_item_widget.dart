@@ -61,16 +61,20 @@ class Liste50c016fb6aItemWidget extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          book.name ?? 'Book Name',
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: theme.textTheme.titleSmall!.copyWith(
-                            color: isLight ? ColorConstant.black : null,
-                            fontSize: 15,
+                        Expanded(
+                          child: Text(
+                            book.name ?? 'Book Name',
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.left,
+                            style: theme.textTheme.titleSmall!.copyWith(
+                              color: isLight ? ColorConstant.black : null,
+                              fontSize: 15,
+                            ),
                           ),
                         ),
-                        const Spacer(),
+                        const SizedBox(
+                          width: 10,
+                        ),
                         book.freeBook! == 0
                             ? Padding(
                                 padding: const EdgeInsets.only(
