@@ -1,3 +1,4 @@
+import 'package:book/core/storage/app_storage.dart';
 import 'package:book/model/book_chapter_model.dart';
 import 'package:book/model/category_model.dart';
 import 'package:book/presentation/detail_page_container_page/widgets/chipviewframefo2_item_widget.dart';
@@ -177,6 +178,16 @@ class _DetailViewState extends State<DetailView> {
                                     ),
                                     child: GestureDetector(
                                       onTap: () {
+                                        AppStorage appStorage = AppStorage();
+                                        int bookId =
+                                            provider.detailModel.book!.bookId!;
+                                        if (!appStorage
+                                            .isReadChapterBookContain(bookId)) {
+                                          appStorage.saveCurrentChapterPosition(
+                                            bookId,
+                                            provider.detailModel.readChapter,
+                                          );
+                                        }
                                         int isFree = provider
                                             .detailModel.book!.freeBook!;
                                         if (isFree == 1) {

@@ -196,9 +196,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       ? Icons.visibility_off
                                       : Icons.visibility,
                                 ),
-                                color: isLight
-                                    ? ColorConstant.kE1E1E1
-                                    : appTheme.blueGray50,
+                                color: appTheme.gray500,
                               ),
                               suffixConstraints: BoxConstraints(
                                 maxHeight: getVerticalSize(48),
@@ -293,17 +291,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(snackBar);
                                     } else {
-                                      if (isGoogleChoose) {
-                                        context.read<auth.AuthProvider>().ssoCreate(
-                                              context,
-                                              name: nameController.text,
-                                              username: userNameController.text,
-                                              mobileNo:
-                                                  mobileNumberController.text,
-                                              email: emailController.text,
-                                            );
-                                        return;
-                                      }
                                       if (passwordController.text
                                           .trim()
                                           .isEmpty) {
@@ -344,7 +331,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             .showSnackBar(snackBar);
                                         return;
                                       }
-                                      context.read<auth.AuthProvider>().register(
+                                      context
+                                          .read<auth.AuthProvider>()
+                                          .register(
                                             context,
                                             name: nameController.text,
                                             username: userNameController.text,
@@ -468,21 +457,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     if (account == null) {
                                       return;
                                     }
-                                    GoogleSignInAuthentication auth =
+                                    GoogleSignInAuthentication authentication =
                                         await account.authentication;
                                     OAuthCredential credential =
                                         GoogleAuthProvider.credential(
-                                      accessToken: auth.accessToken,
-                                      idToken: auth.idToken,
+                                      accessToken: authentication.accessToken,
+                                      idToken: authentication.idToken,
                                     );
                                     UserCredential userCredential =
                                         await FirebaseAuth.instance
                                             .signInWithCredential(credential);
                                     emailController.text =
                                         userCredential.user?.email ?? '';
-                                    setState(() {
-                                      isGoogleChoose = true;
-                                    });
+                                    // ignore: use_build_context_synchronously
+                                    context.read<auth.AuthProvider>().ssoCreate(
+                                          context,
+                                          email: emailController.text,
+                                        );
                                   } on FirebaseAuthException catch (e) {
                                     String error = getErrorMessage(e.code);
                                     scaffoldState.showSnackBar(

@@ -30,6 +30,7 @@ dependencies:
   flutter_windowmanager: ^0.2.0
   get_storage: ^2.1.1
   package_info_plus: ^4.2.0
+  grouped_list: ^5.1.2
 dev_dependencies: 
   flutter_test: 
     sdk: flutter

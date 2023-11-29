@@ -24,8 +24,8 @@ class ProfileProvider extends ChangeNotifier {
     if (package != null) {
       packageName = MembershipModel.fromJson(jsonDecode(package)).packageName;
     }
-    username = userModel.username!;
-    email = userModel.email!;
+    username = userModel.username ?? '';
+    email = userModel.email ?? '';
     uploadImage = userModel.image ?? '';
     notifyListeners();
   }

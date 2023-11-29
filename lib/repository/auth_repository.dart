@@ -34,6 +34,11 @@ class AuthRepository {
         if (data.runtimeType == String) {
           data = jsonDecode(data);
         }
+        if (data['membership_details'] == null) {
+          return right({
+            'data': UserModel.fromJson(data['data']),
+          });
+        }
         return right({
           'data': UserModel.fromJson(data['data']),
           'membership_details':
@@ -85,18 +90,12 @@ class AuthRepository {
   }
 
   Future<Either<String, UserModel>> ssoCreate({
-    required String name,
-    required String username,
-    required String mobileNo,
     required String email,
   }) async {
     try {
       Response response = await dioClient.post(
         ApiEndpoint.ssoCreate,
         data: {
-          'name': name,
-          'username': username,
-          'contact_number': mobileNo,
           'email': email,
         },
       );

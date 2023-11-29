@@ -269,7 +269,7 @@ class _ExplorePageState extends State<ExplorePage> {
                           if (subCategories.isEmpty) {
                             return const Text(
                               'We don\'t currently have what you\'re looking for. Why not suggest it to us?',
-                              textAlign: TextAlign.center,
+                              textAlign: TextAlign.left,
                             );
                           }
                           return provider.isLoading

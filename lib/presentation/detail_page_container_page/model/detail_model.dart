@@ -12,6 +12,7 @@ class DetailModel {
   List<BookModel> authorBookList;
   List<BookModel> similarBook;
   List<BookRatingModel> bookRating;
+  int readChapter;
 
   DetailModel({
     this.book,
@@ -21,6 +22,7 @@ class DetailModel {
     this.authorBookList = const [],
     this.similarBook = const [],
     this.bookRating = const [],
+    this.readChapter = 0,
   });
 
   factory DetailModel.fromJson(Map<String, dynamic> json) {
@@ -56,6 +58,7 @@ class DetailModel {
               .map((e) => BookRatingModel.fromJson(e))
               .toList()
           : [],
+      readChapter: json['read_chapters'] ?? 0,
     );
   }
 

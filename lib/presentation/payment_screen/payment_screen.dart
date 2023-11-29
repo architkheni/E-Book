@@ -427,13 +427,13 @@ void payment({
             'description': 'The payment transaction description.',
             'item_list': {
               'shipping_address': {
-                'recipient_name': userModel.name,
+                'recipient_name': userModel.name ?? 'Enter Your name',
                 'line1': 'Travis County',
                 'line2': '',
                 'city': 'Austin',
                 'country_code': 'US',
                 'postal_code': '73301',
-                'phone': userModel.contactNumber,
+                'phone': userModel.contactNumber ?? '1234567890',
                 'state': 'Texas',
               },
             },

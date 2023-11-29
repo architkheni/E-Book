@@ -39,8 +39,8 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
   void getData() async {
     String user = await AppStorage().getUser();
     UserModel userModel = UserModel.fromJson(jsonDecode(user));
-    nameController.text = userModel.name!;
-    emailController.text = userModel.email!;
+    nameController.text = userModel.name ?? '';
+    emailController.text = userModel.email ?? '';
   }
 
   @override

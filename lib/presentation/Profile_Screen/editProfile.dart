@@ -404,10 +404,10 @@ class _EditProfileState extends State<EditProfile> {
   void getData() async {
     String user = await AppStorage().getUser();
     UserModel userModel = UserModel.fromJson(jsonDecode(user));
-    nameController.text = userModel.name!;
-    usernameController.text = userModel.username!;
-    emailController.text = userModel.email!;
-    contactNumberController.text = userModel.contactNumber!;
+    nameController.text = userModel.name ?? '';
+    usernameController.text = userModel.username ?? '';
+    emailController.text = userModel.email ?? '';
+    contactNumberController.text = userModel.contactNumber ?? '';
     uploadImage = userModel.image ?? '';
     setState(() {});
   }

@@ -29,10 +29,12 @@ class AuthProvider extends ChangeNotifier {
           : Colors.white,
       backgroundColor: Colors.black12,
     );
-    Either<String, Map<String,dynamic>> result =
+    Either<String, Map<String, dynamic>> result =
         await AuthRepository.instance.logIn(email: email, password: password);
     screenLoader.hide();
     result.fold((l) {
+      final GoogleSignIn googleSignIn = GoogleSignIn();
+      googleSignIn.signOut();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(l),
@@ -43,16 +45,18 @@ class AuthProvider extends ChangeNotifier {
       GoRouter navigator = GoRouter.of(context);
       appStorage.setToken((r['data'] as UserModel).apiToken!);
       appStorage.setUser((r['data'] as UserModel).toString());
-      if(r['membership_details'] != null) {
-        appStorage.setPackage((r['membership_details'] as MembershipModel).toString());
+      if (r['membership_details'] != null) {
+        appStorage.setPackage(
+          (r['membership_details'] as MembershipModel).toString(),
+        );
       }
       appStorage.setLogin(true);
-      bool isFirst = await appStorage.getCategoryIsFirst();
-      if (isFirst) {
-        navigator.push(AppRoutesPath.category);
-      } else {
-        navigator.go(AppRoutesPath.home);
-      }
+      // bool isFirst = await appStorage.getCategoryIsFirst();
+      // if (isFirst) {
+      // navigator.push(AppRoutesPath.category);
+      // } else {
+      navigator.go(AppRoutesPath.home);
+      // }
     });
   }
 
@@ -103,9 +107,6 @@ class AuthProvider extends ChangeNotifier {
 
   void ssoCreate(
     BuildContext context, {
-    required String name,
-    required String username,
-    required String mobileNo,
     required String email,
   }) async {
     screenLoader.show(
@@ -117,9 +118,6 @@ class AuthProvider extends ChangeNotifier {
       backgroundColor: Colors.black12,
     );
     Either<String, UserModel> result = await AuthRepository.instance.ssoCreate(
-      name: name,
-      username: username,
-      mobileNo: mobileNo,
       email: email,
     );
     screenLoader.hide();
@@ -140,7 +138,7 @@ class AuthProvider extends ChangeNotifier {
           backgroundColor: appTheme.teal400,
         ),
       );
-      context.push(AppRoutesPath.category);
+      context.go(AppRoutesPath.home);
     });
   }
 
@@ -246,7 +244,7 @@ class AuthProvider extends ChangeNotifier {
               }, (r) {
                 Navigator.pop(context);
                 AppStorage appStorage = AppStorage();
-                appStorage.dispose();
+                appStorage.dispose(context);
                 context.go(AppRoutesPath.logInEmail);
                 final GoogleSignIn googleSignIn = GoogleSignIn();
                 googleSignIn.signOut();

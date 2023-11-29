@@ -308,6 +308,12 @@ class _HomeRecommendedForYouSeeAllScreenState
                                               extra: book.bookId!,
                                             )
                                                 .then((value) {
+                                              context
+                                                  .read<ViewAllBookProvider>()
+                                                  .getViewAllBooks(
+                                                    param: widget.param,
+                                                    key: widget.jsonKey,
+                                                  );
                                               if (widget.param == 'favorites') {
                                                 setState(() {});
                                               }

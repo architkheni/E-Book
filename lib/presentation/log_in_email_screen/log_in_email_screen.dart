@@ -305,10 +305,8 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                               UserCredential userCredential = await FirebaseAuth
                                   .instance
                                   .signInWithCredential(credential);
-                              emailController.text =
-                                  userCredential.user?.email ?? '';
                               // ignore: use_build_context_synchronously
-                              authProvider.logIn(
+                              authProvider.ssoCreate(
                                 context,
                                 email: userCredential.user?.email ?? '',
                               );

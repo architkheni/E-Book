@@ -12,6 +12,7 @@ abstract class AppRoutesPath {
   static const String bookDetail = '/book-detail';
   static const String bookRead = '/book-read';
   static const String viewAllBook = '/book-all-book';
+  static const String history = '/history';
   static const String contactUs = '/contact-us';
   static const String editProfile = '/edit-profile';
   static const String changePassword = '/change-password';
@@ -32,6 +33,7 @@ abstract class AppRoutesName {
   static const String bookDetail = 'book-detail';
   static const String bookRead = 'book-read';
   static const String viewAllBook = 'book-all-book';
+  static const String history = 'history';
   static const String contactUs = 'contact-us';
   static const String editProfile = 'edit-profile';
   static const String changePassword = 'change-password';

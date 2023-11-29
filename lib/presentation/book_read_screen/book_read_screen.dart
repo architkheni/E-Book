@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: non_constant_identifier_names, prefer_typing_uninitialized_variables, unused_local_variable
 
-import 'dart:developer';
 
 import 'package:book/core/storage/cache_storage.dart';
 import 'package:book/core/utils/color_constant.dart';
@@ -153,7 +152,9 @@ class _BookReadViewState extends State<BookReadView> {
                         itemBuilder: (context, index) {
                           String getTitle() {
                             if (index == 0 || index == content.length - 1) {
-                              return content[index];
+                              return index == content.length - 1
+                                  ? 'Conclusion'
+                                  : content[index];
                             }
                             return '$index. ${content[index]}';
                           }
@@ -275,7 +276,6 @@ class _BookReadViewState extends State<BookReadView> {
               int position = context
                   .read<BookReadProvider>()
                   .getCurrentChapterPosition(widget.bookId);
-              log(position.toString());
               PageController controller =
                   PageController(initialPage: position, keepPage: false);
               return provider.isLoading
@@ -315,6 +315,8 @@ class _BookReadViewState extends State<BookReadView> {
                                       chapter: chapter,
                                       fontSize: _currentSliderValue,
                                       isLight: isLight,
+                                      isLast:
+                                          index == provider.chapters.length - 1,
                                     ),
                                   ),
                                   if (index ==
@@ -589,12 +591,14 @@ class Pages extends StatelessWidget {
   final BookChapterModel chapter;
   int fontSize;
   bool isLight;
+  bool isLast;
 
   Pages({
     Key? key,
     required this.chapter,
     required this.fontSize,
     required this.isLight,
+    required this.isLast,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -609,7 +613,7 @@ class Pages extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              '${chapter.title?.capitlize}',
+              isLast ? 'Conclusion' : '${chapter.title?.capitlize}',
               maxLines: 5,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,

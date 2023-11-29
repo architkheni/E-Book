@@ -196,7 +196,7 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                                 GestureDetector(
                                   onTap: () {
                                     context.push(
-                                      AppRoutesPath.viewAllBook,
+                                      AppRoutesPath.history,
                                       extra: {
                                         'title': 'My History',
                                         'param': 'history',

@@ -202,18 +202,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     alignment: Alignment.centerLeft,
                                     child: Consumer<ProfileProvider>(
                                       builder: (context, provider, child) {
-                                        return Text(
-                                          provider.username,
-                                          overflow: TextOverflow.ellipsis,
-                                          textAlign: TextAlign.left,
-                                          style: CustomTextStyles
-                                              .titleMediumWhiteA700
-                                              .copyWith(
-                                            color: isLight
-                                                ? ColorConstant.black
-                                                : null,
-                                          ),
-                                        );
+                                        return provider.username.isNotEmpty
+                                            ? Text(
+                                                provider.username,
+                                                overflow: TextOverflow.ellipsis,
+                                                textAlign: TextAlign.left,
+                                                style: CustomTextStyles
+                                                    .titleMediumWhiteA700
+                                                    .copyWith(
+                                                  color: isLight
+                                                      ? ColorConstant.black
+                                                      : null,
+                                                ),
+                                              )
+                                            : const SizedBox.shrink();
                                       },
                                     ),
                                   ),
@@ -328,20 +330,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             trailing: index == 0
                                 ? Consumer<ProfileProvider>(
-                                  builder: (context,provider,child) {
-                                    return Text(
-                                        provider.packageName ?? 'Package Name',
+                                    builder: (context, provider, child) {
+                                      return Text(
+                                        provider.packageName ?? '',
                                         overflow: TextOverflow.ellipsis,
                                         textAlign: TextAlign.left,
-                                        style: CustomTextStyles.titleSmallWhiteA400
+                                        style: CustomTextStyles
+                                            .titleSmallWhiteA400
                                             .copyWith(
                                           fontWeight: FontWeight.w500,
-                                          color:
-                                              isLight ? ColorConstant.black : null,
+                                          color: isLight
+                                              ? ColorConstant.black
+                                              : null,
                                         ),
                                       );
-                                  },
-                                )
+                                    },
+                                  )
                                 : index == 3
                                     ? Consumer<ThemeProvider>(
                                         builder:

@@ -10,6 +10,7 @@ import 'package:book/presentation/detail_page_container_page/detail_page_contain
 import 'package:book/presentation/explore_page/explore_page.dart';
 import 'package:book/presentation/forgot_password_one_screen/forgot_password_one_screen.dart';
 import 'package:book/presentation/forgot_password_screen/forgot_password_screen.dart';
+import 'package:book/presentation/history_screen/history_screen.dart';
 import 'package:book/presentation/home/home_screen_page.dart';
 import 'package:book/presentation/home_recommended_for_you_see_all_screen/home_recommended_for_you_see_all_screen.dart';
 import 'package:book/presentation/langugaes_screen/langugaes_screen.dart';
@@ -184,6 +185,18 @@ class AppRouter {
           name: AppRoutesName.changePassword,
           builder: (context, state) {
             return const ChangePasswordScreen();
+          },
+        ),
+        GoRoute(
+          path: AppRoutesPath.history,
+          name: AppRoutesName.history,
+          builder: (context, state) {
+            Map<String, dynamic> data = state.extra as Map<String, dynamic>;
+            return HistoryScreen(
+              title: data['title'] as String,
+              param: data['param'] as String,
+              jsonKey: data['jsonKey'],
+            );
           },
         ),
         GoRoute(
