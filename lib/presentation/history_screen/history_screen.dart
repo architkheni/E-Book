@@ -118,8 +118,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         child: GroupedListView<BookModel, DateTime>(
                           order: GroupedListOrder.DESC,
                           elements: books,
-                          groupBy: (element) => DateFormat('yyyy-MM-dd')
-                              .parse(element.updatedAt!),
+                          groupBy: (element) {
+                            String date =
+                                element.updatedAt ?? DateTime.now().toString();
+                            if (date.isEmpty) {
+                              date = DateTime.now().toString();
+                            }
+                            return DateFormat('yyyy-MM-dd').parse(date);
+                          },
                           groupSeparatorBuilder: (groupByValue) {
                             String getMonth() {
                               switch (groupByValue.month) {

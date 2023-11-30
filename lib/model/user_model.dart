@@ -54,8 +54,8 @@ class UserModel {
     deviceId = json['device_id'];
     image = json['image'];
     status = json['status'];
-    categories = json['categories'];
-    languages = json['languages'];
+    categories = json['categories'] ?? [];
+    languages = json['languages'] ?? [];
     deletedAt = json['deleted_at'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];

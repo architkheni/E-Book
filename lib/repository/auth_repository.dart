@@ -18,16 +18,12 @@ class AuthRepository {
 
   Future<Either<String, Map<String, dynamic>>> logIn({
     required String email,
-    required String? password,
+    required String password,
   }) async {
-    Map<String, dynamic> data = {'email': email};
-    if (password != null) {
-      data['password'] = password;
-    }
     try {
       Response response = await dioClient.post(
         ApiEndpoint.login,
-        data: data,
+        data: {'email': email, 'password': password},
       );
       if (response.statusCode == 200) {
         dynamic data = response.data;
@@ -89,7 +85,7 @@ class AuthRepository {
     }
   }
 
-  Future<Either<String, UserModel>> ssoCreate({
+  Future<Either<String, Map<String, dynamic>>> ssoCreate({
     required String email,
   }) async {
     try {
@@ -104,7 +100,16 @@ class AuthRepository {
         if (data.runtimeType == String) {
           data = jsonDecode(data);
         }
-        return right(UserModel.fromJson(data['data']));
+        if (data['membership_details'] == null) {
+          return right({
+            'data': UserModel.fromJson(data['data']),
+          });
+        }
+        return right({
+          'data': UserModel.fromJson(data['data']),
+          'membership_details':
+              MembershipModel.fromJson(data['membership_details']),
+        });
       } else if (response.statusCode == 400) {
         return left(response.data['message']);
       } else {

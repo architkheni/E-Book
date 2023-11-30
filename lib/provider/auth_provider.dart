@@ -19,7 +19,7 @@ class AuthProvider extends ChangeNotifier {
   void logIn(
     BuildContext context, {
     required String email,
-    String? password,
+    required String password,
   }) async {
     screenLoader.show(
       context,
@@ -51,12 +51,7 @@ class AuthProvider extends ChangeNotifier {
         );
       }
       appStorage.setLogin(true);
-      // bool isFirst = await appStorage.getCategoryIsFirst();
-      // if (isFirst) {
-      // navigator.push(AppRoutesPath.category);
-      // } else {
       navigator.go(AppRoutesPath.home);
-      // }
     });
   }
 
@@ -117,7 +112,8 @@ class AuthProvider extends ChangeNotifier {
           : Colors.white,
       backgroundColor: Colors.black12,
     );
-    Either<String, UserModel> result = await AuthRepository.instance.ssoCreate(
+    Either<String, Map<String, dynamic>> result =
+        await AuthRepository.instance.ssoCreate(
       email: email,
     );
     screenLoader.hide();
@@ -129,15 +125,24 @@ class AuthProvider extends ChangeNotifier {
         ),
       );
     }, (r) {
-      appStorage.setToken(r.apiToken!);
-      appStorage.setUser(r.toString());
+      appStorage.setToken((r['data'] as UserModel).apiToken!);
+      appStorage.setUser((r['data'] as UserModel).toString());
       appStorage.setLogin(true);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text('user has been save successfully'),
-          backgroundColor: appTheme.teal400,
-        ),
-      );
+      if (r['membership_details'] != null) {
+        appStorage.setPackage(
+          (r['membership_details'] as MembershipModel).toString(),
+        );
+      }
+      if ((r['data'] as UserModel).categories?.isEmpty ?? true) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text('user has been save successfully'),
+            backgroundColor: appTheme.teal400,
+          ),
+        );
+        context.go(AppRoutesPath.category);
+        return;
+      }
       context.go(AppRoutesPath.home);
     });
   }
