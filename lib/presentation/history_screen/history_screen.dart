@@ -166,7 +166,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             } else if (currentDate
                                     .difference(groupByValue)
                                     .inDays ==
-                                2) {
+                                1) {
                               text = 'Yesterday';
                             } else {
                               text =

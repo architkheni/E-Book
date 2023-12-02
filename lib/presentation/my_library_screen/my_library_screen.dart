@@ -202,6 +202,13 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                                         'param': 'history',
                                         'jsonKey': 'history',
                                       },
+                                    ).then(
+                                      (value) => context
+                                          .read<ViewAllBookProvider>()
+                                          .getViewAllBooks(
+                                            param: 'history',
+                                            key: 'history',
+                                          ),
                                     );
                                   },
                                   child: Padding(

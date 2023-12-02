@@ -316,22 +316,27 @@ class BottombarPage extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 20),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Continue reading',
-                              style: TextStyle(
-                                color: ColorConstant.grey,
-                                fontSize: 12,
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Continue reading',
+                                style: TextStyle(
+                                  color: ColorConstant.grey,
+                                  fontSize: 12,
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 2),
-                            Text(book.name!),
-                          ],
+                              const SizedBox(height: 2),
+                              Text(
+                                book.name!,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
                         ),
-                        const Spacer(),
                         IconButton(
                           onPressed: () {
                             context
