@@ -1,5 +1,5 @@
 class ApiEndpoint {
-  static const String baseUrl = 'https://readingapp.usasoftware.xyz/api';
+  static const String baseUrl = 'https://admin.storise.app/api';
   static const String login = '/login';
   static const String register = '/register';
   static const String ssoCreate = '/sso-create';
