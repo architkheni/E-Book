@@ -45,6 +45,10 @@ class AuthRepository {
       } else {
         return left('Login failed! please try again');
       }
+    } on DioException catch (e) {
+      return left(
+        e.response?.data['message'] ?? 'Register failed! please try again',
+      );
     } catch (e) {
       return left('Login failed! please try again');
     }
@@ -80,6 +84,10 @@ class AuthRepository {
       } else {
         return left('Register failed! please try again');
       }
+    } on DioException catch (e) {
+      return left(
+        e.response?.data['message'] ?? 'Register failed! please try again',
+      );
     } catch (e) {
       return left('Register failed! please try again');
     }
@@ -115,6 +123,10 @@ class AuthRepository {
       } else {
         return left('Register failed! please try again');
       }
+    } on DioException catch (e) {
+      return left(
+        e.response?.data['message'] ?? 'Register failed! please try again',
+      );
     } catch (e) {
       return left('Register failed! please try again');
     }
