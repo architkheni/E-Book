@@ -1,9 +1,8 @@
-import 'package:book/core/app_export.dart';
 import 'package:book/widgets/base_button.dart';
 import 'package:flutter/material.dart';
 
 class CustomElevatedButton extends BaseButton {
-  CustomElevatedButton({
+  const CustomElevatedButton({
     Key? key,
     this.decoration,
     this.leftIcon,
@@ -19,6 +18,7 @@ class CustomElevatedButton extends BaseButton {
     double? width,
     required String text,
   }) : super(
+          key: key,
           text: text,
           onTap: onTap,
           buttonStyle: buttonStyle,
@@ -50,13 +50,13 @@ class CustomElevatedButton extends BaseButton {
   ButtonStyle? get elevatedButtonStyle =>
       (isDisabled ?? false) ? disabledButtonStyle : buttonStyle;
   Widget get buildElevatedButtonWidget => Container(
-        height: this.height,
+        height: height,
         margin: margin,
-        width: this.width,
+        width: width,
         decoration: decoration,
         child: ElevatedButton(
           style: elevatedButtonStyle!.copyWith(
-            visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+            visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
             padding: MaterialStateProperty.all(EdgeInsets.zero),
           ),
           onPressed: onTap ?? () {},

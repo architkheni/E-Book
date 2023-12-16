@@ -1,6 +1,6 @@
-import 'package:book/core/app_export.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CustomCheckboxButton extends StatelessWidget {
   CustomCheckboxButton({
     Key? key,
@@ -69,8 +69,8 @@ class CustomCheckboxButton extends StatelessWidget {
   Widget get leftSideCheckbox => Row(
         children: [
           Padding(
-            child: checkboxWidget,
             padding: padding ?? EdgeInsets.zero,
+            child: checkboxWidget,
           ),
           textWidget,
         ],
@@ -85,7 +85,7 @@ class CustomCheckboxButton extends StatelessWidget {
         ],
       );
   Widget get textWidget => Text(
-        text ?? "",
+        text ?? '',
         textAlign: textAlignment ?? TextAlign.center,
         style: textStyle,
       );

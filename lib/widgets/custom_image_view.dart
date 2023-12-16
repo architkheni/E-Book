@@ -33,6 +33,7 @@ class CustomImageView extends StatelessWidget {
   ///a [CustomImageView] it can be used for showing any type of images
   /// it will shows the placeholder image if image is not found on network image
   CustomImageView({
+    Key? key,
     this.url,
     this.imagePath,
     this.svgPath,
@@ -47,7 +48,7 @@ class CustomImageView extends StatelessWidget {
     this.margin,
     this.border,
     this.placeHolder = 'assets/images/image_not_found.png',
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +74,7 @@ class CustomImageView extends StatelessWidget {
   _buildCircleImage() {
     if (radius != null) {
       return ClipRRect(
-        borderRadius: radius,
+        borderRadius: radius ?? BorderRadius.zero,
         child: _buildImageWithBorder(),
       );
     } else {
@@ -98,7 +99,7 @@ class CustomImageView extends StatelessWidget {
 
   Widget _buildImageView() {
     if (svgPath != null && svgPath!.isNotEmpty) {
-      return Container(
+      return SizedBox(
         height: height,
         width: width,
         child: SvgPicture.asset(
@@ -124,19 +125,14 @@ class CustomImageView extends StatelessWidget {
         fit: fit,
         imageUrl: url!,
         color: color,
-        placeholder: (context, url) => Container(
-          height: 30,
-          width: 30,
-          child: LinearProgressIndicator(
-            color: Colors.grey.shade200,
-            backgroundColor: Colors.grey.shade100,
-          ),
+        placeholder: (context, url) => LinearProgressIndicator(
+          color: Colors.grey.shade200,
+          backgroundColor: Colors.grey.shade100,
         ),
-        errorWidget: (context, url, error) => Image.asset(
-          placeHolder,
+        errorWidget: (context, url, error) => Container(
+          decoration: const BoxDecoration(color: Colors.black),
           height: height,
           width: width,
-          fit: fit ?? BoxFit.cover,
         ),
       );
     } else if (imagePath != null && imagePath!.isNotEmpty) {
@@ -148,6 +144,6 @@ class CustomImageView extends StatelessWidget {
         color: color,
       );
     }
-    return SizedBox();
+    return const SizedBox();
   }
 }

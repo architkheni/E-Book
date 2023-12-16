@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">book</string>
-    
+    <string name="app_name">reading-app</string>
+    <string name="facebook_app_id">265489959194230</string>
+    <string name="fb_login_protocol_scheme">fb265489959194230</string>
+    <string name="facebook_client_token">4c8e420743cef256b111f6a3135e89c1</string>
 </resources>

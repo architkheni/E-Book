@@ -1,145 +1,290 @@
+import 'dart:convert';
+
 import 'package:book/core/app_export.dart';
+import 'package:book/core/storage/app_storage.dart';
+import 'package:book/core/utils/color_constant.dart';
+import 'package:book/model/category_model.dart';
+import 'package:book/model/user_model.dart';
+import 'package:book/provider/explore_provider.dart';
+import 'package:book/provider/profile_provider.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
-import '../langugaes_screen/langugaes_screen.dart';
+import '../../widgets/app_bar/appbar_image.dart';
+import '../../widgets/app_bar/appbar_subtitle.dart';
+import '../../widgets/app_bar/custom_app_bar.dart';
 
-class CategoriesScreen extends StatelessWidget {
-  const CategoriesScreen({Key? key}) : super(key: key);
+class CategoriesScreen extends StatefulWidget {
+  final bool? goIsProfile;
+  const CategoriesScreen({Key? key, this.goIsProfile}) : super(key: key);
+
+  @override
+  State<CategoriesScreen> createState() => _CategoriesScreenState();
+}
+
+class _CategoriesScreenState extends State<CategoriesScreen> {
+  List<int> selectedId = [];
+
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
+
+  void init() async {
+    String user = await AppStorage().getUser();
+    UserModel userModel = UserModel.fromJson(jsonDecode(user));
+    List<dynamic> categories = userModel.categories ?? [];
+    for (var element in categories) {
+      selectedId.add(element);
+    }
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    bool isLight = Theme.of(context).brightness == Brightness.light;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: theme.colorScheme.onPrimaryContainer.withOpacity(1),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        appBar: CustomAppBar(
+          height: 60,
+          leadingWidth: 35,
+          leading: AppbarImage(
+            height: 20,
+            width: 15,
+            svgPath: ImageConstant.imgArrowleftBlueGray50,
+            color: isLight ? ColorConstant.black : null,
+            margin: getMargin(left: 16, top: 17, bottom: 18),
+            onTap: () {
+              context.pop();
+            },
+          ),
+          title: Padding(
+            padding: getPadding(left: 11),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                AppbarSubtitle(text: 'Select Categories'),
+              ],
+            ),
+          ),
+        ),
         body: Container(
           width: double.maxFinite,
-          padding: getPadding(top: 41, bottom: 41),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: getPadding(left: 16),
-                child: Text(
-                  "Select Categories",
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.left,
-                  style: theme.textTheme.headlineLarge,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 16, right: 16),
-                child: IntrinsicWidth(
-                  child: Container(
-                    height: height / 2.5,
-                    width: width,
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                        height: getVerticalSize(300),
-                        padding: getPadding(
-                            left: 16, top: 22, right: 16, bottom: 22),
-                        decoration: AppDecoration.fill.copyWith(
-                          borderRadius: BorderRadiusStyle.roundedBorder12,
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: getPadding(top: 2),
-                              child: Text(
-                                "Select the type of book you enjoy reading.",
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.left,
-                                style: CustomTextStyles.bodyMediumThin,
-                              ),
-                            ),
-                            Spacer(),
-                            Center(
-                              child: Wrap(
-                                runSpacing: getVerticalSize(5),
-                                spacing: getHorizontalSize(5),
-                                children: List<Widget>.generate(
-                                  9,
-                                  (index) =>
-                                      // ChipviewframefoItemWidget(),
-                                      RawChip(
-                                    padding: getPadding(right: 16),
-                                    showCheckmark: false,
-                                    labelPadding: EdgeInsets.zero,
-                                    label: Text(
-                                      "Personal",
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        color: appTheme.blueGray50,
-                                        fontSize: getFontSize(12),
-                                        fontFamily: 'Outfit',
-                                        fontWeight: FontWeight.w100,
-                                      ),
-                                    ),
-                                    avatar: CustomImageView(
-                                      svgPath: ImageConstant.imgGroup1171274896,
-                                      height: getSize(12),
-                                      width: getSize(12),
-                                      margin: getMargin(right: 10),
-                                    ),
-                                    selected: false,
-                                    backgroundColor: theme.colorScheme.primary,
-                                    selectedColor: appTheme.teal400,
-                                    shape: RoundedRectangleBorder(
-                                      side: BorderSide.none,
-                                      borderRadius: BorderRadius.circular(
-                                        getHorizontalSize(8),
-                                      ),
-                                    ),
-                                    onSelected: (value) {},
+          padding: getPadding(top: 0, bottom: 41),
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 16, right: 16),
+                  child: IntrinsicWidth(
+                    child: SizedBox(
+                      // height: height / 2.5,
+                      width: width,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          padding: getPadding(
+                            left: 16,
+                            top: 22,
+                            right: 16,
+                            bottom: 22,
+                          ),
+                          decoration: AppDecoration.fill.copyWith(
+                            borderRadius: BorderRadiusStyle.roundedBorder12,
+                            color: isLight ? ColorConstant.kF3F3F3 : null,
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: getPadding(top: 2),
+                                child: Text(
+                                  'Select the type of books you enjoy reading.',
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.left,
+                                  style:
+                                      CustomTextStyles.bodyMediumThin.copyWith(
+                                    color: isLight ? ColorConstant.black : null,
                                   ),
                                 ),
                               ),
-                            ),
-                            Spacer(),
-                            CustomElevatedButton(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LangugaesScreen()),
-                                );
-                              },
-                              width: double.maxFinite,
-                              height: getVerticalSize(48),
-                              text: "Continue",
-                              // margin: getMargin(top: 188),
-                              buttonStyle: CustomButtonStyles.fillTeal400,
-                              buttonTextStyle:
-                                  CustomTextStyles.titleSmallPrimary_1,
-                            ),
-                            Align(
-                              alignment: Alignment.center,
-                              child: Padding(
-                                padding: getPadding(top: 12),
-                                child: Text(
-                                  "Select 3 or more genres to continue",
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.left,
-                                  style: CustomTextStyles.bodySmallGray400,
+                              const SizedBox(height: 20),
+                              Center(
+                                child: Consumer<ExploreProvider>(
+                                  builder: (context, provider, child) {
+                                    List<CategoryModel> categories =
+                                        provider.categories;
+                                    return Wrap(
+                                      runSpacing: 5,
+                                      spacing: 5,
+                                      children: List<Widget>.generate(
+                                        categories.length,
+                                        (index) => Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 16),
+                                          child: RawChip(
+                                            // padding: getPadding(right: 16),
+                                            showCheckmark: false,
+                                            labelPadding: EdgeInsets.zero,
+                                            label: Text(
+                                              categories[index].name!,
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                color: selectedId.contains(
+                                                  categories[index].categoryId,
+                                                )
+                                                    ? ColorConstant.whiteA700
+                                                    : isLight
+                                                        ? ColorConstant.black
+                                                        : appTheme.blueGray50,
+                                                fontSize: 12,
+                                                fontFamily: 'Outfit',
+                                                fontWeight: FontWeight.w100,
+                                              ),
+                                            ),
+                                            avatar: CustomImageView(
+                                              url: categories[index].icon,
+                                              height: 12,
+                                              width: 12,
+                                              margin: getMargin(right: 10),
+                                              color: selectedId.contains(
+                                                categories[index].categoryId,
+                                              )
+                                                  ? ColorConstant.whiteA700
+                                                  : null,
+                                            ),
+                                            selected: selectedId.contains(
+                                              categories[index].categoryId,
+                                            ),
+                                            backgroundColor: isLight
+                                                ? ColorConstant.kE1E1E1
+                                                : theme.colorScheme.primary,
+                                            selectedColor: appTheme.teal400,
+                                            shape: RoundedRectangleBorder(
+                                              side: BorderSide.none,
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            onSelected: (value) {
+                                              setState(() {
+                                                if (selectedId.contains(
+                                                  categories[index].categoryId,
+                                                )) {
+                                                  selectedId.remove(
+                                                    categories[index]
+                                                        .categoryId!,
+                                                  );
+                                                } else {
+                                                  selectedId.add(
+                                                    categories[index]
+                                                        .categoryId!,
+                                                  );
+                                                }
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
                                 ),
                               ),
-                            ),
-                          ],
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Consumer<ExploreProvider>(
+                                builder: (context, provider, child) {
+                                  return CustomElevatedButton(
+                                    onTap: () {
+                                      List<int> setId = [];
+                                      List<int> id = provider.categories
+                                          .map((e) => e.categoryId!)
+                                          .toList();
+                                      for (var element in selectedId) {
+                                        if (id.contains(element)) {
+                                          setId.add(element);
+                                        }
+                                      }
+                                      if (setId.length <= 2) {
+                                        SnackBar snackBar = SnackBar(
+                                          content: const Text(
+                                            'Select a minimum 3 Categories',
+                                          ),
+                                          backgroundColor: appTheme.teal400,
+                                        );
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(snackBar);
+                                      } else {
+                                        context
+                                            .read<ProfileProvider>()
+                                            .saveUserCategory(
+                                              context,
+                                              category: setId,
+                                              onSuccess:
+                                                  widget.goIsProfile == null
+                                                      ? null
+                                                      : () {
+                                                          context.pop();
+                                                        },
+                                            );
+                                      }
+                                    },
+                                    width: double.maxFinite,
+                                    height: getVerticalSize(48),
+                                    text: 'Continue',
+                                    // margin: getMargin(top: 188),
+                                    buttonStyle: CustomButtonStyles.fillTeal400,
+                                    buttonTextStyle: CustomTextStyles
+                                        .titleSmallPrimary_1
+                                        .copyWith(
+                                      color: isLight
+                                          ? ColorConstant.whiteA700
+                                          : null,
+                                    ),
+                                  );
+                                },
+                              ),
+                              Align(
+                                alignment: Alignment.center,
+                                child: Padding(
+                                  padding: getPadding(top: 12),
+                                  child: Text(
+                                    'Select 3 or more categories to continue',
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: CustomTextStyles.bodySmallGray400
+                                        .copyWith(
+                                      color:
+                                          isLight ? ColorConstant.black : null,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

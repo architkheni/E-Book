@@ -1,4 +1,4 @@
-package com.ebook.app
+package com.storise.app
 
 import io.flutter.embedding.android.FlutterActivity
 

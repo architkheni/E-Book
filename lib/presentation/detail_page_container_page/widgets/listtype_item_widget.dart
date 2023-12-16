@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/app_export.dart';
-import '../../../core/utils/size_utils.dart';
-import '../../../theme/custom_text_style.dart';
 import '../../../widgets/custom_icon_button.dart';
 
 // ignore: must_be_immutable
@@ -22,10 +20,10 @@ class ListtypeItemWidget extends StatelessWidget {
             bottom: 25,
           ),
           child: Text(
-            "",
+            'a',
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.left,
-            style: theme.textTheme.bodyLarge,
+            style: CustomTextStyles.titleMediumWhiteA700,
           ),
         ),
         Expanded(
@@ -37,7 +35,7 @@ class ListtypeItemWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  "",
+                  'B',
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
                   style: CustomTextStyles.titleMediumWhiteA700,
@@ -47,7 +45,7 @@ class ListtypeItemWidget extends StatelessWidget {
                     top: 2,
                   ),
                   child: Text(
-                    "Subscribe to unlock all 2 key ideas from book ",
+                    'Subscribe to unlock all 2 key ideas from book ',
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.left,
                     style: CustomTextStyles.bodyMediumThin,
@@ -69,7 +67,7 @@ class ListtypeItemWidget extends StatelessWidget {
             all: 6,
           ),
           child: CustomImageView(
-            svgPath: ImageConstant.imgUillock,
+            imagePath: ImageConstant.imgUillock1,
           ),
         ),
       ],

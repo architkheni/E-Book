@@ -1,27 +1,43 @@
 import 'package:book/core/app_export.dart';
+import 'package:book/core/utils/color_constant.dart';
+import 'package:book/provider/auth_provider.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:book/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class ForgotPasswordOneScreen extends StatelessWidget {
-  ForgotPasswordOneScreen({Key? key})
+// ignore: must_be_immutable
+class ForgotPasswordOneScreen extends StatefulWidget {
+  final String email;
+  const ForgotPasswordOneScreen({Key? key, required this.email})
       : super(
           key: key,
         );
+
+  @override
+  State<ForgotPasswordOneScreen> createState() =>
+      _ForgotPasswordOneScreenState();
+}
+
+class _ForgotPasswordOneScreenState extends State<ForgotPasswordOneScreen> {
+  bool obsecure = true;
+
+  bool reObsecure = true;
 
   TextEditingController newpasswordController = TextEditingController();
 
   TextEditingController newpasswordoneController = TextEditingController();
 
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
+    bool isLight = Theme.of(context).brightness == Brightness.light;
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: theme.colorScheme.onPrimaryContainer.withOpacity(1),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         resizeToAvoidBottomInset: false,
         body: Form(
           key: _formKey,
@@ -70,10 +86,13 @@ class ForgotPasswordOneScreen extends StatelessWidget {
                           left: 16,
                         ),
                         child: Text(
-                          "Set Password",
+                          'Reset Password',
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
-                          style: theme.textTheme.headlineLarge,
+                          style: isLight
+                              ? theme.textTheme.headlineLarge!
+                                  .copyWith(color: Colors.black)
+                              : theme.textTheme.headlineLarge,
                         ),
                       ),
                       Container(
@@ -91,6 +110,7 @@ class ForgotPasswordOneScreen extends StatelessWidget {
                         ),
                         decoration: AppDecoration.fill.copyWith(
                           borderRadius: BorderRadiusStyle.roundedBorder12,
+                          color: isLight ? ColorConstant.kF3F3F3 : null,
                         ),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
@@ -113,10 +133,12 @@ class ForgotPasswordOneScreen extends StatelessWidget {
                                 top: 13,
                               ),
                               child: Text(
-                                "Code verified",
+                                'Code verified',
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
-                                style: theme.textTheme.titleMedium,
+                                style: theme.textTheme.titleMedium!.copyWith(
+                                  color: isLight ? ColorConstant.black : null,
+                                ),
                               ),
                             ),
                             Container(
@@ -150,31 +172,37 @@ class ForgotPasswordOneScreen extends StatelessWidget {
                                           ),
                                           textStyle: CustomTextStyles
                                               .bodyMediumGray500,
-                                          hintText: "Enter new password",
+                                          hintText: 'Enter new password',
                                           hintStyle: CustomTextStyles
                                               .bodyMediumGray500,
                                           textInputAction: TextInputAction.next,
                                           textInputType:
                                               TextInputType.visiblePassword,
-                                          suffix: Container(
-                                            margin: getMargin(
-                                              left: 12,
-                                              top: 12,
-                                              right: 16,
-                                              bottom: 12,
+                                          suffix: IconButton(
+                                            splashColor: Colors.transparent,
+                                            iconSize: 23,
+                                            onPressed: () {
+                                              setState(() {
+                                                obsecure = !obsecure;
+                                              });
+                                            },
+                                            icon: Icon(
+                                              obsecure
+                                                  ? Icons.visibility_off
+                                                  : Icons.visibility,
                                             ),
-                                            child: CustomImageView(
-                                              svgPath: ImageConstant.imgEye,
-                                            ),
+                                            color: appTheme.gray500,
                                           ),
                                           suffixConstraints: BoxConstraints(
                                             maxHeight: getVerticalSize(
                                               48,
                                             ),
                                           ),
-                                          obscureText: true,
+                                          obscureText: obsecure,
                                           filled: true,
-                                          fillColor: appTheme.blueGray50,
+                                          fillColor: isLight
+                                              ? ColorConstant.kE1E1E1
+                                              : appTheme.blueGray50,
                                         ),
                                         CustomTextFormField(
                                           controller: newpasswordoneController,
@@ -188,170 +216,103 @@ class ForgotPasswordOneScreen extends StatelessWidget {
                                           ),
                                           textStyle: CustomTextStyles
                                               .bodyMediumGray500,
-                                          hintText: "Re-type new password",
+                                          hintText: 'Re-type new password',
                                           hintStyle: CustomTextStyles
                                               .bodyMediumGray500,
                                           textInputType:
                                               TextInputType.visiblePassword,
-                                          suffix: Container(
-                                            margin: getMargin(
-                                              left: 30,
-                                              top: 12,
-                                              right: 16,
-                                              bottom: 12,
+                                          suffix: IconButton(
+                                            splashColor: Colors.transparent,
+                                            iconSize: 23,
+                                            onPressed: () {
+                                              setState(() {
+                                                reObsecure = !reObsecure;
+                                              });
+                                            },
+                                            icon: Icon(
+                                              reObsecure
+                                                  ? Icons.visibility_off
+                                                  : Icons.visibility,
                                             ),
-                                            child: CustomImageView(
-                                              svgPath: ImageConstant.imgEye,
-                                            ),
+                                            color: appTheme.gray500,
                                           ),
                                           suffixConstraints: BoxConstraints(
                                             maxHeight: getVerticalSize(
                                               48,
                                             ),
                                           ),
-                                          obscureText: true,
+                                          obscureText: reObsecure,
                                           filled: true,
-                                          fillColor: appTheme.blueGray50,
+                                          fillColor: isLight
+                                              ? ColorConstant.kE1E1E1
+                                              : appTheme.blueGray50,
                                         ),
                                         Padding(
                                           padding: getPadding(
                                             top: 7,
                                           ),
                                           child: Text(
-                                            "At-least 8 characters",
+                                            'At-least 8 characters',
                                             overflow: TextOverflow.ellipsis,
                                             textAlign: TextAlign.left,
                                             style: CustomTextStyles
-                                                .bodySmallGray400,
+                                                .bodySmallGray400
+                                                .copyWith(
+                                              color: isLight
+                                                  ? ColorConstant.black
+                                                  : null,
+                                            ),
                                           ),
                                         ),
                                         CustomElevatedButton(
+                                          onTap: () {
+                                            if (newpasswordController.text
+                                                        .trim() !=
+                                                    newpasswordController.text
+                                                        .trim() ||
+                                                newpasswordController.text
+                                                    .trim()
+                                                    .isEmpty) {
+                                              SnackBar snackBar = SnackBar(
+                                                content: const Text(
+                                                  'Please enter valid password',
+                                                ),
+                                                backgroundColor:
+                                                    appTheme.teal400,
+                                              );
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(snackBar);
+                                            } else {
+                                              context
+                                                  .read<AuthProvider>()
+                                                  .updatePassword(
+                                                    context,
+                                                    email: widget.email,
+                                                    password:
+                                                        newpasswordController
+                                                            .text,
+                                                  );
+                                            }
+                                          },
                                           width: double.maxFinite,
                                           height: getVerticalSize(
                                             48,
                                           ),
-                                          text: "Set Password",
+                                          text: 'Reset Password',
                                           margin: getMargin(
                                             top: 15,
                                           ),
                                           buttonStyle:
                                               CustomButtonStyles.fillTeal400,
                                           buttonTextStyle: CustomTextStyles
-                                              .titleSmallPrimary_1,
+                                              .titleSmallPrimary_1
+                                              .copyWith(
+                                            color: isLight
+                                                ? ColorConstant.whiteA700
+                                                : null,
+                                          ),
                                         ),
                                       ],
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.topCenter,
-                                    child: Padding(
-                                      padding: getPadding(
-                                        top: 4,
-                                        bottom: 175,
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          SizedBox(
-                                            width: getHorizontalSize(
-                                              25,
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Padding(
-                                                  padding: getPadding(
-                                                    bottom: 9,
-                                                  ),
-                                                  child: Text(
-                                                    "9",
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    textAlign: TextAlign.left,
-                                                    style: CustomTextStyles
-                                                        .titleSmallOnPrimary,
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: getPadding(
-                                                    top: 9,
-                                                  ),
-                                                  child: Text(
-                                                    ":",
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    textAlign: TextAlign.left,
-                                                    style: CustomTextStyles
-                                                        .titleSmallOnPrimary,
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: getPadding(
-                                                    bottom: 1,
-                                                  ),
-                                                  child: Text(
-                                                    "41",
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    textAlign: TextAlign.left,
-                                                    style: CustomTextStyles
-                                                        .titleSmallOnPrimary,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Spacer(),
-                                          CustomImageView(
-                                            svgPath: ImageConstant.imgTrash,
-                                            height: getVerticalSize(
-                                              10,
-                                            ),
-                                            width: getHorizontalSize(
-                                              18,
-                                            ),
-                                            margin: getMargin(
-                                              top: 3,
-                                              bottom: 5,
-                                            ),
-                                          ),
-                                          CustomImageView(
-                                            svgPath: ImageConstant.imgWifi,
-                                            height: getVerticalSize(
-                                              11,
-                                            ),
-                                            width: getHorizontalSize(
-                                              16,
-                                            ),
-                                            margin: getMargin(
-                                              left: 8,
-                                              top: 3,
-                                              bottom: 5,
-                                            ),
-                                          ),
-                                          CustomImageView(
-                                            svgPath: ImageConstant.imgComputer,
-                                            height: getVerticalSize(
-                                              12,
-                                            ),
-                                            width: getHorizontalSize(
-                                              24,
-                                            ),
-                                            margin: getMargin(
-                                              left: 8,
-                                              top: 2,
-                                              bottom: 4,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
                                     ),
                                   ),
                                 ],
