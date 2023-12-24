@@ -69,7 +69,7 @@ class ScreenLoader {
       },
     );
 
-    state.insert(entry);
+    state?.insert(entry);
 
     return LoadingController(
       show: () {

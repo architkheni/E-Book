@@ -47,315 +47,317 @@ class BottombarPage extends StatelessWidget {
           return false;
         }
       },
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        bottomNavigationBar: SizedBox(
-          height: 70,
-          child: BottomAppBar(
-            elevation: 0,
-            color: Theme.of(context).brightness == Brightness.dark
-                ? const Color(0xFF0D0D0D)
-                : const Color(0xFFFFFFFF),
-            padding: EdgeInsets.zero,
-            
-            shape: const CircularNotchedRectangle(),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      context.go(AppRoutesPath.home);
-                    },
-                    child: Container(
-                      color: selectedIndex != 0
-                          ? Colors.transparent
-                          : ColorConstant.primaryColor.withOpacity(0.10),
-                      width: 60,
-                      child: Column(
-                        children: [
-                          const Spacer(),
-                          Container(
-                            child: selectedIndex != 0
-                                ? Image.asset(
-                                    ImageConstant.home,
-                                    height: 25,
-                                    width: 25,
-                                    color: Theme.of(context).brightness ==
-                                            Brightness.dark
-                                        ? ColorConstant.whiteA700
-                                        : Colors.black,
-                                  )
-                                : Image.asset(
-                                    ImageConstant.slectedHome,
-                                    height: 25,
-                                    width: 25,
-                                  ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'Home',
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            style: selectedIndex != 0
-                                ? CustomTextStyles.titleSmallGray500.copyWith(
-                                    color: Theme.of(context).brightness ==
-                                            Brightness.dark
-                                        ? ColorConstant.whiteA700
-                                        : Colors.black,
-                                  )
-                                : CustomTextStyles.labelLargeTeal500Bold,
-                          ),
-                          const Spacer(),
-                        ],
+      child: SafeArea(
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          bottomNavigationBar: SizedBox(
+            height: 80,
+            child: BottomAppBar(
+              elevation: 0,
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? const Color(0xFF0D0D0D)
+                  : const Color(0xFFFFFFFF),
+              // padding: EdgeInsets.zero,
+              
+              shape: const CircularNotchedRectangle(),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        context.go(AppRoutesPath.home);
+                      },
+                      child: Container(
+                        color: selectedIndex != 0
+                            ? Colors.transparent
+                            : ColorConstant.primaryColor.withOpacity(0.10),
+                        width: 60,
+                        child: Column(
+                          children: [
+                            const Spacer(),
+                            Container(
+                              child: selectedIndex != 0
+                                  ? Image.asset(
+                                      ImageConstant.home,
+                                      height: 25,
+                                      width: 25,
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? ColorConstant.whiteA700
+                                          : Colors.black,
+                                    )
+                                  : Image.asset(
+                                      ImageConstant.slectedHome,
+                                      height: 25,
+                                      width: 25,
+                                    ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'Home',
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.left,
+                              style: selectedIndex != 0
+                                  ? CustomTextStyles.titleSmallGray500.copyWith(
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? ColorConstant.whiteA700
+                                          : Colors.black,
+                                    )
+                                  : CustomTextStyles.labelLargeTeal500Bold,
+                            ),
+                            const Spacer(),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      context.go(AppRoutesPath.explore);
-                    },
-                    child: Container(
-                      width: 60,
-                      color: selectedIndex != 1
-                          ? Colors.transparent
-                          : ColorConstant.primaryColor.withOpacity(0.10),
-                      child: Column(
-                        children: [
-                          const Spacer(),
-                          Container(
-                            child: selectedIndex != 1
-                                ? Image.asset(
-                                    ImageConstant.search,
-                                    height: 24,
-                                    width: 24,
-                                    color: Theme.of(context).brightness ==
-                                            Brightness.dark
-                                        ? ColorConstant.whiteA700
-                                        : Colors.black,
-                                  )
-                                : Image.asset(
-                                    ImageConstant.slectedSearch,
-                                    height: 24,
-                                    width: 24,
-                                  ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'Search',
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            style: selectedIndex != 1
-                                ? CustomTextStyles.titleSmallGray500.copyWith(
-                                    color: Theme.of(context).brightness ==
-                                            Brightness.dark
-                                        ? ColorConstant.whiteA700
-                                        : Colors.black,
-                                  )
-                                : CustomTextStyles.labelLargeTeal500Bold,
-                          ),
-                          const Spacer(),
-                        ],
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        context.go(AppRoutesPath.explore);
+                      },
+                      child: Container(
+                        width: 60,
+                        color: selectedIndex != 1
+                            ? Colors.transparent
+                            : ColorConstant.primaryColor.withOpacity(0.10),
+                        child: Column(
+                          children: [
+                            const Spacer(),
+                            Container(
+                              child: selectedIndex != 1
+                                  ? Image.asset(
+                                      ImageConstant.search,
+                                      height: 24,
+                                      width: 24,
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? ColorConstant.whiteA700
+                                          : Colors.black,
+                                    )
+                                  : Image.asset(
+                                      ImageConstant.slectedSearch,
+                                      height: 24,
+                                      width: 24,
+                                    ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'Search',
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.left,
+                              style: selectedIndex != 1
+                                  ? CustomTextStyles.titleSmallGray500.copyWith(
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? ColorConstant.whiteA700
+                                          : Colors.black,
+                                    )
+                                  : CustomTextStyles.labelLargeTeal500Bold,
+                            ),
+                            const Spacer(),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      context.go(AppRoutesPath.library);
-                    },
-                    child: Container(
-                      width: 60,
-                      // color: Colors.white,
-                      color: selectedIndex != 2
-                          ? Colors.transparent
-                          : ColorConstant.primaryColor.withOpacity(0.10),
-                      child: Column(
-                        children: [
-                          const Spacer(),
-                          Container(
-                            child: selectedIndex != 2
-                                ? Image.asset(
-                                    ImageConstant.library,
-                                    height: 24,
-                                    width: 24,
-                                    color: Theme.of(context).brightness ==
-                                            Brightness.dark
-                                        ? ColorConstant.whiteA700
-                                        : Colors.black,
-                                  )
-                                : Image.asset(
-                                    ImageConstant.selectedLibrary,
-                                    // color: Color(0XFFED1C25),
-                                    height: 24,
-                                    width: 24,
-                                  ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'Library',
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            style: selectedIndex != 2
-                                ? CustomTextStyles.titleSmallGray500.copyWith(
-                                    color: Theme.of(context).brightness ==
-                                            Brightness.dark
-                                        ? ColorConstant.whiteA700
-                                        : Colors.black,
-                                  )
-                                : CustomTextStyles.labelLargeTeal500Bold,
-                          ),
-                          const Spacer(),
-                        ],
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        context.go(AppRoutesPath.library);
+                      },
+                      child: Container(
+                        width: 60,
+                        // color: Colors.white,
+                        color: selectedIndex != 2
+                            ? Colors.transparent
+                            : ColorConstant.primaryColor.withOpacity(0.10),
+                        child: Column(
+                          children: [
+                            const Spacer(),
+                            Container(
+                              child: selectedIndex != 2
+                                  ? Image.asset(
+                                      ImageConstant.library,
+                                      height: 24,
+                                      width: 24,
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? ColorConstant.whiteA700
+                                          : Colors.black,
+                                    )
+                                  : Image.asset(
+                                      ImageConstant.selectedLibrary,
+                                      // color: Color(0XFFED1C25),
+                                      height: 24,
+                                      width: 24,
+                                    ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'Library',
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.left,
+                              style: selectedIndex != 2
+                                  ? CustomTextStyles.titleSmallGray500.copyWith(
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? ColorConstant.whiteA700
+                                          : Colors.black,
+                                    )
+                                  : CustomTextStyles.labelLargeTeal500Bold,
+                            ),
+                            const Spacer(),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: GestureDetector(
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        navigationShell.goBranch(
+                          3,
+                          initialLocation: 3 == navigationShell.currentIndex,
+                        );
+                      },
+                      child: Container(
+                        // color: Colors.white,
+                        color: selectedIndex != 3
+                            ? Colors.transparent
+                            : ColorConstant.primaryColor.withOpacity(0.10),
+                        child: Column(
+                          children: [
+                            const Spacer(),
+                            Container(
+                              child: selectedIndex != 3
+                                  ? Image.asset(
+                                      ImageConstant.profileIcon,
+                                      height: 26,
+                                      width: 26,
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? ColorConstant.whiteA700
+                                          : Colors.black,
+                                    )
+                                  : Image.asset(
+                                      ImageConstant.selectedProfile,
+                                      height: 26,
+                                      width: 26,
+                                    ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'Profile',
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.left,
+                              style: selectedIndex != 3
+                                  ? CustomTextStyles.titleSmallGray500.copyWith(
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? ColorConstant.whiteA700
+                                          : Colors.black,
+                                    )
+                                  : CustomTextStyles.labelLargeTeal500Bold,
+                            ),
+                            const Spacer(),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          body: Column(
+            children: [
+              Expanded(child: navigationShell),
+              Consumer<ContinueReadingProvider>(
+                builder: (context, provider, child) {
+                  BookModel? book = provider.bookModel;
+                  if (book == null) {
+                    return const SizedBox.shrink();
+                  }
+                  return GestureDetector(
                     onTap: () {
-                      navigationShell.goBranch(
-                        3,
-                        initialLocation: 3 == navigationShell.currentIndex,
+                      context.push(
+                        AppRoutesPath.bookRead,
+                        extra: provider.bookModel!.bookId!,
                       );
                     },
                     child: Container(
-                      // color: Colors.white,
-                      color: selectedIndex != 3
-                          ? Colors.transparent
-                          : ColorConstant.primaryColor.withOpacity(0.10),
-                      child: Column(
+                      height: 60,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? const Color(0xFF0D0D0D)
+                            : const Color(0xFFFFFFFF),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const Spacer(),
-                          Container(
-                            child: selectedIndex != 3
-                                ? Image.asset(
-                                    ImageConstant.profileIcon,
-                                    height: 26,
-                                    width: 26,
-                                    color: Theme.of(context).brightness ==
-                                            Brightness.dark
-                                        ? ColorConstant.whiteA700
-                                        : Colors.black,
-                                  )
-                                : Image.asset(
-                                    ImageConstant.selectedProfile,
-                                    height: 26,
-                                    width: 26,
+                          SizedBox(
+                            width: width * 5 / 100,
+                          ),
+                          SizedBox(
+                            height: 52.5,
+                            width: 35,
+                            child: CustomImageView(
+                              url: book.frontCover,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          const SizedBox(width: 20),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Continue reading',
+                                  style: TextStyle(
+                                    color: ColorConstant.grey,
+                                    fontSize: 12,
                                   ),
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  book.name!,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
                           ),
-                          const SizedBox(
-                            height: 10,
+                          IconButton(
+                            onPressed: () {
+                              context
+                                  .read<ContinueReadingProvider>()
+                                  .setBook(null);
+                            },
+                            icon: Icon(
+                              Icons.clear,
+                              color: ColorConstant.grey,
+                            ),
                           ),
-                          Text(
-                            'Profile',
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            style: selectedIndex != 3
-                                ? CustomTextStyles.titleSmallGray500.copyWith(
-                                    color: Theme.of(context).brightness ==
-                                            Brightness.dark
-                                        ? ColorConstant.whiteA700
-                                        : Colors.black,
-                                  )
-                                : CustomTextStyles.labelLargeTeal500Bold,
-                          ),
-                          const Spacer(),
                         ],
                       ),
                     ),
-                  ),
-                ),
-              ],
-            ),
+                  );
+                },
+              ),
+            ],
           ),
-        ),
-        body: Column(
-          children: [
-            Expanded(child: navigationShell),
-            Consumer<ContinueReadingProvider>(
-              builder: (context, provider, child) {
-                BookModel? book = provider.bookModel;
-                if (book == null) {
-                  return const SizedBox.shrink();
-                }
-                return GestureDetector(
-                  onTap: () {
-                    context.push(
-                      AppRoutesPath.bookRead,
-                      extra: provider.bookModel!.bookId!,
-                    );
-                  },
-                  child: Container(
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).brightness == Brightness.dark
-                          ? const Color(0xFF0D0D0D)
-                          : const Color(0xFFFFFFFF),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: width * 5 / 100,
-                        ),
-                        SizedBox(
-                          height: 52.5,
-                          width: 35,
-                          child: CustomImageView(
-                            url: book.frontCover,
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                        const SizedBox(width: 20),
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Continue reading',
-                                style: TextStyle(
-                                  color: ColorConstant.grey,
-                                  fontSize: 12,
-                                ),
-                              ),
-                              const SizedBox(height: 2),
-                              Text(
-                                book.name!,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            context
-                                .read<ContinueReadingProvider>()
-                                .setBook(null);
-                          },
-                          icon: Icon(
-                            Icons.clear,
-                            color: ColorConstant.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-          ],
         ),
       ),
     );
