@@ -110,7 +110,8 @@ class _HomeRecommendedForYouSeeAllScreenState
                     .where((element) => element.readCahpters != 0)
                     .toList();
               }
-              if (widget.param != 'finished') {
+              if (widget.param != 'finished' &&
+                  widget.param != 'recently_added') {
                 if (selectedValue == 'A to Z') {
                   books.sort((a, b) => a.name!.compareTo(b.name!));
                 } else if (selectedValue == 'Z to A') {
@@ -148,7 +149,8 @@ class _HomeRecommendedForYouSeeAllScreenState
                         ),
                         const Spacer(),
                         if (widget.param != 'history' &&
-                            widget.param != 'finished') ...[
+                            widget.param != 'finished' &&
+                            widget.param != 'recently_added') ...[
                           Text(
                             'Sort By  ',
                             overflow: TextOverflow.ellipsis,

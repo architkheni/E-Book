@@ -141,7 +141,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 padding:
                                                     const EdgeInsets.all(6),
                                                 child: Icon(
-                                                  Icons.upload_rounded,
+                                                  Icons.edit,
                                                   color: isLight
                                                       ? ColorConstant.whiteA700
                                                       : ColorConstant.black,
@@ -175,7 +175,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 padding:
                                                     const EdgeInsets.all(6),
                                                 child: Icon(
-                                                  Icons.upload_rounded,
+                                                  Icons.edit,
                                                   color: isLight
                                                       ? ColorConstant.whiteA700
                                                       : ColorConstant.black,

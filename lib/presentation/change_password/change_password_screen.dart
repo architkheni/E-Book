@@ -70,171 +70,175 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 20),
-            Text(
-              'Enter your current password',
-              overflow: TextOverflow.ellipsis,
-              style: CustomTextStyles.titleMediumWhiteA500.copyWith(
-                color: isLight ? ColorConstant.black : null,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 5, bottom: 30),
-              child: CustomTextFormField(
-                controller: currentPasswordController,
-                margin: getMargin(
-                  top: 1,
-                ),
-                contentPadding: getPadding(
-                  left: 16,
-                  top: 15,
-                  right: 16,
-                  bottom: 15,
-                ),
-                textStyle: CustomTextStyles.bodyMediumGray200.copyWith(
-                  color: isLight ? ColorConstant.black : null,
-                ),
-                hintText: 'Enter current password',
-                hintStyle: CustomTextStyles.bodyMediumGray200,
-                textInputType: TextInputType.name,
-                filled: true,
-                fillColor:
-                    isLight ? ColorConstant.kF3F3F3 : appTheme.grayTextfiled,
-              ),
-            ),
-            Text(
-              'Enter new password',
-              overflow: TextOverflow.ellipsis,
-              style: CustomTextStyles.titleMediumWhiteA500.copyWith(
-                color: isLight ? ColorConstant.black : null,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 5, bottom: 30),
-              child: CustomTextFormField(
-                controller: newPasswordController,
-                margin: getMargin(
-                  top: 1,
-                ),
-                contentPadding: getPadding(
-                  left: 16,
-                  top: 15,
-                  right: 16,
-                  bottom: 15,
-                ),
-                textStyle: CustomTextStyles.bodyMediumGray200.copyWith(
-                  color: isLight ? ColorConstant.black : null,
-                ),
-                hintText: 'Enter new password',
-                hintStyle: CustomTextStyles.bodyMediumGray200,
-                textInputType: TextInputType.name,
-                filled: true,
-                fillColor:
-                    isLight ? ColorConstant.kF3F3F3 : appTheme.grayTextfiled,
-              ),
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Re-type new password',
+      body: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 20),
+              Text(
+                'Enter your current password',
                 overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.left,
                 style: CustomTextStyles.titleMediumWhiteA500.copyWith(
                   color: isLight ? ColorConstant.black : null,
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 5, bottom: 30),
-              child: CustomTextFormField(
-                controller: newConfirmPasswordController,
-                margin: getMargin(
-                  top: 1,
+              Padding(
+                padding: const EdgeInsets.only(top: 5, bottom: 15),
+                child: CustomTextFormField(
+                  controller: currentPasswordController,
+                  margin: getMargin(
+                    top: 1,
+                  ),
+                  contentPadding: getPadding(
+                    left: 16,
+                    top: 15,
+                    right: 16,
+                    bottom: 15,
+                  ),
+                  textStyle: CustomTextStyles.bodyMediumGray200.copyWith(
+                    color: isLight ? ColorConstant.black : null,
+                  ),
+                  hintText: 'Enter current password',
+                  hintStyle: CustomTextStyles.bodyMediumGray200,
+                  textInputType: TextInputType.name,
+                  filled: true,
+                  fillColor:
+                      isLight ? ColorConstant.kF3F3F3 : appTheme.grayTextfiled,
                 ),
-                contentPadding: getPadding(
-                  left: 16,
-                  top: 15,
-                  right: 16,
-                  bottom: 15,
-                ),
-                textStyle: CustomTextStyles.bodyMediumGray200.copyWith(
+              ),
+              Text(
+                'Enter new password',
+                overflow: TextOverflow.ellipsis,
+                style: CustomTextStyles.titleMediumWhiteA500.copyWith(
                   color: isLight ? ColorConstant.black : null,
                 ),
-                hintText: 'Re-type new password',
-                hintStyle: CustomTextStyles.bodyMediumGray200,
-                textInputType: TextInputType.name,
-                filled: true,
-                fillColor:
-                    isLight ? ColorConstant.kF3F3F3 : appTheme.grayTextfiled,
               ),
-            ),
-            CustomElevatedButton(
-              onTap: () {
-                if (currentPasswordController.text.trim().isEmpty) {
-                  SnackBar snackBar = SnackBar(
-                    content: const Text('Current password is not empty'),
-                    backgroundColor: appTheme.teal400,
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  return;
-                }
-                if (newPasswordController.text.trim().isEmpty) {
-                  SnackBar snackBar = SnackBar(
-                    content: const Text('New password is not empty'),
-                    backgroundColor: appTheme.teal400,
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  return;
-                }
-                if (newPasswordController.text.trim().length < 8) {
-                  SnackBar snackBar = SnackBar(
-                    content: const Text(
-                      'Password length must be greater than 8 characters',
-                    ),
-                    backgroundColor: appTheme.teal400,
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  return;
-                }
-                if (newPasswordController.text.trim().contains(' ')) {
-                  SnackBar snackBar = SnackBar(
-                    content: const Text(
-                      'Password not contain space',
-                    ),
-                    backgroundColor: appTheme.teal400,
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  return;
-                }
-                if (newPasswordController.text.trim() !=
-                    newConfirmPasswordController.text.trim()) {
-                  SnackBar snackBar = SnackBar(
-                    content: const Text('Confirm password is not same'),
-                    backgroundColor: appTheme.teal400,
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  return;
-                }
-                context.read<AuthProvider>().changePassword(
-                      context,
-                      currentPassword: currentPasswordController.text.trim(),
-                      newPassword: newPasswordController.text.trim(),
+              Padding(
+                padding: const EdgeInsets.only(top: 5, bottom: 15),
+                child: CustomTextFormField(
+                  controller: newPasswordController,
+                  margin: getMargin(
+                    top: 1,
+                  ),
+                  contentPadding: getPadding(
+                    left: 16,
+                    top: 15,
+                    right: 16,
+                    bottom: 15,
+                  ),
+                  textStyle: CustomTextStyles.bodyMediumGray200.copyWith(
+                    color: isLight ? ColorConstant.black : null,
+                  ),
+                  hintText: 'Enter new password',
+                  hintStyle: CustomTextStyles.bodyMediumGray200,
+                  textInputType: TextInputType.name,
+                  filled: true,
+                  fillColor:
+                      isLight ? ColorConstant.kF3F3F3 : appTheme.grayTextfiled,
+                ),
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Re-type new password',
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.left,
+                  style: CustomTextStyles.titleMediumWhiteA500.copyWith(
+                    color: isLight ? ColorConstant.black : null,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 5, bottom: 15),
+                child: CustomTextFormField(
+                  controller: newConfirmPasswordController,
+                  margin: getMargin(
+                    top: 1,
+                  ),
+                  contentPadding: getPadding(
+                    left: 16,
+                    top: 15,
+                    right: 16,
+                    bottom: 15,
+                  ),
+                  textStyle: CustomTextStyles.bodyMediumGray200.copyWith(
+                    color: isLight ? ColorConstant.black : null,
+                  ),
+                  hintText: 'Re-type new password',
+                  hintStyle: CustomTextStyles.bodyMediumGray200,
+                  textInputType: TextInputType.name,
+                  filled: true,
+                  fillColor:
+                      isLight ? ColorConstant.kF3F3F3 : appTheme.grayTextfiled,
+                ),
+              ),
+              CustomElevatedButton(
+                onTap: () {
+                  if (currentPasswordController.text.trim().isEmpty) {
+                    SnackBar snackBar = SnackBar(
+                      content: const Text('Current password is not empty'),
+                      backgroundColor: appTheme.teal400,
                     );
-              },
-              width: double.maxFinite,
-              height: getVerticalSize(48),
-              text: 'Change Password',
-              buttonStyle: CustomButtonStyles.fillTeal400,
-              buttonTextStyle: CustomTextStyles.titleSmallPrimary_1.copyWith(
-                color: isLight ? ColorConstant.whiteA700 : null,
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    return;
+                  }
+                  if (newPasswordController.text.trim().isEmpty) {
+                    SnackBar snackBar = SnackBar(
+                      content: const Text('New password is not empty'),
+                      backgroundColor: appTheme.teal400,
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    return;
+                  }
+                  if (newPasswordController.text.trim().length < 8) {
+                    SnackBar snackBar = SnackBar(
+                      content: const Text(
+                        'Password length must be greater than 8 characters',
+                      ),
+                      backgroundColor: appTheme.teal400,
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    return;
+                  }
+                  if (newPasswordController.text.trim().contains(' ')) {
+                    SnackBar snackBar = SnackBar(
+                      content: const Text(
+                        'Password not contain space',
+                      ),
+                      backgroundColor: appTheme.teal400,
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    return;
+                  }
+                  if (newPasswordController.text.trim() !=
+                      newConfirmPasswordController.text.trim()) {
+                    SnackBar snackBar = SnackBar(
+                      content: const Text('Confirm password is not same'),
+                      backgroundColor: appTheme.teal400,
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    return;
+                  }
+                  context.read<AuthProvider>().changePassword(
+                        context,
+                        currentPassword: currentPasswordController.text.trim(),
+                        newPassword: newPasswordController.text.trim(),
+                      );
+                },
+                width: double.maxFinite,
+                height: getVerticalSize(48),
+                text: 'Change Password',
+                buttonStyle: CustomButtonStyles.fillTeal400,
+                buttonTextStyle: CustomTextStyles.titleSmallPrimary_1.copyWith(
+                  color: isLight ? ColorConstant.whiteA700 : null,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -182,8 +182,8 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          var velidEmail = emailV(emailController.text);
-                          if (velidEmail == true) {
+                          var validEmail = emailV(emailController.text);
+                          if (validEmail == true) {
                             context.read<auth.AuthProvider>().forgotPassword(
                                   context,
                                   email: emailController.text.trim(),

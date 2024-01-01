@@ -38,293 +38,202 @@ class _ForgotPasswordOneScreenState extends State<ForgotPasswordOneScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        resizeToAvoidBottomInset: false,
-        body: Form(
+        body: Form( 
           key: _formKey,
-          child: Container(
-            height: mediaQueryData.size.height,
-            width: double.maxFinite,
-            padding: getPadding(
-              left: 16,
-              top: 176,
-              right: 16,
-            ),
-            child: Stack(
-              alignment: Alignment.topCenter,
-              children: [
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Padding(
+          child: SingleChildScrollView(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              height: MediaQuery.of(context).size.height,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
                     padding: getPadding(
-                      top: 205,
+                      left: 16,
                     ),
-                    child: SizedBox(
-                      width: getHorizontalSize(
-                        142,
-                      ),
-                      child: Divider(
-                        height: getVerticalSize(
-                          4,
-                        ),
-                        thickness: getVerticalSize(
-                          4,
-                        ),
-                        color: appTheme.gray400,
-                      ),
+                    child: Text(
+                      'Reset Password',
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.left,
+                      style: isLight
+                          ? theme.textTheme.headlineLarge!
+                              .copyWith(color: Colors.black)
+                          : theme.textTheme.headlineLarge,
                     ),
                   ),
-                ),
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: getPadding(
-                          left: 16,
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 24,
+                    ),
+                    decoration: AppDecoration.fill.copyWith(
+                      borderRadius: BorderRadiusStyle.roundedBorder12,
+                      color: isLight ? ColorConstant.kF3F3F3 : null,
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        CustomImageView(
+                          svgPath: ImageConstant.imgCheckmarkTeal400,
+                          height: getSize(
+                            53,
+                          ),
+                          width: getSize(
+                            53,
+                          ),
+                          margin: getMargin(
+                            top: 5,
+                          ),
                         ),
-                        child: Text(
-                          'Reset Password',
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: isLight
-                              ? theme.textTheme.headlineLarge!
-                                  .copyWith(color: Colors.black)
-                              : theme.textTheme.headlineLarge,
+                        Padding(
+                          padding: getPadding(
+                            top: 13,
+                          ),
+                          child: Text(
+                            'Code verified',
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.left,
+                            style: theme.textTheme.titleMedium!.copyWith(
+                              color: isLight ? ColorConstant.black : null,
+                            ),
+                          ),
                         ),
-                      ),
-                      Container(
-                        width: getHorizontalSize(
-                          358,
+                        const SizedBox(
+                          height: 16,
                         ),
-                        margin: getMargin(
-                          top: 13,
+                        CustomTextFormField(
+                          controller: newpasswordController,
+                          contentPadding: getPadding(
+                            left: 16,
+                            top: 15,
+                            bottom: 15,
+                          ),
+                          textStyle: CustomTextStyles.bodyMediumGray500,
+                          hintText: 'Enter new password',
+                          hintStyle: CustomTextStyles.bodyMediumGray500,
+                          textInputAction: TextInputAction.next,
+                          textInputType: TextInputType.visiblePassword,
+                          suffix: IconButton(
+                            splashColor: Colors.transparent,
+                            iconSize: 23,
+                            onPressed: () {
+                              setState(() {
+                                obsecure = !obsecure;
+                              });
+                            },
+                            icon: Icon(
+                              obsecure
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                            ),
+                            color: appTheme.gray500,
+                          ),
+                          suffixConstraints: BoxConstraints(
+                            maxHeight: getVerticalSize(
+                              48,
+                            ),
+                          ),
+                          obscureText: obsecure,
+                          filled: true,
+                          fillColor: isLight
+                              ? ColorConstant.kE1E1E1
+                              : appTheme.blueGray50,
                         ),
-                        padding: getPadding(
-                          left: 4,
-                          top: 24,
-                          right: 4,
-                          bottom: 24,
+                        CustomTextFormField(
+                          controller: newpasswordoneController,
+                          margin: getMargin(
+                            top: 16,
+                          ),
+                          contentPadding: getPadding(
+                            left: 16,
+                            top: 15,
+                            bottom: 15,
+                          ),
+                          textStyle: CustomTextStyles.bodyMediumGray500,
+                          hintText: 'Re-type new password',
+                          hintStyle: CustomTextStyles.bodyMediumGray500,
+                          textInputType: TextInputType.visiblePassword,
+                          suffix: IconButton(
+                            splashColor: Colors.transparent,
+                            iconSize: 23,
+                            onPressed: () {
+                              setState(() {
+                                reObsecure = !reObsecure;
+                              });
+                            },
+                            icon: Icon(
+                              reObsecure
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                            ),
+                            color: appTheme.gray500,
+                          ),
+                          suffixConstraints: BoxConstraints(
+                            maxHeight: getVerticalSize(
+                              48,
+                            ),
+                          ),
+                          obscureText: reObsecure,
+                          filled: true,
+                          fillColor: isLight
+                              ? ColorConstant.kE1E1E1
+                              : appTheme.blueGray50,
                         ),
-                        decoration: AppDecoration.fill.copyWith(
-                          borderRadius: BorderRadiusStyle.roundedBorder12,
-                          color: isLight ? ColorConstant.kF3F3F3 : null,
+                        const SizedBox(
+                          height: 8,
                         ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.end,
+                        Row(
                           children: [
-                            CustomImageView(
-                              svgPath: ImageConstant.imgCheckmarkTeal400,
-                              height: getSize(
-                                53,
-                              ),
-                              width: getSize(
-                                53,
-                              ),
-                              margin: getMargin(
-                                top: 5,
-                              ),
-                            ),
-                            Padding(
-                              padding: getPadding(
-                                top: 13,
-                              ),
-                              child: Text(
-                                'Code verified',
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.left,
-                                style: theme.textTheme.titleMedium!.copyWith(
-                                  color: isLight ? ColorConstant.black : null,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              height: getVerticalSize(
-                                199,
-                              ),
-                              width: getHorizontalSize(
-                                338,
-                              ),
-                              margin: getMargin(
-                                top: 23,
-                              ),
-                              child: Stack(
-                                alignment: Alignment.topCenter,
-                                children: [
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        CustomTextFormField(
-                                          controller: newpasswordController,
-                                          contentPadding: getPadding(
-                                            left: 16,
-                                            top: 15,
-                                            bottom: 15,
-                                          ),
-                                          textStyle: CustomTextStyles
-                                              .bodyMediumGray500,
-                                          hintText: 'Enter new password',
-                                          hintStyle: CustomTextStyles
-                                              .bodyMediumGray500,
-                                          textInputAction: TextInputAction.next,
-                                          textInputType:
-                                              TextInputType.visiblePassword,
-                                          suffix: IconButton(
-                                            splashColor: Colors.transparent,
-                                            iconSize: 23,
-                                            onPressed: () {
-                                              setState(() {
-                                                obsecure = !obsecure;
-                                              });
-                                            },
-                                            icon: Icon(
-                                              obsecure
-                                                  ? Icons.visibility_off
-                                                  : Icons.visibility,
-                                            ),
-                                            color: appTheme.gray500,
-                                          ),
-                                          suffixConstraints: BoxConstraints(
-                                            maxHeight: getVerticalSize(
-                                              48,
-                                            ),
-                                          ),
-                                          obscureText: obsecure,
-                                          filled: true,
-                                          fillColor: isLight
-                                              ? ColorConstant.kE1E1E1
-                                              : appTheme.blueGray50,
-                                        ),
-                                        CustomTextFormField(
-                                          controller: newpasswordoneController,
-                                          margin: getMargin(
-                                            top: 16,
-                                          ),
-                                          contentPadding: getPadding(
-                                            left: 16,
-                                            top: 15,
-                                            bottom: 15,
-                                          ),
-                                          textStyle: CustomTextStyles
-                                              .bodyMediumGray500,
-                                          hintText: 'Re-type new password',
-                                          hintStyle: CustomTextStyles
-                                              .bodyMediumGray500,
-                                          textInputType:
-                                              TextInputType.visiblePassword,
-                                          suffix: IconButton(
-                                            splashColor: Colors.transparent,
-                                            iconSize: 23,
-                                            onPressed: () {
-                                              setState(() {
-                                                reObsecure = !reObsecure;
-                                              });
-                                            },
-                                            icon: Icon(
-                                              reObsecure
-                                                  ? Icons.visibility_off
-                                                  : Icons.visibility,
-                                            ),
-                                            color: appTheme.gray500,
-                                          ),
-                                          suffixConstraints: BoxConstraints(
-                                            maxHeight: getVerticalSize(
-                                              48,
-                                            ),
-                                          ),
-                                          obscureText: reObsecure,
-                                          filled: true,
-                                          fillColor: isLight
-                                              ? ColorConstant.kE1E1E1
-                                              : appTheme.blueGray50,
-                                        ),
-                                        Padding(
-                                          padding: getPadding(
-                                            top: 7,
-                                          ),
-                                          child: Text(
-                                            'At-least 8 characters',
-                                            overflow: TextOverflow.ellipsis,
-                                            textAlign: TextAlign.left,
-                                            style: CustomTextStyles
-                                                .bodySmallGray400
-                                                .copyWith(
-                                              color: isLight
-                                                  ? ColorConstant.black
-                                                  : null,
-                                            ),
-                                          ),
-                                        ),
-                                        CustomElevatedButton(
-                                          onTap: () {
-                                            if (newpasswordController.text
-                                                        .trim() !=
-                                                    newpasswordController.text
-                                                        .trim() ||
-                                                newpasswordController.text
-                                                    .trim()
-                                                    .isEmpty) {
-                                              SnackBar snackBar = SnackBar(
-                                                content: const Text(
-                                                  'Please enter valid password',
-                                                ),
-                                                backgroundColor:
-                                                    appTheme.teal400,
-                                              );
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(snackBar);
-                                            } else {
-                                              context
-                                                  .read<AuthProvider>()
-                                                  .updatePassword(
-                                                    context,
-                                                    email: widget.email,
-                                                    password:
-                                                        newpasswordController
-                                                            .text,
-                                                  );
-                                            }
-                                          },
-                                          width: double.maxFinite,
-                                          height: getVerticalSize(
-                                            48,
-                                          ),
-                                          text: 'Reset Password',
-                                          margin: getMargin(
-                                            top: 15,
-                                          ),
-                                          buttonStyle:
-                                              CustomButtonStyles.fillTeal400,
-                                          buttonTextStyle: CustomTextStyles
-                                              .titleSmallPrimary_1
-                                              .copyWith(
-                                            color: isLight
-                                                ? ColorConstant.whiteA700
-                                                : null,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
+                            Text(
+                              'At-least 8 characters',
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.left,
+                              style: CustomTextStyles.bodySmallGray400.copyWith(
+                                color: isLight ? ColorConstant.black : null,
                               ),
                             ),
                           ],
                         ),
-                      ),
-                    ],
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        CustomElevatedButton(
+                          onTap: () {
+                            if (newpasswordController.text.trim() !=
+                                    newpasswordController.text.trim() ||
+                                newpasswordController.text.trim().isEmpty) {
+                              SnackBar snackBar = SnackBar(
+                                content: const Text(
+                                  'Please enter valid password',
+                                ),
+                                backgroundColor: appTheme.teal400,
+                              );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            } else {
+                              context.read<AuthProvider>().updatePassword(
+                                    context,
+                                    email: widget.email,
+                                    password: newpasswordController.text,
+                                  );
+                            }
+                          },
+                          height: 48,
+                          text: 'Reset Password',
+                          buttonStyle: CustomButtonStyles.fillTeal400,
+                          buttonTextStyle:
+                              CustomTextStyles.titleSmallPrimary_1.copyWith(
+                            color: isLight ? ColorConstant.whiteA700 : null,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
