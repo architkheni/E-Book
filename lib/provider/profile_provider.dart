@@ -135,7 +135,7 @@ class ProfileProvider extends ChangeNotifier {
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }, (r) {
       SnackBar snackBar = SnackBar(
-        content: Text(r),
+        content: const Text('Your message submitted successfully'),
         backgroundColor: appTheme.teal400,
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);

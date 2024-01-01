@@ -269,10 +269,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     mobileNumberController.text,
                                   );
                                   if (number ==
-                                      'Mobile Number must be of 10 digit') {
+                                      'Mobile Number must be of 7 digit') {
                                     SnackBar snackBar = SnackBar(
                                       content: const Text(
-                                        'Mobile Number must be of 10 digit',
+                                        'Mobile Number must be of 7 digit',
                                       ),
                                       backgroundColor: appTheme.teal400,
                                     );
@@ -608,8 +608,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   validateMobile(String value) {
 // Indian Mobile number are of 10 digit only
-    if (value.length != 10) {
-      return 'Mobile Number must be of 10 digit';
+    if (value.length < 7) {
+      return 'Mobile Number must be of 7 digit';
     } else {
       return null;
     }

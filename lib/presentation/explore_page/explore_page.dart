@@ -422,6 +422,20 @@ class _ExplorePageState extends State<ExplorePage> {
                                                     : null,
                                               ),
                                             ),
+                                            const SizedBox(height: 5),
+                                            Text(
+                                              provider.books[index]
+                                                      .description ??
+                                                  'Book Description',
+                                              overflow: TextOverflow.ellipsis,
+                                              textAlign: TextAlign.left,
+                                              style: theme.textTheme.labelLarge!
+                                                  .copyWith(
+                                                color: isLight
+                                                    ? ColorConstant.black
+                                                    : null,
+                                              ),
+                                            ),
                                             const SizedBox(height: 7),
                                             Builder(
                                               builder: (context) {
@@ -472,28 +486,28 @@ class _ExplorePageState extends State<ExplorePage> {
                                             const SizedBox(height: 7),
                                             Row(
                                               children: [
-                                                Icon(
-                                                  Icons.headphones,
-                                                  color: isLight
-                                                      ? ColorConstant.black
-                                                      : appTheme.whiteA700,
-                                                  size: 20,
-                                                ),
-                                                const SizedBox(width: 5),
-                                                Text(
-                                                  '${provider.books[index].originalAudiobookLength}m',
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  textAlign: TextAlign.left,
-                                                  style: theme
-                                                      .textTheme.labelLarge!
-                                                      .copyWith(
-                                                    color: isLight
-                                                        ? ColorConstant.black
-                                                        : null,
-                                                  ),
-                                                ),
-                                                const SizedBox(width: 10),
+                                                // Icon(
+                                                //   Icons.headphones,
+                                                //   color: isLight
+                                                //       ? ColorConstant.black
+                                                //       : appTheme.whiteA700,
+                                                //   size: 20,
+                                                // ),
+                                                // const SizedBox(width: 5),
+                                                // Text(
+                                                //   '${provider.books[index].originalAudiobookLength}m',
+                                                //   overflow:
+                                                //       TextOverflow.ellipsis,
+                                                //   textAlign: TextAlign.left,
+                                                //   style: theme
+                                                //       .textTheme.labelLarge!
+                                                //       .copyWith(
+                                                //     color: isLight
+                                                //         ? ColorConstant.black
+                                                //         : null,
+                                                //   ),
+                                                // ),
+                                                // const SizedBox(width: 10),
                                                 Icon(
                                                   Icons.visibility_outlined,
                                                   color: isLight

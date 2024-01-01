@@ -360,10 +360,10 @@ class _EditProfileState extends State<EditProfile> {
                         } else {
                           var number =
                               validateMobile(contactNumberController.text);
-                          if (number == 'Mobile Number must be of 10 digit') {
+                          if (number == 'Mobile Number must be of 7 digit') {
                             SnackBar snackBar = SnackBar(
                               content: const Text(
-                                'Mobile Number must be of 10 digit',
+                                'Mobile Number must be of 7 digit',
                               ),
                               backgroundColor: appTheme.teal400,
                             );
@@ -421,8 +421,8 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   validateMobile(String value) {
-    if (value.length != 10) {
-      return 'Mobile Number must be of 10 digit';
+    if (value.length < 7) {
+      return 'Mobile Number must be of 7 digit';
     } else {
       return null;
     }

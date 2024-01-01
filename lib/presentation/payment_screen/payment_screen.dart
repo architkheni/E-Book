@@ -197,7 +197,7 @@ void showPromoCodeDialog({
               height: getVerticalSize(
                 48,
               ),
-              text: 'Apply promocode',
+              text: 'Apply Promocode',
               margin: getMargin(
                 top: 0,
                 left: 16,
