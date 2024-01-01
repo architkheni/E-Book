@@ -55,7 +55,7 @@ class CustomElevatedButton extends BaseButton {
         width: width,
         decoration: decoration,
         child: ElevatedButton(
-          style: elevatedButtonStyle!.copyWith(
+          style: elevatedButtonStyle?.copyWith(
             visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
             padding: MaterialStateProperty.all(EdgeInsets.zero),
           ),

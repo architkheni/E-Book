@@ -32,6 +32,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   bool obsecure = true;
 
+  bool tick = true;
+
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
@@ -208,44 +210,76 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   : appTheme.blueGray50,
                             ),
                           ],
-                          Container(
-                            width: getHorizontalSize(320),
-                            margin: getMargin(top: 16, right: 5),
-                            child: RichText(
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text:
-                                        'By selecting Create Account below, I agree to ',
-                                    style: CustomTextStyles.bodyMediumThin_1
-                                        .copyWith(
-                                      color:
-                                          isLight ? ColorConstant.black : null,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: 'Terms of Service',
-                                    style: CustomTextStyles.titleSmallTeal400_1,
-                                  ),
-                                  TextSpan(
-                                    text: ' & ',
-                                    style: CustomTextStyles.bodyMediumThin_1
-                                        .copyWith(
-                                      color:
-                                          isLight ? ColorConstant.black : null,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: 'Privacy Policy',
-                                    style: CustomTextStyles.titleSmallTeal400_1,
-                                  ),
-                                ],
+                          Row(
+                            children: [
+                              Checkbox(
+                                value: tick,
+                                checkColor: Colors.white,
+                                activeColor: ColorConstant.primaryColor,
+                                onChanged: (value) {
+                                  tick = value ?? false;
+                                  setState(() {});
+                                },
                               ),
-                              textAlign: TextAlign.left,
-                            ),
+                              Flexible(
+                                child: Container(
+                                  width: getHorizontalSize(320),
+                                  margin: getMargin(top: 16, right: 5),
+                                  child: RichText(
+                                    text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text:
+                                              'By selecting Create Account below, I agree to ',
+                                          style: CustomTextStyles
+                                              .bodyMediumThin_1
+                                              .copyWith(
+                                            color: isLight
+                                                ? ColorConstant.black
+                                                : null,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: 'Terms of Service',
+                                          style: CustomTextStyles
+                                              .titleSmallTeal400_1,
+                                        ),
+                                        TextSpan(
+                                          text: ' & ',
+                                          style: CustomTextStyles
+                                              .bodyMediumThin_1
+                                              .copyWith(
+                                            color: isLight
+                                                ? ColorConstant.black
+                                                : null,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: 'Privacy Policy',
+                                          style: CustomTextStyles
+                                              .titleSmallTeal400_1,
+                                        ),
+                                      ],
+                                    ),
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                           CustomElevatedButton(
                             onTap: () {
+                              if (tick == false) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: const Text(
+                                      'Please accept the terms and privacy policy',
+                                    ),
+                                    backgroundColor: appTheme.teal400,
+                                  ),
+                                );
+                                return;
+                              }
                               var name = validateName(nameController.text);
                               if (name == 'Name must be more than 2 charater') {
                                 SnackBar snackBar = SnackBar(
