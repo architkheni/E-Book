@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:book/core/app_export.dart';
 import 'package:book/core/utils/color_constant.dart';
 import 'package:book/provider/auth_provider.dart' as auth;
@@ -342,30 +340,30 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                           buttonTextStyle: CustomTextStyles.titleSmallPrimary_1,
                         ),
                       ),
-                      Platform.isAndroid
-                          ? const SizedBox.shrink()
-                          : CustomElevatedButton(
-                              width: double.maxFinite,
-                              height: 48,
-                              text: 'Login with Apple',
-                              margin: getMargin(top: 16),
-                              leftIcon: Container(
-                                margin: getMargin(right: 30),
-                                child: CustomImageView(
-                                  svgPath: ImageConstant.imgUser,
-                                ),
-                              ),
-                              buttonStyle:
-                                  CustomButtonStyles.fillBluegray50.copyWith(
-                                backgroundColor: MaterialStateProperty.all(
-                                  isLight
-                                      ? ColorConstant.kE1E1E1
-                                      : ColorConstant.kEAF4F4,
-                                ),
-                              ),
-                              buttonTextStyle:
-                                  CustomTextStyles.titleSmallPrimary_1,
-                            ),
+                      // Platform.isAndroid
+                      //     ? const SizedBox.shrink()
+                      //     : CustomElevatedButton(
+                      //         width: double.maxFinite,
+                      //         height: 48,
+                      //         text: 'Login with Apple',
+                      //         margin: getMargin(top: 16),
+                      //         leftIcon: Container(
+                      //           margin: getMargin(right: 30),
+                      //           child: CustomImageView(
+                      //             svgPath: ImageConstant.imgUser,
+                      //           ),
+                      //         ),
+                      //         buttonStyle:
+                      //             CustomButtonStyles.fillBluegray50.copyWith(
+                      //           backgroundColor: MaterialStateProperty.all(
+                      //             isLight
+                      //                 ? ColorConstant.kE1E1E1
+                      //                 : ColorConstant.kEAF4F4,
+                      //           ),
+                      //         ),
+                      //         buttonTextStyle:
+                      //             CustomTextStyles.titleSmallPrimary_1,
+                      //       ),
                       Padding(
                         padding: getPadding(top: 33),
                         child: Row(

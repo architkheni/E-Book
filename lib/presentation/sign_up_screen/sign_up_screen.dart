@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:book/core/app_export.dart';
 import 'package:book/core/utils/color_constant.dart';
 import 'package:book/provider/auth_provider.dart' as auth;
@@ -8,6 +6,7 @@ import 'package:book/widgets/custom_text_form_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
@@ -34,7 +33,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   bool obsecure = true;
 
-  bool tick = true;
+  bool tick = false;
 
   @override
   Widget build(BuildContext context) {
@@ -421,7 +420,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             Padding(
                               padding: getPadding(
                                 top: 24,
-                                bottom: 24,
+                                bottom: 8,
                               ),
                               child: Row(
                                 mainAxisAlignment:
@@ -476,7 +475,106 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ],
                               ),
                             ),
+                            Row(
+                              children: [
+                                Checkbox(
+                                  value: tick,
+                                  checkColor: Colors.white,
+                                  activeColor: ColorConstant.primaryColor,
+                                  onChanged: (value) {
+                                    tick = value ?? false;
+                                    setState(() {});
+                                  },
+                                ),
+                                Flexible(
+                                  child: SizedBox(
+                                    width: getHorizontalSize(320),
+                                    child: RichText(
+                                      text: TextSpan(
+                                        children: [
+                                          TextSpan(
+                                            text:
+                                                'By selecting Create Account below, I agree to ',
+                                            style: CustomTextStyles
+                                                .bodyMediumThin_1
+                                                .copyWith(
+                                              color: isLight
+                                                  ? ColorConstant.black
+                                                  : null,
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: 'Terms of Service',
+                                            style: CustomTextStyles
+                                                .titleSmallTeal400_1,
+                                            recognizer: TapGestureRecognizer()
+                                              ..onTap = () {
+                                                launchUrl(
+                                                  Uri.parse(
+                                                    'https://storise.app/term-of-service/',
+                                                  ),
+                                                  mode: LaunchMode
+                                                      .externalApplication,
+                                                );
+                                              },
+                                          ),
+                                          TextSpan(
+                                            text: ' & ',
+                                            style: CustomTextStyles
+                                                .bodyMediumThin_1
+                                                .copyWith(
+                                              color: isLight
+                                                  ? ColorConstant.black
+                                                  : null,
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: 'Privacy Policy',
+                                            style: CustomTextStyles
+                                                .titleSmallTeal400_1,
+                                            recognizer: TapGestureRecognizer()
+                                              ..onTap = () {
+                                                launchUrl(
+                                                  Uri.parse(
+                                                    'https://storise.app/privacy-policy/',
+                                                  ),
+                                                  mode: LaunchMode
+                                                      .externalApplication,
+                                                );
+                                              },
+                                          ),
+                                        ],
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 16,
+                            ),
                             CustomElevatedButton(
+                              onTap: () async {
+                                if (tick == false) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: const Text(
+                                        'Please accept the terms and privacy policy',
+                                      ),
+                                      backgroundColor: appTheme.teal400,
+                                    ),
+                                  );
+                                  return;
+                                }
+                                final LoginResult result =
+                                    await FacebookAuth.instance.login();
+                                if (result.status == LoginStatus.success) {
+                                  final data =
+                                      await FacebookAuth.instance.getUserData();
+                                  print(data);
+                                }
+                              },
                               width: double.maxFinite,
                               height: 48,
                               text: 'Login with Facebook',
@@ -504,6 +602,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               padding: const EdgeInsets.only(top: 16),
                               child: CustomElevatedButton(
                                 onTap: () async {
+                                  if (tick == false) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: const Text(
+                                          'Please accept the terms and privacy policy',
+                                        ),
+                                        backgroundColor: appTheme.teal400,
+                                      ),
+                                    );
+                                    return;
+                                  }
                                   ScaffoldMessengerState scaffoldState =
                                       ScaffoldMessenger.of(context);
                                   try {
@@ -563,30 +672,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     CustomTextStyles.titleSmallPrimary_1,
                               ),
                             ),
-                            Platform.isAndroid
-                                ? const SizedBox.shrink()
-                                : CustomElevatedButton(
-                                    width: double.maxFinite,
-                                    height: getVerticalSize(
-                                      48,
-                                    ),
-                                    text: 'Login with Apple',
-                                    margin: getMargin(
-                                      top: 16,
-                                    ),
-                                    leftIcon: Container(
-                                      margin: getMargin(
-                                        right: 30,
-                                      ),
-                                      child: CustomImageView(
-                                        svgPath: ImageConstant.imgUser,
-                                      ),
-                                    ),
-                                    buttonStyle:
-                                        CustomButtonStyles.fillBluegray50,
-                                    buttonTextStyle:
-                                        CustomTextStyles.titleSmallPrimary_1,
-                                  ),
+                            // Platform.isAndroid
+                            //     ? const SizedBox.shrink()
+                            //     : CustomElevatedButton(
+                            //         width: double.maxFinite,
+                            //         height: getVerticalSize(
+                            //           48,
+                            //         ),
+                            //         text: 'Login with Apple',
+                            //         margin: getMargin(
+                            //           top: 16,
+                            //         ),
+                            //         leftIcon: Container(
+                            //           margin: getMargin(
+                            //             right: 30,
+                            //           ),
+                            //           child: CustomImageView(
+                            //             svgPath: ImageConstant.imgUser,
+                            //           ),
+                            //         ),
+                            //         buttonStyle:
+                            //             CustomButtonStyles.fillBluegray50,
+                            //         buttonTextStyle:
+                            //             CustomTextStyles.titleSmallPrimary_1,
+                            //       ),
                           ],
                           Align(
                             alignment: Alignment.center,
