@@ -6,10 +6,12 @@ import 'package:book/provider/auth_provider.dart' as auth;
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:book/widgets/custom_text_form_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -243,6 +245,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           text: 'Terms of Service',
                                           style: CustomTextStyles
                                               .titleSmallTeal400_1,
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = () {
+                                              launchUrl(
+                                                Uri.parse(
+                                                  'https://storise.app/term-of-service/',
+                                                ),
+                                                mode: LaunchMode
+                                                    .externalApplication,
+                                              );
+                                            },
                                         ),
                                         TextSpan(
                                           text: ' & ',
@@ -258,6 +270,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           text: 'Privacy Policy',
                                           style: CustomTextStyles
                                               .titleSmallTeal400_1,
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = () {
+                                              launchUrl(
+                                                Uri.parse(
+                                                  'https://storise.app/privacy-policy/',
+                                                ),
+                                                mode: LaunchMode
+                                                    .externalApplication,
+                                              );
+                                            },
                                         ),
                                       ],
                                     ),

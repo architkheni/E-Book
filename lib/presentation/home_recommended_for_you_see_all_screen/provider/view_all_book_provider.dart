@@ -1,4 +1,3 @@
-
 import 'package:book/core/storage/app_storage.dart';
 import 'package:book/model/book_model.dart';
 import 'package:book/repository/home_repository.dart';
@@ -17,11 +16,13 @@ class ViewAllBookProvider extends ChangeNotifier {
     result.fold((l) {
       setLoading(false);
     }, (r) {
-      r.sort(
-        (a, b) {
-          return b.name!.compareTo(a.name!);
-        },
-      );
+      if (param != 'history') {
+        r.sort(
+          (a, b) {
+            return b.name!.compareTo(a.name!);
+          },
+        );
+      }
       books = r;
       setLoading(false);
     });
