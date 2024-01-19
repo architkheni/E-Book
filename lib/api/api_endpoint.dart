@@ -29,4 +29,5 @@ class ApiEndpoint {
   static const String packages = '/packages';
   static const String readingChapter = '/reading-chapter';
   static const String promocodes = '/promocodes';
+  static const String paypalCredentials = '/paypal-credentials';
 }

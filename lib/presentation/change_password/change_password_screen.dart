@@ -194,16 +194,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     return;
                   }
-                  if (newPasswordController.text.trim().length < 8) {
-                    SnackBar snackBar = SnackBar(
-                      content: const Text(
-                        'Password length must be greater than 8 characters',
-                      ),
-                      backgroundColor: appTheme.teal400,
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    return;
-                  }
                   if (newPasswordController.text.trim().contains(' ')) {
                     SnackBar snackBar = SnackBar(
                       content: const Text(

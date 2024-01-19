@@ -305,7 +305,9 @@ class PaymentScreenState extends State<PaymentScreen> {
   }
 
   Future<void> init() async {
-    await context.read<PackageProvider>().getPackagesDetails();
+    var provider = context.read<PackageProvider>();
+    await provider.getPaypalDetails();
+    await provider.getPackagesDetails();
     setState(() {});
   }
 
@@ -403,80 +405,82 @@ void payment({
   AppStorage appStorage = AppStorage();
   String userString = await appStorage.getUser();
   UserModel userModel = UserModel.fromJson(jsonDecode(userString));
-  navigatorState.push(
-    MaterialPageRoute(
-      builder: (_) => UsePaypal(
-        sandboxMode: true,
-        clientId:
-            'AdhqFrRbpA6xim3nYJ-64bolDm1kJF42iAgLuUseMQAoEpfupVetVF0lgB7RGPiPobpqIkcLq5AZ9ohW',
-        secretKey:
-            'EEokQiuUtDJkFtr61O_BDjcxiwXnFb647sEVcqGZWOEu6i3dd8Qh1yVVdxzRLWbUADLVMawnRMLv8CVs',
-        returnURL: 'https://samplesite.com/return',
-        cancelURL: 'https://samplesite.com/cancel',
-        transactions: [
-          {
-            'amount': {
-              'total': price,
-              'currency': 'USD',
-              'details': {
-                'subtotal': price,
-                'shipping': '0',
-                'shipping_discount': 0,
+  if (context.mounted) {
+    var provider = context.read<PackageProvider>();
+    log(provider.paypalCredentials.toString(), name: 'PaypalCredentials');
+    navigatorState.push(
+      MaterialPageRoute(
+        builder: (_) => UsePaypal(
+          sandboxMode: true,
+          clientId: provider.paypalCredentials.paypalClientId,
+          secretKey: provider.paypalCredentials.paypalSecretKey,
+          returnURL: provider.paypalCredentials.paypalReturnUrl,
+          cancelURL: provider.paypalCredentials.paypalCancelUrl,
+          transactions: [
+            {
+              'amount': {
+                'total': price,
+                'currency': 'USD',
+                'details': {
+                  'subtotal': price,
+                  'shipping': '0',
+                  'shipping_discount': 0,
+                },
               },
-            },
-            'description': 'The payment transaction description.',
-            'item_list': {
-              'shipping_address': {
-                'recipient_name': userModel.name ?? 'Enter Your name',
-                'line1': 'Travis County',
-                'line2': '',
-                'city': 'Austin',
-                'country_code': 'US',
-                'postal_code': '73301',
-                'phone': userModel.contactNumber ?? '1234567890',
-                'state': 'Texas',
+              'description': 'The payment transaction description.',
+              'item_list': {
+                'shipping_address': {
+                  'recipient_name': userModel.name ?? 'Enter Your name',
+                  'line1': 'Travis County',
+                  'line2': '',
+                  'city': 'Austin',
+                  'country_code': 'US',
+                  'postal_code': '73301',
+                  'phone': userModel.contactNumber ?? '1234567890',
+                  'state': 'Texas',
+                },
               },
-            },
-          }
-        ],
-        note: 'Contact us for any questions',
-        onSuccess: (Map params) async {
-          log('$params');
-          try {
-            String transactionId = params['paymentId'];
-            String status = params['status'];
-            String type = params['data']['payer']['payment_method'];
-            context.read<ProfileProvider>().saveTransaction(
-                  context,
-                  transactionId: transactionId,
-                  status: status,
-                  type: type,
-                  packageId: packageId,
-                  packageType: packageType.name,
-                );
-          } catch (e) {
-            log(e.toString());
-          }
-        },
-        onError: (error) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Text('Some error accured in the payment'),
-              backgroundColor: appTheme.teal400,
-            ),
-          );
-        },
-        onCancel: (params) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Text('Cancel payment'),
-              backgroundColor: appTheme.teal400,
-            ),
-          );
-        },
+            }
+          ],
+          note: 'Contact us for any questions',
+          onSuccess: (Map params) async {
+            log('$params');
+            try {
+              String transactionId = params['paymentId'];
+              String status = params['status'];
+              String type = params['data']['payer']['payment_method'];
+              context.read<ProfileProvider>().saveTransaction(
+                    context,
+                    transactionId: transactionId,
+                    status: status,
+                    type: type,
+                    packageId: packageId,
+                    packageType: packageType.name,
+                  );
+            } catch (e) {
+              log(e.toString());
+            }
+          },
+          onError: (error) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text('Some error accured in the payment'),
+                backgroundColor: appTheme.teal400,
+              ),
+            );
+          },
+          onCancel: (params) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text('Cancel payment'),
+                backgroundColor: appTheme.teal400,
+              ),
+            );
+          },
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 class PackageDetails extends StatelessWidget {

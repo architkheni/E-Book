@@ -4,7 +4,9 @@ import 'dart:developer';
 import 'package:book/core/storage/app_storage.dart';
 import 'package:book/model/member_ship_model.dart';
 import 'package:book/model/packages_model.dart';
+import 'package:book/model/paypal_model.dart';
 import 'package:book/repository/package_repository.dart';
+import 'package:book/repository/payment_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +16,7 @@ class PackageProvider extends ChangeNotifier {
   bool isLoading = true;
   AppStorage appStorage = AppStorage();
   PackagesResponse packagesResponse = PackagesResponse();
+  late PaypalCredentials paypalCredentials;
 
   void setLoading(bool value) {
     isLoading = value;
@@ -34,6 +37,18 @@ class PackageProvider extends ChangeNotifier {
         packageType = MembershipModel.fromJson(jsonDecode(package)).packageType;
       }
       packagesResponse = r;
+      setLoading(false);
+    });
+  }
+
+  Future<void> getPaypalDetails() async {
+    Either<String, PaypalCredentials> result =
+        await PaymentRepository.instance.getPaypalData();
+    result.fold((l) {
+      setLoading(false);
+      log(l);
+    }, (r) async {
+      paypalCredentials = r;
       setLoading(false);
     });
   }
