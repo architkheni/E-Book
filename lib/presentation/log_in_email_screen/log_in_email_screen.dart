@@ -293,7 +293,7 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                                   .instance
                                   .signInWithCredential(credential);
                               // ignore: use_build_context_synchronously
-                              authProvider.ssoCreate(
+                              authProvider.ssoLogin(
                                 context,
                                 email: userCredential.user?.email ?? '',
                               );

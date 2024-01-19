@@ -46,6 +46,10 @@ class AuthProvider extends ChangeNotifier {
       appStorage.setToken((r['data'] as UserModel).apiToken!);
       appStorage.setUser((r['data'] as UserModel).toString());
       if (r['membership_details'] != null) {
+        AppStorage.purchasePackageId =
+            (r['membership_details'] as MembershipModel).packageId;
+        AppStorage.purchasePackageType =
+            (r['membership_details'] as MembershipModel).packageType;
         appStorage.setPackage(
           (r['membership_details'] as MembershipModel).toString(),
         );
@@ -129,6 +133,64 @@ class AuthProvider extends ChangeNotifier {
       appStorage.setUser((r['data'] as UserModel).toString());
       appStorage.setLogin(true);
       if (r['membership_details'] != null) {
+        AppStorage.purchasePackageId =
+            (r['membership_details'] as MembershipModel).packageId;
+        AppStorage.purchasePackageType =
+            (r['membership_details'] as MembershipModel).packageType;
+        appStorage.setPackage(
+          (r['membership_details'] as MembershipModel).toString(),
+        );
+      }
+      if ((r['data'] as UserModel).categories?.isEmpty ?? true) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text('user has been save successfully'),
+            backgroundColor: appTheme.teal400,
+          ),
+        );
+        context.go(AppRoutesPath.category);
+        return;
+      }
+      context.go(AppRoutesPath.home);
+    });
+  }
+
+  void ssoLogin(
+    BuildContext context, {
+    required String email,
+  }) async {
+    screenLoader.show(
+      context,
+      loadingColor: ColorConstant.primaryColor,
+      containerColor: Theme.of(context).brightness == Brightness.dark
+          ? Colors.black
+          : Colors.white,
+      backgroundColor: Colors.black12,
+    );
+    Either<String, Map<String, dynamic>> result =
+        await AuthRepository.instance.ssoLogin(
+      email: email,
+    );
+    screenLoader.hide();
+    result.fold((l) {
+      final GoogleSignIn googleSignIn = GoogleSignIn();
+      googleSignIn.signOut();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(l),
+          backgroundColor: appTheme.teal400,
+        ),
+      );
+      context.push(AppRoutesPath.signUp);
+    }, (r) {
+      appStorage.setToken((r['data'] as UserModel).apiToken!);
+      appStorage.setUser((r['data'] as UserModel).toString());
+      appStorage.setLogin(true);
+      if (r['membership_details'] != null) {
+        AppStorage.purchasePackageId =
+            (r['membership_details'] as MembershipModel).packageId;
+        AppStorage.purchasePackageType =
+            (r['membership_details'] as MembershipModel).packageType;
         appStorage.setPackage(
           (r['membership_details'] as MembershipModel).toString(),
         );

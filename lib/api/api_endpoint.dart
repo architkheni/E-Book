@@ -3,6 +3,7 @@ class ApiEndpoint {
   static const String login = '/login';
   static const String register = '/register';
   static const String ssoCreate = '/sso-create';
+  static const String ssoLogin = '/sso-login';
   static const String forgetPassword = '/forgot-password';
   static const String resendOtp = '/resend-otp';
   static const String verifyToken = '/verify-token';
@@ -29,5 +30,6 @@ class ApiEndpoint {
   static const String packages = '/packages';
   static const String readingChapter = '/reading-chapter';
   static const String promocodes = '/promocodes';
+  static const String paymentSuccessfully = '/payment-successfully';
   static const String paypalCredentials = '/paypal-credentials';
 }

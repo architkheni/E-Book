@@ -208,7 +208,7 @@ class PrimaryColors {
   // Red
   Color get redA700 => const Color(0XFFFF0000);
   // Teal
-  Color get teal400 => const Color(0XFF299689);
+  Color get teal400 => const Color(0XFF16d979);
 
   Color get whiteA700 => const Color(0XFFFFFFFF);
 }

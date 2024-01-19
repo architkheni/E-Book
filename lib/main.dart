@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:book/ColorTheme/ColorTheme.dart';
 import 'package:book/core/storage/app_storage.dart';
 import 'package:book/core/storage/cache_storage.dart';
 import 'package:book/model/book_model.dart';
+import 'package:book/model/member_ship_model.dart';
 import 'package:book/presentation/langugaes_screen/provider/language_provider.dart';
 import 'package:book/provider/auth_provider.dart';
 import 'package:book/provider/category_provider.dart';
@@ -40,6 +43,12 @@ void main() async {
     initialLocation: isLogin ? AppRoutesPath.home : AppRoutesPath.logInEmail,
   );
   CacheStorage.isDark = isDark;
+  var package = await AppStorage().getPackage();
+  if (package != null) {
+    var x = MembershipModel.fromJson(jsonDecode(package));
+    AppStorage.purchasePackageId = x.packageId;
+    AppStorage.purchasePackageType = x.packageType?.toLowerCase();
+  }
   runApp(MyApp(isDark: isDark, book: book));
 }
 

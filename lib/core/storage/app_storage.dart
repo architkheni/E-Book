@@ -9,6 +9,9 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppStorage {
+  static int? purchasePackageId;
+  static String? purchasePackageType;
+  
   void setToken(String token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('token', token);
@@ -109,7 +112,7 @@ class AppStorage {
             : true;
   }
 
-  void dispose(BuildContext   context) async {
+  void dispose(BuildContext context) async {
     context.read<ContinueReadingProvider>().setBook(null);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('token');

@@ -132,6 +132,48 @@ class AuthRepository {
     }
   }
 
+  Future<Either<String, Map<String, dynamic>>> ssoLogin({
+    required String email,
+  }) async {
+    try {
+      Response response = await dioClient.post(
+        ApiEndpoint.ssoLogin,
+        data: {
+          'email': email,
+        },
+      );
+      if (response.statusCode == 200) {
+        dynamic data = response.data;
+        if (data.runtimeType == String) {
+          data = jsonDecode(data);
+        }
+        if (data['message'] != null) {
+          return left(data['message']);
+        }
+        if (data['membership_details'] == null) {
+          return right({
+            'data': UserModel.fromJson(data['data']),
+          });
+        }
+        return right({
+          'data': UserModel.fromJson(data['data']),
+          'membership_details':
+              MembershipModel.fromJson(data['membership_details']),
+        });
+      } else if (response.statusCode == 400) {
+        return left(response.data['message']);
+      } else {
+        return left('Register failed! please try again');
+      }
+    } on DioException catch (e) {
+      return left(
+        e.response?.data['message'] ?? 'Register failed! please try again',
+      );
+    } catch (e) {
+      return left('Register failed! please try again');
+    }
+  }
+
   Future<Either<String, bool>> forgotPassword({required String email}) async {
     try {
       Response response = await dioClient

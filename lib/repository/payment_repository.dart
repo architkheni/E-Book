@@ -41,6 +41,26 @@ class PaymentRepository {
     }
   }
 
+  Future<Either<String, String>> directPackage() async {
+    String token = await AppStorage().getToken();
+    try {
+      final response = await dioClient.post(
+        ApiEndpoint.paymentSuccessfully,
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+        data: {'status': true},
+      );
+      dynamic data = response.data as Map<String, dynamic>;
+      data = data['message'];
+      if (data != null) {
+        return right(data);
+      } else {
+        return left(data['error']);
+      }
+    } catch (e) {
+      return left('Server error accured');
+    }
+  }
+
   Future<Either<String, PaypalCredentials>> getPaypalData() async {
     String token = await AppStorage().getToken();
     try {

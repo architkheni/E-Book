@@ -31,7 +31,7 @@ void showPaymentModemSheet({
   required String price,
   required BuildContext context,
   required PackageType packageType,
-  required int packageId,
+  required PackageData packageData,
 }) {
   bool isLight = Theme.of(context).brightness == Brightness.light;
   showModalBottomSheet(
@@ -52,7 +52,7 @@ void showPaymentModemSheet({
                 price: price,
                 context: context,
                 packageType: packageType,
-                packageId: packageId,
+                packageId: packageData.id,
               );
             },
             width: double.maxFinite,
@@ -78,7 +78,7 @@ void showPaymentModemSheet({
                 price: price,
                 context: context,
                 packageType: packageType,
-                packageId: packageId,
+                packageData: packageData,
               );
             },
             width: double.maxFinite,
@@ -108,7 +108,7 @@ void showPromoCodeDialog({
   required String price,
   required BuildContext context,
   required PackageType packageType,
-  required int packageId,
+  required PackageData packageData,
 }) async {
   bool isLight = Theme.of(context).brightness == Brightness.light;
   showDialog(
@@ -157,17 +157,32 @@ void showPromoCodeDialog({
                           .applyPromocode(code: text);
                   result.fold((l) {
                     Navigator.pop(context);
-                  }, (r) {
+                  }, (r) async {
                     int minValue = r['min_cart_value'];
                     int value = r['value'];
                     int intPrice = int.parse(price);
                     if (intPrice > minValue) {
                       int totalPrice = intPrice - value;
                       Navigator.pop(context);
+                      if (totalPrice <= 0) {
+                        await PaymentRepository.instance.directPackage();
+                        AppStorage.purchasePackageId = packageData.id;
+                        AppStorage.purchasePackageType = packageType.name;
+                        await AppStorage().setPackage(packageData.toString());
+                        if (context.mounted) {
+                          var provider = context.read<PackageProvider>();
+                          provider.packageId = packageData.id;
+                          log(
+                            provider.packageId.toString(),
+                            name: 'provider.packageId',
+                          );
+                        }
+                        return;
+                      }
                       showTotalPaymentDialog(
                         context: context,
                         packageType: packageType,
-                        packageId: packageId,
+                        packageId: packageData.id,
                         promocode: text,
                         totalPrice: intPrice,
                         discountPrice: value,
@@ -677,25 +692,27 @@ class PackageDetails extends StatelessWidget {
 
         const SizedBox(height: 40),
         CustomElevatedButton(
-          onTap: (packageData.id == packageId && packageType == 'annual')
-              ? () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content:
-                          const Text('You already subscribed this package'),
-                      backgroundColor: appTheme.teal400,
-                    ),
-                  );
-                }
-              : () async {
-                  //TODO: make annualy payment
-                  showPaymentModemSheet(
-                    context: context,
-                    packageId: packageData.id,
-                    packageType: PackageType.annual,
-                    price: '${packageData.annualPrice}',
-                  );
-                },
+          onTap:
+              (packageData.id == (AppStorage.purchasePackageId ?? packageId) &&
+                      AppStorage.purchasePackageType == 'annual')
+                  ? () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content:
+                              const Text('You already subscribed this package'),
+                          backgroundColor: appTheme.teal400,
+                        ),
+                      );
+                    }
+                  : () async {
+                      //TODO: make annualy payment
+                      showPaymentModemSheet(
+                        context: context,
+                        packageData: packageData,
+                        packageType: PackageType.annual,
+                        price: '${packageData.annualPrice}',
+                      );
+                    },
           width: double.maxFinite,
           height: getVerticalSize(48),
           text: '\$${packageData.annualPrice} / Year',
@@ -706,25 +723,27 @@ class PackageDetails extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         CustomElevatedButton(
-          onTap: (packageData.id == packageId && packageType == 'monthly')
-              ? () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content:
-                          const Text('You already subscribed this package'),
-                      backgroundColor: appTheme.teal400,
-                    ),
-                  );
-                }
-              : () async {
-                  //TODO: make monthaly payment
-                  showPaymentModemSheet(
-                    context: context,
-                    packageId: packageData.id,
-                    packageType: PackageType.monthly,
-                    price: '${packageData.monthlyPrice}',
-                  );
-                },
+          onTap:
+              (packageData.id == (AppStorage.purchasePackageId ?? packageId) &&
+                      AppStorage.purchasePackageType == 'monthly')
+                  ? () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content:
+                              const Text('You already subscribed this package'),
+                          backgroundColor: appTheme.teal400,
+                        ),
+                      );
+                    }
+                  : () async {
+                      //TODO: make monthaly payment
+                      showPaymentModemSheet(
+                        context: context,
+                        packageData: packageData,
+                        packageType: PackageType.monthly,
+                        price: '${packageData.monthlyPrice}',
+                      );
+                    },
           width: double.maxFinite,
           height: getVerticalSize(48),
           text: '\$${packageData.monthlyPrice} / Month',
