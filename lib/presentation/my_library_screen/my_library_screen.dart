@@ -1,4 +1,5 @@
 import 'package:book/core/app_export.dart';
+import 'package:book/core/storage/app_storage.dart';
 import 'package:book/core/utils/color_constant.dart';
 import 'package:book/model/book_model.dart';
 import 'package:book/presentation/home_recommended_for_you_see_all_screen/provider/view_all_book_provider.dart';
@@ -336,7 +337,9 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                                                             ),
                                                           ),
                                                         ),
-                                                        book.freeBook! == 0
+                                                        book.freeBook! == 0 &&
+                                                                !AppStorage
+                                                                    .getPurchased()
                                                             ? Padding(
                                                                 padding:
                                                                     const EdgeInsets

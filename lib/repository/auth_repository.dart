@@ -37,8 +37,7 @@ class AuthRepository {
         }
         return right({
           'data': UserModel.fromJson(data['data']),
-          'membership_details':
-              MembershipModel.fromJson(data['membership_details']),
+          'membership_details': data['membership_details'],
         });
       } else if (response.statusCode == 400) {
         return left(response.data['message']);

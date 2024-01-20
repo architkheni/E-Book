@@ -1,4 +1,5 @@
 import 'package:book/core/app_export.dart';
+import 'package:book/core/storage/app_storage.dart';
 import 'package:book/core/utils/color_constant.dart';
 import 'package:book/model/book_model.dart';
 import 'package:book/presentation/home_recommended_for_you_see_all_screen/provider/view_all_book_provider.dart';
@@ -396,7 +397,7 @@ class _HomeRecommendedForYouSeeAllScreenState
                                                                         'Finished'
                                                                     ? const SizedBox()
                                                                     : book.freeBook! ==
-                                                                            0
+                                                                            0 && !AppStorage.getPurchased()
                                                                         ? Padding(
                                                                             padding:
                                                                                 const EdgeInsets.only(

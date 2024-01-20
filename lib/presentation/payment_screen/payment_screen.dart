@@ -165,17 +165,18 @@ void showPromoCodeDialog({
                       int totalPrice = intPrice - value;
                       Navigator.pop(context);
                       if (totalPrice <= 0) {
-                        await PaymentRepository.instance.directPackage();
-                        AppStorage.purchasePackageId = packageData.id;
-                        AppStorage.purchasePackageType = packageType.name;
-                        await AppStorage().setPackage(packageData.toString());
+                        await PaymentRepository.instance.directPackage().then(
+                              (value) => value.fold(
+                                (l) => ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(content: Text(l))),
+                                (r) => ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(
+                                        content: Text(
+                                            'Package sussessfully purchased'))),
+                              ),
+                            );
                         if (context.mounted) {
-                          var provider = context.read<PackageProvider>();
-                          provider.packageId = packageData.id;
-                          log(
-                            provider.packageId.toString(),
-                            name: 'provider.packageId',
-                          );
+                          context.pop();
                         }
                         return;
                       }
@@ -692,27 +693,25 @@ class PackageDetails extends StatelessWidget {
 
         const SizedBox(height: 40),
         CustomElevatedButton(
-          onTap:
-              (packageData.id == (AppStorage.purchasePackageId ?? packageId) &&
-                      AppStorage.purchasePackageType == 'annual')
-                  ? () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content:
-                              const Text('You already subscribed this package'),
-                          backgroundColor: appTheme.teal400,
-                        ),
-                      );
-                    }
-                  : () async {
-                      //TODO: make annualy payment
-                      showPaymentModemSheet(
-                        context: context,
-                        packageData: packageData,
-                        packageType: PackageType.annual,
-                        price: '${packageData.annualPrice}',
-                      );
-                    },
+          onTap: (AppStorage.getPurchased())
+              ? () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content:
+                          const Text('You already subscribed this package'),
+                      backgroundColor: appTheme.teal400,
+                    ),
+                  );
+                }
+              : () async {
+                  //TODO: make annualy payment
+                  showPaymentModemSheet(
+                    context: context,
+                    packageData: packageData,
+                    packageType: PackageType.annual,
+                    price: '${packageData.annualPrice}',
+                  );
+                },
           width: double.maxFinite,
           height: getVerticalSize(48),
           text: '\$${packageData.annualPrice} / Year',
@@ -723,27 +722,25 @@ class PackageDetails extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         CustomElevatedButton(
-          onTap:
-              (packageData.id == (AppStorage.purchasePackageId ?? packageId) &&
-                      AppStorage.purchasePackageType == 'monthly')
-                  ? () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content:
-                              const Text('You already subscribed this package'),
-                          backgroundColor: appTheme.teal400,
-                        ),
-                      );
-                    }
-                  : () async {
-                      //TODO: make monthaly payment
-                      showPaymentModemSheet(
-                        context: context,
-                        packageData: packageData,
-                        packageType: PackageType.monthly,
-                        price: '${packageData.monthlyPrice}',
-                      );
-                    },
+          onTap: (AppStorage.getPurchased())
+              ? () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content:
+                          const Text('You already subscribed this package'),
+                      backgroundColor: appTheme.teal400,
+                    ),
+                  );
+                }
+              : () async {
+                  //TODO: make monthaly payment
+                  showPaymentModemSheet(
+                    context: context,
+                    packageData: packageData,
+                    packageType: PackageType.monthly,
+                    price: '${packageData.monthlyPrice}',
+                  );
+                },
           width: double.maxFinite,
           height: getVerticalSize(48),
           text: '\$${packageData.monthlyPrice} / Month',

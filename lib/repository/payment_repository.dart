@@ -52,6 +52,8 @@ class PaymentRepository {
       dynamic data = response.data as Map<String, dynamic>;
       data = data['message'];
       if (data != null) {
+        await AppStorage.setPurchased(true);
+        
         return right(data);
       } else {
         return left(data['error']);

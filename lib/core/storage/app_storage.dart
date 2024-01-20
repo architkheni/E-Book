@@ -11,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AppStorage {
   static int? purchasePackageId;
   static String? purchasePackageType;
-  
+
   void setToken(String token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('token', token);
@@ -112,6 +112,16 @@ class AppStorage {
             : true;
   }
 
+  static bool getPurchased() {
+    GetStorage getStorage = GetStorage();
+    return getStorage.read<bool>('user-purchase') ?? false;
+  }
+
+  static Future<void> setPurchased(bool x) async {
+    GetStorage getStorage = GetStorage();
+    return await getStorage.write('user-purchase', x);
+  }
+
   void dispose(BuildContext context) async {
     context.read<ContinueReadingProvider>().setBook(null);
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -121,6 +131,7 @@ class AppStorage {
     GetStorage getStorage = GetStorage();
     getStorage.remove('chapter-position');
     getStorage.remove('book');
+    getStorage.erase();
     CacheStorage.dispose();
   }
 }

@@ -190,7 +190,8 @@ class _DetailViewState extends State<DetailView> {
                                         }
                                         int isFree = provider
                                             .detailModel.book!.freeBook!;
-                                        if (isFree == 1) {
+                                        if (isFree == 1 ||
+                                            AppStorage.getPurchased()) {
                                           context
                                               .read<ContinueReadingProvider>()
                                               .setBook(
@@ -479,8 +480,8 @@ class _DetailViewState extends State<DetailView> {
                                 ),
                               ),
                               const SizedBox(width: 10),
-                              if (provider.detailModel.book!.freeBook! ==
-                                  0) ...[
+                              if (provider.detailModel.book!.freeBook! == 0 &&
+                                  !AppStorage.getPurchased()) ...[
                                 CustomIconButton(
                                   height: 32,
                                   width: 32,
@@ -542,7 +543,8 @@ class _DetailViewState extends State<DetailView> {
                                   ),
                                   const SizedBox(width: 10),
                                   if (provider.detailModel.book!.freeBook! ==
-                                      0) ...[
+                                          0 &&
+                                      !AppStorage.getPurchased()) ...[
                                     CustomIconButton(
                                       height: 32,
                                       width: 32,
@@ -590,8 +592,8 @@ class _DetailViewState extends State<DetailView> {
                                 ),
                               ),
                               const SizedBox(width: 10),
-                              if (provider.detailModel.book!.freeBook! ==
-                                  0) ...[
+                              if (provider.detailModel.book!.freeBook! == 0 &&
+                                  !AppStorage.getPurchased()) ...[
                                 CustomIconButton(
                                   height: 32,
                                   width: 32,

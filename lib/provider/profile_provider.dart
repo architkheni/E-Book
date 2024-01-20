@@ -173,6 +173,8 @@ class ProfileProvider extends ChangeNotifier {
         backgroundColor: appTheme.teal400,
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      AppStorage.setPurchased(true);
+      context.pop();
       context.pop();
     });
   }

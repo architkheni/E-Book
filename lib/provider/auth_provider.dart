@@ -1,6 +1,5 @@
 import 'package:book/core/storage/app_storage.dart';
 import 'package:book/core/utils/color_constant.dart';
-import 'package:book/model/member_ship_model.dart';
 import 'package:book/model/user_model.dart';
 import 'package:book/repository/auth_repository.dart';
 import 'package:book/router/app_routes.dart';
@@ -46,13 +45,14 @@ class AuthProvider extends ChangeNotifier {
       appStorage.setToken((r['data'] as UserModel).apiToken!);
       appStorage.setUser((r['data'] as UserModel).toString());
       if (r['membership_details'] != null) {
-        AppStorage.purchasePackageId =
-            (r['membership_details'] as MembershipModel).packageId;
-        AppStorage.purchasePackageType =
-            (r['membership_details'] as MembershipModel).packageType;
-        appStorage.setPackage(
-          (r['membership_details'] as MembershipModel).toString(),
-        );
+        AppStorage.setPurchased(true);
+        // AppStorage.purchasePackageId =
+        //     (r['membership_details'] as MembershipModel).packageId;
+        // AppStorage.purchasePackageType =
+        //     (r['membership_details'] as MembershipModel).packageType;
+        // appStorage.setPackage(
+        //   (r['membership_details'] as MembershipModel).toString(),
+        // );
       }
       appStorage.setLogin(true);
       navigator.go(AppRoutesPath.home);
@@ -133,13 +133,14 @@ class AuthProvider extends ChangeNotifier {
       appStorage.setUser((r['data'] as UserModel).toString());
       appStorage.setLogin(true);
       if (r['membership_details'] != null) {
-        AppStorage.purchasePackageId =
-            (r['membership_details'] as MembershipModel).packageId;
-        AppStorage.purchasePackageType =
-            (r['membership_details'] as MembershipModel).packageType;
-        appStorage.setPackage(
-          (r['membership_details'] as MembershipModel).toString(),
-        );
+        AppStorage.setPurchased(true);
+        // AppStorage.purchasePackageId =
+        //     (r['membership_details'] as MembershipModel).packageId;
+        // AppStorage.purchasePackageType =
+        //     (r['membership_details'] as MembershipModel).packageType;
+        // appStorage.setPackage(
+        //   (r['membership_details'] as MembershipModel).toString(),
+        // );
       }
       if ((r['data'] as UserModel).categories?.isEmpty ?? true) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -187,13 +188,14 @@ class AuthProvider extends ChangeNotifier {
       appStorage.setUser((r['data'] as UserModel).toString());
       appStorage.setLogin(true);
       if (r['membership_details'] != null) {
-        AppStorage.purchasePackageId =
-            (r['membership_details'] as MembershipModel).packageId;
-        AppStorage.purchasePackageType =
-            (r['membership_details'] as MembershipModel).packageType;
-        appStorage.setPackage(
-          (r['membership_details'] as MembershipModel).toString(),
-        );
+        AppStorage.setPurchased(true);
+        // AppStorage.purchasePackageId =
+        //     (r['membership_details'] as MembershipModel).packageId;
+        // AppStorage.purchasePackageType =
+        //     (r['membership_details'] as MembershipModel).packageType;
+        // appStorage.setPackage(
+        //   (r['membership_details'] as MembershipModel).toString(),
+        // );
       }
       if ((r['data'] as UserModel).categories?.isEmpty ?? true) {
         ScaffoldMessenger.of(context).showSnackBar(

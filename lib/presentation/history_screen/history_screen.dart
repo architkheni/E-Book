@@ -1,3 +1,4 @@
+import 'package:book/core/storage/app_storage.dart';
 import 'package:book/core/utils/color_constant.dart';
 import 'package:book/core/utils/image_constant.dart';
 import 'package:book/core/utils/size_utils.dart';
@@ -268,7 +269,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                                       ),
                                                     ),
                                                   ),
-                                                  book.freeBook! == 0
+                                                  book.freeBook! == 0 &&
+                                                          !AppStorage
+                                                              .getPurchased()
                                                       ? Padding(
                                                           padding:
                                                               const EdgeInsets

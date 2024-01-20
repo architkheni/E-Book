@@ -1,4 +1,5 @@
 import 'package:book/core/app_export.dart';
+import 'package:book/core/storage/app_storage.dart';
 import 'package:book/core/utils/color_constant.dart';
 import 'package:book/core/utils/string_utils.dart';
 import 'package:book/model/book_model.dart';
@@ -102,7 +103,7 @@ class BookTile extends StatelessWidget {
                       ),
                     ),
                   ),
-                  book.freeBook! == 0
+                  book.freeBook! == 0 && !AppStorage.getPurchased()
                       ? Padding(
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: SizedBox(
