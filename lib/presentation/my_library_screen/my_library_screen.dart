@@ -379,6 +379,8 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                                                                       svgPath:
                                                                           ImageConstant
                                                                               .imgGgread,
+                                                                      color: ColorConstant
+                                                                          .primaryColor,
                                                                       height:
                                                                           16,
                                                                       width: 16,

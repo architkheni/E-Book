@@ -51,9 +51,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
               child: RefreshIndicator(
                 color: appTheme.teal400,
                 onRefresh: () async {
-                  context
-                      .read<HomePovider>()
-                      .getDashboardDetails();
+                  context.read<HomePovider>().getDashboardDetails();
                 },
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
@@ -61,7 +59,6 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                     padding:
                         const EdgeInsets.only(top: 12, left: 16, right: 16),
                     child: Column(
-                      
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -294,6 +291,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                                           CustomImageView(
                                             svgPath: ImageConstant
                                                 .imgArrowrightTeal400,
+                                            color: ColorConstant.primaryColor,
                                             height: getSize(16),
                                             width: getSize(16),
                                             margin: getMargin(
@@ -522,6 +520,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                                           CustomImageView(
                                             svgPath: ImageConstant
                                                 .imgArrowrightTeal400,
+                                            color: ColorConstant.primaryColor,
                                             height: getSize(16),
                                             width: getSize(16),
                                             margin: getMargin(
@@ -603,6 +602,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                                           CustomImageView(
                                             svgPath: ImageConstant
                                                 .imgArrowrightTeal400,
+                                            color: ColorConstant.primaryColor,
                                             height: getSize(16),
                                             width: getSize(16),
                                             margin: getMargin(

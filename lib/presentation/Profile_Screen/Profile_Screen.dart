@@ -314,6 +314,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 child: CustomImageView(
                                   height: 25,
                                   width: 25,
+                                  color: ColorConstant.primaryColor,
                                   imagePath: imageList[index],
                                 ),
                               ),

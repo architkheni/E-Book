@@ -111,6 +111,7 @@ class BookTile extends StatelessWidget {
                             width: 15,
                             child: CustomImageView(
                               imagePath: ImageConstant.lock,
+                              color: ColorConstant.primaryColor,
                               fit: BoxFit.fill,
                             ),
                           ),

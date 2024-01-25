@@ -397,7 +397,9 @@ class _HomeRecommendedForYouSeeAllScreenState
                                                                         'Finished'
                                                                     ? const SizedBox()
                                                                     : book.freeBook! ==
-                                                                            0 && !AppStorage.getPurchased()
+                                                                                0 &&
+                                                                            !AppStorage
+                                                                                .getPurchased()
                                                                         ? Padding(
                                                                             padding:
                                                                                 const EdgeInsets.only(
@@ -433,6 +435,8 @@ class _HomeRecommendedForYouSeeAllScreenState
                                                                         CustomImageView(
                                                                           svgPath:
                                                                               ImageConstant.imgGgread,
+                                                                          color:
+                                                                              ColorConstant.primaryColor,
                                                                           height:
                                                                               16,
                                                                           width:

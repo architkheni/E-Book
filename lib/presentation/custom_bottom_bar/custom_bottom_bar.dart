@@ -87,6 +87,7 @@ class BottombarPage extends StatelessWidget {
                                   )
                                 : Image.asset(
                                     ImageConstant.slectedHome,
+                                    color: ColorConstant.primaryColor,
                                     height: 25,
                                     width: 25,
                                   ),
@@ -139,6 +140,7 @@ class BottombarPage extends StatelessWidget {
                                   )
                                 : Image.asset(
                                     ImageConstant.slectedSearch,
+                                    color: ColorConstant.primaryColor,
                                     height: 24,
                                     width: 24,
                                   ),
@@ -192,7 +194,7 @@ class BottombarPage extends StatelessWidget {
                                   )
                                 : Image.asset(
                                     ImageConstant.selectedLibrary,
-                                    // color: Color(0XFFED1C25),
+                                    color: ColorConstant.primaryColor,
                                     height: 24,
                                     width: 24,
                                   ),
@@ -248,6 +250,7 @@ class BottombarPage extends StatelessWidget {
                                   )
                                 : Image.asset(
                                     ImageConstant.selectedProfile,
+                                    color: ColorConstant.primaryColor,
                                     height: 26,
                                     width: 26,
                                   ),

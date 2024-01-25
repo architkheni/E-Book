@@ -598,6 +598,7 @@ class _ExplorePageState extends State<ExplorePage> {
                                   ),
                                   CustomImageView(
                                     svgPath: ImageConstant.imgArrowrightTeal400,
+                                    color: ColorConstant.primaryColor,
                                     height: getSize(16),
                                     width: getSize(16),
                                     margin:

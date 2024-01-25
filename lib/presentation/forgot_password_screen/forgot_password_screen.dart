@@ -151,6 +151,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                           ),
                           CustomImageView(
                             svgPath: ImageConstant.imgUilreload,
+                            color: ColorConstant.primaryColor,
                             height: getSize(14),
                             width: getSize(14),
                             margin: getMargin(left: 4, top: 2),

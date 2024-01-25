@@ -309,6 +309,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                                                 svgPath:
                                                                     ImageConstant
                                                                         .imgGgread,
+                                                                color: ColorConstant
+                                                                    .primaryColor,
                                                                 height: 16,
                                                                 width: 16,
                                                               ),
