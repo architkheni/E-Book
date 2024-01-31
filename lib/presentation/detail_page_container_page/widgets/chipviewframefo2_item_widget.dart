@@ -1,32 +1,38 @@
+import 'package:book/core/utils/color_constant.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/app_export.dart';
 
-// ignore: must_be_immutable
 class Chipviewframefo2ItemWidget extends StatelessWidget {
-  const Chipviewframefo2ItemWidget({Key? key})
+  final String text;
+  final String? icon;
+
+  final Function()? onTap;
+  const Chipviewframefo2ItemWidget({Key? key, required this.text, this.onTap, this.icon})
       : super(
           key: key,
         );
 
   @override
   Widget build(BuildContext context) {
+    bool isLight = Theme.of(context).brightness == Brightness.light;
     return RawChip(
-      padding: getPadding(left: 16, right: 16),
+      onPressed: onTap,
+      padding: getPadding(left: 5, right: 10),
       showCheckmark: false,
       labelPadding: EdgeInsets.zero,
       label: Text(
-        "Demo Text",
+        text,
         textAlign: TextAlign.left,
         style: TextStyle(
-          color: appTheme.blueGray50,
+          color: isLight ? ColorConstant.black : appTheme.blueGray50,
           fontSize: getFontSize(12),
           fontFamily: 'Outfit',
           fontWeight: FontWeight.w100,
         ),
       ),
       selected: false,
-      backgroundColor: appTheme.blueGray900,
+      backgroundColor: isLight ? ColorConstant.kF3F3F3 : appTheme.blueGray900,
       selectedColor: appTheme.blueGray900,
       shape: RoundedRectangleBorder(
         side: BorderSide.none,
@@ -34,7 +40,14 @@ class Chipviewframefo2ItemWidget extends StatelessWidget {
           getHorizontalSize(8),
         ),
       ),
-      onSelected: (value) {},
+      avatar: CustomImageView(
+        svgPath: icon == null  ? ImageConstant.imgGroup1171274896 : null,
+        url: icon,
+        height: 12,
+        width: 12,
+        margin: getMargin(right: 3),
+        color: icon != null ? null : isLight ? Colors.black : null,
+      ),
     );
   }
 }

@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "1066008035865",
+    "project_id": "reading-app-8b8f3",
+    "storage_bucket": "reading-app-8b8f3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1066008035865:android:ad552c94c7c8aad10f2088",
+        "android_client_info": {
+          "package_name": "com.storise.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1066008035865-dhbe6ff6pk5m2shjje2179gq6o1ln0e4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.storise.app",
+            "certificate_hash": "bdd3c497a4f003aefe5f708d9229b4991da073f8"
+          }
+        },
+        {
+          "client_id": "1066008035865-9hehog2um2e05nhvt0k2a5ldapobq59q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTZVJUSMmfU2pBASOYcwGlg788IR_etKI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1066008035865-9hehog2um2e05nhvt0k2a5ldapobq59q.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1066008035865-r4evj7diaft1ah0t62hhrqnqj9rjd9bj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.storise.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

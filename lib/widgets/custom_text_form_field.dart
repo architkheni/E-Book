@@ -1,7 +1,9 @@
 import 'package:book/core/app_export.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CustomTextFormField extends StatelessWidget {
+
   CustomTextFormField({
     Key? key,
     this.alignment,
@@ -9,8 +11,9 @@ class CustomTextFormField extends StatelessWidget {
     this.margin,
     this.maxLength,
     this.controller,
+    this.onTap,
     this.focusNode,
-    this.autofocus = true,
+    this.autofocus = false,
     this.enabled = true,
     this.textStyle,
     this.obscureText = false,
@@ -32,17 +35,21 @@ class CustomTextFormField extends StatelessWidget {
     this.disabledBorderDecoration,
     this.onChanged,
     this.validator,
+    this.minLines,
+    this.readOnly = false,
   }) : super(
           key: key,
         );
 
   final Alignment? alignment;
 
+  bool readOnly;
   final double? width;
 
   final EdgeInsetsGeometry? margin;
 
   final TextEditingController? controller;
+  void Function()? onTap;
 
   final FocusNode? focusNode;
 
@@ -60,6 +67,8 @@ class CustomTextFormField extends StatelessWidget {
   final TextInputType? textInputType;
 
   final int? maxLines;
+
+  final int? minLines;
 
   final String? hintText;
 
@@ -103,12 +112,15 @@ class CustomTextFormField extends StatelessWidget {
         width: width ?? double.maxFinite,
         margin: margin,
         child: TextFormField(
+          readOnly: readOnly,
+          minLines: minLines,
           controller: controller,
-          focusNode: focusNode ?? FocusNode(),
+          onTap: onTap,
+          focusNode: focusNode,
           autofocus: autofocus!,
           enabled: enabled,
           style: textStyle,
-          maxLength:maxLength,
+          maxLength: maxLength,
           onChanged: onChanged,
           obscureText: obscureText!,
           textInputAction: textInputAction,
@@ -119,7 +131,7 @@ class CustomTextFormField extends StatelessWidget {
         ),
       );
   InputDecoration get decoration => InputDecoration(
-        hintText: hintText ?? "",
+        hintText: hintText ?? '',
         hintStyle: hintStyle,
         prefixIcon: prefix,
         prefixIconConstraints: prefixConstraints,
@@ -128,6 +140,7 @@ class CustomTextFormField extends StatelessWidget {
         fillColor: fillColor,
         filled: filled,
         isDense: true,
+        counterText: '',
         contentPadding: contentPadding,
         border: defaultBorderDecoration ??
             OutlineInputBorder(

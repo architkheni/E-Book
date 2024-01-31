@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:book/core/app_export.dart';
+import 'package:book/core/utils/color_constant.dart';
+import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class ListrectanglesiItemWidget extends StatelessWidget {
@@ -34,6 +35,7 @@ class ListrectanglesiItemWidget extends StatelessWidget {
           ),
           CustomImageView(
             svgPath: ImageConstant.imgAkariconshomealt1WhiteA700,
+            color: ColorConstant.primaryColor,
             height: getSize(
               24,
             ),
@@ -50,7 +52,7 @@ class ListrectanglesiItemWidget extends StatelessWidget {
               bottom: 8,
             ),
             child: Text(
-              "",
+              '',
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,
               style: CustomTextStyles.bodySmallWhiteA700,

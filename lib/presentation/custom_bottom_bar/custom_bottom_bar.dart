@@ -1,279 +1,365 @@
-import 'dart:async';
-import 'dart:ffi';
+import 'package:book/core/storage/cache_storage.dart';
+import 'package:book/core/utils/color_constant.dart';
+import 'package:book/model/book_model.dart';
+import 'package:book/provider/continue_reading_book_provider.dart';
+import 'package:book/router/app_routes.dart';
+import 'package:book/theme/theme_helper.dart';
+import 'package:book/widgets/custom_image_view.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../../connection_status/connection_status_singleton.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+
 import '../../core/utils/image_constant.dart';
 import '../../theme/custom_text_style.dart';
-import '../Profile_Screen/Profile_Screen.dart';
-import '../explore_page/explore_page.dart';
-import '../home/home_screen_page.dart';
-import '../my_library_screen/my_library_screen.dart';
 
-class BottombarPage extends StatefulWidget {
-  final int? buttomIndex;
-  bool? isGuest = false;
-
-  BottombarPage({required this.buttomIndex, this.isGuest});
-
-  @override
-  State<BottombarPage> createState() => _BottombarPageState();
-}
-
-class _BottombarPageState extends State<BottombarPage> {
-  bool keyboardOpen = false;
-  var ProfileURL = "";
-  int selectedIndex = 0;
-  var IsGuestUserEnabled;
-  var GetTimeSplash;
-
-  List widgetOptions = [
-    HomeScreenPage(),
-    ExplorePage(),
-    MyLibraryScreen(),
-    ProfileScreen(),
-
-    // ViewDetailsScreen(),
-    // ViewCommentScreen(),
-    // // BuyScreen(),
-    // RoomMembersScreen(),
-    // RoomsScreen()
-  ];
-
-  late StreamSubscription _connectionChangeStream;
-
-  bool isOffline = false;
-  @override
-  initState() {
-    super.initState();
-    ConnectionStatusSingleton connectionStatus =
-        ConnectionStatusSingleton.getInstance();
-    _connectionChangeStream =
-        connectionStatus.connectionChange.listen(connectionChanged);
-    selectedIndex = widget.buttomIndex!;
-  }
-
-  void connectionChanged(dynamic hasConnection) {
-    setState(() {
-      isOffline = !hasConnection;
-    });
-  }
+class BottombarPage extends StatelessWidget {
+  final StatefulNavigationShell navigationShell;
+  const BottombarPage({
+    Key? key,
+    required this.navigationShell,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return (isOffline)
-        ? Text("NOt Connected")
-        : WillPopScope(
-            onWillPop: () async => false,
-            child: Scaffold(
-              resizeToAvoidBottomInset: false,
-              floatingActionButton: Stack(
-                children: const [],
-              ),
-              bottomNavigationBar: Container(
-                height: 70,
-                child: BottomAppBar(
-                  // color: Color(0xFFFFFFFF),
-                  color: Theme.of(context).brightness == Brightness.dark
-                      ? Color(0xFFFFFFFF)
-                      : Color(0xFF0D0D0D),
-                  shape: const CircularNotchedRectangle(),
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 13, bottom: 0),
+    double width = MediaQuery.of(context).size.width;
+    int selectedIndex = navigationShell.currentIndex;
+    return WillPopScope(
+      onWillPop: () async {
+        if (selectedIndex != 0) {
+          navigationShell.goBranch(0);
+          return false;
+        } else if (CacheStorage.count == 0) {
+          return true;
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text('Press back again to exit the app.'),
+              backgroundColor: appTheme.teal400,
+            ),
+          );
+          CacheStorage.count--;
+          Future.delayed(
+            const Duration(seconds: 2),
+            () {
+              CacheStorage.count = 1;
+            },
+          );
+          return false;
+        }
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        bottomNavigationBar: SizedBox(
+          height: 70,
+          child: BottomAppBar(
+            elevation: 0,
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color(0xFF0D0D0D)
+                : const Color(0xFFFFFFFF),
+            padding: EdgeInsets.zero,
+            shape: const CircularNotchedRectangle(),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      context.go(AppRoutesPath.home);
+                    },
+                    child: Container(
+                      color: selectedIndex != 0
+                          ? Colors.transparent
+                          : ColorConstant.primaryColor.withOpacity(0.10),
+                      width: 60,
+                      child: Column(
+                        children: [
+                          const Spacer(),
+                          Container(
+                            child: selectedIndex != 0
+                                ? Image.asset(
+                                    ImageConstant.home,
+                                    height: 25,
+                                    width: 25,
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? ColorConstant.whiteA700
+                                        : Colors.black,
+                                  )
+                                : Image.asset(
+                                    ImageConstant.slectedHome,
+                                    color: ColorConstant.primaryColor,
+                                    height: 25,
+                                    width: 25,
+                                  ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Home',
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.left,
+                            style: selectedIndex != 0
+                                ? CustomTextStyles.titleSmallGray500.copyWith(
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? ColorConstant.whiteA700
+                                        : Colors.black,
+                                  )
+                                : CustomTextStyles.labelLargeTeal500Bold,
+                          ),
+                          const Spacer(),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      context.go(AppRoutesPath.explore);
+                    },
+                    child: Container(
+                      width: 60,
+                      color: selectedIndex != 1
+                          ? Colors.transparent
+                          : ColorConstant.primaryColor.withOpacity(0.10),
+                      child: Column(
+                        children: [
+                          const Spacer(),
+                          Container(
+                            child: selectedIndex != 1
+                                ? Image.asset(
+                                    ImageConstant.search,
+                                    height: 24,
+                                    width: 24,
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? ColorConstant.whiteA700
+                                        : Colors.black,
+                                  )
+                                : Image.asset(
+                                    ImageConstant.slectedSearch,
+                                    color: ColorConstant.primaryColor,
+                                    height: 24,
+                                    width: 24,
+                                  ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Search',
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.left,
+                            style: selectedIndex != 1
+                                ? CustomTextStyles.titleSmallGray500.copyWith(
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? ColorConstant.whiteA700
+                                        : Colors.black,
+                                  )
+                                : CustomTextStyles.labelLargeTeal500Bold,
+                          ),
+                          const Spacer(),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      context.go(AppRoutesPath.library);
+                    },
+                    child: Container(
+                      width: 60,
+                      // color: Colors.white,
+                      color: selectedIndex != 2
+                          ? Colors.transparent
+                          : ColorConstant.primaryColor.withOpacity(0.10),
+                      child: Column(
+                        children: [
+                          const Spacer(),
+                          Container(
+                            child: selectedIndex != 2
+                                ? Image.asset(
+                                    ImageConstant.library,
+                                    height: 24,
+                                    width: 24,
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? ColorConstant.whiteA700
+                                        : Colors.black,
+                                  )
+                                : Image.asset(
+                                    ImageConstant.selectedLibrary,
+                                    color: ColorConstant.primaryColor,
+                                    height: 24,
+                                    width: 24,
+                                  ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Library',
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.left,
+                            style: selectedIndex != 2
+                                ? CustomTextStyles.titleSmallGray500.copyWith(
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? ColorConstant.whiteA700
+                                        : Colors.black,
+                                  )
+                                : CustomTextStyles.labelLargeTeal500Bold,
+                          ),
+                          const Spacer(),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      navigationShell.goBranch(
+                        3,
+                        initialLocation: 3 == navigationShell.currentIndex,
+                      );
+                    },
+                    child: Container(
+                      // color: Colors.white,
+                      color: selectedIndex != 3
+                          ? Colors.transparent
+                          : ColorConstant.primaryColor.withOpacity(0.10),
+                      child: Column(
+                        children: [
+                          const Spacer(),
+                          Container(
+                            child: selectedIndex != 3
+                                ? Image.asset(
+                                    ImageConstant.profileIcon,
+                                    height: 26,
+                                    width: 26,
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? ColorConstant.whiteA700
+                                        : Colors.black,
+                                  )
+                                : Image.asset(
+                                    ImageConstant.selectedProfile,
+                                    color: ColorConstant.primaryColor,
+                                    height: 26,
+                                    width: 26,
+                                  ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Profile',
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.left,
+                            style: selectedIndex != 3
+                                ? CustomTextStyles.titleSmallGray500.copyWith(
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? ColorConstant.whiteA700
+                                        : Colors.black,
+                                  )
+                                : CustomTextStyles.labelLargeTeal500Bold,
+                          ),
+                          const Spacer(),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        body: Column(
+          children: [
+            Expanded(child: navigationShell),
+            Consumer<ContinueReadingProvider>(
+              builder: (context, provider, child) {
+                BookModel? book = provider.bookModel;
+                if (book == null) {
+                  return const SizedBox.shrink();
+                }
+                return GestureDetector(
+                  onTap: () {
+                    context.push(
+                      AppRoutesPath.bookRead,
+                      extra: provider.bookModel!.bookId!,
+                    );
+                  },
+                  child: Container(
+                    height: 60,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? const Color(0xFF0D0D0D)
+                          : const Color(0xFFFFFFFF),
+                    ),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              // setUI();
-                              selectedIndex = 0;
-                            });
-                          },
-                          child: Container(
-                            color:
-                                Theme.of(context).brightness == Brightness.dark
-                                    ? Color(0xFFFFFFFF)
-                                    : Color(0xFF0D0D0D),
-                            height: 65,
-                            width: 60,
-                            child: Column(
-                              children: [
-                                Container(
-                                  child: selectedIndex != 0
-                                      ? Image.asset(
-                                          "${ImageConstant.Home}",
-                                          height: 25,
-                                          width: 25,
-                                        )
-                                      : Image.asset(
-                                          "${ImageConstant.SlectedHome}",
-                                          height: 25,
-                                          width: 25,
-                                          // color: Color(0XFFED1C25),
-                                        ),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                  child: Text("Home",
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.left,
-                                      style: selectedIndex != 0
-                                          ? CustomTextStyles.titleSmallGray500
-                                          : CustomTextStyles
-                                              .labelLargeTeal500Bold),
-                                ),
-                                // Spacer(),
-                              ],
-                            ),
+                        SizedBox(
+                          width: width * 5 / 100,
+                        ),
+                        SizedBox(
+                          height: 52.5,
+                          width: 35,
+                          child: CustomImageView(
+                            url: book.frontCover,
+                            fit: BoxFit.fill,
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              selectedIndex = 1;
-                            });
-                          },
-                          child: Container(
-                            height: 65,
-                            width: 60,
-                            // color: Colors.white,
-                            color:
-                                Theme.of(context).brightness == Brightness.dark
-                                    ? Color(0xFFFFFFFF)
-                                    : Color(0xFF0D0D0D),
-                            child: Column(
-                              children: [
-                                Container(
-                                  child: selectedIndex != 1
-                                      ? Image.asset(
-                                          "${ImageConstant.Search}",
-                                          height: 24,
-                                          width: 24,
-                                        )
-                                      : Image.asset(
-                                          "${ImageConstant.SlectedSearch}",
-                                          height: 24,
-                                          width: 24,
-                                        ),
+                        const SizedBox(width: 20),
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Continue reading',
+                                style: TextStyle(
+                                  color: ColorConstant.grey,
+                                  fontSize: 12,
                                 ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                  child: Text("Search",
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.left,
-                                      style: selectedIndex != 1
-                                          ? CustomTextStyles.titleSmallGray500
-                                          : CustomTextStyles
-                                              .labelLargeTeal500Bold),
-                                ),
-                              ],
-                            ),
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                book.name!,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              selectedIndex = 2;
-                            });
+                        IconButton(
+                          onPressed: () {
+                            context
+                                .read<ContinueReadingProvider>()
+                                .setBook(null);
                           },
-                          child: Container(
-                            height: 65,
-                            width: 60,
-                            // color: Colors.white,
-                            color:
-                                Theme.of(context).brightness == Brightness.dark
-                                    ? Color(0xFFFFFFFF)
-                                    : Color(0xFF0D0D0D),
-                            child: Column(
-                              children: [
-                                Container(
-                                  child: selectedIndex != 2
-                                      ? Image.asset(
-                                          "${ImageConstant.Library}",
-                                          height: 24,
-                                          width: 24,
-                                        )
-                                      : Image.asset(
-                                          "${ImageConstant.SelectedLibrary}",
-                                          // color: Color(0XFFED1C25),
-                                          height: 24,
-                                          width: 24,
-                                        ),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                  child: Text("Library",
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.left,
-                                      style: selectedIndex != 2
-                                          ? CustomTextStyles.titleSmallGray500
-                                          : CustomTextStyles
-                                              .labelLargeTeal500Bold),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              selectedIndex = 3;
-                            });
-                          },
-                          child: Container(
-                            height: 65,
-                            width: 60,
-                            // color: Colors.white,
-                            color:
-                                Theme.of(context).brightness == Brightness.dark
-                                    ? Color(0xFFFFFFFF)
-                                    : Color(0xFF0D0D0D),
-                            child: Column(
-                              children: [
-                                Container(
-                                  child: selectedIndex != 3
-                                      ? Image.asset(
-                                          "${ImageConstant.ProfileIcon}",
-                                          height: 26,
-                                          width: 26,
-                                        )
-                                      : Image.asset(
-                                          "${ImageConstant.SelectedProfile}",
-                                          // color: Color(0XFFED1C25),
-                                          height: 26,
-                                          width: 26,
-                                        ),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                  child: Text("Profile",
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.left,
-                                      style: selectedIndex != 3
-                                          ? CustomTextStyles.titleSmallGray500
-                                          : CustomTextStyles
-                                              .labelLargeTeal500Bold),
-                                ),
-                              ],
-                            ),
+                          icon: Icon(
+                            Icons.clear,
+                            color: ColorConstant.grey,
                           ),
                         ),
                       ],
                     ),
                   ),
-                ),
-              ),
-              body: widgetOptions[selectedIndex],
+                );
+              },
             ),
-          );
+          ],
+        ),
+      ),
+    );
   }
 }

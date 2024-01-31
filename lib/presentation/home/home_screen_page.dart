@@ -1,574 +1,651 @@
-import 'package:book/presentation/home/widgets/listone_item_widget.dart';
-import 'package:book/presentation/home/widgets/listtitle1_item_widget.dart';
-import 'package:book/presentation/home/widgets/listtitle2_item_widget.dart';
-import 'package:book/presentation/home/widgets/listtitle3_item_widget.dart';
-
-import '../detail_page_container_page/detail_page_container_page.dart';
-import '../detail_page_container_page/widgets/chipviewframefo2_item_widget.dart';
-import '../detail_page_container_page/widgets/listtitle_item_widget.dart';
-import '../home_recommended_for_you_see_all_screen/home_recommended_for_you_see_all_screen.dart';
 import 'package:book/core/app_export.dart';
-import 'package:book/widgets/custom_elevated_button.dart';
+import 'package:book/core/storage/cache_storage.dart';
+import 'package:book/core/utils/color_constant.dart';
+import 'package:book/core/utils/string_utils.dart';
+import 'package:book/provider/category_provider.dart';
+import 'package:book/provider/explore_provider.dart';
+import 'package:book/provider/home_provider.dart';
+import 'package:book/provider/wishlist_provider.dart';
+import 'package:book/router/app_routes.dart';
+import 'package:book/widgets/app_bar/appbar_subtitle.dart';
+import 'package:book/widgets/book_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
-// ignore_for_file: must_be_immutable
-class HomeScreenPage extends StatelessWidget {
+import '../detail_page_container_page/widgets/chipviewframefo2_item_widget.dart';
+
+class HomeScreenPage extends StatefulWidget {
   const HomeScreenPage({Key? key}) : super(key: key);
 
   @override
+  State<HomeScreenPage> createState() => _HomeScreenPageState();
+}
+
+class _HomeScreenPageState extends State<HomeScreenPage> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<ExploreProvider>().getAllCategories();
+    context.read<WishlistProvider>().getWishListBook();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    bool isLight = Theme.of(context).brightness == Brightness.light;
     mediaQueryData = MediaQuery.of(context);
-    double _width = MediaQuery.of(context).size.width;
-    double _height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: theme.colorScheme.onPrimaryContainer.withOpacity(1),
-        body: Container(
-          width: _width,
-          // double.maxFinite,
-          decoration: AppDecoration.black,
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  width: _width,
-                  padding: getPadding(left: 16, top: 10, right: 16, bottom: 10),
-                  decoration: AppDecoration.black,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Padding(
-                        padding: getPadding(top: 18),
-                        child: Text(
-                          "For Me",
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: theme.textTheme.headlineSmall,
-                        ),
-                      ),
-                      Padding(
-                        padding: getPadding(top: 2),
-                        child: SizedBox(
-                          width: 80,
-                          child: Divider(
-                            height: 2,
-                            thickness: 2,
-                            color: appTheme.teal400,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        body: Consumer<HomePovider>(
+          builder: (context, provider, child) {
+            if (provider.isLoading) {
+              return Center(
+                child: CircularProgressIndicator(color: appTheme.teal400),
+              );
+            }
+            return SizedBox(
+              width: width,
+              // double.maxFinite,
+              child: RefreshIndicator(
+                color: appTheme.teal400,
+                onRefresh: () async {
+                  context.read<HomePovider>().getDashboardDetails();
+                },
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(top: 12, left: 16, right: 16),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: getPadding(left: 6, bottom: 16),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: appTheme.teal400,
+                                  width: 2,
+                                ),
+                              ),
+                            ),
+                            padding: const EdgeInsets.only(bottom: 3),
+                            child: AppbarSubtitle(
+                              text: 'For Me',
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 12, left: 16, right: 16),
-                  child: Container(
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: getPadding(left: 6),
-                              child: Text(
-                                "Free Blinks of the Day",
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.left,
-                                style: theme.textTheme.titleLarge,
-                              ),
+                        Padding(
+                          padding: getPadding(left: 6),
+                          child: Text(
+                            'Free Book for You',
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.left,
+                            style: theme.textTheme.titleLarge!.copyWith(
+                              color: isLight ? ColorConstant.black : null,
                             ),
-                            Padding(
-                              padding: getPadding(left: 6, top: 10),
-                              child: Text(
-                                "Selected by our creators",
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.left,
-                                style: CustomTextStyles.bodyMediumThin,
-                              ),
+                          ),
+                        ),
+                        Padding(
+                          padding: getPadding(left: 6, top: 10),
+                          child: Text(
+                            'Selected by our curators',
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.left,
+                            style: CustomTextStyles.bodyMediumThin.copyWith(
+                              color: isLight ? ColorConstant.black : null,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: Container(
-                                height: _height / 4.5,
-                                width: _width,
-                                child: Stack(
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        provider.dashboardModel.mainBook != null
+                            ? GestureDetector(
+                                onTap: () {
+                                  context.push(
+                                    AppRoutesPath.bookDetail,
+                                    extra: provider
+                                        .dashboardModel.mainBook!.bookId!,
+                                  );
+                                },
+                                child: Align(
                                   alignment: Alignment.center,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetailPageContainerPage()),
-                                        );
-                                      },
-                                      child: CustomImageView(
-                                        imagePath:
-                                            ImageConstant.imgE50c016fb6a84,
-                                        height: _height / 4.5,
-                                        width: _width,
-                                        fit: BoxFit.fill,
+                                  child: CustomImageView(
+                                    url: provider
+                                        .dashboardModel.mainBook!.frontCover,
+                                    height: (width / 2.3) * 1.5,
+                                    width: width / 2.3,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              )
+                            : const SizedBox.shrink(),
+                        provider.dashboardModel.mainBook != null &&
+                                provider.dashboardModel.mainBook!.name != null
+                            ? Padding(
+                                padding: getPadding(left: 6, top: 7),
+                                child: Text(
+                                  provider.dashboardModel.mainBook!.title!,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.left,
+                                  style: theme.textTheme.titleSmall!.copyWith(
+                                    color: isLight ? ColorConstant.black : null,
+                                    fontSize: 17,
+                                  ),
+                                ),
+                              )
+                            : const SizedBox.shrink(),
+                        provider.dashboardModel.mainBook != null &&
+                                provider.dashboardModel.mainBook!.authorName !=
+                                    null
+                            ? Padding(
+                                padding: getPadding(left: 6),
+                                child: Builder(
+                                  builder: (context) {
+                                    String author = '';
+                                    List<dynamic> list = (provider
+                                            .dashboardModel
+                                            .mainBook!
+                                            .authorName as List<dynamic>)
+                                        .where((element) => element != null)
+                                        .toList();
+
+                                    for (var i = 0; i < list.length; i++) {
+                                      author += list[i];
+                                      author +=
+                                          ((list.length - 1) == i) ? '' : ', ';
+                                    }
+
+                                    return Text(
+                                      author,
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.left,
+                                      style: CustomTextStyles.bodyMediumThin
+                                          .copyWith(
+                                        color: isLight
+                                            ? ColorConstant.black
+                                            : null,
+                                        fontSize: 17,
                                       ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.center,
-                                      child: Container(
-                                        height: _height / 4.5,
-                                        width: _width,
-                                        decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                            begin: Alignment(0.5, 0),
-                                            end: Alignment(0.5, 1),
-                                            colors: [
-                                              theme.colorScheme
-                                                  .onPrimaryContainer,
-                                              theme.colorScheme
-                                                  .onPrimaryContainer
-                                                  .withOpacity(0.6),
-                                              theme.colorScheme
-                                                  .onPrimaryContainer
-                                                  .withOpacity(1),
-                                            ],
+                                    );
+                                  },
+                                ),
+                              )
+                            : const SizedBox.shrink(),
+                        provider.dashboardModel.mainBook != null &&
+                                provider.dashboardModel.mainBook!.description !=
+                                    null
+                            ? Padding(
+                                padding: getPadding(left: 6),
+                                child: Text(
+                                  provider.dashboardModel.mainBook!
+                                          .description ??
+                                      '',
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.left,
+                                  style:
+                                      CustomTextStyles.bodyMediumThin.copyWith(
+                                    color: isLight ? ColorConstant.black : null,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              )
+                            : const SizedBox.shrink(),
+                        provider.dashboardModel.mainBook != null
+                            ? Padding(
+                                padding: getPadding(left: 6, top: 5),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(3),
+                                      decoration: BoxDecoration(
+                                        color: appTheme.teal400,
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          provider.dashboardModel.mainBook!
+                                              .type!.capitlize,
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.left,
+                                          style: theme.textTheme.bodySmall!
+                                              .copyWith(
+                                            color: isLight
+                                                ? ColorConstant.black
+                                                : null,
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                       ),
                                     ),
-                                    GestureDetector(
+                                    provider.dashboardModel.mainBook!
+                                                .originalAudiobookLength !=
+                                            null
+                                        ? Padding(
+                                            padding: getPadding(
+                                              left: 3,
+                                              top: 1,
+                                            ),
+                                            child: Text(
+                                              '${provider.dashboardModel.mainBook!.originalAudiobookLength} min',
+                                              overflow: TextOverflow.ellipsis,
+                                              textAlign: TextAlign.left,
+                                              style: theme.textTheme.bodySmall!
+                                                  .copyWith(
+                                                color: isLight
+                                                    ? ColorConstant.black
+                                                    : null,
+                                              ),
+                                            ),
+                                          )
+                                        : const SizedBox.shrink(),
+                                  ],
+                                ),
+                              )
+                            : const SizedBox.shrink(),
+                        provider.dashboardModel.recommendedBook.isNotEmpty
+                            ? Padding(
+                                padding: getPadding(top: 31),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      'Recommended For You',
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.left,
+                                      style: theme.textTheme.headlineSmall!
+                                          .copyWith(
+                                        color: isLight
+                                            ? ColorConstant.black
+                                            : null,
+                                      ),
+                                    ),
+                                    const Spacer(),
+                                    InkWell(
                                       onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetailPageContainerPage()),
+                                        context.push(
+                                          AppRoutesPath.viewAllBook,
+                                          extra: {
+                                            'title': 'Recommended For You',
+                                            'param': 'flag_recommend',
+                                          },
                                         );
                                       },
-                                      child: CustomImageView(
-                                        imagePath: ImageConstant
-                                            .imgE50c016fb6a84163x115,
-                                        height: _height / 4.5,
-                                        width: _width / 3,
-                                        fit: BoxFit.fill,
+                                      child: Row(
+                                        children: [
+                                          Padding(
+                                            padding: getPadding(
+                                              top: 7,
+                                              bottom: 7,
+                                            ),
+                                            child: Text(
+                                              'Show all',
+                                              overflow: TextOverflow.ellipsis,
+                                              textAlign: TextAlign.left,
+                                              style: CustomTextStyles
+                                                  .labelLargeTeal400Bold,
+                                            ),
+                                          ),
+                                          CustomImageView(
+                                            svgPath: ImageConstant
+                                                .imgArrowrightTeal400,
+                                            color: ColorConstant.primaryColor,
+                                            height: getSize(16),
+                                            width: getSize(16),
+                                            margin: getMargin(
+                                              left: 4,
+                                              top: 7,
+                                              bottom: 7,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ],
                                 ),
-                              ),
-                            ),
-                            Padding(
-                              padding: getPadding(left: 6),
-                              child: Text(
-                                "Book Title ",
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.left,
-                                style: theme.textTheme.titleSmall,
-                              ),
-                            ),
-                            Padding(
-                              padding: getPadding(left: 6, top: 8),
-                              child: Text(
-                                "Main Title ",
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.left,
-                                style: CustomTextStyles.bodyMediumThin,
-                              ),
-                            ),
-                            Padding(
-                              padding: getPadding(left: 6, top: 5),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    height: 15,
-                                    width: 63,
-                                    decoration: BoxDecoration(
-                                      color: appTheme.teal400,
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        "Select tyep",
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.left,
-                                        style: theme.textTheme.bodySmall,
+                              )
+                            : const SizedBox.shrink(),
+                        provider.dashboardModel.recommendedBook.isNotEmpty
+                            ? Padding(
+                                padding: getPadding(top: 20, bottom: 20),
+                                child: SingleChildScrollView(
+                                  physics: const BouncingScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: List.generate(
+                                      provider.dashboardModel.recommendedBook
+                                          .length,
+                                      (index) => BookTile(
+                                        book: provider.dashboardModel
+                                            .recommendedBook[index],
                                       ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: getPadding(left: 3, top: 1),
-                                    child: Text(
-                                      "21 min",
+                                ),
+                              )
+                            : const SizedBox.shrink(),
+                        // provider.dashboardModel.topSearchBook.isNotEmpty
+                        //     ? Padding(
+                        //         padding: getPadding(top: 20),
+                        //         child: Row(
+                        //           children: [
+                        //             Text(
+                        //               'Top Search',
+                        //               overflow: TextOverflow.ellipsis,
+                        //               textAlign: TextAlign.left,
+                        //               style:
+                        //                   theme.textTheme.titleLarge!.copyWith(
+                        //                 color: isLight
+                        //                     ? ColorConstant.black
+                        //                     : null,
+                        //               ),
+                        //             ),
+                        //             const Spacer(),
+                        //             InkWell(
+                        //               onTap: () {
+                        //                 context.push(
+                        //                   AppRoutesPath.viewAllBook,
+                        //                   extra: {
+                        //                     'title': 'Top Search',
+                        //                     'param': 'flag_top_sell',
+                        //                   },
+                        //                 );
+                        //               },
+                        //               child: Row(
+                        //                 children: [
+                        //                   Padding(
+                        //                     padding: getPadding(
+                        //                       top: 7,
+                        //                       bottom: 7,
+                        //                     ),
+                        //                     child: Text(
+                        //                       'Show all',
+                        //                       overflow: TextOverflow.ellipsis,
+                        //                       textAlign: TextAlign.left,
+                        //                       style: CustomTextStyles
+                        //                           .labelLargeTeal400Bold,
+                        //                     ),
+                        //                   ),
+                        //                   CustomImageView(
+                        //                     svgPath: ImageConstant
+                        //                         .imgArrowrightTeal400,
+                        //                     height: getSize(16),
+                        //                     width: getSize(16),
+                        //                     margin: getMargin(
+                        //                       left: 4,
+                        //                       top: 7,
+                        //                       bottom: 7,
+                        //                     ),
+                        //                   ),
+                        //                 ],
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       )
+                        //     : const SizedBox.shrink(),
+                        // provider.dashboardModel.topSearchBook.isNotEmpty
+                        //     ? Padding(
+                        //         padding: getPadding(top: 20, bottom: 20),
+                        //         child: SingleChildScrollView(
+                        //           physics: const BouncingScrollPhysics(),
+                        //           scrollDirection: Axis.horizontal,
+                        //           child: Row(
+                        //             crossAxisAlignment:
+                        //                 CrossAxisAlignment.start,
+                        //             children: List.generate(
+                        //               provider
+                        //                   .dashboardModel.topSearchBook.length,
+                        //               (index) => BookTile(
+                        //                 book: provider.dashboardModel
+                        //                     .topSearchBook[index],
+                        //               ),
+                        //             ),
+                        //           ),
+                        //         ),
+                        //       )
+                        //     : const SizedBox.shrink(),
+                        provider.dashboardModel.categories.isNotEmpty
+                            ? Padding(
+                                padding: getPadding(top: 5),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      'Categories',
                                       overflow: TextOverflow.ellipsis,
                                       textAlign: TextAlign.left,
-                                      style: theme.textTheme.bodySmall,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 25),
-                              child: Align(
-                                alignment: Alignment.centerRight,
-                                child: Container(
-                                  height: _height / 3.5,
-                                  // color: Colors.pink,
-                                  child: ListView.separated(
-                                    scrollDirection: Axis.horizontal,
-                                    separatorBuilder: (
-                                      context,
-                                      index,
-                                    ) {
-                                      return SizedBox(
-                                        width: getHorizontalSize(10),
-                                      );
-                                    },
-                                    itemCount: 4,
-                                    itemBuilder: (context, index) {
-                                      return ListoneItemWidget();
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: getPadding(top: 31),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Recommended For You",
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: theme.textTheme.headlineSmall,
-                                  ),
-                                  Spacer(),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                HomeRecommendedForYouSeeAllScreen(
-                                                  Title: "Recommended For You",
-                                                )),
-                                      );
-                                    },
-                                    child: Padding(
-                                      padding: getPadding(top: 7, bottom: 7),
-                                      child: Text(
-                                        "Show all",
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.left,
-                                        style: CustomTextStyles
-                                            .labelLargeTeal400Bold,
+                                      style:
+                                          theme.textTheme.titleLarge!.copyWith(
+                                        color: isLight
+                                            ? ColorConstant.black
+                                            : null,
                                       ),
                                     ),
+                                    const Spacer(),
+                                  ],
+                                ),
+                              )
+                            : const SizedBox.shrink(),
+                        provider.dashboardModel.categories.isNotEmpty
+                            ? SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                physics: const BouncingScrollPhysics(),
+                                padding: getPadding(top: 16),
+                                child: SizedBox(
+                                  width: width * 1.75,
+                                  child: Wrap(
+                                    runSpacing: getVerticalSize(5),
+                                    spacing: getHorizontalSize(5),
+                                    children: List<Widget>.generate(
+                                        provider.dashboardModel.categories
+                                            .length, (index) {
+                                      String text = provider.dashboardModel
+                                              .categories[index].name ??
+                                          '';
+                                      String icon = provider.dashboardModel
+                                              .categories[index].icon ??
+                                          '';
+
+                                      return Chipviewframefo2ItemWidget(
+                                        onTap: () {
+                                          CacheStorage.navigationShell
+                                              .goBranch(1);
+                                          context
+                                              .read<CategoryProvider>()
+                                              .changeData(
+                                                provider
+                                                    .dashboardModel
+                                                    .categories[index]
+                                                    .categoryId!,
+                                                provider.dashboardModel
+                                                    .categories[index].name!,
+                                              );
+                                        },
+                                        text: text,
+                                        icon: icon,
+                                      );
+                                    }),
                                   ),
-                                  CustomImageView(
-                                    svgPath: ImageConstant.imgArrowrightTeal400,
-                                    height: getSize(16),
-                                    width: getSize(16),
-                                    margin:
-                                        getMargin(left: 4, top: 7, bottom: 7),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: SizedBox(
-                                height: getVerticalSize(287),
-                                child: ListView.separated(
-                                  padding: getPadding(top: 31),
+                                ),
+                              )
+                            : const SizedBox.shrink(),
+                        provider.dashboardModel.popularBook.isNotEmpty
+                            ? Padding(
+                                padding: getPadding(
+                                  top: 24,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      'Popular',
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.left,
+                                      style:
+                                          theme.textTheme.titleLarge!.copyWith(
+                                        color: isLight
+                                            ? ColorConstant.black
+                                            : null,
+                                      ),
+                                    ),
+                                    const Spacer(),
+                                    InkWell(
+                                      onTap: () {
+                                        context.push(
+                                          AppRoutesPath.viewAllBook,
+                                          extra: {
+                                            'title': 'Popular',
+                                            'param': 'recently_added',
+                                          },
+                                        );
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Padding(
+                                            padding: getPadding(
+                                              top: 7,
+                                              bottom: 7,
+                                            ),
+                                            child: Text(
+                                              'Show all',
+                                              overflow: TextOverflow.ellipsis,
+                                              textAlign: TextAlign.left,
+                                              style: CustomTextStyles
+                                                  .labelLargeTeal400Bold,
+                                            ),
+                                          ),
+                                          CustomImageView(
+                                            svgPath: ImageConstant
+                                                .imgArrowrightTeal400,
+                                            color: ColorConstant.primaryColor,
+                                            height: getSize(16),
+                                            width: getSize(16),
+                                            margin: getMargin(
+                                              left: 4,
+                                              top: 7,
+                                              bottom: 7,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : const SizedBox.shrink(),
+                        provider.dashboardModel.popularBook.isNotEmpty
+                            ? Padding(
+                                padding: getPadding(top: 20, bottom: 20),
+                                child: SingleChildScrollView(
+                                  physics: const BouncingScrollPhysics(),
                                   scrollDirection: Axis.horizontal,
-                                  separatorBuilder: (
-                                    context,
-                                    index,
-                                  ) {
-                                    return SizedBox(
-                                      width: getHorizontalSize(13),
-                                    );
-                                  },
-                                  itemCount: 4,
-                                  itemBuilder: (context, index) {
-                                    return ListtitleItemWidget();
-                                  },
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: getPadding(top: 13),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Top Search",
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: theme.textTheme.titleLarge,
-                                  ),
-                                  Spacer(),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                HomeRecommendedForYouSeeAllScreen(
-                                                  Title: "Top Search",
-                                                )),
-                                      );
-                                    },
-                                    child: Padding(
-                                      padding: getPadding(top: 5, bottom: 5),
-                                      child: Text(
-                                        "Show all",
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.left,
-                                        style: CustomTextStyles
-                                            .labelLargeTeal400Bold,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: List.generate(
+                                      provider
+                                          .dashboardModel.popularBook.length,
+                                      (index) => BookTile(
+                                        book: provider
+                                            .dashboardModel.popularBook[index],
                                       ),
                                     ),
                                   ),
-                                  CustomImageView(
-                                    svgPath: ImageConstant.imgArrowrightTeal400,
-                                    height: getSize(16),
-                                    width: getSize(16),
-                                    margin:
-                                        getMargin(left: 4, top: 4, bottom: 4),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: SizedBox(
-                                height: getVerticalSize(272),
-                                child: ListView.separated(
-                                  padding: getPadding(top: 16),
+                                ),
+                              )
+                            : const SizedBox.shrink(),
+                        provider.dashboardModel.recentlyAddBook.isNotEmpty
+                            ? Padding(
+                                padding: getPadding(top: 5),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      'Recently Added',
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.left,
+                                      style:
+                                          theme.textTheme.titleLarge!.copyWith(
+                                        color: isLight
+                                            ? ColorConstant.black
+                                            : null,
+                                      ),
+                                    ),
+                                    const Spacer(),
+                                    InkWell(
+                                      onTap: () {
+                                        context.push(
+                                          AppRoutesPath.viewAllBook,
+                                          extra: {
+                                            'title': 'Recently Added',
+                                            'param': 'recently_added',
+                                          },
+                                        );
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Padding(
+                                            padding: getPadding(
+                                              top: 7,
+                                              bottom: 7,
+                                            ),
+                                            child: Text(
+                                              'Show all',
+                                              overflow: TextOverflow.ellipsis,
+                                              textAlign: TextAlign.left,
+                                              style: CustomTextStyles
+                                                  .labelLargeTeal400Bold,
+                                            ),
+                                          ),
+                                          CustomImageView(
+                                            svgPath: ImageConstant
+                                                .imgArrowrightTeal400,
+                                            color: ColorConstant.primaryColor,
+                                            height: getSize(16),
+                                            width: getSize(16),
+                                            margin: getMargin(
+                                              left: 4,
+                                              top: 7,
+                                              bottom: 7,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : const SizedBox.shrink(),
+                        provider.dashboardModel.recentlyAddBook.isNotEmpty
+                            ? Padding(
+                                padding: getPadding(top: 20, bottom: 20),
+                                child: SingleChildScrollView(
+                                  physics: const BouncingScrollPhysics(),
                                   scrollDirection: Axis.horizontal,
-                                  separatorBuilder: (
-                                    context,
-                                    index,
-                                  ) {
-                                    return SizedBox(
-                                      width: getHorizontalSize(13),
-                                    );
-                                  },
-                                  itemCount: 4,
-                                  itemBuilder: (context, index) {
-                                    return Listtitle1ItemWidget();
-                                  },
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: getPadding(
-                                top: 5,
-                              ),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Categories",
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: theme.textTheme.titleLarge,
-                                  ),
-                                  Spacer(),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                HomeRecommendedForYouSeeAllScreen(
-                                                  Title: "Categories",
-                                                )),
-                                      );
-                                    },
-                                    child: Padding(
-                                      padding: getPadding(
-                                        top: 5,
-                                        bottom: 5,
-                                      ),
-                                      child: Text(
-                                        "Show all",
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.left,
-                                        style: CustomTextStyles
-                                            .labelLargeTeal400Bold,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: List.generate(
+                                      provider.dashboardModel.recentlyAddBook
+                                          .length,
+                                      (index) => BookTile(
+                                        book: provider.dashboardModel
+                                            .recentlyAddBook[index],
                                       ),
                                     ),
                                   ),
-                                  CustomImageView(
-                                    svgPath: ImageConstant.imgArrowrightTeal400,
-                                    height: getSize(16),
-                                    width: getSize(16),
-                                    margin:
-                                        getMargin(left: 4, top: 4, bottom: 4),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              padding: getPadding(top: 16),
-                              child: IntrinsicWidth(
-                                child: Wrap(
-                                  runSpacing: getVerticalSize(5),
-                                  spacing: getHorizontalSize(5),
-                                  children: List<Widget>.generate(5,
-                                      (index) => Chipviewframefo2ItemWidget()),
                                 ),
-                              ),
-                            ),
-                            Padding(
-                              padding: getPadding(
-                                top: 24,
-                              ),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Popular",
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: theme.textTheme.titleLarge,
-                                  ),
-                                  Spacer(),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                HomeRecommendedForYouSeeAllScreen(
-                                                  Title: "Popular",
-                                                )),
-                                      );
-                                    },
-                                    child: Padding(
-                                      padding: getPadding(
-                                        top: 5,
-                                        bottom: 5,
-                                      ),
-                                      child: Text(
-                                        "Show all",
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.left,
-                                        style: CustomTextStyles
-                                            .labelLargeTeal400Bold,
-                                      ),
-                                    ),
-                                  ),
-                                  CustomImageView(
-                                    svgPath: ImageConstant.imgArrowrightTeal400,
-                                    height: getSize(16),
-                                    width: getSize(16),
-                                    margin:
-                                        getMargin(left: 4, top: 4, bottom: 4),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: SizedBox(
-                                height: getVerticalSize(272),
-                                child: ListView.separated(
-                                  padding: getPadding(top: 16),
-                                  scrollDirection: Axis.horizontal,
-                                  separatorBuilder: (
-                                    context,
-                                    index,
-                                  ) {
-                                    return SizedBox(
-                                      width: getHorizontalSize(13),
-                                    );
-                                  },
-                                  itemCount: 4,
-                                  itemBuilder: (context, index) {
-                                    return Listtitle2ItemWidget();
-                                  },
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: getPadding(top: 5),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Recently Added",
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: theme.textTheme.titleLarge,
-                                  ),
-                                  Spacer(),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                HomeRecommendedForYouSeeAllScreen(
-                                                  Title: "Recently Added",
-                                                )),
-                                      );
-                                    },
-                                    child: Padding(
-                                      padding: getPadding(top: 5, bottom: 5),
-                                      child: Text(
-                                        "Show all",
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.left,
-                                        style: CustomTextStyles
-                                            .labelLargeTeal400Bold,
-                                      ),
-                                    ),
-                                  ),
-                                  CustomImageView(
-                                    svgPath: ImageConstant.imgArrowrightTeal400,
-                                    height: getSize(16),
-                                    width: getSize(16),
-                                    margin:
-                                        getMargin(left: 4, top: 4, bottom: 4),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: SizedBox(
-                                height: getVerticalSize(272),
-                                child: ListView.separated(
-                                  padding: getPadding(top: 16),
-                                  scrollDirection: Axis.horizontal,
-                                  separatorBuilder: (
-                                    context,
-                                    index,
-                                  ) {
-                                    return SizedBox(
-                                      width: getHorizontalSize(13),
-                                    );
-                                  },
-                                  itemCount: 4,
-                                  itemBuilder: (context, index) {
-                                    return Listtitle3ItemWidget();
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                              )
+                            : const SizedBox.shrink(),
                       ],
                     ),
                   ),
                 ),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         ),
       ),
     );
