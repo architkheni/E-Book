@@ -620,11 +620,117 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             .signInWithCredential(credential);
                                     emailController.text =
                                         userCredential.user?.email ?? '';
+                                    if (mounted) {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => Dialog(
+                                          backgroundColor:
+                                              ColorConstant.whiteA700,
+                                          child: Container(
+                                            padding: const EdgeInsets.all(16),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                CustomTextFormField(
+                                                  controller: nameController,
+                                                  margin: getMargin(top: 21),
+                                                  contentPadding: getPadding(
+                                                    left: 16,
+                                                    top: 15,
+                                                    right: 16,
+                                                    bottom: 15,
+                                                  ),
+                                                  textStyle: CustomTextStyles
+                                                      .bodyMediumGray500,
+                                                  hintText: 'Name',
+                                                  hintStyle: CustomTextStyles
+                                                      .bodyMediumGray500,
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  filled: true,
+                                                  fillColor: isLight
+                                                      ? ColorConstant.kE1E1E1
+                                                      : appTheme.blueGray50,
+                                                ),
+                                                CustomTextFormField(
+                                                  controller:
+                                                      userNameController,
+                                                  margin: getMargin(top: 15),
+                                                  contentPadding: getPadding(
+                                                    left: 16,
+                                                    top: 15,
+                                                    right: 16,
+                                                    bottom: 15,
+                                                  ),
+                                                  textStyle: CustomTextStyles
+                                                      .bodyMediumGray500,
+                                                  hintText: 'User Name',
+                                                  hintStyle: CustomTextStyles
+                                                      .bodyMediumGray500,
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  filled: true,
+                                                  fillColor: isLight
+                                                      ? ColorConstant.kE1E1E1
+                                                      : appTheme.blueGray50,
+                                                ),
+                                                CustomTextFormField(
+                                                  controller:
+                                                      mobileNumberController,
+                                                  margin: getMargin(top: 15),
+                                                  contentPadding: getPadding(
+                                                    left: 16,
+                                                    top: 15,
+                                                    right: 16,
+                                                    bottom: 15,
+                                                  ),
+                                                  textStyle: CustomTextStyles
+                                                      .bodyMediumGray500,
+                                                  hintText: 'Mobile Number',
+                                                  hintStyle: CustomTextStyles
+                                                      .bodyMediumGray500,
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  textInputType:
+                                                      TextInputType.phone,
+                                                  maxLength: 10,
+                                                  filled: true,
+                                                  fillColor: isLight
+                                                      ? ColorConstant.kE1E1E1
+                                                      : appTheme.blueGray50,
+                                                ),
+                                                const SizedBox(
+                                                  height: 16,
+                                                ),
+                                                ElevatedButton(
+                                                  onPressed: () {
+                                                    context
+                                                        .read<
+                                                            auth.AuthProvider>()
+                                                        .ssoCreate(
+                                                          context,
+                                                          email: emailController
+                                                              .text,
+                                                          name: nameController.text,
+                                                          username:userNameController.text,
+                                                          contactNumber:mobileNumberController.text,
+                                                        );
+                                                  },
+                                                  child: Text(
+                                                    'Continue',
+                                                    style: TextStyle(
+                                                      color: ColorConstant
+                                                          .primaryColor,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }
                                     // ignore: use_build_context_synchronously
-                                    context.read<auth.AuthProvider>().ssoCreate(
-                                          context,
-                                          email: emailController.text,
-                                        );
                                   } on FirebaseAuthException catch (e) {
                                     String error = getErrorMessage(e.code);
                                     scaffoldState.showSnackBar(

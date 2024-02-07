@@ -107,6 +107,9 @@ class AuthProvider extends ChangeNotifier {
   void ssoCreate(
     BuildContext context, {
     required String email,
+    required String name,
+    required String username,
+    required String contactNumber,
   }) async {
     screenLoader.show(
       context,
@@ -119,6 +122,9 @@ class AuthProvider extends ChangeNotifier {
     Either<String, Map<String, dynamic>> result =
         await AuthRepository.instance.ssoCreate(
       email: email,
+      name: name,
+      username: username,
+      contactNumber:contactNumber,
     );
     screenLoader.hide();
     result.fold((l) {
@@ -134,13 +140,6 @@ class AuthProvider extends ChangeNotifier {
       appStorage.setLogin(true);
       if (r['membership_details'] != null) {
         AppStorage.setPurchased(true);
-        // AppStorage.purchasePackageId =
-        //     (r['membership_details'] as MembershipModel).packageId;
-        // AppStorage.purchasePackageType =
-        //     (r['membership_details'] as MembershipModel).packageType;
-        // appStorage.setPackage(
-        //   (r['membership_details'] as MembershipModel).toString(),
-        // );
       }
       if ((r['data'] as UserModel).categories?.isEmpty ?? true) {
         ScaffoldMessenger.of(context).showSnackBar(

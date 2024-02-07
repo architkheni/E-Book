@@ -94,12 +94,18 @@ class AuthRepository {
 
   Future<Either<String, Map<String, dynamic>>> ssoCreate({
     required String email,
+    required String username,
+    required String name,
+    required String contactNumber,
   }) async {
     try {
       Response response = await dioClient.post(
         ApiEndpoint.ssoCreate,
         data: {
           'email': email,
+          'name': name,
+          'username': username,
+          'contact_number': contactNumber,
         },
       );
       if (response.statusCode == 200) {
