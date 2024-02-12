@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: non_constant_identifier_names, prefer_typing_uninitialized_variables, unused_local_variable
 
-
 import 'package:book/core/storage/cache_storage.dart';
 import 'package:book/core/utils/color_constant.dart';
 import 'package:book/core/utils/string_utils.dart';
@@ -322,7 +321,13 @@ class _BookReadViewState extends State<BookReadView> {
                                   if (index ==
                                       provider.chapters.length - 1) ...[
                                     CustomElevatedButton(
-                                      onTap: () {},
+                                      onTap: () {
+                                        context
+                                            .read<BookReadProvider>()
+                                            .markBookAsFinished(
+                                              widget.bookId,
+                                            );
+                                      },
                                       width: double.maxFinite,
                                       height: getVerticalSize(
                                         48,

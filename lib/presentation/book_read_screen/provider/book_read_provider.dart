@@ -40,6 +40,11 @@ class BookReadProvider extends ChangeNotifier {
     await HomeRepository.instance.readChapter(bookId, chapterId, token);
   }
 
+  void markBookAsFinished(int bookId,) async {
+    String token = await appStorage.getToken();
+    await HomeRepository.instance.markAsBookFinished(bookId, token);
+  }
+
   void setLoading(bool value) {
     isLoading = value;
     notifyListeners();

@@ -269,7 +269,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                                           AppRoutesPath.viewAllBook,
                                           extra: {
                                             'title': 'Recommended For You',
-                                            'param': 'flag_recommend',
+                                            'param': 'recommended',
                                           },
                                         );
                                       },
@@ -498,7 +498,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                                           AppRoutesPath.viewAllBook,
                                           extra: {
                                             'title': 'Popular',
-                                            'param': 'recently_added',
+                                            'param': 'popular',
                                           },
                                         );
                                       },

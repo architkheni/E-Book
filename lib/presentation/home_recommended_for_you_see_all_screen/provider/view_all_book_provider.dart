@@ -16,13 +16,6 @@ class ViewAllBookProvider extends ChangeNotifier {
     result.fold((l) {
       setLoading(false);
     }, (r) {
-      if (param != 'history') {
-        r.sort(
-          (a, b) {
-            return b.name!.compareTo(a.name!);
-          },
-        );
-      }
       books = r;
       setLoading(false);
     });

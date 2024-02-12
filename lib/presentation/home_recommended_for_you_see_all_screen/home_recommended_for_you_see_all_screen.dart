@@ -31,9 +31,9 @@ class HomeRecommendedForYouSeeAllScreen extends StatefulWidget {
 class _HomeRecommendedForYouSeeAllScreenState
     extends State<HomeRecommendedForYouSeeAllScreen> {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
-  String selectedValue = 'A to Z';
+  String selectedValue = 'None';
 
-  List<String> filterOption = ['A to Z', 'Z to A'];
+  List<String> filterOption = ['None', 'A to Z', 'Z to A'];
 
   @override
   void initState() {
@@ -111,8 +111,7 @@ class _HomeRecommendedForYouSeeAllScreenState
                     .where((element) => element.readCahpters != 0)
                     .toList();
               }
-              if (widget.param != 'finished' &&
-                  widget.param != 'recently_added') {
+              if (widget.param != 'finished') {
                 if (selectedValue == 'A to Z') {
                   books.sort((a, b) => a.name!.compareTo(b.name!));
                 } else if (selectedValue == 'Z to A') {
@@ -150,8 +149,7 @@ class _HomeRecommendedForYouSeeAllScreenState
                         ),
                         const Spacer(),
                         if (widget.param != 'history' &&
-                            widget.param != 'finished' &&
-                            widget.param != 'recently_added') ...[
+                            widget.param != 'finished') ...[
                           Text(
                             'Sort By  ',
                             overflow: TextOverflow.ellipsis,
