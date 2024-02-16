@@ -8,8 +8,12 @@ class Chipviewframefo2ItemWidget extends StatelessWidget {
   final String? icon;
 
   final Function()? onTap;
-  const Chipviewframefo2ItemWidget({Key? key, required this.text, this.onTap, this.icon})
-      : super(
+  const Chipviewframefo2ItemWidget({
+    Key? key,
+    required this.text,
+    this.onTap,
+    this.icon,
+  }) : super(
           key: key,
         );
 
@@ -25,10 +29,10 @@ class Chipviewframefo2ItemWidget extends StatelessWidget {
         text,
         textAlign: TextAlign.left,
         style: TextStyle(
-          color: isLight ? ColorConstant.black : appTheme.blueGray50,
+          color: isLight ? ColorConstant.black : appTheme.gray400,
           fontSize: getFontSize(12),
           fontFamily: 'Outfit',
-          fontWeight: FontWeight.w100,
+          fontWeight: FontWeight.bold,
         ),
       ),
       selected: false,
@@ -41,12 +45,16 @@ class Chipviewframefo2ItemWidget extends StatelessWidget {
         ),
       ),
       avatar: CustomImageView(
-        svgPath: icon == null  ? ImageConstant.imgGroup1171274896 : null,
+        svgPath: icon == null ? ImageConstant.imgGroup1171274896 : null,
         url: icon,
         height: 12,
         width: 12,
         margin: getMargin(right: 3),
-        color: icon != null ? null : isLight ? Colors.black : null,
+        color: icon != null
+            ? null
+            : isLight
+                ? Colors.black
+                : null,
       ),
     );
   }

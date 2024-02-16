@@ -10,6 +10,7 @@ import 'package:book/theme/custom_button_style.dart';
 import 'package:book/widgets/app_bar/appbar_subtitle.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
@@ -362,6 +363,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 listen: false,
                                               );
                                               provider.toggleTheme(value);
+                                              if (value) {
+                                                SystemChrome
+                                                    .setSystemUIOverlayStyle(
+                                                  const SystemUiOverlayStyle(
+                                                    statusBarColor:
+                                                        Colors.white,
+                                                    statusBarBrightness:
+                                                        Brightness.light,
+                                                    statusBarIconBrightness:
+                                                        Brightness.dark,
+                                                  ),
+                                                );
+                                              } else {
+                                                SystemChrome
+                                                    .setSystemUIOverlayStyle(
+                                                  const SystemUiOverlayStyle(
+                                                    statusBarColor:
+                                                        Colors.black,
+                                                    statusBarBrightness:
+                                                        Brightness.dark,
+                                                    statusBarIconBrightness:
+                                                        Brightness.light,
+                                                  ),
+                                                );
+                                              }
                                             },
                                           );
                                         },

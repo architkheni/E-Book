@@ -8,6 +8,7 @@ import 'package:book/model/book_chapter_model.dart';
 import 'package:book/presentation/book_read_screen/provider/book_read_provider.dart';
 import 'package:book/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:go_router/go_router.dart';
@@ -46,6 +47,23 @@ class _BookReadViewState extends State<BookReadView> {
   void initState() {
     ShowBox = false;
     init();
+    if (Theme.of(context).brightness == Brightness.light) {
+      SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(
+          statusBarColor: Colors.white,
+          statusBarBrightness: Brightness.light,
+          statusBarIconBrightness: Brightness.dark,
+        ),
+      );
+    } else {
+      SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(
+          statusBarColor: Colors.black,
+          statusBarBrightness: Brightness.dark,
+          statusBarIconBrightness: Brightness.light,
+        ),
+      );
+    }
     super.initState();
   }
 
@@ -198,6 +216,23 @@ class _BookReadViewState extends State<BookReadView> {
   void dispose() {
     ShowBox = false;
     disposFlag();
+    if (Theme.of(context).brightness == Brightness.light) {
+      SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(
+          statusBarColor: Colors.white,
+          statusBarBrightness: Brightness.light,
+          statusBarIconBrightness: Brightness.dark,
+        ),
+      );
+    } else {
+      SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(
+          statusBarColor: Colors.black,
+          statusBarBrightness: Brightness.dark,
+          statusBarIconBrightness: Brightness.light,
+        ),
+      );
+    }
     super.dispose();
   }
 
