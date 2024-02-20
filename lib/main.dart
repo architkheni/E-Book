@@ -86,7 +86,7 @@ class MyApp extends StatelessWidget {
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, child) {
-          if (Theme.of(context).brightness == Brightness.light) {
+          if (themeProvider.themeMode == ThemeMode.light) {
             SystemChrome.setSystemUIOverlayStyle(
               const SystemUiOverlayStyle(
                 statusBarColor: Colors.white,

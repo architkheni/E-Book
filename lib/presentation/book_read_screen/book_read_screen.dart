@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: non_constant_identifier_names, prefer_typing_uninitialized_variables, unused_local_variable
 
+import 'package:book/core/storage/app_storage.dart';
 import 'package:book/core/storage/cache_storage.dart';
 import 'package:book/core/utils/color_constant.dart';
 import 'package:book/core/utils/string_utils.dart';
@@ -47,7 +48,12 @@ class _BookReadViewState extends State<BookReadView> {
   void initState() {
     ShowBox = false;
     init();
-    if (Theme.of(context).brightness == Brightness.light) {
+
+    super.initState();
+  }
+
+  init() async {
+    if (!(await AppStorage().getDarkMode())) {
       SystemChrome.setSystemUIOverlayStyle(
         const SystemUiOverlayStyle(
           statusBarColor: Colors.white,
@@ -64,10 +70,6 @@ class _BookReadViewState extends State<BookReadView> {
         ),
       );
     }
-    super.initState();
-  }
-
-  init() async {
     await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   }
 
