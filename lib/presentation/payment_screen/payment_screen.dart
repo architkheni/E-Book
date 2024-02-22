@@ -169,10 +169,14 @@ void showPromoCodeDialog({
                               (value) => value.fold(
                                 (l) => ScaffoldMessenger.of(context)
                                     .showSnackBar(SnackBar(content: Text(l))),
-                                (r) => ScaffoldMessenger.of(context)
-                                    .showSnackBar(const SnackBar(
-                                        content: Text(
-                                            'Package sussessfully purchased'))),
+                                (r) =>
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'Package sussessfully purchased',
+                                    ),
+                                  ),
+                                ),
                               ),
                             );
                         if (context.mounted) {
@@ -427,7 +431,6 @@ void payment({
     navigatorState.push(
       MaterialPageRoute(
         builder: (_) => UsePaypal(
-          sandboxMode: true,
           clientId: provider.paypalCredentials.paypalClientId,
           secretKey: provider.paypalCredentials.paypalSecretKey,
           returnURL: provider.paypalCredentials.paypalReturnUrl,
