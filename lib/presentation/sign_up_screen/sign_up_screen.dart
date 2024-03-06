@@ -559,6 +559,142 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   final data =
                                       await FacebookAuth.instance.getUserData();
                                   print(data);
+                                  if (mounted) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => Dialog(
+                                        backgroundColor:
+                                            ColorConstant.whiteA700,
+                                        child: Container(
+                                          padding: const EdgeInsets.all(16),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              // CustomTextFormField(
+                                              //   controller: nameController,
+                                              //   margin: getMargin(top: 21),
+                                              //   contentPadding: getPadding(
+                                              //     left: 16,
+                                              //     top: 15,
+                                              //     right: 16,
+                                              //     bottom: 15,
+                                              //   ),
+                                              //   textStyle: CustomTextStyles
+                                              //       .bodyMediumGray500,
+                                              //   hintText: 'Name',
+                                              //   hintStyle: CustomTextStyles
+                                              //       .bodyMediumGray500,
+                                              //   textInputAction:
+                                              //       TextInputAction.next,
+                                              //   filled: true,
+                                              //   fillColor: isLight
+                                              //       ? ColorConstant.kE1E1E1
+                                              //       : appTheme.blueGray50,
+                                              // ),
+                                              CustomTextFormField(
+                                                controller: emailController,
+                                                margin: getMargin(top: 15),
+                                                contentPadding: getPadding(
+                                                  left: 16,
+                                                  top: 15,
+                                                  right: 16,
+                                                  bottom: 15,
+                                                ),
+                                                // readOnly: isGoogleChoose,
+                                                textStyle: CustomTextStyles
+                                                    .bodyMediumGray500,
+                                                hintText: 'Email',
+                                                hintStyle: CustomTextStyles
+                                                    .bodyMediumGray500,
+                                                textInputAction:
+                                                    TextInputAction.next,
+                                                textInputType:
+                                                    TextInputType.emailAddress,
+                                                filled: true,
+                                                fillColor: isLight
+                                                    ? ColorConstant.kE1E1E1
+                                                    : appTheme.blueGray50,
+                                              ),
+                                              CustomTextFormField(
+                                                controller: userNameController,
+                                                margin: getMargin(top: 15),
+                                                contentPadding: getPadding(
+                                                  left: 16,
+                                                  top: 15,
+                                                  right: 16,
+                                                  bottom: 15,
+                                                ),
+                                                textStyle: CustomTextStyles
+                                                    .bodyMediumGray500,
+                                                hintText: 'User Name',
+                                                hintStyle: CustomTextStyles
+                                                    .bodyMediumGray500,
+                                                textInputAction:
+                                                    TextInputAction.next,
+                                                filled: true,
+                                                fillColor: isLight
+                                                    ? ColorConstant.kE1E1E1
+                                                    : appTheme.blueGray50,
+                                              ),
+                                              CustomTextFormField(
+                                                controller:
+                                                    mobileNumberController,
+                                                margin: getMargin(top: 15),
+                                                contentPadding: getPadding(
+                                                  left: 16,
+                                                  top: 15,
+                                                  right: 16,
+                                                  bottom: 15,
+                                                ),
+                                                textStyle: CustomTextStyles
+                                                    .bodyMediumGray500,
+                                                hintText: 'Mobile Number',
+                                                hintStyle: CustomTextStyles
+                                                    .bodyMediumGray500,
+                                                textInputAction:
+                                                    TextInputAction.next,
+                                                textInputType:
+                                                    TextInputType.phone,
+                                                maxLength: 10,
+                                                filled: true,
+                                                fillColor: isLight
+                                                    ? ColorConstant.kE1E1E1
+                                                    : appTheme.blueGray50,
+                                              ),
+                                              const SizedBox(
+                                                height: 16,
+                                              ),
+                                              ElevatedButton(
+                                                onPressed: () {
+                                                  context
+                                                      .read<auth.AuthProvider>()
+                                                      .ssoCreate(
+                                                        context,
+                                                        email: emailController
+                                                            .text,
+                                                        name: data["name"],
+                                                        username:
+                                                            userNameController
+                                                                .text,
+                                                        contactNumber:
+                                                            mobileNumberController
+                                                                .text,
+                                                      );
+                                                },
+                                                child: Text(
+                                                  'Continue',
+                                                  style: TextStyle(
+                                                    color: ColorConstant
+                                                        .primaryColor,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }
                                 }
                               },
                               width: double.maxFinite,
@@ -711,9 +847,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                           context,
                                                           email: emailController
                                                               .text,
-                                                          name: nameController.text,
-                                                          username:userNameController.text,
-                                                          contactNumber:mobileNumberController.text,
+                                                          name: nameController
+                                                              .text,
+                                                          username:
+                                                              userNameController
+                                                                  .text,
+                                                          contactNumber:
+                                                              mobileNumberController
+                                                                  .text,
                                                         );
                                                   },
                                                   child: Text(

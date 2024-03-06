@@ -244,6 +244,80 @@ class _LogInEmailScreenState extends State<LogInEmailScreen> {
                             final data =
                                 await FacebookAuth.instance.getUserData();
                             print(data);
+                            auth.AuthProvider authProvider =
+                                context.read<auth.AuthProvider>();
+                            // result.accessToken;
+                            // result.idToken;
+
+// GoogleSignInAuthentication
+// FacebookAuthCredential auth =
+//                                   await result.;
+//                               OAuthCredential credential =
+//                                   FacebookAuthProvider.credential("${result.accessToken}");
+
+// print("Login with Facebook => ${credential.asMap()}");
+                            //  UserCredential userCredential = await FirebaseAuth
+                            //       .instance
+                            //       .signInWithCustomToken("${result.accessToken}");
+                            // .signInWithCredential(credential);
+                            // ignore: use_build_context_synchronously
+
+                            if (mounted) {
+                              showDialog(
+                                context: context,
+                                builder: (context) => Dialog(
+                                  backgroundColor: ColorConstant.whiteA700,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(16),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        CustomTextFormField(
+                                          controller: emailController,
+                                          margin: getMargin(top: 15),
+                                          contentPadding: getPadding(
+                                            left: 16,
+                                            top: 15,
+                                            right: 16,
+                                            bottom: 15,
+                                          ),
+                                          // readOnly: isGoogleChoose,
+                                          textStyle: CustomTextStyles
+                                              .bodyMediumGray500,
+                                          hintText: 'Email',
+                                          hintStyle: CustomTextStyles
+                                              .bodyMediumGray500,
+                                          textInputAction: TextInputAction.next,
+                                          textInputType:
+                                              TextInputType.emailAddress,
+                                          filled: true,
+                                          fillColor: isLight
+                                              ? ColorConstant.kE1E1E1
+                                              : appTheme.blueGray50,
+                                        ),
+                                        const SizedBox(
+                                          height: 16,
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            authProvider.ssoLogin(
+                                              context,
+                                              email: emailController.text,
+                                            );
+                                          },
+                                          child: Text(
+                                            'Continue',
+                                            style: TextStyle(
+                                              color: ColorConstant.primaryColor,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }
                           }
                         },
                         width: double.maxFinite,
